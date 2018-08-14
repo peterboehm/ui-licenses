@@ -1,0 +1,12 @@
+{
+  "name": "@olf/ui-license",
+  "description": "Stripes app module for the Licenses tool",
+  "main": "ui-license.min.js",
+  "module": "src/index.js",
+  "stripes": {
+    "type": "app",
+    "displayName": "Licenses",
+    "route":"/licenses"
+  },
+  "license": "Apache-2.0"
+}
