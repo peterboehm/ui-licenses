@@ -16,7 +16,7 @@ const postCssColorFunction = require('postcss-color-function')
 const styleDir = path.resolve('scss');
 const sourceDir = path.resolve('src');
 const aliases = {
-  '@olf/erm-stripes' : sourceDir
+  '@olf/ui-license' : sourceDir
 }
 
 const baselineModules = path.join(path.resolve('@k-int/stripes-baseline'), 'node_modules');
