@@ -1,0 +1,60 @@
+{
+  "name": "@folio/licenses",
+  "version": "0.1.0",
+  "description": "License functionality for Stripes",
+  "main": "src/index.js",
+  "repository": "",
+  "license": "Apache-2.0",
+  "engines": {
+    "node": ">=6.0.0"
+  },
+  "scripts": {
+    "start": "stripes serve",
+    "build": "stripes build --output ./output",
+    "test": "stripes test nightmare --run demo --show",
+    "lint": "eslint src"
+  },
+  "devDependencies": {
+    "@folio/eslint-config-stripes": "^3.2.1",
+    "@folio/stripes-cli": "^1.4.0",
+    "@folio/stripes-logger": "^0.0.2",
+    "babel-eslint": "^9.0.0",
+    "eslint": "^5.5.0"
+  },
+  "dependencies": {
+    "@folio/stripes-components": "^3.1.0",
+    "@folio/stripes-connect": "^3.2.0",
+    "@folio/stripes-smart-components": "^1.8.0",
+    "lodash": "^4.17.4",
+    "prop-types": "^15.6.0",
+    "react-router-dom": "^4.1.1"
+  },
+  "peerDependencies": {
+    "@folio/stripes-core": "^2.12.0",
+    "react": "*"
+  },
+  "stripes": {
+    "type": "app",
+    "displayName": "ui-licenses.meta.title",
+    "route": "/licenses",
+    "home": "/licenses/dashboard",
+    "hasSettings": true,
+    "queryResource": "query",
+    "okapiInterfaces": {},
+    "permissionSets": [
+      {
+        "permissionName": "module.licenses.enabled",
+        "displayName": "UI: ui-licenses module is enabled",
+        "visible": true
+      },
+      {
+        "permissionName": "settings.licenses.enabled",
+        "displayName": "Settings (licenses): display list of settings pages",
+        "subPermissions": [
+          "settings.enabled"
+        ],
+        "visible": true
+      }
+    ]
+  }
+}
