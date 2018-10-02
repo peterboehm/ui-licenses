@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Switch from 'react-router-dom/Switch';
 import Route from 'react-router-dom/Route';
-import Licneses from './Licenses';
+import Licenses from './Licenses';
 import Settings from './settings';
 
 const NoMatch = () => (
@@ -21,7 +21,7 @@ class App extends React.Component {
 
   constructor(props) {
     super(props);
-    this.connectedERM = props.stripes.connect(Licenses)
+    this.connectedLicenses = props.stripes.connect(Licenses)
   }
 
   render() {
