@@ -2,10 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import { SearchAndSort } from '@folio/stripes-smart-components';
-import packageInfo from '../package';
+import packageInfo from '../../package';
 
-import ViewLicense from './components/Licenses/ViewLicense';
-import EditLicense from './components/Licenses/EditLicense';
+import ViewLicense from '../components/Licenses/ViewLicense';
+import EditLicense from '../components/Licenses/EditLicense';
 
 
 const INITIAL_RESULT_COUNT = 100;
@@ -54,7 +54,7 @@ class Licenses extends React.Component {
   }
 
   render() {
-    const path = '/erm/agreements';
+    const path = '/licenses/licenses';
     packageInfo.stripes.route = path;
     packageInfo.stripes.home = path;
 

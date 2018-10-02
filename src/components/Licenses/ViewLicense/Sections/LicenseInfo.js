@@ -14,7 +14,7 @@ import css from './LicenseInfo.css';
 class LicenseInfo extends React.Component {
 
   static propTypes = {
-    agreement: PropTypes.object,
+    license: PropTypes.object,
     id: PropTypes.string,
     onToggle: PropTypes.func,
     open: PropTypes.bool,
@@ -40,7 +40,7 @@ class LicenseInfo extends React.Component {
   }
 
   render() {
-    const { agreement, stripes: { intl } } = this.props;
+    const { license, stripes: { intl } } = this.props;
 
     return (
       <Accordion

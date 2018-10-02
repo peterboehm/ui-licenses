@@ -59,7 +59,7 @@ class ViewLicense extends React.Component {
     }));
   }
 
-  handleSubmit = (agreement) => {
+  handleSubmit = (license) => {
     this.props.mutator.selectedLicense.PUT(license)
       .then(() => this.props.onCloseEdit());
   }

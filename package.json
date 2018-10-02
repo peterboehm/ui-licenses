@@ -37,7 +37,7 @@
     "type": "app",
     "displayName": "ui-licenses.meta.title",
     "route": "/licenses",
-    "home": "/licenses/dashboard",
+    "home": "/licenses/licenses",
     "hasSettings": true,
     "queryResource": "query",
     "okapiInterfaces": {},
