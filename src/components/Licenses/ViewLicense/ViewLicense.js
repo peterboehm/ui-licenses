@@ -47,6 +47,8 @@ class ViewLicense extends React.Component {
   getSectionProps() {
     return {
       license: this.getLicense(),
+      onToggle: this.handleSectionToggle,
+      stripes: this.props.stripes,
     };
   }
 
