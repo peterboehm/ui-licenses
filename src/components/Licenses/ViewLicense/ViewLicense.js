@@ -126,6 +126,12 @@ class ViewLicense extends React.Component {
         <AccordionSet>
           <LicenseInfo id="licenseInfo" open={this.state.sections.licenseInfo} {...sectionProps} />
         </AccordionSet>
+
+	<pre>
+          {JSON.stringify(license, null, '\t')}
+        </pre>
+
+
         { this.renderEditLayer() }
       </Pane>
     );
