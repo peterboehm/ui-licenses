@@ -21,24 +21,6 @@ class LicenseInfo extends React.Component {
     stripes: PropTypes.object,
   };
 
-  state = {
-    sections: {
-      internalContacts: false,
-      contentReviews: false,
-      trials: false,
-      reviewHistory: false,
-    }
-  }
-
-  handleSectionToggle = ({ id }) => {
-    this.setState((prevState) => ({
-      sections: {
-        ...prevState.sections,
-        [id]: !prevState.sections[id],
-      }
-    }));
-  }
-
   render() {
     const { license, stripes: { intl } } = this.props;
 

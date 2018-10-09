@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Redirect, Route, Switch } from 'react-router-dom';
 import { SearchAndSort } from '@folio/stripes/smart-components';
+
+import getSASParams from '../util/getSASParams';
 import packageInfo from '../../package';
 
 import ViewLicense from '../components/Licenses/ViewLicense';
 import EditLicense from '../components/Licenses/EditLicense';
-
 
 const INITIAL_RESULT_COUNT = 100;
 
@@ -15,23 +15,14 @@ class Licenses extends React.Component {
   static manifest = Object.freeze({
     records: {
       type: 'okapi',
-      resourceShouldRefresh: true,
       records: 'results',
-      path: (queryParams, pathComponents, resources) => {
-        const path = 'licenses/licenses';
-        const params = ['stats=true'];
-
-        const { query: { query, filters, sort } } = resources;
-
-        if (query) params.push(`match=name&match=description&term=${query}`);
-
-        if (params.length) return `${path}?${params.join('&')}`;
-
-        return path;
-      },
+      path: 'licenses',
+      params: getSASParams({
+        searchKey: 'name',
+      })
     },
     query: {},
-    resultCount: {},
+    resultCount: { initialValue: INITIAL_RESULT_COUNT },
   });
 
   static propTypes = {
@@ -47,14 +38,14 @@ class Licenses extends React.Component {
     mutator.records.POST(license)
       .then((newLicense) => {
         mutator.query.update({
-          _path: `/licenses/licenses/view/${license.id}`,
+          _path: `/licenses/view/${license.id}`,
           layer: '',
         });
       });
   }
 
   render() {
-    const path = '/licenses/licenses';
+    const path = '/licenses';
     packageInfo.stripes.route = path;
     packageInfo.stripes.home = path;
 
