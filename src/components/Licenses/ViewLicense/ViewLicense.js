@@ -8,7 +8,7 @@ import {
   Layout,
   Pane,
   Layer,
-} from '@folio/stripes-components';
+} from '@folio/stripes/components';
 
 import {
   LicenseInfo

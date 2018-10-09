@@ -1,6 +1,6 @@
 import React from 'react';
 import { Field } from 'redux-form';
-import { Col, Row, TextField } from '@folio/stripes-components';
+import { Col, Row, TextField } from '@folio/stripes/components';
 
 class LicenseForm extends React.Component {
   render() {

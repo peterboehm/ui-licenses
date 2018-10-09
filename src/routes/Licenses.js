@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Redirect, Route, Switch } from 'react-router-dom';
-import { SearchAndSort } from '@folio/stripes-smart-components';
+import { SearchAndSort } from '@folio/stripes/smart-components';
 import packageInfo from '../../package';
 
 import ViewLicense from '../components/Licenses/ViewLicense';
