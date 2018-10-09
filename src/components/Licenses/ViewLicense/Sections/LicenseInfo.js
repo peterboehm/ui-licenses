@@ -7,7 +7,7 @@ import {
   Col,
   KeyValue,
   Row,
-} from '@folio/stripes-components';
+} from '@folio/stripes/components';
 
 import css from './LicenseInfo.css';
 
@@ -20,24 +20,6 @@ class LicenseInfo extends React.Component {
     open: PropTypes.bool,
     stripes: PropTypes.object,
   };
-
-  state = {
-    sections: {
-      internalContacts: false,
-      contentReviews: false,
-      trials: false,
-      reviewHistory: false,
-    }
-  }
-
-  handleSectionToggle = ({ id }) => {
-    this.setState((prevState) => ({
-      sections: {
-        ...prevState.sections,
-        [id]: !prevState.sections[id],
-      }
-    }));
-  }
 
   render() {
     const { license, stripes: { intl } } = this.props;

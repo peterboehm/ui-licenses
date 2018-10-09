@@ -8,7 +8,7 @@ import {
   Layout,
   Pane,
   Layer,
-} from '@folio/stripes-components';
+} from '@folio/stripes/components';
 
 import {
   LicenseInfo
@@ -21,7 +21,7 @@ class ViewLicense extends React.Component {
   static manifest = Object.freeze({
     selectedLicense: {
       type: 'okapi',
-      path: 'licenses/licenses/:{id}',
+      path: 'licenses/:{id}',
     },
     query: {},
   });
@@ -126,12 +126,7 @@ class ViewLicense extends React.Component {
         <AccordionSet>
           <LicenseInfo id="licenseInfo" open={this.state.sections.licenseInfo} {...sectionProps} />
         </AccordionSet>
-
-	<pre>
-          {JSON.stringify(license, null, '\t')}
-        </pre>
-
-
+        <pre>{JSON.stringify(license, null, '\t')}</pre>
         { this.renderEditLayer() }
       </Pane>
     );

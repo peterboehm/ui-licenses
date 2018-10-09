@@ -2,15 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Switch from 'react-router-dom/Switch';
 import Route from 'react-router-dom/Route';
-import LicensesModule from './LicensesModule';
+import Licenses from './routes/Licenses';
 import Settings from './settings';
-
-const NoMatch = () => (
-  <div>
-    <h2>{this.props.stripes.intl.formatMessage({ id: 'ui-licenses.errors.noMatch.oops' })}</h2>
-    <p>{this.props.stripes.intl.formatMessage({ id: 'ui-licenses.errors.noMatch.how' }, { location: <tt>{this.props.location.pathname}</tt> })}</p>
-  </div>
-);
 
 class App extends React.Component {
   static propTypes = {
@@ -21,7 +14,7 @@ class App extends React.Component {
 
   constructor(props) {
     super(props);
-    this.connectedLicensesModule = props.stripes.connect(LicensesModule)
+    this.connectedLicenses = props.stripes.connect(Licenses)
   }
 
   render() {
@@ -33,9 +26,8 @@ class App extends React.Component {
       <Switch>
         <Route
           path={`${this.props.match.path}`}
-          render={() => <this.connectedLicensesModule {...this.props} />}
+          render={() => <this.connectedLicenses {...this.props} />}
         />
-        <Route component={NoMatch} />
       </Switch>
     );
   }
