@@ -21,7 +21,7 @@ class ViewLicense extends React.Component {
   static manifest = Object.freeze({
     selectedLicense: {
       type: 'okapi',
-      path: 'licenses/:{id}',
+      path: 'licenses/licenses/:{id}',
     },
     query: {},
   });
