@@ -16,7 +16,7 @@ class Licenses extends React.Component {
     records: {
       type: 'okapi',
       records: 'results',
-      path: 'licenses',
+      path: 'licenses/licenses',
       params: getSASParams({
         searchKey: 'name',
       })
