@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { get } from 'lodash';
+import { Pluggable } from '@folio/stripes/core';
+
 import {
   Accordion,
   AccordionSet,
@@ -37,6 +39,22 @@ class LicenseInfo extends React.Component {
               label={intl.formatMessage({ id: 'ui-licenses.licenses.licenseName' })}
               value={license.name}
             />
+          </Col>
+        </Row>
+        <Row>
+          <Col xs={12}>
+	    <Pluggable
+              aria-haspopup="true"
+              type="find-license"
+              dataKey="license"
+              searchLabel="+"
+              searchButtonStyle="default"
+              selectLicense={license => console.log("License selected %o",license)}
+              {...this.props}
+            >
+              <span>[no license-selection plugin]</span>
+            </Pluggable>
+
           </Col>
         </Row>
         <Row>
