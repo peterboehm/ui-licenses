@@ -25,7 +25,7 @@ class LicenseInfo extends React.Component {
 
   onSetParentLicense(license) {
     console.log("onSetParentLicense(%o)",license);
-    this.props.license.parent = { id : license.id, nanme: license.name }
+    this.props.license.parent = { id : license.id, name: license.name }
   }
 
 
@@ -60,8 +60,7 @@ class LicenseInfo extends React.Component {
                 {...this.props}
               >
                 <span>[no license-selection plugin]</span>
-              </Pluggable>
-	      {license.parent}
+              </Pluggable> {(license.parent || {}).name}
 	    </KeyValue>
           </Col>
         </Row>
