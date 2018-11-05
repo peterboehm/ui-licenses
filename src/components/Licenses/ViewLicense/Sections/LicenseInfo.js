@@ -23,6 +23,12 @@ class LicenseInfo extends React.Component {
     stripes: PropTypes.object,
   };
 
+  onSetParentLicense(license) {
+    console.log("onSetParentLicense(%o)",license);
+    this.props.license.parent = { id : license.id, nanme: license.name }
+  }
+
+
   render() {
     const { license, stripes: { intl } } = this.props;
 
@@ -43,18 +49,20 @@ class LicenseInfo extends React.Component {
         </Row>
         <Row>
           <Col xs={12}>
-	    <Pluggable
-              aria-haspopup="true"
-              type="find-license"
-              dataKey="license"
-              searchLabel="+"
-              searchButtonStyle="default"
-              selectLicense={license => console.log("License selected %o",license)}
-              {...this.props}
-            >
-              <span>[no license-selection plugin]</span>
-            </Pluggable>
-
+	    <KeyValue label={intl.formatMessage({ id: 'ui-licenses.licenses.parentLicense' })}>
+  	      <Pluggable
+                aria-haspopup="true"
+                type="find-license"
+                dataKey="license"
+                searchLabel="+"
+                searchButtonStyle="default"
+                selectLicense={license => this.onSetParentLicense(license)}
+                {...this.props}
+              >
+                <span>[no license-selection plugin]</span>
+              </Pluggable>
+	      {license.parent}
+	    </KeyValue>
           </Col>
         </Row>
         <Row>
