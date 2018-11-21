@@ -1,1 +1,1 @@
-export { default as LicenseInfo } from './LicenseInfo';
+export { default as LicenseInfo } from './LicenseInfo'; // eslint-disable-line

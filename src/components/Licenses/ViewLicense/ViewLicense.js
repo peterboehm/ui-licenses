@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { get } from 'lodash';
+import { FormattedMessage } from 'react-intl';
 
 import {
   AccordionSet,
@@ -17,7 +18,6 @@ import {
 import EditLicense from '../EditLicense';
 
 class ViewLicense extends React.Component {
-
   static manifest = Object.freeze({
     selectedLicense: {
       type: 'okapi',
@@ -83,12 +83,12 @@ class ViewLicense extends React.Component {
   }
 
   renderEditLayer() {
-    const { resources: { query }, stripes: { intl } } = this.props;
+    const { resources: { query } } = this.props;
 
     return (
       <Layer
         isOpen={query.layer === 'edit'}
-        contentLabel={intl.formatMessage({ id: 'ui-licenses.licenses.editLicense' })}
+        contentLabel={<FormattedMessage id="ui-licenses.licenses.editLicense" />}
       >
         <EditLicense
           {...this.props}
@@ -116,8 +116,7 @@ class ViewLicense extends React.Component {
         onClose={this.props.onClose}
         actionMenuItems={stripes.hasPerm('ui-licenses.licenses.edit') ? [{
           id: 'clickable-edit-license',
-          title: stripes.intl.formatMessage({ id: 'ui-licenses.licenses.editLicense' }),
-          label: stripes.intl.formatMessage({ id: 'ui-licenses.licenses.edit' }),
+          label: <FormattedMessage id="ui-licenses.licenses.edit" />,
           href: this.props.editLink,
           onClick: this.props.onEdit,
           icon: 'edit',
