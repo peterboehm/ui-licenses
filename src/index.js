@@ -14,7 +14,7 @@ class App extends React.Component {
 
   constructor(props) {
     super(props);
-    this.connectedLicenses = props.stripes.connect(Licenses)
+    this.connectedLicenses = props.stripes.connect(Licenses);
   }
 
   render() {

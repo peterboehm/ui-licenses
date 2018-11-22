@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { get } from 'lodash';
+import { FormattedMessage } from 'react-intl';
 
 import {
   AccordionSet,
@@ -88,12 +89,12 @@ class ViewLicense extends React.Component {
   }
 
   renderEditLayer() {
-    const { resources: { query }, stripes: { intl } } = this.props;
+    const { resources: { query } } = this.props;
 
     return (
       <Layer
         isOpen={query.layer === 'edit'}
-        contentLabel={intl.formatMessage({ id: 'ui-licenses.licenses.editLicense' })}
+        contentLabel={<FormattedMessage id="ui-licenses.licenses.editLicense" />}
       >
         <EditLicense
           {...this.props}
