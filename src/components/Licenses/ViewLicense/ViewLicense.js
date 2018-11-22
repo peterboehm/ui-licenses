@@ -107,7 +107,7 @@ class ViewLicense extends React.Component {
   }
 
   getActionMenu({ onToggle }) {
-    const { onEdit, editLink, stripes: { hasPerm, intl } } = this.props;
+    const { onEdit, editLink, stripes: { hasPerm } } = this.props;
     const items = [];
 
     /**
@@ -116,8 +116,8 @@ class ViewLicense extends React.Component {
     if (hasPerm('ui-licenses.licenses.edit')) {
       items.push({
         id: 'clickable-edit-license',
-        label: intl.formatMessage({ id: 'ui-licenses.licenses.edit' }),
-        ariaLabel: intl.formatMessage({ id: 'ui-licenses.licenses.editLicense' }),
+        label: <FormattedMessage id="ui-licenses.licenses.edit" />,
+        ariaLabel: <FormattedMessage id='ui-licenses.licenses.editLicense'/>,
         href: editLink,
         onClick: onEdit,
         icon: 'edit',
@@ -172,7 +172,7 @@ class ViewLicense extends React.Component {
         paneTitle={license.name}
         dismissible
         onClose={this.props.onClose}
-        actionMenu={this.getActionMenu}
+        // actionMenu={this.getActionMenu}
       >
         <AccordionSet>
           <LicenseInfo id="licenseInfo" open={this.state.sections.licenseInfo} {...sectionProps} />

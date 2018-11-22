@@ -26,7 +26,7 @@ export default class ErmSettings extends React.Component {
 
   render() {
     return (
-      <Settings {...this.props} pages={this.pages} paneTitle="ui-erm" />
+      <Settings {...this.props} pages={this.pages} paneTitle="ui-licenses" />
     );
   }
 }
