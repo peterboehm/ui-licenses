@@ -44,7 +44,7 @@ class LicenseInfo extends React.Component {
         </Row>
         <Row>
           <Col xs={12}>
-	    <KeyValue label={intl.formatMessage({ id: 'ui-licenses.licenses.parentLicense' })}>
+	    <KeyValue label={<FormattedMessage id="ui-licenses.licenses.parentLicense" />}>
   	      <Pluggable
                 aria-haspopup="true"
                 type="find-license"
