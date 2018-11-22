@@ -47,7 +47,7 @@ class Licenses extends React.Component {
   render() {
     // II Copied from ../ui-users/src/Users.js - I have no idea which of these might be needed for other things, or where this list
     // is defined, so leaving it here in full, along with the signpost to Users.js to try and help the next lost soul who finds themseleves here.
-    const { onSelectRow, disableRecordCreation, onComponentWillUnmount, showSingleResult, browseOnly, stripes: { intl } } = this.props;
+    const { onSelectRow, showSingleResult } = this.props;
 
     const path = '/licenses';
     packageInfo.stripes.route = path;

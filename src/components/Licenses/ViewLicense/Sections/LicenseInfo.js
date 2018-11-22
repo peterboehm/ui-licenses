@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { get } from 'lodash';
 import { Pluggable } from '@folio/stripes/core';
 import { FormattedMessage } from 'react-intl';
 import {
