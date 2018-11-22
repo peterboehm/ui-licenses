@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { get } from 'lodash';
+import { FormattedMessage } from 'react-intl';
 
 import {
   AccordionSet,
@@ -8,6 +9,7 @@ import {
   Layout,
   Pane,
   Layer,
+  Button,
 } from '@folio/stripes/components';
 
 import {
@@ -17,7 +19,6 @@ import {
 import EditLicense from '../EditLicense';
 
 class ViewLicense extends React.Component {
-
   static manifest = Object.freeze({
     selectedLicense: {
       type: 'okapi',
@@ -33,6 +34,11 @@ class ViewLicense extends React.Component {
     paneWidth: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     stripes: PropTypes.object,
   };
+
+  constructor(props) {
+    super(props);
+    this.getActionMenu = this.getActionMenu.bind(this);
+  }
 
   state = {
     sections: {
@@ -83,12 +89,12 @@ class ViewLicense extends React.Component {
   }
 
   renderEditLayer() {
-    const { resources: { query }, stripes: { intl } } = this.props;
+    const { resources: { query } } = this.props;
 
     return (
       <Layer
         isOpen={query.layer === 'edit'}
-        contentLabel={intl.formatMessage({ id: 'ui-licenses.licenses.editLicense' })}
+        contentLabel={<FormattedMessage id="ui-licenses.licenses.editLicense" />}
       >
         <EditLicense
           {...this.props}
@@ -100,11 +106,63 @@ class ViewLicense extends React.Component {
     );
   }
 
+  getActionMenu({ onToggle }) {
+    const { onEdit, editLink, stripes: { hasPerm, intl } } = this.props;
+    const items = [];
+
+    /**
+     * Can edit
+     */
+    if (hasPerm('ui-licenses.licenses.edit')) {
+      items.push({
+        id: 'clickable-edit-license',
+        label: intl.formatMessage({ id: 'ui-licenses.licenses.edit' }),
+        ariaLabel: intl.formatMessage({ id: 'ui-licenses.licenses.editLicense' }),
+        href: editLink,
+        onClick: onEdit,
+        icon: 'edit',
+      });
+    }
+
+    /**
+     * We only want to render the action menu
+     * if we have something to show
+     */
+    if (!items.length) {
+      return null;
+    }
+
+    /**
+     * Return action menu
+     */
+    return (
+      <Fragment>
+        {items.map((item, index) => (
+          <Button
+            key={index}
+            buttonStyle="dropdownItem"
+            id={item.id}
+            aria-label={item.ariaLabel}
+            href={item.href}
+            onClick={() => {
+              // Toggle the action menu dropdown
+              onToggle();
+              item.onClick();
+            }}
+          >
+            <Icon icon={item.icon}>
+              {item.label}
+            </Icon>
+          </Button>
+        ))}
+      </Fragment>
+    );
+  }
+
   render() {
     const license = this.getLicense();
     if (!license) return this.renderLoadingPane();
 
-    const { stripes } = this.props;
     const sectionProps = this.getSectionProps();
 
     return (
@@ -114,14 +172,7 @@ class ViewLicense extends React.Component {
         paneTitle={license.name}
         dismissible
         onClose={this.props.onClose}
-        actionMenuItems={stripes.hasPerm('ui-licenses.licenses.edit') ? [{
-          id: 'clickable-edit-license',
-          title: stripes.intl.formatMessage({ id: 'ui-licenses.licenses.editLicense' }),
-          label: stripes.intl.formatMessage({ id: 'ui-licenses.licenses.edit' }),
-          href: this.props.editLink,
-          onClick: this.props.onEdit,
-          icon: 'edit',
-        }] : []}
+        actionMenu={this.getActionMenu}
       >
         <AccordionSet>
           <LicenseInfo id="licenseInfo" open={this.state.sections.licenseInfo} {...sectionProps} />

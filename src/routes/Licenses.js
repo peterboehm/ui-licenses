@@ -11,7 +11,6 @@ import EditLicense from '../components/Licenses/EditLicense';
 const INITIAL_RESULT_COUNT = 100;
 
 class Licenses extends React.Component {
-
   static manifest = Object.freeze({
     records: {
       type: 'okapi',
@@ -37,7 +36,7 @@ class Licenses extends React.Component {
     const { mutator } = this.props;
 
     mutator.records.POST(license)
-      .then((newLicense) => {
+      .then(() => {
         mutator.query.update({
           _path: `/licenses/view/${license.id}`,
           layer: '',
@@ -87,7 +86,6 @@ class Licenses extends React.Component {
       </React.Fragment>
     );
   }
-
 }
 
 export default Licenses;

@@ -1,13 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
+import { FormattedMessage } from 'react-intl';
 import stripesForm from '@folio/stripes/form';
 import { Button, IconButton, Pane, PaneMenu } from '@folio/stripes/components';
 
 import LicenseForm from '../LicenseForm';
 
 class EditLicense extends React.Component {
-
   static propTypes = {
     initialValues: PropTypes.object,
     handleSubmit: PropTypes.func.isRequired,
@@ -23,26 +22,30 @@ class EditLicense extends React.Component {
   renderFirstMenu() {
     return (
       <PaneMenu>
-        <IconButton
-          icon="closeX"
-          onClick={this.props.onCloseEdit}
-          aria-label={this.props.stripes.intl.formatMessage({ id: 'ui-licenses.licenses.closeNewLicense' })}
-        />
+        <FormattedMessage id="ui-licenses.licenses.closeNewLicense">
+          {ariaLabel => (
+            <IconButton
+              icon="closeX"
+              onClick={this.props.onCloseEdit}
+              aria-label={ariaLabel}
+            />
+          )}
+        </FormattedMessage>
       </PaneMenu>
     );
   }
 
   renderLastMenu() {
-    const { initialValues, stripes: { intl } } = this.props;
+    const { initialValues } = this.props;
 
     let id;
     let label;
     if (initialValues && initialValues.id) {
       id = 'clickable-updatelicense';
-      label = intl.formatMessage({ id: 'ui-licenses.licenses.updateLicense' });
+      label = <FormattedMessage id="ui-licenses.licenses.updateLicense" />;
     } else {
       id = 'clickable-createlicense';
-      label = intl.formatMessage({ id: 'ui-licenses.licenses.createLicense' });
+      label = <FormattedMessage id="ui-licenses.licenses.createLicense" />;
     }
 
     return (
@@ -50,8 +53,6 @@ class EditLicense extends React.Component {
         <Button
           id={id}
           type="submit"
-          title={label}
-          ariaLabel={label}
           disabled={this.props.pristine || this.props.submitting}
           onClick={this.props.handleSubmit}
           buttonStyle="primary paneHeaderNewButton"
@@ -64,9 +65,9 @@ class EditLicense extends React.Component {
   }
 
   render() {
-    const { initialValues, stripes: { intl } } = this.props;
+    const { initialValues } = this.props;
     const paneTitle = initialValues && initialValues.id ?
-      initialValues.name : intl.formatMessage({ id: 'ui-licenses.licenses.createLicense' });
+      initialValues.name : <FormattedMessage id="ui-licenses.licenses.createLicense" />;
 
     return (
       <form id="form-license">

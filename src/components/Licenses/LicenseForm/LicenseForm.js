@@ -22,4 +22,3 @@ class LicenseForm extends React.Component {
 }
 
 export default LicenseForm;
-
