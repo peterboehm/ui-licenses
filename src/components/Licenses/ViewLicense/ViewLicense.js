@@ -10,10 +10,12 @@ import {
   Pane,
   Layer,
   Button,
+  MultiColumnList,
 } from '@folio/stripes/components';
 
 import {
-  LicenseInfo
+  LicenseInfo,
+  LicenseCustomProperties,
 } from './Sections';
 
 import EditLicense from '../EditLicense';
@@ -42,7 +44,8 @@ class ViewLicense extends React.Component {
 
   state = {
     sections: {
-      licenseInfo: true
+      licenseInfo: true,
+      licenseProperties: true
     }
   }
 
@@ -176,8 +179,9 @@ class ViewLicense extends React.Component {
       >
         <AccordionSet>
           <LicenseInfo id="licenseInfo" open={this.state.sections.licenseInfo} {...sectionProps} />
+          {(license.customProperties && Object.keys(license.customProperties).length > 0) ? <LicenseCustomProperties id="licenseCustomProperties" open={this.state.sections.licenseCustomProperties} {...sectionProps} /> : null}
         </AccordionSet>
-        <pre>{JSON.stringify(license, null, '\t')}</pre>
+        
         { this.renderEditLayer() }
       </Pane>
     );
