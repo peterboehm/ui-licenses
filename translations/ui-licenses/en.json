@@ -11,6 +11,7 @@
   "errors.noMatch.oops": "Uh-oh!",
   "errors.noMatch.how": "How did you get to {location}?",
 
+  "licenses.parentLicense": "Parent License",
   "licenses.licenseInfo": "License Information",
   "licenses.licenseName": "License Title",
   "licenses.licenseDescription": "Description",
