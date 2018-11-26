@@ -18,8 +18,8 @@ class LicenseInfo extends React.Component {
   };
 
   onSetParentLicense(license) {
-    console.log("onSetParentLicense(%o)",license);
-    this.props.license.parent = { id : license.id, name: license.name }
+    console.log('onSetParentLicense(%o)', license);
+    this.props.license.parent = { id : license.id, name: license.name };
   }
 
 
@@ -43,8 +43,8 @@ class LicenseInfo extends React.Component {
         </Row>
         <Row>
           <Col xs={12}>
-	    <KeyValue label={<FormattedMessage id="ui-licenses.licenses.parentLicense" />}>
-  	      <Pluggable
+            <KeyValue label={<FormattedMessage id="ui-licenses.licenses.parentLicense" />}>
+              <Pluggable
                 aria-haspopup="true"
                 type="find-license"
                 dataKey="license"
@@ -54,8 +54,10 @@ class LicenseInfo extends React.Component {
                 {...this.props}
               >
                 <span>[no license-selection plugin]</span>
-              </Pluggable> {(license.parent || {}).name}
-	    </KeyValue>
+              </Pluggable>
+              {' '}
+              {(license.parent || {}).name}
+            </KeyValue>
           </Col>
         </Row>
         <Row>

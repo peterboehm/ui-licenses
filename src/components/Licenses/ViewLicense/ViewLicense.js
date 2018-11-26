@@ -119,7 +119,7 @@ class ViewLicense extends React.Component {
       items.push({
         id: 'clickable-edit-license',
         label: <FormattedMessage id="ui-licenses.licenses.edit" />,
-        ariaLabel: <FormattedMessage id='ui-licenses.licenses.editLicense'/>,
+        ariaLabel: <FormattedMessage id="ui-licenses.licenses.editLicense" />,
         href: editLink,
         onClick: onEdit,
         icon: 'edit',
@@ -180,7 +180,7 @@ class ViewLicense extends React.Component {
           <LicenseInfo id="licenseInfo" open={this.state.sections.licenseInfo} {...sectionProps} />
           {(license.customProperties && Object.keys(license.customProperties).length > 0) ? <LicenseCustomProperties id="licenseCustomProperties" open={this.state.sections.licenseCustomProperties} {...sectionProps} /> : null}
         </AccordionSet>
-        
+
         { this.renderEditLayer() }
       </Pane>
     );

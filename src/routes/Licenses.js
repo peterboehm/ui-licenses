@@ -68,7 +68,7 @@ class Licenses extends React.Component {
           viewRecordPerms="module.licenses.enabled"
           newRecordPerms="module.licenses.enabled"
           onCreate={this.create}
-	  onSelectRow={onSelectRow}
+          onSelectRow={onSelectRow}
           parentResources={this.props.resources}
           parentMutator={this.props.mutator}
           showSingleResult
