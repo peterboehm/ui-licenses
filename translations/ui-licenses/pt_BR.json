@@ -30,5 +30,15 @@
     "agreements.licenseAndBusTerms": "Termos de licença e negócios",
     "agreements.organizations": "Organizações",
     "agreements.eresources": "E-recursos",
-    "agreements.assocAgreements": "Contratos associados"
+    "agreements.assocAgreements": "Contratos associados",
+    "meta.title": "Licenças",
+    "errors.noMatch.oops": "Ops!",
+    "errors.noMatch.how": "Como você chegou em {location}?",
+    "ui-licenses.licenses.licenseInfo": "Informação sobre a licença",
+    "ui-licenses.licenses.parentLicense": "Licença pai",
+    "ui-licenses.licenses.licenseDescription": "Descrição",
+    "licenses.licenseInfo": "License Information",
+    "licenses.licenseName": "License Title",
+    "licenses.licenseDescription": "Description",
+    "licenses.customProperties": "License Properties"
 }
