@@ -18,7 +18,6 @@ class LicenseInfo extends React.Component {
   };
 
   onSetParentLicense(license) {
-    console.log('onSetParentLicense(%o)', license);
     this.props.license.parent = { id : license.id, name: license.name };
   }
 
@@ -50,7 +49,7 @@ class LicenseInfo extends React.Component {
                 dataKey="license"
                 searchLabel="+"
                 searchButtonStyle="default"
-                selectLicense={license => this.onSetParentLicense(license)}
+                selectLicense={lic => this.onSetParentLicense(lic)}
                 {...this.props}
               >
                 <span>[no license-selection plugin]</span>
