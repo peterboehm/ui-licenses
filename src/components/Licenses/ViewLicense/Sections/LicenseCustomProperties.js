@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import {
   Accordion,
@@ -27,8 +28,11 @@ const renderCustomPropertyValue = (type, value) => {
 const renderCustomPropertyValues = (entries) => {
   const renderedValues = [];
   entries.forEach((entry, index) => {
-    console.log('ind: %o', index);
-    renderedValues.push(<Col xs={12} md={8} mdOffset={((index == 0) ? null : 4)} className={(index > 0 ? 'subsequentRow' : null)}>{renderCustomPropertyValue(entry.type, entry.value)}</Col>);
+    renderedValues.push(
+      <Col xs={12} md={8} mdOffset={((index === 0) ? null : 4)} className={(index > 0 ? 'subsequentRow' : null)}>
+        {renderCustomPropertyValue(entry.type, entry.value)}
+      </Col>
+    );
   });
 
   return renderedValues;
@@ -38,10 +42,12 @@ const renderCustomProperties = (customProperties) => {
   const propertyList = [];
   Object.keys(customProperties).forEach((propertyName) => {
     const entries = customProperties[propertyName];
-    propertyList.push(<Row className={css.licenseCustomPropsRow}>
-      <Col xs={12} md={4} className={css.licenseCustomPropName}>{nicePropertyName(propertyName)}</Col>
-      { renderCustomPropertyValues(entries) }
-                      </Row>);
+    propertyList.push(
+      <Row className={css.licenseCustomPropsRow}>
+        <Col xs={12} md={4} className={css.licenseCustomPropName}>{nicePropertyName(propertyName)}</Col>
+        { renderCustomPropertyValues(entries) }
+      </Row>
+    );
   });
 
   return propertyList;
@@ -49,8 +55,15 @@ const renderCustomProperties = (customProperties) => {
 
 const LicenseCustomProperties = ({ license, id, onToggle, open }) => (
   <Accordion id={id} label={<FormattedMessage id="ui-licenses.licenses.customProperties" />} open={open} onToggle={onToggle}>
-    { renderCustomProperties(license.customProperties) }
+    {renderCustomProperties(license.customProperties)}
   </Accordion>
 );
+
+LicenseCustomProperties.propTypes = {
+  license: PropTypes.shape({ customProperties: PropTypes.object }),
+  id: PropTypes.string,
+  onToggle: PropTypes.func,
+  open: PropTypes.bool,
+};
 
 export default LicenseCustomProperties;
