@@ -38,7 +38,12 @@ To run `ui-licenses` within a Stripes platform:
 1. Create a workspace with `stripes workspace` and select whatever modules you want (e.g., `ui-users` and `ui-licenses`) and at least one platform such as `stripes-sample-platform`.
 1. Navigate to the platform's directory and run `stripes serve stripes.config.js.local`.
 
+## Additional information
 
-## More info
+Read the [Stripes Module Developer's Guide](https://github.com/folio-org/stripes/blob/master/doc/dev-guide.md).
 
-Read the [Stripes Module Developer's Guide](https://github.com/folio-org/stripes-core/blob/master/doc/dev-guide.md).
+See project [UILIC](https://issues.folio.org/browse/UILIC)
+at the [FOLIO issue tracker](https://dev.folio.org/guidelines/issue-tracker).
+
+Other FOLIO Developer documentation is at [dev.folio.org](https://dev.folio.org/)
+
