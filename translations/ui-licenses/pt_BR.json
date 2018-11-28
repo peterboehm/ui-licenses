@@ -37,8 +37,9 @@
     "ui-licenses.licenses.licenseInfo": "Informação sobre a licença",
     "ui-licenses.licenses.parentLicense": "Licença pai",
     "ui-licenses.licenses.licenseDescription": "Descrição",
-    "licenses.licenseInfo": "License Information",
-    "licenses.licenseName": "License Title",
-    "licenses.licenseDescription": "Description",
-    "licenses.customProperties": "License Properties"
+    "licenses.licenseInfo": "Informações sobre a licença",
+    "licenses.licenseName": "Título da licença",
+    "licenses.licenseDescription": "Descrição",
+    "licenses.customProperties": "Propriedades da licença",
+    "licenses.parentLicense": "Licença pai"
 }
