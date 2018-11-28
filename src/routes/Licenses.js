@@ -42,12 +42,12 @@ class Licenses extends React.Component {
           layer: '',
         });
       });
-  }
+  };
 
   render() {
     // II Copied from ../ui-users/src/Users.js - I have no idea which of these might be needed for other things, or where this list
-    // is defined, so leaving it here in full, along with the signpost to Users.js to try and help the next lost soul who finds themseleves here.
-    const { onSelectRow, showSingleResult } = this.props;
+    // is defined, so leaving it here in full, along with the signpost to Users.js to try and help the next lost soul who finds themselves here.
+    const { onSelectRow } = this.props;
 
     const path = '/licenses';
     packageInfo.stripes.route = path;
@@ -68,7 +68,7 @@ class Licenses extends React.Component {
           viewRecordPerms="module.licenses.enabled"
           newRecordPerms="module.licenses.enabled"
           onCreate={this.create}
-	  onSelectRow={onSelectRow}
+          onSelectRow={onSelectRow}
           parentResources={this.props.resources}
           parentMutator={this.props.mutator}
           showSingleResult
