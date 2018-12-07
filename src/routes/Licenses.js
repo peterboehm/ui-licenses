@@ -64,7 +64,8 @@ class Licenses extends React.Component {
           resultCountIncrement={INITIAL_RESULT_COUNT}
           viewRecordComponent={ViewLicense}
           editRecordComponent={EditLicense}
-          visibleColumns={['id', 'name', 'description']}
+          // visibleColumns={['id', 'name', 'description']}
+          visibleColumns={['name', 'description']}
           viewRecordPerms="module.licenses.enabled"
           newRecordPerms="module.licenses.enabled"
           onCreate={this.create}
