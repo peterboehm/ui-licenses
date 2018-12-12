@@ -34,12 +34,12 @@
     "meta.title": "Licenses",
     "errors.noMatch.oops": "Uh-oh!",
     "errors.noMatch.how": "How did you get to {location}?",
-    "ui-licenses.licenses.licenseInfo": "Informazioni sulla licenza",
-    "ui-licenses.licenses.parentLicense": "Licenza principale",
-    "ui-licenses.licenses.licenseDescription": "Descrizione",
-    "licenses.licenseInfo": "Informazioni sulla licenza",
-    "licenses.licenseName": "Titolo della licenza",
-    "licenses.licenseDescription": "Descrizione",
-    "licenses.customProperties": "Proprietà della licenza",
-    "licenses.parentLicense": "Licenza principale"
+    "ui-licenses.licenses.licenseInfo": "License Information",
+    "ui-licenses.licenses.parentLicense": "Parent License",
+    "ui-licenses.licenses.licenseDescription": "Description",
+    "licenses.licenseInfo": "License Information",
+    "licenses.licenseName": "License Title",
+    "licenses.licenseDescription": "Description",
+    "licenses.customProperties": "License Properties",
+    "licenses.parentLicense": "Parent License"
 }
