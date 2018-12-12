@@ -37,9 +37,9 @@
     "ui-licenses.licenses.licenseInfo": "License Information",
     "ui-licenses.licenses.parentLicense": "Parent License",
     "ui-licenses.licenses.licenseDescription": "Description",
-    "licenses.licenseInfo": "License Information",
-    "licenses.licenseName": "License Title",
-    "licenses.licenseDescription": "Description",
-    "licenses.customProperties": "License Properties",
-    "licenses.parentLicense": "Parent License"
+    "licenses.licenseInfo": "معلومات الترخيص",
+    "licenses.licenseName": "عنوان الرخصة",
+    "licenses.licenseDescription": "الوصف",
+    "licenses.customProperties": "خصائص الترخيص",
+    "licenses.parentLicense": "الرخصة الأصلية"
 }
