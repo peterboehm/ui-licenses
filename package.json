@@ -39,7 +39,9 @@
     "home": "/licenses",
     "hasSettings": true,
     "queryResource": "query",
-    "okapiInterfaces": {},
+    "okapiInterfaces": {
+      "licenses": "1.0"
+    },
     "permissionSets": [
       {
         "permissionName": "module.licenses.enabled",
