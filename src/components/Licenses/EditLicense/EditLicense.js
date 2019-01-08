@@ -25,7 +25,7 @@ class EditLicense extends React.Component {
         <FormattedMessage id="ui-licenses.licenses.closeNewLicense">
           {ariaLabel => (
             <IconButton
-              icon="closeX"
+              icon="times"
               onClick={this.props.onCloseEdit}
               aria-label={ariaLabel}
             />
