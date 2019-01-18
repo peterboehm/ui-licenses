@@ -1,6 +1,6 @@
 {
   "name": "@folio/licenses",
-  "version": "1.2.0",
+  "version": "2.0.0",
   "description": "License functionality for Stripes",
   "main": "src/index.js",
   "repository": "",
@@ -16,8 +16,8 @@
   },
   "devDependencies": {
     "@folio/eslint-config-stripes": "^3.2.1",
-    "@folio/stripes-cli": "^1.5.0",
-    "@folio/stripes": "^1.0.0",
+    "@folio/stripes-cli": "^1.8.0",
+    "@folio/stripes": "^2.0.0",
     "babel-eslint": "^9.0.0",
     "eslint": "^5.5.0"
   },
@@ -29,7 +29,7 @@
     "redux-form": "^7.0.3"
   },
   "peerDependencies": {
-    "@folio/stripes": "^1.0.0",
+    "@folio/stripes": "^2.0.0",
     "react": "*"
   },
   "stripes": {
