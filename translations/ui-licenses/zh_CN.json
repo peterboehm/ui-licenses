@@ -41,5 +41,6 @@
     "licenses.licenseName": "许可证标题",
     "licenses.licenseDescription": "描述",
     "licenses.customProperties": "许可证属性",
-    "licenses.parentLicense": "上级许可证"
+    "licenses.parentLicense": "上级许可证",
+    "licenses.editLicense": "Edit License"
 }

@@ -41,5 +41,6 @@
     "licenses.licenseName": "Título da licença",
     "licenses.licenseDescription": "Descrição",
     "licenses.customProperties": "Propriedades da licença",
-    "licenses.parentLicense": "Licença pai"
+    "licenses.parentLicense": "Licença pai",
+    "licenses.editLicense": "Edit License"
 }
