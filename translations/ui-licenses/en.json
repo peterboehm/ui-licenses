@@ -15,7 +15,8 @@
   "licenses.licenseInfo": "License Information",
   "licenses.licenseName": "License Title",
   "licenses.licenseDescription": "Description",
-  "licenses.customProperties": "License Properties"
+  "licenses.customProperties": "License Properties",
+  "licenses.editLicense": "Edit License"
 
 }
 
