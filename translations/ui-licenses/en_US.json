@@ -34,13 +34,13 @@
     "meta.title": "Licenses",
     "errors.noMatch.oops": "Uh-oh!",
     "errors.noMatch.how": "How did you get to {location}?",
-    "ui-licenses.licenses.licenseInfo": "License Information",
-    "ui-licenses.licenses.parentLicense": "Parent License",
+    "ui-licenses.licenses.licenseInfo": "License information",
+    "ui-licenses.licenses.parentLicense": "Parent license",
     "ui-licenses.licenses.licenseDescription": "Description",
     "licenses.licenseInfo": "License Information",
     "licenses.licenseName": "License Title",
     "licenses.licenseDescription": "Description",
     "licenses.customProperties": "License Properties",
-    "licenses.parentLicense": "Parent License",
+    "licenses.parentLicense": "Parent license",
     "licenses.editLicense": "Edit License"
 }
