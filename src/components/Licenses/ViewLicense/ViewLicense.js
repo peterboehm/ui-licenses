@@ -94,17 +94,21 @@ class ViewLicense extends React.Component {
     const { resources: { query } } = this.props;
 
     return (
-      <Layer
-        isOpen={query.layer === 'edit'}
-        contentLabel={<FormattedMessage id="ui-licenses.licenses.editLicense" />}
-      >
-        <EditLicense
-          {...this.props}
-          onSubmit={this.handleSubmit}
-          parentMutator={this.props.mutator}
-          initialValues={this.getLicense()}
-        />
-      </Layer>
+      <FormattedMessage id="ui-licenses.licenses.editLicense">
+        {layerContentLabel => (
+          <Layer
+            isOpen={query.layer === 'edit'}
+            contentLabel={layerContentLabel}
+          >
+            <EditLicense
+              {...this.props}
+              onSubmit={this.handleSubmit}
+              parentMutator={this.props.mutator}
+              initialValues={this.getLicense()}
+            />
+          </Layer>
+        )}
+      </FormattedMessage>
     );
   }
 
@@ -177,8 +181,16 @@ class ViewLicense extends React.Component {
         // actionMenu={this.getActionMenu}
       >
         <AccordionSet>
-          <LicenseInfo id="licenseInfo" open={this.state.sections.licenseInfo} {...sectionProps} />
-          {(license.customProperties && Object.keys(license.customProperties).length > 0) ? <LicenseCustomProperties id="licenseCustomProperties" open={this.state.sections.licenseCustomProperties} {...sectionProps} /> : null}
+          <LicenseInfo
+            id="licenseInfo"
+            open={this.state.sections.licenseInfo}
+            {...sectionProps}
+          />
+          <LicenseCustomProperties
+            id="licenseCustomProperties"
+            open={this.state.sections.licenseCustomProperties}
+            {...sectionProps}
+          />
         </AccordionSet>
 
         { this.renderEditLayer() }
