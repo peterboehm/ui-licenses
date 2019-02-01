@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { get } from 'lodash';
 import { FormattedMessage } from 'react-intl';
@@ -29,10 +29,21 @@ class ViewLicense extends React.Component {
   });
 
   static propTypes = {
+    editLink: PropTypes.string,
     match: PropTypes.object,
+    mutator: PropTypes.shape({
+      selectedLicense: PropTypes.shape({
+        PUT: PropTypes.func,
+      })
+    }),
+    onEdit: PropTypes.func,
     onClose: PropTypes.func,
-    parentResources: PropTypes.object,
+    onCloseEdit: PropTypes.func,
     paneWidth: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    parentResources: PropTypes.object,
+    resources: PropTypes.shape({
+      selectedLicense: PropTypes.object,
+    }),
     stripes: PropTypes.object,
   };
 

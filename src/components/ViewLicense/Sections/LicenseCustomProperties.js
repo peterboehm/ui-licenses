@@ -13,7 +13,7 @@ export default class LicenseCustomProperties extends React.Component {
 
   renderPropertyName = (propName) => {
     const afterLowercase = /(?<=[a-z])([A-Z])/gm;
-    const afterCapsBeforeLowercase = /(?<=[A-Z])([A-Z])(?=[a-z])/gm
+    const afterCapsBeforeLowercase = /(?<=[A-Z])([A-Z])(?=[a-z])/gm;
 
     let formattedName = propName
       .replace(afterLowercase, ' $1')
@@ -31,8 +31,8 @@ export default class LicenseCustomProperties extends React.Component {
 
   renderPropertyValues = (propValues) => {
     return propValues.map((entry, index) => (
-      <Col key={index} xs={12} md={8} mdOffset={(index != 0 ? 4 : undefined)} >
-        {entry.type.endsWith('CustomPropertyRefdata') ?  entry.value.value : entry.value }
+      <Col key={index} xs={12} md={8} mdOffset={(index > 0 ? 4 : undefined)}>
+        {entry.type.endsWith('CustomPropertyRefdata') ? entry.value.value : entry.value }
       </Col>
     ));
   }
@@ -63,6 +63,5 @@ export default class LicenseCustomProperties extends React.Component {
         {this.renderProperties(license.customProperties)}
       </Accordion>
     );
-
   }
 }
