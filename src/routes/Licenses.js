@@ -5,12 +5,12 @@ import { SearchAndSort } from '@folio/stripes/smart-components';
 import getSASParams from '../util/getSASParams';
 import packageInfo from '../../package';
 
-import ViewLicense from '../components/Licenses/ViewLicense';
-import EditLicense from '../components/Licenses/EditLicense';
+import ViewLicense from '../components/ViewLicense';
+import EditLicense from '../components/EditLicense';
 
 const INITIAL_RESULT_COUNT = 100;
 
-class Licenses extends React.Component {
+export default class Licenses extends React.Component {
   static manifest = Object.freeze({
     records: {
       type: 'okapi',
@@ -54,39 +54,34 @@ class Licenses extends React.Component {
     packageInfo.stripes.home = path;
 
     return (
-      <React.Fragment>
-        <SearchAndSort
-          key="licenses"
-          packageInfo={packageInfo}
-          filterConfig={[]}
-          objectName="title"
-          initialResultCount={INITIAL_RESULT_COUNT}
-          resultCountIncrement={INITIAL_RESULT_COUNT}
-          viewRecordComponent={ViewLicense}
-          editRecordComponent={EditLicense}
-          // visibleColumns={['id', 'name', 'description']}
-          visibleColumns={['name', 'description']}
-          viewRecordPerms="module.licenses.enabled"
-          newRecordPerms="module.licenses.enabled"
-          onCreate={this.create}
-          onSelectRow={onSelectRow}
-          parentResources={this.props.resources}
-          parentMutator={this.props.mutator}
-          showSingleResult
-          columnMapping={{
-            id: 'ID',
-            name: 'Name',
-            description: 'Description'
-          }}
-          columnWidths={{
-            id: 300,
-            name: 300,
-            description: 'auto',
-          }}
-        />
-      </React.Fragment>
+      <SearchAndSort
+        columnMapping={{
+          id: 'ID',
+          name: 'Name',
+          description: 'Description'
+        }}
+        columnWidths={{
+          id: 300,
+          name: 300,
+          description: 'auto',
+        }}
+        editRecordComponent={EditLicense}
+        filterConfig={[]}
+        initialResultCount={INITIAL_RESULT_COUNT}
+        key="licenses"
+        newRecordPerms="module.licenses.enabled"
+        objectName="title"
+        onCreate={this.create}
+        onSelectRow={onSelectRow}
+        packageInfo={packageInfo}
+        parentMutator={this.props.mutator}
+        parentResources={this.props.resources}
+        resultCountIncrement={INITIAL_RESULT_COUNT}
+        showSingleResult
+        viewRecordComponent={ViewLicense}
+        viewRecordPerms="module.licenses.enabled"
+        visibleColumns={['name', 'description']}
+      />
     );
   }
 }
-
-export default Licenses;

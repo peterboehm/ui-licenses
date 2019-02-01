@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { get } from 'lodash';
 import { FormattedMessage } from 'react-intl';
@@ -29,10 +29,21 @@ class ViewLicense extends React.Component {
   });
 
   static propTypes = {
+    editLink: PropTypes.string,
     match: PropTypes.object,
+    mutator: PropTypes.shape({
+      selectedLicense: PropTypes.shape({
+        PUT: PropTypes.func,
+      })
+    }),
+    onEdit: PropTypes.func,
     onClose: PropTypes.func,
-    parentResources: PropTypes.object,
+    onCloseEdit: PropTypes.func,
     paneWidth: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    parentResources: PropTypes.object,
+    resources: PropTypes.shape({
+      selectedLicense: PropTypes.object,
+    }),
     stripes: PropTypes.object,
   };
 
@@ -112,56 +123,22 @@ class ViewLicense extends React.Component {
     );
   }
 
-  getActionMenu({ onToggle }) {
-    const { onEdit, editLink, stripes: { hasPerm } } = this.props;
-    const items = [];
+  getActionMenu = () => {
+    if (!this.props.stripes.hasPerm('ui-licenses.licenses.edit')) return null;
 
-    /**
-     * Can edit
-     */
-    if (hasPerm('ui-licenses.licenses.edit')) {
-      items.push({
-        id: 'clickable-edit-license',
-        label: <FormattedMessage id="ui-licenses.licenses.edit" />,
-        ariaLabel: <FormattedMessage id="ui-licenses.licenses.editLicense" />,
-        href: editLink,
-        onClick: onEdit,
-        icon: 'edit',
-      });
-    }
-
-    /**
-     * We only want to render the action menu
-     * if we have something to show
-     */
-    if (!items.length) {
-      return null;
-    }
-
-    /**
-     * Return action menu
-     */
     return (
-      <Fragment>
-        {items.map((item, index) => (
-          <Button
-            key={index}
-            buttonStyle="dropdownItem"
-            id={item.id}
-            aria-label={item.ariaLabel}
-            href={item.href}
-            onClick={() => {
-              // Toggle the action menu dropdown
-              onToggle();
-              item.onClick();
-            }}
-          >
-            <Icon icon={item.icon}>
-              {item.label}
-            </Icon>
-          </Button>
-        ))}
-      </Fragment>
+      <React.Fragment>
+        <Button
+          buttonStyle="dropdownItem"
+          href={this.props.editLink}
+          id="clickable-edit-license"
+          onClick={this.props.onEdit}
+        >
+          <Icon icon="edit">
+            <FormattedMessage id="ui-licenses.licenses.editLicense" />
+          </Icon>
+        </Button>
+      </React.Fragment>
     );
   }
 
@@ -178,7 +155,7 @@ class ViewLicense extends React.Component {
         paneTitle={license.name}
         dismissible
         onClose={this.props.onClose}
-        // actionMenu={this.getActionMenu}
+        actionMenu={this.getActionMenu}
       >
         <AccordionSet>
           <LicenseInfo

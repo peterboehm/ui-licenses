@@ -49,6 +49,14 @@
         "visible": true
       },
       {
+        "permissionName": "ui-licenses.licenses.edit",
+        "displayName": "UI: ui-licenses module is enabled",
+        "visible": true,
+        "subPermissions": [
+          "module.licenses.enabled"
+        ]
+      },
+      {
         "permissionName": "settings.licenses.enabled",
         "displayName": "Settings (licenses): display list of settings pages",
         "subPermissions": [
