@@ -12,12 +12,12 @@ export default class LicenseCustomProperties extends React.Component {
   };
 
   renderPropertyName = (propName) => {
-    const afterLowercase = /(?<=[a-z])([A-Z])/gm;
-    const afterCapsBeforeLowercase = /(?<=[A-Z])([A-Z])(?=[a-z])/gm;
+    const afterLowercase = /([a-z])([A-Z])/gm;
+    const afterCapsBeforeLowercase = /([A-Z])([A-Z])([a-z])/gm;
 
     let formattedName = propName
-      .replace(afterLowercase, ' $1')
-      .replace(afterCapsBeforeLowercase, ' $1')
+      .replace(afterLowercase, '$1 $2')
+      .replace(afterCapsBeforeLowercase, '$1 $2$3')
       .replace('_', ' ');
 
     formattedName = formattedName.charAt(0).toUpperCase() + formattedName.slice(1);
