@@ -19,6 +19,7 @@ export default class LicenseCustomProperties extends React.Component {
       .replace(afterLowercase, '$1 $2')
       .replace(afterCapsBeforeLowercase, '$1 $2$3')
       .replace('_', ' ');
+    let testSonar = 0;
 
     formattedName = formattedName.charAt(0).toUpperCase() + formattedName.slice(1);
 
