@@ -36,7 +36,7 @@
     "type": "app",
     "displayName": "ui-licenses.meta.title",
     "route": "/licenses",
-    "home": "/licenses",
+    "home": "/licenses?sort=Name&filters=status.Active",
     "hasSettings": true,
     "queryResource": "query",
     "okapiInterfaces": {
