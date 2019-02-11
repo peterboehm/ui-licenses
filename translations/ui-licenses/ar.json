@@ -34,13 +34,15 @@
     "meta.title": "تراخيص",
     "errors.noMatch.oops": "أوه!",
     "errors.noMatch.how": "كيف وصلت إلى {location} ؟",
-    "ui-licenses.licenses.licenseInfo": "License Information",
-    "ui-licenses.licenses.parentLicense": "Parent License",
-    "ui-licenses.licenses.licenseDescription": "Description",
+    "ui-licenses.licenses.licenseInfo": "معلومات الرخصة",
+    "ui-licenses.licenses.parentLicense": "الرخصة الأصلية",
+    "ui-licenses.licenses.licenseDescription": "الوصف",
     "licenses.licenseInfo": "معلومات الترخيص",
     "licenses.licenseName": "عنوان الرخصة",
     "licenses.licenseDescription": "الوصف",
     "licenses.customProperties": "خصائص الترخيص",
     "licenses.parentLicense": "الرخصة الأصلية",
-    "licenses.editLicense": "Edit License"
+    "licenses.editLicense": "تحرير الترخيص",
+    "licenses.updateLicense": "تحديث الترخيص",
+    "licenses.createLicense": "إنشاء ترخيص"
 }

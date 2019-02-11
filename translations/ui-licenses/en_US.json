@@ -37,10 +37,12 @@
     "ui-licenses.licenses.licenseInfo": "License information",
     "ui-licenses.licenses.parentLicense": "Parent license",
     "ui-licenses.licenses.licenseDescription": "Description",
-    "licenses.licenseInfo": "License Information",
-    "licenses.licenseName": "License Title",
+    "licenses.licenseInfo": "License information",
+    "licenses.licenseName": "License title",
     "licenses.licenseDescription": "Description",
-    "licenses.customProperties": "License Properties",
+    "licenses.customProperties": "License properties",
     "licenses.parentLicense": "Parent license",
-    "licenses.editLicense": "Edit License"
+    "licenses.editLicense": "Edit License",
+    "licenses.updateLicense": "Update License",
+    "licenses.createLicense": "Create License"
 }
