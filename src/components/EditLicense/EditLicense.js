@@ -6,12 +6,17 @@ import { Button, IconButton, Pane, PaneMenu } from '@folio/stripes/components';
 
 import LicenseForm from '../LicenseForm';
 
+const handleSubmit = (agreement, dispatch, props) => {
+  props.onUpdate(agreement)
+    .then(() => props.onCancel());
+};
+
 class EditLicense extends React.Component {
   static propTypes = {
     initialValues: PropTypes.object,
     handleSubmit: PropTypes.func.isRequired,
     onSave: PropTypes.func,
-    onCloseEdit: PropTypes.func,
+    onCancel: PropTypes.func,
     onRemove: PropTypes.func,
     pristine: PropTypes.bool,
     submitting: PropTypes.bool,
@@ -26,7 +31,7 @@ class EditLicense extends React.Component {
           {ariaLabel => (
             <IconButton
               icon="times"
-              onClick={this.props.onCloseEdit}
+              onClick={this.props.onCancel}
               aria-label={ariaLabel}
             />
           )}
@@ -86,8 +91,7 @@ class EditLicense extends React.Component {
 
 export default stripesForm({
   form: 'EditLicense',
-  // validate,
-  // asyncValidate,
+  onSubmit: handleSubmit,
   navigationCheck: true,
   enableReinitialize: true,
 })(EditLicense);

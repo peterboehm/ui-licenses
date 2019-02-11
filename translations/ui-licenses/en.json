@@ -1,11 +1,11 @@
 {
   "meta.title": "Licenses",
 
-  "closeNewAgreement": "Close new agreement",
-  "createLicense": "Create License",
-  "editLicense": "Edit License",
-  "newLicense": "New License",
-  "updateLicense": "Update License",
+  "closeNewLicense": "Close new license",
+  "createLicense": "Create license",
+  "editLicense": "Edit license",
+  "newLicense": "New license",
+  "updateLicense": "Update license",
 
   "prop.description": "Description",
   "prop.endDate": "End date",
@@ -16,7 +16,11 @@
   "prop.status": "Status",
   "prop.type": "Type",
 
+  "placeholder.licenseName": "Enter the license name",
+  "placeholder.licenseDescription": "Enter a description of the license",
+
   "section.licenseInformation": "License information",
+  "section.organizations": "Organizations",
   "section.terms": "Terms",
 
   "settings.general": "General",

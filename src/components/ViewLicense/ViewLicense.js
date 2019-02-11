@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { get } from 'lodash';
+import { cloneDeep, get } from 'lodash';
 import { FormattedMessage } from 'react-intl';
 
 import {
@@ -59,11 +59,26 @@ class ViewLicense extends React.Component {
     }
   }
 
-  getLicense() {
+  getLicense = () => {
     return get(this.props.resources.selectedLicense, ['records', 0], {});
   }
 
-  getSectionProps() {
+  getInitialValues = () => {
+    const license = cloneDeep(this.getLicense());
+    const { status, type } = license;
+
+    if (status && status.id) {
+      license.status = status.id;
+    }
+
+    if (type && type.id) {
+      license.type = type.id;
+    }
+
+    return license;
+  }
+
+  getSectionProps = () => {
     return {
       license: this.getLicense(),
       onToggle: this.handleSectionToggle,
@@ -80,12 +95,7 @@ class ViewLicense extends React.Component {
     }));
   }
 
-  handleSubmit = (license) => {
-    this.props.mutator.selectedLicense.PUT(license)
-      .then(() => this.props.onCloseEdit());
-  }
-
-  renderLoadingPane() {
+  renderLoadingPane = () => {
     return (
       <Pane
         id="pane-view-license"
@@ -101,7 +111,7 @@ class ViewLicense extends React.Component {
     );
   }
 
-  renderEditLayer() {
+  renderEditLayer = () => {
     const { resources: { query } } = this.props;
 
     return (
@@ -113,9 +123,10 @@ class ViewLicense extends React.Component {
           >
             <EditLicense
               {...this.props}
+              onCancel={this.props.onCloseEdit}
               onSubmit={this.handleSubmit}
               parentMutator={this.props.mutator}
-              initialValues={this.getLicense()}
+              initialValues={this.getInitialValues()}
             />
           </Layer>
         )}

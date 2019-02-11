@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
+import { get } from 'lodash';
+
 import { SearchAndSort } from '@folio/stripes/smart-components';
 
 import getSASParams from '../util/getSASParams';
@@ -38,6 +40,10 @@ export default class Licenses extends React.Component {
       type: 'okapi',
       path: 'licenses/refdata/License/status',
     },
+    typeValues: {
+      type: 'okapi',
+      path: 'licenses/refdata/License/type',
+    },
     query: { initialValue: {} },
     resultCount: { initialValue: INITIAL_RESULT_COUNT },
     selectedLicenseId: { initialValue: '' },
@@ -48,6 +54,7 @@ export default class Licenses extends React.Component {
       query: PropTypes.object,
       records: PropTypes.object,
       statusValues: PropTypes.object,
+      typeValues: PropTypes.object,
     }),
     mutator: PropTypes.object,
     onSelectRow: PropTypes.func,
@@ -84,9 +91,9 @@ export default class Licenses extends React.Component {
     const { mutator } = this.props;
 
     mutator.records.POST(license)
-      .then(() => {
+      .then((newLicense) => {
         mutator.query.update({
-          _path: `/licenses/view/${license.id}`,
+          _path: `/licenses/view/${newLicense.id}`,
           layer: '',
         });
       });
@@ -117,6 +124,16 @@ export default class Licenses extends React.Component {
       }, {});
   }
 
+  getDefaultLicenseValues = () => {
+    const status = get(this.props.resources.statusValues, ['records'], []).find(v => v.value === 'active') || {};
+    const type = get(this.props.resources.typeValues, ['records'], []).find(v => v.value === 'local') || {};
+
+    return {
+      status: status.id,
+      type: type.id,
+    };
+  }
+
   renderFilters = (onChange) => {
     return (
       <LicenseFilters
@@ -139,10 +156,14 @@ export default class Licenses extends React.Component {
           name: 300,
           description: 'auto',
         }}
+        detailProps={{
+          onUpdate: this.handleUpdate
+        }}
         editRecordComponent={EditLicense}
         initialResultCount={INITIAL_RESULT_COUNT}
         key="licenses"
-        newRecordPerms="module.licenses.enabled"
+        newRecordInitialValues={this.getDefaultLicenseValues()}
+        newRecordPerms="ui-licenses.licenses.edit"
         objectName="license"
         onCreate={this.handleCreate}
         onFilterChange={this.handleFilterChange}
@@ -154,7 +175,7 @@ export default class Licenses extends React.Component {
         resultCountIncrement={INITIAL_RESULT_COUNT}
         showSingleResult
         viewRecordComponent={ViewLicense}
-        viewRecordPerms="module.licenses.enabled"
+        viewRecordPerms="ui-licenses.licenses.view"
         visibleColumns={['name', 'description']}
       />
     );
