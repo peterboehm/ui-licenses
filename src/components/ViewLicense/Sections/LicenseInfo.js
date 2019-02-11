@@ -28,21 +28,21 @@ class LicenseInfo extends React.Component {
     return (
       <Accordion
         id={this.props.id}
-        label={<FormattedMessage id="ui-licenses.licenses.licenseInfo" />}
+        label={<FormattedMessage id="ui-licenses.section.licenseInformation" />}
         open={this.props.open}
         onToggle={this.props.onToggle}
       >
         <Row>
           <Col xs={12}>
             <KeyValue
-              label={<FormattedMessage id="ui-licenses.licenses.licenseName" />}
+              label={<FormattedMessage id="ui-licenses.prop.name" />}
               value={license.name}
             />
           </Col>
         </Row>
         <Row>
           <Col xs={12}>
-            <KeyValue label={<FormattedMessage id="ui-licenses.licenses.parentLicense" />}>
+            <KeyValue label={<FormattedMessage id="ui-licenses.prop.parentLicense" />}>
               <Pluggable
                 aria-haspopup="true"
                 type="find-license"
@@ -62,7 +62,7 @@ class LicenseInfo extends React.Component {
         <Row>
           <Col xs={12}>
             <KeyValue
-              label={<FormattedMessage id="ui-licenses.licenses.licenseDescription" />}
+              label={<FormattedMessage id="ui-licenses.prop.description" />}
               value={license.description}
             />
           </Col>

@@ -22,7 +22,7 @@ class EditLicense extends React.Component {
   renderFirstMenu() {
     return (
       <PaneMenu>
-        <FormattedMessage id="ui-licenses.licenses.closeNewLicense">
+        <FormattedMessage id="ui-licenses.closeNewLicense">
           {ariaLabel => (
             <IconButton
               icon="times"
@@ -42,10 +42,10 @@ class EditLicense extends React.Component {
     let label;
     if (initialValues && initialValues.id) {
       id = 'clickable-updatelicense';
-      label = <FormattedMessage id="ui-licenses.licenses.updateLicense" />;
+      label = <FormattedMessage id="ui-licenses.updateLicense" />;
     } else {
       id = 'clickable-createlicense';
-      label = <FormattedMessage id="ui-licenses.licenses.createLicense" />;
+      label = <FormattedMessage id="ui-licenses.createLicense" />;
     }
 
     return (
@@ -67,7 +67,7 @@ class EditLicense extends React.Component {
   render() {
     const { initialValues } = this.props;
     const paneTitle = initialValues && initialValues.id ?
-      initialValues.name : <FormattedMessage id="ui-licenses.licenses.createLicense" />;
+      initialValues.name : <FormattedMessage id="ui-licenses.createLicense" />;
 
     return (
       <form id="form-license">

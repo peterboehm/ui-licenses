@@ -105,7 +105,7 @@ class ViewLicense extends React.Component {
     const { resources: { query } } = this.props;
 
     return (
-      <FormattedMessage id="ui-licenses.licenses.editLicense">
+      <FormattedMessage id="ui-licenses.editLicense">
         {layerContentLabel => (
           <Layer
             isOpen={query.layer === 'edit'}
@@ -135,7 +135,7 @@ class ViewLicense extends React.Component {
           onClick={this.props.onEdit}
         >
           <Icon icon="edit">
-            <FormattedMessage id="ui-licenses.licenses.editLicense" />
+            <FormattedMessage id="ui-licenses.editLicense" />
           </Icon>
         </Button>
       </React.Fragment>

@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { FormattedMessage } from 'react-intl';
 import { SearchAndSort } from '@folio/stripes/smart-components';
 
 import getSASParams from '../util/getSASParams';
@@ -16,6 +17,9 @@ export default class Licenses extends React.Component {
     records: {
       type: 'okapi',
       records: 'results',
+      recordsRequired: '%{resultCount}',
+      perRequest: 100,
+      limitParam: 'perPage',
       path: 'licenses/licenses',
       params: getSASParams({
         searchKey: 'name',
@@ -24,6 +28,11 @@ export default class Licenses extends React.Component {
           'Description': 'description',
         }
       })
+    },
+    selectedLicense: {
+      type: 'okapi',
+      path: 'licenses/licenses/${selectedLicenseId}', // eslint-disable-line no-template-curly-in-string
+      fetch: false,
     },
     statusValues: {
       type: 'okapi',
@@ -83,6 +92,12 @@ export default class Licenses extends React.Component {
       });
   };
 
+  handleUpdate = (license) => {
+    this.props.mutator.selectedLicenseId.replace(license.id);
+
+    return this.props.mutator.selectedLicense.PUT(license);
+  }
+
   getActiveFilters = () => {
     const { query } = this.props.resources;
 
@@ -117,19 +132,18 @@ export default class Licenses extends React.Component {
       <SearchAndSort
         browseOnly={this.props.browseOnly}
         columnMapping={{
-          name: 'Name',
-          description: 'Description'
+          name: <FormattedMessage id="ui-licenses.prop.name" />,
+          description: <FormattedMessage id="ui-licenses.prop.description" />
         }}
         columnWidths={{
           name: 300,
           description: 'auto',
         }}
         editRecordComponent={EditLicense}
-        filterConfig={[]}
         initialResultCount={INITIAL_RESULT_COUNT}
         key="licenses"
         newRecordPerms="module.licenses.enabled"
-        objectName="title"
+        objectName="license"
         onCreate={this.handleCreate}
         onFilterChange={this.handleFilterChange}
         onSelectRow={this.props.onSelectRow}
