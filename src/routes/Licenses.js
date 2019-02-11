@@ -105,6 +105,21 @@ export default class Licenses extends React.Component {
     return this.props.mutator.selectedLicense.PUT(license);
   }
 
+  validateLicense = (values) => {
+    const errors = {};
+
+    if (values.startDate && values.endDate) {
+      const startDate = new Date(values.startDate);
+      const endDate = new Date(values.endDate);
+
+      if (startDate >= endDate) {
+        errors.endDate = <FormattedMessage id="ui-licenses.errors.endDateGreaterThanStartDate" />;
+      }
+    }
+
+    return errors;
+  }
+
   getActiveFilters = () => {
     const { query } = this.props.resources;
 
@@ -157,7 +172,8 @@ export default class Licenses extends React.Component {
           description: 'auto',
         }}
         detailProps={{
-          onUpdate: this.handleUpdate
+          onUpdate: this.handleUpdate,
+          validateLicense: this.validateLicense,
         }}
         editRecordComponent={EditLicense}
         initialResultCount={INITIAL_RESULT_COUNT}

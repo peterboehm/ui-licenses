@@ -11,6 +11,10 @@ const handleSubmit = (agreement, dispatch, props) => {
     .then(() => props.onCancel());
 };
 
+const validate = (values, props) => {
+  return props.validateLicense(values, props);
+};
+
 class EditLicense extends React.Component {
   static propTypes = {
     initialValues: PropTypes.object,
@@ -18,10 +22,12 @@ class EditLicense extends React.Component {
     onSave: PropTypes.func,
     onCancel: PropTypes.func,
     onRemove: PropTypes.func,
+    onUpdate: PropTypes.func.isRequired,
     pristine: PropTypes.bool,
     submitting: PropTypes.bool,
     parentResources: PropTypes.object,
-    parentMutator: PropTypes.object
+    parentMutator: PropTypes.object,
+    validateLicense: PropTypes.func.isRequired,
   }
 
   renderFirstMenu() {
@@ -92,6 +98,7 @@ class EditLicense extends React.Component {
 export default stripesForm({
   form: 'EditLicense',
   onSubmit: handleSubmit,
+  validate,
   navigationCheck: true,
   enableReinitialize: true,
 })(EditLicense);

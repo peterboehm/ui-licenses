@@ -7,6 +7,8 @@
   "newLicense": "New license",
   "updateLicense": "Update license",
 
+  "errors.endDateGreaterThanStartDate": "End date must be after the start date",
+
   "prop.description": "Description",
   "prop.endDate": "End date",
   "prop.name": "Name",
