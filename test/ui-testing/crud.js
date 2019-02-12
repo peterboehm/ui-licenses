@@ -62,6 +62,7 @@ const createLicense = (nightmare, done, defaultValues, resourceId) => {
         throw Error(`Description of license is incorrect. Expected "${expectedValues.description}" and got "${foundDescription}" `);
       }
     }, values)
+    .then(() => nightmare.click('#pane-view-license button[icon=times]'))
     .then(done)
     .catch(done);
 
@@ -100,6 +101,52 @@ module.exports.test = (uiTestCtx) => {
           })
           .catch(done);
       });
+
+      it('should clear default status filters', done => {
+        nightmare
+          .wait('#filter-accordion-status button[icon=times-circle-solid]')
+          .click('#filter-accordion-status button[icon=times-circle-solid]')
+          .then(done)
+          .catch(done);
+      });
+
+      it('should create license with correct default values', done => {
+        const defaults = generateLicenseValues();
+        nightmare
+          .wait('#clickable-licenses-module')
+          .click('#clickable-licenses-module')
+          .wait('#licenses-module-display')
+          .wait('#clickable-newlicense')
+          .click('#clickable-newlicense')
+
+          .waitUntilNetworkIdle(2000) // Wait for the default values to be fetched and set.
+
+          .insert('#edit-license-name', defaults.name)
+
+          .click('#clickable-createlicense')
+          .wait('#licenseInfo')
+          .waitUntilNetworkIdle(500)
+          .evaluate(expectedValues => {
+            const foundName = document.querySelector('[data-test-license-name]').innerText;
+            if (foundName !== expectedValues.name) {
+              throw Error(`Name of license is incorrect. Expected "${expectedValues.name}" and got "${foundName}" `);
+            }
+
+            const foundType = document.querySelector('[data-test-license-type]').innerText;
+            if (foundType !== 'Local') {
+              throw Error(`Type of license is incorrect. Expected "Local" and got "${foundType}" `);
+            }
+
+            const foundStatus = document.querySelector('[data-test-license-status]').innerText;
+            if (foundStatus !== 'Active') {
+              throw Error(`Status of license is incorrect. Expected "Active" and got "${foundStatus}" `);
+            }
+          }, defaults)
+          .then(() => nightmare.click('#pane-view-license button[icon=times]'))
+          .then(done)
+          .catch(done);
+      });
+
 
       it('should create license', done => {
         createLicense(nightmare, done, values);
@@ -177,7 +224,7 @@ module.exports.test = (uiTestCtx) => {
           .type('#edit-license-start-date', '1968-01-05')
           .click('#datepicker-clear-button-edit-license-end-date')
           .type('#edit-license-end-date', '1968-01-05\u000d')
-          .wait(1000)
+          .wait(5000)
 
           .evaluate(() => {
             const error = document.querySelector('[data-test-error-end-date-too-early]');

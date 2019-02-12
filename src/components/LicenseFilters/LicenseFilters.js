@@ -51,6 +51,7 @@ export default class LicenseFilters extends React.Component {
 
     return (
       <Accordion
+        id={`filter-accordion-${name}`}
         displayClearButton={activeFilters.length > 0}
         header={FilterAccordionHeader}
         label={<FormattedMessage id={`ui-licenses.prop.${name}`} />}
