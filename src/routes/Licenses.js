@@ -113,7 +113,11 @@ export default class Licenses extends React.Component {
       const endDate = new Date(values.endDate);
 
       if (startDate >= endDate) {
-        errors.endDate = <FormattedMessage id="ui-licenses.errors.endDateGreaterThanStartDate" />;
+        errors.endDate = (
+          <div data-test-error-end-date-too-early>
+            <FormattedMessage id="ui-licenses.errors.endDateGreaterThanStartDate" />
+          </div>
+        );
       }
     }
 

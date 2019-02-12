@@ -35,7 +35,7 @@ class LicenseInfo extends React.Component {
         <Row>
           <Col xs={12}>
             <KeyValue label={<FormattedMessage id="ui-licenses.prop.name" />}>
-              <div data-test-license-description>
+              <div data-test-license-name>
                 {license.name}
               </div>
             </KeyValue>

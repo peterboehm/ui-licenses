@@ -11,7 +11,8 @@
   "scripts": {
     "start": "stripes serve",
     "build": "stripes build --output ./output",
-    "test": "stripes test nightmare --run demo --show",
+    "test": "stripes test nightmare --run crud",
+    "test-crud": "stripes test nightmare --run crud",
     "lint": "eslint src"
   },
   "devDependencies": {

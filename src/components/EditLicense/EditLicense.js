@@ -101,4 +101,5 @@ export default stripesForm({
   validate,
   navigationCheck: true,
   enableReinitialize: true,
+  keepDirtyOnReinitialize: true,
 })(EditLicense);
