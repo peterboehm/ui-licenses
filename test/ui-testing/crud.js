@@ -111,7 +111,7 @@ module.exports.test = (uiTestCtx) => {
       });
 
       it('should create license with correct default values', done => {
-        const defaults = generateLicenseValues();
+        const name = `Default License #${Math.round(Math.random() * 100000)}`;
         nightmare
           .wait('#clickable-licenses-module')
           .click('#clickable-licenses-module')
@@ -121,15 +121,15 @@ module.exports.test = (uiTestCtx) => {
 
           .waitUntilNetworkIdle(2000) // Wait for the default values to be fetched and set.
 
-          .insert('#edit-license-name', defaults.name)
+          .insert('#edit-license-name', name)
 
           .click('#clickable-createlicense')
           .wait('#licenseInfo')
-          .waitUntilNetworkIdle(500)
-          .evaluate(expectedValues => {
+          .waitUntilNetworkIdle(1000)
+          .evaluate(expectedName => {
             const foundName = document.querySelector('[data-test-license-name]').innerText;
-            if (foundName !== expectedValues.name) {
-              throw Error(`Name of license is incorrect. Expected "${expectedValues.name}" and got "${foundName}" `);
+            if (foundName !== expectedName) {
+              throw Error(`Name of license is incorrect. Expected "${expectedName}" and got "${foundName}" `);
             }
 
             const foundType = document.querySelector('[data-test-license-type]').innerText;
@@ -141,7 +141,7 @@ module.exports.test = (uiTestCtx) => {
             if (foundStatus !== 'Active') {
               throw Error(`Status of license is incorrect. Expected "Active" and got "${foundStatus}" `);
             }
-          }, defaults)
+          }, name)
           .then(() => nightmare.click('#pane-view-license button[icon=times]'))
           .then(done)
           .catch(done);
@@ -159,6 +159,7 @@ module.exports.test = (uiTestCtx) => {
           .click('[data-test-search-and-sort-submit]')
           .wait(1000) // If another license was open wait for the new one to be open before the next operation.
           .wait('#licenseInfo')
+          .waitUntilNetworkIdle(1000)
           .evaluate(expectedValues => {
             const node = document.querySelector('[data-test-license-name]');
             if (!node || !node.innerText) throw Error('No license name node found.');
@@ -190,7 +191,7 @@ module.exports.test = (uiTestCtx) => {
           .type('#edit-license-status', values.editedStatus)
           .click('#clickable-updatelicense')
           .wait('#licenseInfo')
-          .wait(5000) // Wait for the POST/reloading to trigger since #licenseInfo may be up for some ms first.
+          .waitUntilNetworkIdle(1000)
           .evaluate(expectedValues => {
             const name = document.querySelector('[data-test-license-name]').innerText;
             if (name !== expectedValues.editedName) {
