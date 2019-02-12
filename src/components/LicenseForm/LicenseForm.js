@@ -1,22 +1,66 @@
 import React from 'react';
-import { Field } from 'redux-form';
-import { Col, Row, TextField } from '@folio/stripes/components';
+import PropTypes from 'prop-types';
+
+import {
+  AccordionSet,
+  Col,
+  ExpandAllButton,
+  Row
+} from '@folio/stripes/components';
+
+import {
+  LicenseFormInfo
+} from './Sections';
 
 class LicenseForm extends React.Component {
+  static propTypes = {
+    parentMutator: PropTypes.object,
+    parentResources: PropTypes.object,
+  }
+
+  state = {
+    sections: {
+      licenseFormInfo: true,
+    }
+  }
+
+  getSectionProps() {
+    return {
+      onToggle: this.handleSectionToggle,
+      parentResources: this.props.parentResources,
+      parentMutator: this.props.parentMutator,
+    };
+  }
+
+  handleSectionToggle = ({ id }) => {
+    this.setState((prevState) => ({
+      sections: {
+        ...prevState.sections,
+        [id]: !prevState.sections[id],
+      }
+    }));
+  }
+
+  handleAllSectionsToggle = (sections) => {
+    this.setState({ sections });
+  }
+
   render() {
+    const sectionProps = this.getSectionProps();
+    const { sections } = this.state;
+
     return (
-      <Row>
-        <Col xs={8} style={{ margin: '0 auto', padding: '0' }}>
-          <Row>
-            <Col xs={12}>
-              <Field label="Name" name="name" id="name" component={TextField} fullWidth />
-            </Col>
-            <Col xs={12}>
-              <Field label="Description" name="description" id="description" component={TextField} fullWidth />
-            </Col>
-          </Row>
-        </Col>
-      </Row>
+      <AccordionSet>
+        <Row end="xs">
+          <Col xs>
+            <ExpandAllButton
+              accordionStatus={sections}
+              onToggle={this.handleAllSectionsToggle}
+            />
+          </Col>
+        </Row>
+        <LicenseFormInfo id="licenseFormInfo" open={sections.licenseFormInfo} {...sectionProps} />
+      </AccordionSet>
     );
   }
 }

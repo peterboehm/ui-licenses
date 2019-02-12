@@ -56,7 +56,7 @@ export default class LicenseCustomProperties extends React.Component {
     return (
       <Accordion
         id={id}
-        label={<FormattedMessage id="ui-licenses.licenses.customProperties" />}
+        label={<FormattedMessage id="ui-licenses.section.terms" />}
         open={open}
         onToggle={onToggle}
       >

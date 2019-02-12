@@ -1,25 +1,33 @@
 {
   "meta.title": "Licenses",
-  "new-app.greeting": "Congratulations!",
-  "new-app.message": "Your Stripes app is running.",
+
+  "closeNewLicense": "Close new license",
+  "createLicense": "Create license",
+  "editLicense": "Edit license",
+  "newLicense": "New license",
+  "updateLicense": "Update license",
+
+  "errors.endDateGreaterThanStartDate": "End date must be after the start date",
+
+  "prop.description": "Description",
+  "prop.endDate": "End date",
+  "prop.name": "Name",
+  "prop.parentLicense": "Parent License",
+  "prop.terms": "License Terms",
+  "prop.startDate": "Start date",
+  "prop.status": "Status",
+  "prop.type": "Type",
+
+  "placeholder.licenseName": "Enter the license name",
+  "placeholder.licenseDescription": "Enter a description of the license",
+
+  "section.licenseInformation": "License information",
+  "section.organizations": "Organizations",
+  "section.terms": "Terms",
 
   "settings.general": "General",
   "settings.general.message": "These are your general app settings.",
   "settings.some-feature": "Some Feature",
-  "settings.some-feature.message": "These are your settings for some app feature.",
-
-  "errors.noMatch.oops": "Uh-oh!",
-  "errors.noMatch.how": "How did you get to {location}?",
-
-  "licenses.parentLicense": "Parent License",
-  "licenses.licenseInfo": "License Information",
-  "licenses.licenseName": "License Title",
-  "licenses.licenseDescription": "Description",
-  "licenses.customProperties": "License Properties",
-  "licenses.editLicense": "Edit License",
-  "licenses.updateLicense": "Update License",
-  "licenses.createLicense": "Create License",
-
-  "prop.status": "Status"
+  "settings.some-feature.message": "These are your settings for some app feature."
 }
 

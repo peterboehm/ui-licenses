@@ -1,5 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { FormattedMessage } from 'react-intl';
+import { get } from 'lodash';
+
 import { SearchAndSort } from '@folio/stripes/smart-components';
 
 import getSASParams from '../util/getSASParams';
@@ -16,6 +19,9 @@ export default class Licenses extends React.Component {
     records: {
       type: 'okapi',
       records: 'results',
+      recordsRequired: '%{resultCount}',
+      perRequest: 100,
+      limitParam: 'perPage',
       path: 'licenses/licenses',
       params: getSASParams({
         searchKey: 'name',
@@ -25,9 +31,18 @@ export default class Licenses extends React.Component {
         }
       })
     },
+    selectedLicense: {
+      type: 'okapi',
+      path: 'licenses/licenses/${selectedLicenseId}', // eslint-disable-line no-template-curly-in-string
+      fetch: false,
+    },
     statusValues: {
       type: 'okapi',
       path: 'licenses/refdata/License/status',
+    },
+    typeValues: {
+      type: 'okapi',
+      path: 'licenses/refdata/License/type',
     },
     query: { initialValue: {} },
     resultCount: { initialValue: INITIAL_RESULT_COUNT },
@@ -39,6 +54,7 @@ export default class Licenses extends React.Component {
       query: PropTypes.object,
       records: PropTypes.object,
       statusValues: PropTypes.object,
+      typeValues: PropTypes.object,
     }),
     mutator: PropTypes.object,
     onSelectRow: PropTypes.func,
@@ -75,13 +91,34 @@ export default class Licenses extends React.Component {
     const { mutator } = this.props;
 
     mutator.records.POST(license)
-      .then(() => {
+      .then((newLicense) => {
         mutator.query.update({
-          _path: `/licenses/view/${license.id}`,
+          _path: `/licenses/view/${newLicense.id}`,
           layer: '',
         });
       });
   };
+
+  handleUpdate = (license) => {
+    this.props.mutator.selectedLicenseId.replace(license.id);
+
+    return this.props.mutator.selectedLicense.PUT(license);
+  }
+
+  validateLicense = (values) => {
+    const errors = {};
+
+    if (values.startDate && values.endDate) {
+      const startDate = new Date(values.startDate);
+      const endDate = new Date(values.endDate);
+
+      if (startDate >= endDate) {
+        errors.endDate = <FormattedMessage id="ui-licenses.errors.endDateGreaterThanStartDate" />;
+      }
+    }
+
+    return errors;
+  }
 
   getActiveFilters = () => {
     const { query } = this.props.resources;
@@ -102,6 +139,16 @@ export default class Licenses extends React.Component {
       }, {});
   }
 
+  getDefaultLicenseValues = () => {
+    const status = get(this.props.resources.statusValues, ['records'], []).find(v => v.value === 'active') || {};
+    const type = get(this.props.resources.typeValues, ['records'], []).find(v => v.value === 'local') || {};
+
+    return {
+      status: status.id,
+      type: type.id,
+    };
+  }
+
   renderFilters = (onChange) => {
     return (
       <LicenseFilters
@@ -117,19 +164,23 @@ export default class Licenses extends React.Component {
       <SearchAndSort
         browseOnly={this.props.browseOnly}
         columnMapping={{
-          name: 'Name',
-          description: 'Description'
+          name: <FormattedMessage id="ui-licenses.prop.name" />,
+          description: <FormattedMessage id="ui-licenses.prop.description" />
         }}
         columnWidths={{
           name: 300,
           description: 'auto',
         }}
+        detailProps={{
+          onUpdate: this.handleUpdate,
+          validateLicense: this.validateLicense,
+        }}
         editRecordComponent={EditLicense}
-        filterConfig={[]}
         initialResultCount={INITIAL_RESULT_COUNT}
         key="licenses"
-        newRecordPerms="module.licenses.enabled"
-        objectName="title"
+        newRecordInitialValues={this.getDefaultLicenseValues()}
+        newRecordPerms="ui-licenses.licenses.edit"
+        objectName="license"
         onCreate={this.handleCreate}
         onFilterChange={this.handleFilterChange}
         onSelectRow={this.props.onSelectRow}
@@ -140,7 +191,7 @@ export default class Licenses extends React.Component {
         resultCountIncrement={INITIAL_RESULT_COUNT}
         showSingleResult
         viewRecordComponent={ViewLicense}
-        viewRecordPerms="module.licenses.enabled"
+        viewRecordPerms="ui-licenses.licenses.view"
         visibleColumns={['name', 'description']}
       />
     );

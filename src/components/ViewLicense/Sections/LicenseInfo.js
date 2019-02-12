@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Pluggable } from '@folio/stripes/core';
-import { FormattedMessage } from 'react-intl';
+import { get } from 'lodash';
+import { FormattedDate, FormattedMessage } from 'react-intl';
 import {
   Accordion,
   Col,
@@ -28,43 +28,56 @@ class LicenseInfo extends React.Component {
     return (
       <Accordion
         id={this.props.id}
-        label={<FormattedMessage id="ui-licenses.licenses.licenseInfo" />}
+        label={<FormattedMessage id="ui-licenses.section.licenseInformation" />}
         open={this.props.open}
         onToggle={this.props.onToggle}
       >
         <Row>
           <Col xs={12}>
-            <KeyValue
-              label={<FormattedMessage id="ui-licenses.licenses.licenseName" />}
-              value={license.name}
-            />
+            <KeyValue label={<FormattedMessage id="ui-licenses.prop.name" />}>
+              <div data-test-license-description>
+                {license.name}
+              </div>
+            </KeyValue>
           </Col>
         </Row>
         <Row>
-          <Col xs={12}>
-            <KeyValue label={<FormattedMessage id="ui-licenses.licenses.parentLicense" />}>
-              <Pluggable
-                aria-haspopup="true"
-                type="find-license"
-                dataKey="license"
-                searchLabel="+"
-                searchButtonStyle="default"
-                selectLicense={lic => this.onSetParentLicense(lic)}
-                {...this.props}
-              >
-                <span>[no license-selection plugin]</span>
-              </Pluggable>
-              {' '}
-              {(license.parent || {}).name}
+          <Col xs={6} md={3}>
+            <KeyValue label={<FormattedMessage id="ui-licenses.prop.type" />}>
+              <div data-test-license-type>
+                {get(license, ['type', 'label'], '-')}
+              </div>
+            </KeyValue>
+          </Col>
+          <Col xs={6} md={3}>
+            <KeyValue label={<FormattedMessage id="ui-licenses.prop.status" />}>
+              <div data-test-license-status>
+                {get(license, ['status', 'label'], '-')}
+              </div>
+            </KeyValue>
+          </Col>
+          <Col xs={6} md={3}>
+            <KeyValue label={<FormattedMessage id="ui-licenses.prop.startDate" />}>
+              <div data-test-license-start-date>
+                {license.startDate ? <FormattedDate value={license.startDate} /> : '-'}
+              </div>
+            </KeyValue>
+          </Col>
+          <Col xs={6} md={3}>
+            <KeyValue label={<FormattedMessage id="ui-licenses.prop.endDate" />}>
+              <div data-test-license-end-date>
+                {license.endDate ? <FormattedDate value={license.endDate} /> : '-'}
+              </div>
             </KeyValue>
           </Col>
         </Row>
         <Row>
           <Col xs={12}>
-            <KeyValue
-              label={<FormattedMessage id="ui-licenses.licenses.licenseDescription" />}
-              value={license.description}
-            />
+            <KeyValue label={<FormattedMessage id="ui-licenses.prop.description" />}>
+              <div data-test-license-description>
+                {license.description}
+              </div>
+            </KeyValue>
           </Col>
         </Row>
       </Accordion>
