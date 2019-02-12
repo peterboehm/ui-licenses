@@ -7,6 +7,7 @@ import { Field } from 'redux-form';
 import {
   Accordion,
   AccordionSet,
+  Checkbox,
   Col,
   Datepicker,
   Row,
@@ -24,6 +25,7 @@ class LicenseFormInfo extends React.Component {
     parentResources: PropTypes.shape({
       statusValues: PropTypes.object,
       typeValues: PropTypes.object,
+      endDateSemanticsValues: PropTypes.object,
     }),
   };
 
@@ -35,6 +37,11 @@ class LicenseFormInfo extends React.Component {
   getTypeValues() {
     return get(this.props.parentResources.typeValues, ['records'], [])
       .map(({ id, label }) => ({ label, value: id }));
+  }
+
+  getEndDateOpenEnded() {
+    return get(this.props.parentResources.endDateSemanticsValues, ['records'], [])
+      .find(v => v.value === 'open_ended') || {};
   }
 
   getSectionProps() {
@@ -71,7 +78,7 @@ class LicenseFormInfo extends React.Component {
           </Col>
         </Row>
         <Row>
-          <Col xs={12} md={3}>
+          <Col xs={12} md={6}>
             <Field
               id="edit-license-type"
               component={Select}
@@ -81,7 +88,7 @@ class LicenseFormInfo extends React.Component {
               required
             />
           </Col>
-          <Col xs={12} md={3}>
+          <Col xs={12} md={6}>
             <Field
               id="edit-license-status"
               component={Select}
@@ -91,7 +98,9 @@ class LicenseFormInfo extends React.Component {
               required
             />
           </Col>
-          <Col xs={12} md={3}>
+        </Row>
+        <Row>
+          <Col xs={12} md={5}>
             <Field
               id="edit-license-start-date"
               name="startDate"
@@ -101,7 +110,7 @@ class LicenseFormInfo extends React.Component {
               backendDateStandard="YYYY-MM-DD"
             />
           </Col>
-          <Col xs={12} md={3}>
+          <Col xs={10} md={5}>
             <Field
               id="edit-license-end-date"
               name="endDate"
@@ -109,6 +118,26 @@ class LicenseFormInfo extends React.Component {
               component={Datepicker}
               dateFormat="YYYY-MM-DD"
               backendDateStandard="YYYY-MM-DD"
+            />
+          </Col>
+          <Col xs={2} style={{ paddingTop: 20 }}>
+            <Field
+              id="edit-license-end-date-semantics"
+              name="endDateSemantics"
+              label={<FormattedMessage id="ui-licenses.prop.endDateSemantics" />}
+              component={Checkbox}
+              type="checkbox"
+              parse={v => (v ? 'open_ended' : 'explicit')}
+              format={v => {
+                if (typeof v === 'string') return v === 'open_ended';
+
+                if (typeof v === 'object' && v.id) {
+                  const openEndedValue = this.getEndDateOpenEnded();
+                  return v.id === openEndedValue.id;
+                }
+
+                return v;
+              }}
             />
           </Col>
         </Row>

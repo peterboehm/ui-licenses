@@ -11,6 +11,7 @@
 
   "prop.description": "Description",
   "prop.endDate": "End date",
+  "prop.endDateSemantics": "Open ended",
   "prop.name": "Name",
   "prop.parentLicense": "Parent License",
   "prop.terms": "License Terms",

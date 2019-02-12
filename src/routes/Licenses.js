@@ -44,6 +44,10 @@ export default class Licenses extends React.Component {
       type: 'okapi',
       path: 'licenses/refdata/License/type',
     },
+    endDateSemanticsValues: {
+      type: 'okapi',
+      path: 'licenses/refdata/License/endDateSemantics',
+    },
     query: { initialValue: {} },
     resultCount: { initialValue: INITIAL_RESULT_COUNT },
     selectedLicenseId: { initialValue: '' },
