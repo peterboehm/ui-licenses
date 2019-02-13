@@ -1,7 +1,9 @@
 /* global describe, it, before, after, Nightmare */
 
+const generateNumber = () => Math.round(Math.random() * 100000);
+
 const generateLicenseValues = () => {
-  const number = Math.round(Math.random() * 100000);
+  const number = generateNumber();
   return {
     name: `Fledgling License #${number}`,
     description: `This license of count #${number} is still in its initial stages.`,
@@ -111,7 +113,7 @@ module.exports.test = (uiTestCtx) => {
       });
 
       it('should create license with correct default values', done => {
-        const name = `Default License #${Math.round(Math.random() * 100000)}`;
+        const name = `Default License #${generateNumber()}`;
         nightmare
           .wait('#clickable-licenses-module')
           .click('#clickable-licenses-module')
@@ -146,7 +148,6 @@ module.exports.test = (uiTestCtx) => {
           .then(done)
           .catch(done);
       });
-
 
       it('should create license', done => {
         createLicense(nightmare, done, values);
@@ -214,27 +215,54 @@ module.exports.test = (uiTestCtx) => {
 
       it('should reject endDate <= startDate', done => {
         nightmare
-          .click('[class*=paneHeader] [class*=dropdown] button')
-          .wait('#clickable-edit-license')
-          .click('#clickable-edit-license')
+          .click('#clickable-newlicense')
           .wait('#licenseFormInfo')
-          .insert('#edit-license-name', '')
-          .insert('#edit-license-name', values.editedName)
+          .waitUntilNetworkIdle(1000)
+          .insert('#edit-license-name', 'Invalid Date')
 
-          .click('#datepicker-clear-button-edit-license-start-date')
-          .type('#edit-license-start-date', '1968-01-05')
-          .click('#datepicker-clear-button-edit-license-end-date')
-          .type('#edit-license-end-date', '1968-01-05\u000d')
-          .wait(5000)
+          .type('#edit-license-end-date', '2020-01-04\u000d')
+          .type('#edit-license-start-date', '2020-01-05\u000d')
+          .wait(1000)
 
           .evaluate(() => {
-            const error = document.querySelector('[data-test-error-end-date-too-early]');
-            if (!error) {
+            if (!document.querySelector('[data-test-error-end-date-too-early]')) {
               throw Error('Expected to find an error message at [data-test-error-end-date-too-early] for the End Date');
             }
-          }, values)
+          })
           .then(() => {
-            nightmare.click('form button[icon=times]');
+            nightmare
+              .click('form button[icon=times]')
+              .click('[data-test-confirmation-modal-cancel-button]');
+          })
+          .then(done)
+          .catch(done);
+      });
+
+      it('should create open-ended license', done => {
+        nightmare
+          .click('#clickable-newlicense')
+          .wait('#licenseFormInfo')
+          .waitUntilNetworkIdle(1000)
+          .insert('#edit-license-name', `Open Ended License #${generateNumber()}`)
+          .type('#edit-license-end-date', '2020-01-11\u000d')
+          .click('#edit-license-open-ended')
+          .type('#edit-license-start-date', '2020-01-01\u000d')
+          .wait(1000)
+
+          .evaluate(() => {
+            if (!document.querySelector('#edit-license-end-date').disabled) {
+              throw Error('Expected to find #edit-license-end-date disabled');
+            }
+          })
+          .click('#clickable-createlicense')
+          .wait('#licenseInfo')
+          .waitUntilNetworkIdle(1000)
+
+          .evaluate(() => {
+            const endDate = document.querySelector('[data-test-license-end-date]').innerText;
+            if (endDate !== 'Open ended') {
+              throw Error('Expected [data-test-license-end-date] to be "Open ended"');
+            }
           })
           .then(done)
           .catch(done);

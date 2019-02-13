@@ -7,6 +7,7 @@ import { Field } from 'redux-form';
 import {
   Accordion,
   AccordionSet,
+  Checkbox,
   Col,
   Datepicker,
   Row,
@@ -24,8 +25,13 @@ class LicenseFormInfo extends React.Component {
     parentResources: PropTypes.shape({
       statusValues: PropTypes.object,
       typeValues: PropTypes.object,
+      endDateSemanticsValues: PropTypes.object,
     }),
   };
+
+  state = {
+    openEnded: false,
+  }
 
   getStatusValues() {
     return get(this.props.parentResources.statusValues, ['records'], [])
@@ -37,11 +43,47 @@ class LicenseFormInfo extends React.Component {
       .map(({ id, label }) => ({ label, value: id }));
   }
 
+  getEndDateOpenEnded() {
+    return get(this.props.parentResources.endDateSemanticsValues, ['records'], [])
+      .find(v => v.value === 'open_ended') || {};
+  }
+
   getSectionProps() {
     return {
       parentMutator: this.props.parentMutator,
       parentResources: this.props.parentResources,
     };
+  }
+
+  warnEndDate = (endDate, allValues) => {
+    this.setState({ openEnded: allValues.openEnded });
+
+    if (allValues.openEnded && endDate) {
+      return (
+        <div data-test-warn-clear-end-date>
+          <FormattedMessage id="ui-licenses.warn.clearEndDate" />
+        </div>
+      );
+    }
+
+    return undefined;
+  }
+
+  validateEndDate = (value, allValues) => {
+    if (value && allValues.startDate) {
+      const startDate = new Date(allValues.startDate);
+      const endDate = new Date(allValues.endDate);
+
+      if (startDate >= endDate) {
+        return (
+          <div data-test-error-end-date-too-early>
+            <FormattedMessage id="ui-licenses.errors.endDateGreaterThanStartDate" />
+          </div>
+        );
+      }
+    }
+
+    return undefined;
   }
 
   render() {
@@ -71,7 +113,7 @@ class LicenseFormInfo extends React.Component {
           </Col>
         </Row>
         <Row>
-          <Col xs={12} md={3}>
+          <Col xs={12} md={6}>
             <Field
               id="edit-license-type"
               component={Select}
@@ -81,7 +123,7 @@ class LicenseFormInfo extends React.Component {
               required
             />
           </Col>
-          <Col xs={12} md={3}>
+          <Col xs={12} md={6}>
             <Field
               id="edit-license-status"
               component={Select}
@@ -91,7 +133,9 @@ class LicenseFormInfo extends React.Component {
               required
             />
           </Col>
-          <Col xs={12} md={3}>
+        </Row>
+        <Row>
+          <Col xs={12} md={5}>
             <Field
               id="edit-license-start-date"
               name="startDate"
@@ -101,7 +145,7 @@ class LicenseFormInfo extends React.Component {
               backendDateStandard="YYYY-MM-DD"
             />
           </Col>
-          <Col xs={12} md={3}>
+          <Col xs={10} md={5}>
             <Field
               id="edit-license-end-date"
               name="endDate"
@@ -109,6 +153,18 @@ class LicenseFormInfo extends React.Component {
               component={Datepicker}
               dateFormat="YYYY-MM-DD"
               backendDateStandard="YYYY-MM-DD"
+              disabled={this.state.openEnded}
+              validate={this.validateEndDate}
+              warn={this.warnEndDate}
+            />
+          </Col>
+          <Col xs={2} style={{ paddingTop: 20 }}>
+            <Field
+              id="edit-license-open-ended"
+              name="openEnded"
+              label={<FormattedMessage id="ui-licenses.prop.openEnded" />}
+              component={Checkbox}
+              type="checkbox"
             />
           </Col>
         </Row>
