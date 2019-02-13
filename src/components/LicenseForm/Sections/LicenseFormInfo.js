@@ -29,6 +29,10 @@ class LicenseFormInfo extends React.Component {
     }),
   };
 
+  state = {
+    openEnded: false,
+  }
+
   getStatusValues() {
     return get(this.props.parentResources.statusValues, ['records'], [])
       .map(({ id, label }) => ({ label, value: id }));
@@ -49,6 +53,37 @@ class LicenseFormInfo extends React.Component {
       parentMutator: this.props.parentMutator,
       parentResources: this.props.parentResources,
     };
+  }
+
+  warnEndDate = (endDate, allValues) => {
+    this.setState({ openEnded: allValues.openEnded });
+
+    if (allValues.openEnded && endDate) {
+      return (
+        <div data-test-warn-clear-end-date>
+          <FormattedMessage id="ui-licenses.warn.clearEndDate" />
+        </div>
+      );
+    }
+
+    return undefined;
+  }
+
+  validateEndDate = (value, allValues) => {
+    if (value && allValues.startDate) {
+      const startDate = new Date(allValues.startDate);
+      const endDate = new Date(allValues.endDate);
+
+      if (startDate >= endDate) {
+        return (
+          <div data-test-error-end-date-too-early>
+            <FormattedMessage id="ui-licenses.errors.endDateGreaterThanStartDate" />
+          </div>
+        );
+      }
+    }
+
+    return undefined;
   }
 
   render() {
@@ -118,26 +153,18 @@ class LicenseFormInfo extends React.Component {
               component={Datepicker}
               dateFormat="YYYY-MM-DD"
               backendDateStandard="YYYY-MM-DD"
+              disabled={this.state.openEnded}
+              validate={this.validateEndDate}
+              warn={this.warnEndDate}
             />
           </Col>
           <Col xs={2} style={{ paddingTop: 20 }}>
             <Field
-              id="edit-license-end-date-semantics"
-              name="endDateSemantics"
-              label={<FormattedMessage id="ui-licenses.prop.endDateSemantics" />}
+              id="edit-license-open-ended"
+              name="openEnded"
+              label={<FormattedMessage id="ui-licenses.prop.openEnded" />}
               component={Checkbox}
               type="checkbox"
-              parse={v => (v ? 'open_ended' : 'explicit')}
-              format={v => {
-                if (typeof v === 'string') return v === 'open_ended';
-
-                if (typeof v === 'object' && v.id) {
-                  const openEndedValue = this.getEndDateOpenEnded();
-                  return v.id === openEndedValue.id;
-                }
-
-                return v;
-              }}
             />
           </Col>
         </Row>

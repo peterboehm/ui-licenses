@@ -11,8 +11,8 @@
 
   "prop.description": "Description",
   "prop.endDate": "End date",
-  "prop.endDateSemantics": "Open ended",
   "prop.name": "Name",
+  "prop.openEnded": "Open ended",
   "prop.parentLicense": "Parent License",
   "prop.terms": "License Terms",
   "prop.startDate": "Start date",
@@ -25,6 +25,8 @@
   "section.licenseInformation": "License information",
   "section.organizations": "Organizations",
   "section.terms": "Terms",
+
+  "warn.clearEndDate": "This value will be cleared when saving because \"Open ended\" is checked.",
 
   "settings.general": "General",
   "settings.general.message": "These are your general app settings.",

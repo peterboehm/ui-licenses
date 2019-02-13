@@ -21,6 +21,12 @@ class LicenseInfo extends React.Component {
     this.props.license.parent = { id : license.id, name: license.name };
   }
 
+  renderEndDate(license) {
+    if (license.openEnded) return <FormattedMessage id="ui-licenses.prop.openEnded" />;
+    if (license.endDate) return <FormattedDate value={license.endDate} />;
+
+    return '-';
+  }
 
   render() {
     const { license } = this.props;
@@ -66,7 +72,7 @@ class LicenseInfo extends React.Component {
           <Col xs={6} md={3}>
             <KeyValue label={<FormattedMessage id="ui-licenses.prop.endDate" />}>
               <div data-test-license-end-date>
-                {license.endDate ? <FormattedDate value={license.endDate} /> : '-'}
+                {this.renderEndDate(license)}
               </div>
             </KeyValue>
           </Col>
