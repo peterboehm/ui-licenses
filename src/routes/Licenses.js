@@ -27,7 +27,10 @@ export default class Licenses extends React.Component {
         searchKey: 'name',
         columnMap: {
           'Name': 'name',
-          'Description': 'description',
+          'Type': 'type',
+          'Status': 'status',
+          'Start Date': 'startDate',
+          'End Date': 'endDate'
         }
       })
     },
@@ -150,11 +153,17 @@ export default class Licenses extends React.Component {
         browseOnly={this.props.browseOnly}
         columnMapping={{
           name: <FormattedMessage id="ui-licenses.prop.name" />,
-          description: <FormattedMessage id="ui-licenses.prop.description" />
+          type: <FormattedMessage id="ui-licenses.prop.type" />,
+          status: <FormattedMessage id="ui-licenses.prop.status" />,
+          startDate: <FormattedMessage id="ui-licenses.prop.startDate" />,
+          endDate: <FormattedMessage id="ui-licenses.prop.endDate" />
         }}
         columnWidths={{
           name: 300,
-          description: 'auto',
+          type: 150,
+          status: 150,
+          startDate: 200,
+          endDate: 200
         }}
         detailProps={{
           onUpdate: this.handleUpdate,
@@ -173,10 +182,14 @@ export default class Licenses extends React.Component {
         parentResources={this.props.resources}
         renderFilters={this.renderFilters}
         resultCountIncrement={INITIAL_RESULT_COUNT}
+        resultsFormatter={{
+          type: a => a.type && a.type.label,
+          status: a => a.status && a.status.label
+        }}
         showSingleResult
         viewRecordComponent={ViewLicense}
         viewRecordPerms="ui-licenses.licenses.view"
-        visibleColumns={['name', 'description']}
+        visibleColumns={['name', 'type', 'status', 'startDate', 'endDate']}
       />
     );
   }
