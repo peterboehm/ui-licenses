@@ -8,6 +8,7 @@ import { CheckboxFilter } from '@folio/stripes/smart-components';
 
 const FILTERS = [
   'status',
+  'type',
 ];
 
 export default class LicenseFilters extends React.Component {
@@ -20,11 +21,13 @@ export default class LicenseFilters extends React.Component {
   static defaultProps = {
     activeFilters: {
       status: [],
+      type: [],
     }
   };
 
   state = {
     status: [],
+    type: [],
   }
 
   static getDerivedStateFromProps(props, state) {
@@ -72,6 +75,7 @@ export default class LicenseFilters extends React.Component {
     return (
       <AccordionSet>
         {this.renderCheckboxFilter('status')}
+        {this.renderCheckboxFilter('type')}
       </AccordionSet>
     );
   }
