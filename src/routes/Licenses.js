@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
+import { FormattedDate, FormattedMessage } from 'react-intl';
 import { get } from 'lodash';
 
 import { SearchAndSort } from '@folio/stripes/smart-components';
@@ -147,6 +147,13 @@ export default class Licenses extends React.Component {
     );
   }
 
+  renderEndDate = (license) => {
+    if (license.openEnded) return <FormattedMessage id="ui-licenses.prop.openEnded" />;
+    if (license.endDate) return <FormattedDate value={license.endDate} />;
+
+    return '';
+  }
+
   render() {
     return (
       <SearchAndSort
@@ -184,7 +191,9 @@ export default class Licenses extends React.Component {
         resultCountIncrement={INITIAL_RESULT_COUNT}
         resultsFormatter={{
           type: a => a.type && a.type.label,
-          status: a => a.status && a.status.label
+          status: a => a.status && a.status.label,
+          startDate: a => (a.startDate ? <FormattedDate value={a.startDate} /> : ''),
+          endDate: this.renderEndDate,
         }}
         showSingleResult
         viewRecordComponent={ViewLicense}
