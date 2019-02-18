@@ -74,17 +74,17 @@ module.exports.test = (uiTestCtx) => {
           .type(`#edit-term-${NUMBER_OF_TERMS - 1}-value`, 'A Good Fellow')
           .wait(500)
           .evaluate((termId, expectedTerm) => {
-            const nameElement = document.querySelector('#edit-term-0-name');
-            const valueElement = document.querySelector('#edit-term-0-value');
+            const nameElement = document.querySelector(`#edit-term-${termId}-name`);
+            const valueElement = document.querySelector(`#edit-term-${termId}-value`);
 
             if (expectedTerm.label !== nameElement.selectedOptions[0].textContent) {
-              throw Error(`Expected #edit-term-${termId}-name to have label ${expectedTerm.label}`);
+              throw Error(`Expected #edit-term-${termId}-name to have label ${expectedTerm.label}. It is ${nameElement.selectedOptions[0].textContent}`);
             }
             if (expectedTerm.name !== nameElement.value) {
-              throw Error(`Expected #edit-term-${termId}-name to have label ${expectedTerm.name}`);
+              throw Error(`Expected #edit-term-${termId}-name to have value ${expectedTerm.name}. It is ${nameElement.value}`);
             }
             if (expectedTerm.value !== valueElement.value) {
-              throw Error(`Expected #edit-term-${termId}-name to have label ${expectedTerm.value}`);
+              throw Error(`Expected #edit-term-${termId}-value to have label ${expectedTerm.value}. It is ${valueElement.value}`);
             }
           }, NUMBER_OF_TERMS - 1, TERM)
           .then(done)
@@ -170,7 +170,7 @@ module.exports.test = (uiTestCtx) => {
               throw Error(`Expected to NOT FIND ${expectedTerm.name} label`);
             }
 
-            if (!valueElement) {
+            if (valueElement) {
               throw Error(`Expected to NOT FIND ${expectedTerm.name} value`);
             }
           }, TERM)
