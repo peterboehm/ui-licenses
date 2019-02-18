@@ -16,6 +16,8 @@ import {
   TextField,
 } from '@folio/stripes/components';
 
+import { required } from '../../../util/validators';
+
 class LicenseFormInfo extends React.Component {
   static propTypes = {
     id: PropTypes.string,
@@ -92,7 +94,7 @@ class LicenseFormInfo extends React.Component {
     return (
       <Accordion
         id={this.props.id}
-        label={<FormattedMessage id="ui-agreements.agreements.agreementInfo" />}
+        label={<FormattedMessage id="ui-licenses.section.licenseInformation" />}
         open={this.props.open}
         onToggle={this.props.onToggle}
       >
@@ -107,6 +109,7 @@ class LicenseFormInfo extends React.Component {
                   component={TextField}
                   placeholder={placeholder}
                   required
+                  validate={required}
                 />
               )}
             </FormattedMessage>

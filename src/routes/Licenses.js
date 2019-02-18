@@ -39,6 +39,10 @@ export default class Licenses extends React.Component {
       path: 'licenses/licenses/${selectedLicenseId}', // eslint-disable-line no-template-curly-in-string
       fetch: false,
     },
+    terms: {
+      type: 'okapi',
+      path: 'licenses/custprops',
+    },
     statusValues: {
       type: 'okapi',
       path: 'licenses/refdata/License/status',
@@ -57,6 +61,7 @@ export default class Licenses extends React.Component {
       query: PropTypes.object,
       records: PropTypes.object,
       statusValues: PropTypes.object,
+      terms: PropTypes.object,
       typeValues: PropTypes.object,
     }),
     mutator: PropTypes.object,
@@ -131,9 +136,16 @@ export default class Licenses extends React.Component {
     const status = get(this.props.resources.statusValues, ['records'], []).find(v => v.value === 'active') || {};
     const type = get(this.props.resources.typeValues, ['records'], []).find(v => v.value === 'local') || {};
 
+    const customProperties = {};
+    get(this.props.resources.terms, ['records'], [])
+      .filter((term, i) => i < 5)
+      // .filter((term) => term.default)
+      .forEach(term => { customProperties[term.name] = ''; });
+
     return {
       status: status.id,
       type: type.id,
+      customProperties,
     };
   }
 

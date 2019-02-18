@@ -15,6 +15,8 @@
   "prop.openEnded": "Open ended",
   "prop.parentLicense": "Parent License",
   "prop.terms": "License Terms",
+  "prop.termName": "Name",
+  "prop.termValue": "Value",
   "prop.startDate": "Start date",
   "prop.status": "Status",
   "prop.type": "Type",
@@ -31,6 +33,9 @@
   "settings.general": "General",
   "settings.general.message": "These are your general app settings.",
   "settings.some-feature": "Some Feature",
-  "settings.some-feature.message": "These are your settings for some app feature."
+  "settings.some-feature.message": "These are your settings for some app feature.",
+
+  "terms.add": "Add term",
+  "terms.notSet": "Not set"
 }
 

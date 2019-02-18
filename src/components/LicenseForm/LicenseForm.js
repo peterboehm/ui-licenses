@@ -9,7 +9,8 @@ import {
 } from '@folio/stripes/components';
 
 import {
-  LicenseFormInfo
+  LicenseFormInfo,
+  LicenseFormTerms,
 } from './Sections';
 
 class LicenseForm extends React.Component {
@@ -21,6 +22,7 @@ class LicenseForm extends React.Component {
   state = {
     sections: {
       licenseFormInfo: true,
+      licenseFormTerms: true,
     }
   }
 
@@ -60,6 +62,7 @@ class LicenseForm extends React.Component {
           </Col>
         </Row>
         <LicenseFormInfo id="licenseFormInfo" open={sections.licenseFormInfo} {...sectionProps} />
+        <LicenseFormTerms id="licenseFormTerms" open={sections.licenseFormTerms} {...sectionProps} />
       </AccordionSet>
     );
   }
