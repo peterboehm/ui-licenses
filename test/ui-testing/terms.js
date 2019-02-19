@@ -4,9 +4,10 @@ const generateNumber = () => Math.round(Math.random() * 100000);
 
 let NUMBER_OF_TERMS;
 const TERM = {
-  name: 'authorisedUsers',
-  label: 'Definition of authorised user',
-  value: 'A Good Fellow',
+  name: 'otherRestrictions',
+  label: 'Other restrictions',
+  value: 'A Few',
+  editedValue: 'A Lot',
 };
 
 module.exports.test = (uiTestCtx) => {
@@ -70,8 +71,8 @@ module.exports.test = (uiTestCtx) => {
 
       it('should set term', done => {
         nightmare
-          .type(`#edit-term-${NUMBER_OF_TERMS - 1}-name`, 'Definition')
-          .type(`#edit-term-${NUMBER_OF_TERMS - 1}-value`, 'A Good Fellow')
+          .type(`#edit-term-${NUMBER_OF_TERMS - 1}-name`, TERM.label)
+          .type(`#edit-term-${NUMBER_OF_TERMS - 1}-value`, TERM.value)
           .wait(500)
           .evaluate((termId, expectedTerm) => {
             const nameElement = document.querySelector(`#edit-term-${termId}-name`);
@@ -144,6 +145,81 @@ module.exports.test = (uiTestCtx) => {
             }
             if (expectedTerm.value !== valueElement.value) {
               throw Error(`Expected #edit-term-0-name to have label ${expectedTerm.value}`);
+            }
+          }, TERM)
+          .then(done)
+          .catch(done);
+      });
+
+      it('should edit term value', done => {
+        nightmare
+          .insert('#edit-term-0-value', '')
+          .insert('#edit-term-0-value', TERM.editedValue)
+          .wait(500)
+          .evaluate((expectedTerm) => {
+            const valueElement = document.querySelector('#edit-term-0-value');
+
+            if (expectedTerm.editedValue !== valueElement.value) {
+              throw Error(`Expected #edit-term-0-value to have label ${expectedTerm.editedValue}. It is ${valueElement.value}`);
+            }
+          }, TERM)
+          .then(done)
+          .catch(done);
+      });
+
+      it('should save updated license', done => {
+        nightmare
+          .click('#clickable-updatelicense')
+          .waitUntilNetworkIdle(2000) // Wait for record to be fetched
+          .then(done)
+          .catch(done);
+      });
+
+      it('should find edited term in terms list', done => {
+        nightmare
+          .evaluate((expectedTerm) => {
+            const nameElement = document.querySelector(`[data-test-term-label=${expectedTerm.name}]`);
+            const valueElement = document.querySelector(`[data-test-term-value=${expectedTerm.name}]`);
+
+            if (!nameElement) {
+              throw Error(`Expected to find ${expectedTerm.name} label`);
+            }
+
+            if (nameElement.textContent !== expectedTerm.label) {
+              throw Error(`Expected to find ${expectedTerm.label}`);
+            }
+
+            if (!valueElement) {
+              throw Error(`Expected to find ${expectedTerm.name} value`);
+            }
+
+            if (valueElement.textContent !== expectedTerm.editedValue) {
+              throw Error(`Expected to find ${expectedTerm.editedValue}`);
+            }
+          }, TERM)
+          .then(done)
+          .catch(done);
+      });
+
+      it('should edit license and find edited term', done => {
+        nightmare
+          .click('[class*=paneHeader] [class*=dropdown] button')
+          .wait('#clickable-edit-license')
+          .click('#clickable-edit-license')
+          .wait('#licenseFormInfo')
+          .waitUntilNetworkIdle(2000)
+          .evaluate((expectedTerm) => {
+            const nameElement = document.querySelector('#edit-term-0-name');
+            const valueElement = document.querySelector('#edit-term-0-value');
+
+            if (expectedTerm.label !== nameElement.selectedOptions[0].textContent) {
+              throw Error(`Expected #edit-term-0-name to have label ${expectedTerm.label}`);
+            }
+            if (expectedTerm.name !== nameElement.value) {
+              throw Error(`Expected #edit-term-0-name to have label ${expectedTerm.name}`);
+            }
+            if (expectedTerm.editedValue !== valueElement.value) {
+              throw Error(`Expected #edit-term-0-name to have label ${expectedTerm.editedValue}`);
             }
           }, TERM)
           .then(done)
