@@ -63,5 +63,11 @@
     "placeholder.licenseDescription": "Digite uma descrição da licença",
     "section.licenseInformation": "Informações de licença",
     "section.organizations": "Organizações",
-    "section.terms": "Termos"
+    "section.terms": "Termos",
+    "prop.openEnded": "Acabou de abrir",
+    "warn.clearEndDate": "Este valor será limpo ao salvar porque \"Aberto\" está marcado.",
+    "prop.termName": "Name",
+    "prop.termValue": "Value",
+    "terms.add": "Add term",
+    "terms.notSet": "Not set"
 }

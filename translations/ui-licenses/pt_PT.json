@@ -63,5 +63,11 @@
     "placeholder.licenseDescription": "Enter a description of the license",
     "section.licenseInformation": "License information",
     "section.organizations": "Organizations",
-    "section.terms": "Terms"
+    "section.terms": "Terms",
+    "prop.openEnded": "Open ended",
+    "warn.clearEndDate": "This value will be cleared when saving because \"Open ended\" is checked.",
+    "prop.termName": "Name",
+    "prop.termValue": "Value",
+    "terms.add": "Add term",
+    "terms.notSet": "Not set"
 }
