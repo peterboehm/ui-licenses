@@ -48,14 +48,9 @@ export default class LicenseTerms extends React.Component {
     );
   }
 
-  renderTerms = () => {
-    const terms = get(this.props.parentResources.terms, ['records'], []);
-    return terms.map(this.renderTerm);
-  }
-
   render() {
-    const { id, license, onToggle, open } = this.props;
-    if (!license.customProperties || Object.keys(license.customProperties).length === 0) return null;
+    const { id, onToggle, open, parentResources } = this.props;
+    const terms = get(parentResources.terms, ['records'], []);
 
     return (
       <Accordion
@@ -64,7 +59,7 @@ export default class LicenseTerms extends React.Component {
         open={open}
         onToggle={onToggle}
       >
-        {this.renderTerms(license.customProperties)}
+        {terms.map(this.renderTerm)}
       </Accordion>
     );
   }

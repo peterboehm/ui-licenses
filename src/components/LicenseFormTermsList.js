@@ -28,9 +28,10 @@ export default class LicenseFormTermsList extends React.Component {
     meta: PropTypes.object,
     availableTerms: PropTypes.arrayOf(PropTypes.shape({
       description: PropTypes.string,
-      label: PropTypes.string,
-      type: PropTypes.string,
-      value: PropTypes.string,
+      label: PropTypes.string.isRequired,
+      options: PropTypes.array,
+      type: PropTypes.string.isRequired,
+      value: PropTypes.string.isRequired,
     })).isRequired,
   };
 
@@ -73,7 +74,11 @@ export default class LicenseFormTermsList extends React.Component {
 
     const unsetTerms = availableTerms.filter(t => {
       const termValue = value[t.value];
+
+      // The term is unset and has no value.
       if (termValue === undefined) return true;
+
+      // The term is set but is marked for deletion. Allow reuse.
       if (termValue[0] && termValue[0]._delete) return true;
 
       return false;
@@ -87,6 +92,7 @@ export default class LicenseFormTermsList extends React.Component {
         onChange={e => {
           const newValue = e.target.value;
 
+          // Update `state.terms` which controls what terms are being edited.
           this.setState(prevState => {
             const newTerms = [...prevState.terms];
             newTerms[i] = this.getTerm(newValue);
@@ -94,11 +100,15 @@ export default class LicenseFormTermsList extends React.Component {
             return { terms: newTerms };
           });
 
+          // Update redux-form (which tracks what the values for a given term are) because
+          // in essence we're deleting a term and creating a new term.
+          // We do this by 1) marking the current term for deletion and 2) initing
+          // the new term to an empty object.
           const currentValue = value[term.value] ? value[term.value][0] : {};
           onChange({
             ...value,
             [term.value]: [{
-              ...currentValue,
+              id: currentValue.id,
               _delete: true,
             }],
             [newValue]: [{}],
@@ -114,6 +124,14 @@ export default class LicenseFormTermsList extends React.Component {
     const { input: { onChange, value } } = this.props;
     const currentValue = value[term.value] ? value[term.value][0] : {};
 
+    // Initialise to just the value (for text/number values)
+    // and then check if it's an object (for Select/refdata values).
+    let controlledFieldValue = currentValue.value;
+    if (controlledFieldValue && controlledFieldValue.value) {
+      controlledFieldValue = controlledFieldValue.value;
+    }
+
+    // Figure out which component we're rendering
     let FieldComponent = TextArea;
     if (term.type === TERM_TYPE_SELECT) FieldComponent = Select;
     if (term.type === TERM_TYPE_NUMBER) FieldComponent = TextField;
@@ -123,22 +141,16 @@ export default class LicenseFormTermsList extends React.Component {
         ...value,
         [term.value]: [{
           ...currentValue,
-          _delete: e.target.value === '' ? true : undefined,
+          _delete: e.target.value === '' ? true : undefined, // Delete term if removing the value.
           value: e.target.value
         }],
       });
     };
 
-    // Initialise to just the value (for text/number values)
-    // and then check if it's an object (for Select/refdata values).
-    let controlledFieldValue = currentValue.value;
-    if (controlledFieldValue && controlledFieldValue.value) {
-      controlledFieldValue = controlledFieldValue.value;
-    }
-
     return (
       <FieldComponent
         data-test-term-value
+        dataOptions={term.options}
         id={`edit-term-${i}-value`}
         onChange={handleChange}
         type={term.type === TERM_TYPE_NUMBER ? 'number' : undefined}

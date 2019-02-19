@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import { get } from 'lodash';
 import { Field } from 'redux-form';
 
@@ -13,9 +13,10 @@ import {
 
 import LicenseFormTermsList from '../../LicenseFormTermsList';
 
-export default class LicenseFormTerms extends React.Component {
+class LicenseFormTerms extends React.Component {
   static propTypes = {
     id: PropTypes.string,
+    intl: intlShape.isRequired,
     onToggle: PropTypes.func,
     open: PropTypes.bool,
     parentResources: PropTypes.shape({
@@ -31,12 +32,24 @@ export default class LicenseFormTerms extends React.Component {
     const terms = get(props.parentResources, ['terms', 'records'], []);
     if (terms.length !== state.terms.length) {
       return {
-        terms: terms.map((term) => ({
-          description: term.description,
-          label: term.label,
-          type: term.type,
-          value: term.name,
-        })),
+        terms: terms.map((term) => {
+          let options = get(term.category, ['values']);
+          if (options) {
+            options = [{
+              label: props.intl.formatMessage({ id: 'ui-licenses.terms.notSet' }),
+              value: '',
+            },
+            ...options];
+          }
+
+          return {
+            description: term.description,
+            label: term.label,
+            type: term.type,
+            options,
+            value: term.name,
+          };
+        }),
       };
     }
 
@@ -75,3 +88,5 @@ export default class LicenseFormTerms extends React.Component {
     );
   }
 }
+
+export default injectIntl(LicenseFormTerms);
