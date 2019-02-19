@@ -138,8 +138,7 @@ export default class Licenses extends React.Component {
 
     const customProperties = {};
     get(this.props.resources.terms, ['records'], [])
-      .filter((term, i) => i < 5)
-      // .filter((term) => term.default)
+      .filter(term => term.primary)
       .forEach(term => { customProperties[term.name] = ''; });
 
     return {

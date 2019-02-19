@@ -25,7 +25,7 @@ export default class LicenseTerms extends React.Component {
     let value = get(this.props.license, ['customProperties', term.name, '0', 'value']);
 
     if (value === undefined) {
-      if (term.default) value = <FormattedMessage id="ui-licenses.terms.notSet" />;
+      if (term.primary) value = <FormattedMessage id="ui-licenses.terms.notSet" />;
       else return null;
     }
 
