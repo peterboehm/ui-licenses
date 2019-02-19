@@ -4,6 +4,7 @@
 * Upgrade to Stripes 2.0
 * Removed usage of lookbehinds in regexes (avail in 2.0.1)
 * Added License Status filter to search.
+* Added ability to view, add, edit, and remove terms from licenses.
 
 ## 1.1.0
 First Official Release for Q4 Release - 2018-12-11
