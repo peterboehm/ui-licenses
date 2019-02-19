@@ -1,8 +1,7 @@
 /* global describe, it, before, after, Nightmare */
 
-const generateNumber = () => Math.round(Math.random() * 100000);
-
 let NUMBER_OF_TERMS;
+
 const TERM = {
   name: 'otherRestrictions',
   label: 'Other restrictions',
@@ -10,14 +9,16 @@ const TERM = {
   editedValue: 'A Lot',
 };
 
-module.exports.test = (uiTestCtx) => {
-  describe('Module test: ui-licenses: set license terms', function test() {
+const generateNumber = () => Math.round(Math.random() * 100000);
+
+module.exports.test = (uiTestCtx, term = TERM) => {
+  describe(`ui-licenses: set license term: "${term.label}"`, function test() {
     const { config, helpers: { login, logout } } = uiTestCtx;
     const nightmare = new Nightmare(config.nightmare);
 
     this.timeout(Number(config.test_timeout));
 
-    describe('Login > open licenses > create, view, edit license > logout', () => {
+    describe('login > open licenses > create license > edit terms > logout', () => {
       before((done) => {
         login(nightmare, config, done);
       });
@@ -28,6 +29,9 @@ module.exports.test = (uiTestCtx) => {
 
       it('should navigate to create license page', done => {
         const name = `Terms License #${generateNumber()}`;
+
+        console.log(`\tCreating ${name}`);
+
         nightmare
           .wait('#clickable-licenses-module')
           .click('#clickable-licenses-module')
@@ -69,25 +73,10 @@ module.exports.test = (uiTestCtx) => {
           .catch(done);
       });
 
-      it('should set term', done => {
+      it(`should set term to: ${term.value}`, done => {
         nightmare
-          .type(`#edit-term-${NUMBER_OF_TERMS - 1}-name`, TERM.label)
-          .type(`#edit-term-${NUMBER_OF_TERMS - 1}-value`, TERM.value)
-          .wait(500)
-          .evaluate((termId, expectedTerm) => {
-            const nameElement = document.querySelector(`#edit-term-${termId}-name`);
-            const valueElement = document.querySelector(`#edit-term-${termId}-value`);
-
-            if (expectedTerm.label !== nameElement.selectedOptions[0].textContent) {
-              throw Error(`Expected #edit-term-${termId}-name to have label ${expectedTerm.label}. It is ${nameElement.selectedOptions[0].textContent}`);
-            }
-            if (expectedTerm.name !== nameElement.value) {
-              throw Error(`Expected #edit-term-${termId}-name to have value ${expectedTerm.name}. It is ${nameElement.value}`);
-            }
-            if (expectedTerm.value !== valueElement.value) {
-              throw Error(`Expected #edit-term-${termId}-value to have label ${expectedTerm.value}. It is ${valueElement.value}`);
-            }
-          }, NUMBER_OF_TERMS - 1, TERM)
+          .type(`#edit-term-${NUMBER_OF_TERMS - 1}-name`, term.label)
+          .type(`#edit-term-${NUMBER_OF_TERMS - 1}-value`, term.value)
           .then(done)
           .catch(done);
       });
@@ -121,7 +110,7 @@ module.exports.test = (uiTestCtx) => {
             if (valueElement.textContent !== expectedTerm.value) {
               throw Error(`Expected to find ${expectedTerm.value}`);
             }
-          }, TERM)
+          }, term)
           .then(done)
           .catch(done);
       });
@@ -137,32 +126,27 @@ module.exports.test = (uiTestCtx) => {
             const nameElement = document.querySelector('#edit-term-0-name');
             const valueElement = document.querySelector('#edit-term-0-value');
 
-            if (expectedTerm.label !== nameElement.selectedOptions[0].textContent) {
+            if (nameElement.selectedOptions[0].textContent !== expectedTerm.label) {
               throw Error(`Expected #edit-term-0-name to have label ${expectedTerm.label}`);
             }
-            if (expectedTerm.name !== nameElement.value) {
-              throw Error(`Expected #edit-term-0-name to have label ${expectedTerm.name}`);
+            if (nameElement.value !== expectedTerm.name) {
+              throw Error(`Expected #edit-term-0-name to have value ${expectedTerm.name}`);
             }
-            if (expectedTerm.value !== valueElement.value) {
-              throw Error(`Expected #edit-term-0-name to have label ${expectedTerm.value}`);
+            const value = valueElement.selectedOptions ?
+              valueElement.selectedOptions[0].textContent : valueElement.value;
+
+            if (value !== expectedTerm.value) {
+              throw Error(`Expected #edit-term-0-value to be ${expectedTerm.value}. It is ${value}`);
             }
-          }, TERM)
+          }, term)
           .then(done)
           .catch(done);
       });
 
-      it('should edit term value', done => {
+      it(`should edit term value to: ${term.editedValue}`, done => {
         nightmare
           .insert('#edit-term-0-value', '')
-          .insert('#edit-term-0-value', TERM.editedValue)
-          .wait(500)
-          .evaluate((expectedTerm) => {
-            const valueElement = document.querySelector('#edit-term-0-value');
-
-            if (expectedTerm.editedValue !== valueElement.value) {
-              throw Error(`Expected #edit-term-0-value to have label ${expectedTerm.editedValue}. It is ${valueElement.value}`);
-            }
-          }, TERM)
+          .type('#edit-term-0-value', term.editedValue)
           .then(done)
           .catch(done);
       });
@@ -186,7 +170,7 @@ module.exports.test = (uiTestCtx) => {
             }
 
             if (nameElement.textContent !== expectedTerm.label) {
-              throw Error(`Expected to find ${expectedTerm.label}`);
+              throw Error(`Expected to find term name ${expectedTerm.label}`);
             }
 
             if (!valueElement) {
@@ -194,9 +178,9 @@ module.exports.test = (uiTestCtx) => {
             }
 
             if (valueElement.textContent !== expectedTerm.editedValue) {
-              throw Error(`Expected to find ${expectedTerm.editedValue}`);
+              throw Error(`Expected to find term value ${expectedTerm.editedValue}`);
             }
-          }, TERM)
+          }, term)
           .then(done)
           .catch(done);
       });
@@ -218,10 +202,14 @@ module.exports.test = (uiTestCtx) => {
             if (expectedTerm.name !== nameElement.value) {
               throw Error(`Expected #edit-term-0-name to have label ${expectedTerm.name}`);
             }
-            if (expectedTerm.editedValue !== valueElement.value) {
-              throw Error(`Expected #edit-term-0-name to have label ${expectedTerm.editedValue}`);
+
+            const value = valueElement.selectedOptions ?
+              valueElement.selectedOptions[0].textContent : valueElement.value;
+
+            if (value !== expectedTerm.editedValue) {
+              throw Error(`Expected #edit-term-0-value to be ${expectedTerm.editedValue}. It is ${value}`);
             }
-          }, TERM)
+          }, term)
           .then(done)
           .catch(done);
       });
@@ -249,7 +237,7 @@ module.exports.test = (uiTestCtx) => {
             if (valueElement) {
               throw Error(`Expected to NOT FIND ${expectedTerm.name} value`);
             }
-          }, TERM)
+          }, term)
           .then(done)
           .catch(done);
       });
