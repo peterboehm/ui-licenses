@@ -11,8 +11,10 @@
   "scripts": {
     "start": "stripes serve",
     "build": "stripes build --output ./output",
-    "test": "stripes test nightmare --run crud",
+    "test": "stripes test nightmare --run crud/text-term/select-term",
     "test-crud": "stripes test nightmare --run crud",
+    "test-text-term": "stripes test nightmare --run text-term",
+    "test-select-term": "stripes test nightmare --run select-term",
     "lint": "eslint src"
   },
   "devDependencies": {

@@ -75,14 +75,14 @@ module.exports.generateLicenseValues = generateLicenseValues;
 module.exports.createLicense = createLicense;
 
 module.exports.test = (uiTestCtx) => {
-  describe('Module test: ui-licenses: basic license crud', function test() {
+  describe('ui-licenses: basic license crud', function test() {
     const { config, helpers: { login, logout } } = uiTestCtx;
     const nightmare = new Nightmare(config.nightmare);
     const values = generateLicenseValues();
 
     this.timeout(Number(config.test_timeout));
 
-    describe('Login > open licenses > create, view, edit license > logout', () => {
+    describe('login > open licenses > create, view, edit license > logout', () => {
       before((done) => {
         login(nightmare, config, done);
       });

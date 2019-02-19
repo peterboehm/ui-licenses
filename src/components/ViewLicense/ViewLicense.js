@@ -14,7 +14,7 @@ import {
 
 import {
   LicenseInfo,
-  LicenseCustomProperties,
+  LicenseTerms,
 } from './Sections';
 
 import EditLicense from '../EditLicense';
@@ -47,15 +47,10 @@ class ViewLicense extends React.Component {
     stripes: PropTypes.object,
   };
 
-  constructor(props) {
-    super(props);
-    this.getActionMenu = this.getActionMenu.bind(this);
-  }
-
   state = {
     sections: {
       licenseInfo: true,
-      licenseProperties: true
+      licenseTerms: true,
     }
   }
 
@@ -82,6 +77,7 @@ class ViewLicense extends React.Component {
     return {
       license: this.getLicense(),
       onToggle: this.handleSectionToggle,
+      parentResources: this.props.parentResources,
       stripes: this.props.stripes,
     };
   }
@@ -134,8 +130,13 @@ class ViewLicense extends React.Component {
     );
   }
 
-  getActionMenu = () => {
+  getActionMenu = ({ onToggle }) => {
     if (!this.props.stripes.hasPerm('ui-licenses.licenses.edit')) return null;
+
+    const handleClick = () => {
+      this.props.onEdit();
+      onToggle();
+    };
 
     return (
       <React.Fragment>
@@ -143,7 +144,7 @@ class ViewLicense extends React.Component {
           buttonStyle="dropdownItem"
           href={this.props.editLink}
           id="clickable-edit-license"
-          onClick={this.props.onEdit}
+          onClick={handleClick}
         >
           <Icon icon="edit">
             <FormattedMessage id="ui-licenses.editLicense" />
@@ -174,9 +175,9 @@ class ViewLicense extends React.Component {
             open={this.state.sections.licenseInfo}
             {...sectionProps}
           />
-          <LicenseCustomProperties
-            id="licenseCustomProperties"
-            open={this.state.sections.licenseCustomProperties}
+          <LicenseTerms
+            id="licenseTerms"
+            open={this.state.sections.licenseTerms}
             {...sectionProps}
           />
         </AccordionSet>
