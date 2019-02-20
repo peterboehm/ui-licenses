@@ -66,12 +66,12 @@ class LicenseFormTerms extends React.Component {
       >
         <Row>
           <Col xs={5}>
-            <Label tagName="span" required>
+            <Label tagName="span">
               <FormattedMessage id="ui-licenses.prop.termName" />
             </Label>
           </Col>
           <Col xs={6}>
-            <Label tagName="span" required>
+            <Label tagName="span">
               <FormattedMessage id="ui-licenses.prop.termValue" />
             </Label>
           </Col>
