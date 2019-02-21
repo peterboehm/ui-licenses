@@ -66,8 +66,8 @@
     "section.terms": "Termos",
     "prop.openEnded": "Acabou de abrir",
     "warn.clearEndDate": "Este valor será limpo ao salvar porque \"Aberto\" está marcado.",
-    "prop.termName": "Name",
-    "prop.termValue": "Value",
-    "terms.add": "Add term",
-    "terms.notSet": "Not set"
+    "prop.termName": "Nome",
+    "prop.termValue": "Valor",
+    "terms.add": "Adicionar termo",
+    "terms.notSet": "Não configurado"
 }
