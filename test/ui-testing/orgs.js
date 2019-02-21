@@ -150,7 +150,7 @@ module.exports.test = (uiTestCtx) => {
         it(`should find ${licensor.name} in header as Licensor`, done => {
           nightmare
             .evaluate(o => {
-              const headerLicensor = document.querySelector('[data-test-licensor-name]').textContent;
+              const headerLicensor = document.querySelector('[data-test-header-licensor-name]').textContent;
               if (headerLicensor !== o.name) {
                 throw Error(`Expected to find Licensor as ${o.name}. It is ${headerLicensor}.`);
               }
