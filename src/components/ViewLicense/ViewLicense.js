@@ -13,6 +13,7 @@ import {
 } from '@folio/stripes/components';
 
 import {
+  LicenseHeader,
   LicenseInfo,
   LicenseTerms,
 } from './Sections';
@@ -173,6 +174,7 @@ class ViewLicense extends React.Component {
         onClose={this.props.onClose}
         actionMenu={this.getActionMenu}
       >
+        <LicenseHeader {...sectionProps} />
         <AccordionSet>
           <LicenseInfo
             id="licenseInfo"

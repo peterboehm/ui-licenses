@@ -36,7 +36,7 @@ class LicenseFormTerms extends React.Component {
           let options = get(term.category, ['values']);
           if (options) {
             options = [{
-              label: props.intl.formatMessage({ id: 'ui-licenses.terms.notSet' }),
+              label: props.intl.formatMessage({ id: 'ui-licenses.notSet' }),
               value: '',
             },
             ...options];

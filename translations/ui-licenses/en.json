@@ -7,7 +7,11 @@
   "newLicense": "New license",
   "updateLicense": "Update license",
 
+  "notSet": "Not set",
+
   "errors.endDateGreaterThanStartDate": "End date must be after the start date",
+
+  "header.licensor": "Licensor",
 
   "organizations.add": "Add organization to agreement",
   "organizations.licenseHasNone": "Agreement has no organizations.",
@@ -41,7 +45,6 @@
   "settings.some-feature.message": "These are your settings for some app feature.",
 
   "terms.add": "Add term",
-  "terms.notSet": "Not set",
 
   "warn.clearEndDate": "This value will be cleared when saving because \"Open ended\" is checked."
 }
