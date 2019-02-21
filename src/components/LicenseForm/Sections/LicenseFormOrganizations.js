@@ -101,6 +101,7 @@ class LicenseFormOrganizations extends React.Component {
               <Col xs={8}>
                 <Field
                   component={OrganizationSelection}
+                  id={`org-name-${index}`}
                   name={`orgs[${index}].org`}
                   path="licenses/org"
                   validate={required}
@@ -110,9 +111,10 @@ class LicenseFormOrganizations extends React.Component {
                 <FormattedMessage id="ui-licenses.organizations.selectRole">
                   {placeholder => (
                     <Field
-                      name={`orgs[${index}].role`}
                       component={Select}
                       dataOptions={this.state.roles}
+                      id={`org-role-${index}`}
+                      name={`orgs[${index}].role`}
                       placeholder={placeholder}
                       validate={required}
                     />
@@ -122,13 +124,17 @@ class LicenseFormOrganizations extends React.Component {
               <Col xs={1}>
                 <IconButton
                   icon="trash"
+                  id={`org-delete-${index}`}
                   onClick={() => this.onRemoveOrganization(fields, index, org)}
                 />
               </Col>
             </Row>
           ))}
         </div>
-        <Button onClick={() => fields.push({ })}>
+        <Button
+          id="add-license-org-btn"
+          onClick={() => fields.push({ })}
+        >
           <Icon icon="plus-sign">
             <FormattedMessage id="ui-licenses.organizations.add" />
           </Icon>
@@ -146,7 +152,10 @@ class LicenseFormOrganizations extends React.Component {
               name="orgs"
               component={this.renderOrgList}
             />
-            <Button onClick={() => this.setState({ showCreateOrgModal: true })}>
+            <Button
+              id="create-license-org-btn"
+              onClick={() => this.setState({ showCreateOrgModal: true })}
+            >
               <FormattedMessage id="ui-licenses.organizations.createNew" />
             </Button>
             <CreateOrganizationModal

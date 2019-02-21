@@ -11,10 +11,11 @@
   "scripts": {
     "start": "stripes serve",
     "build": "stripes build --output ./output",
-    "test": "stripes test nightmare --run crud/text-term/select-term",
+    "test": "stripes test nightmare --run crud/text-term/select-term/orgs",
     "test-crud": "stripes test nightmare --run crud",
     "test-text-term": "stripes test nightmare --run text-term",
     "test-select-term": "stripes test nightmare --run select-term",
+    "test-orgs": "stripes test nightmare --run orgs",
     "lint": "eslint src"
   },
   "devDependencies": {
@@ -25,7 +26,7 @@
     "eslint": "^5.5.0"
   },
   "dependencies": {
-    "@folio/stripes-erm-components": "^1.0.2",
+    "@folio/stripes-erm-components": "^1.0.3",
     "lodash": "^4.17.4",
     "prop-types": "^15.6.0",
     "react-intl": "^2.4.0",

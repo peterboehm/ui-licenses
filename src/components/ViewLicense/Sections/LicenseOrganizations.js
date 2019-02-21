@@ -27,7 +27,11 @@ export default class Organizations extends React.Component {
     return (
       <React.Fragment>
         { orgs.map((o, index) => (
-          <Layout className="marginTopHalf" key={index}>
+          <Layout
+            className="marginTopHalf"
+            data-test-license-org
+            key={index}
+          >
             {o.org.vendorsUuid ?
               <Link to={`/vendors/view/${o.org.vendorsUuid}`}>{o.org.name}</Link> :
               o.org.name
@@ -57,6 +61,7 @@ export default class Organizations extends React.Component {
       <Accordion
         displayWhenClosed={this.renderBadge()}
         displayWhenOpen={this.renderBadge()}
+        id="license-orgs"
         label={<FormattedMessage id="ui-licenses.section.organizations" />}
       >
         <Layout className="padding-bottom-gutter">
