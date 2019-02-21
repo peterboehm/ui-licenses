@@ -9,7 +9,8 @@
 
   "notSet": "Not set",
 
-  "errors.endDateGreaterThanStartDate": "End date must be after the start date",
+  "errors.endDateGreaterThanStartDate": "End date must be after the start date.",
+  "errors.multipleLicensors": "Only one Licensor per license is allowed.",
 
   "header.licensor": "Licensor",
 

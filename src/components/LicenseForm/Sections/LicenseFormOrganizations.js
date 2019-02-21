@@ -31,6 +31,7 @@ class LicenseFormOrganizations extends React.Component {
   };
 
   state = {
+    licensorRoleId: undefined,
     roles: [],
     showCreateOrgModal: false,
   }
@@ -38,7 +39,10 @@ class LicenseFormOrganizations extends React.Component {
   static getDerivedStateFromProps(nextProps, state) {
     const roles = get(nextProps.parentResources.orgRoleValues, ['records'], []);
     if (state.roles.length !== roles.length) {
-      return { roles: roles.map(({ id, label }) => ({ value: id, label })) };
+      return {
+        licensorRoleId: (roles.find(r => r.value === 'licensor') || {}).id,
+        roles: roles.map(({ id, label }) => ({ value: id, label })),
+      };
     }
 
     return null;
@@ -63,6 +67,18 @@ class LicenseFormOrganizations extends React.Component {
     }
   }
 
+  validateMultipleLicensors = (value, allValues) => {
+    const { licensorRoleId } = this.state;
+    if (value === licensorRoleId) {
+      const licensorOrgs = allValues.orgs.filter(o => o.role === licensorRoleId);
+      if (licensorOrgs.length > 1) {
+        return <FormattedMessage id="ui-licenses.errors.multipleLicensors" />;
+      }
+    }
+
+    return undefined;
+  }
+
   renderNoOrgs = () => (
     <Layout className="padding-bottom-gutter">
       <FormattedMessage id="ui-licenses.organizations.licenseHasNone" />
@@ -72,12 +88,12 @@ class LicenseFormOrganizations extends React.Component {
   renderOrgsHeaders = () => (
     <Row>
       <Col xs={8}>
-        <Label tagName="span">
+        <Label required tagName="span">
           <FormattedMessage id="ui-licenses.prop.orgName" />
         </Label>
       </Col>
       <Col xs={3}>
-        <Label tagName="span">
+        <Label required tagName="span">
           <FormattedMessage id="ui-licenses.prop.orgRole" />
         </Label>
       </Col>
@@ -116,7 +132,10 @@ class LicenseFormOrganizations extends React.Component {
                       id={`org-role-${index}`}
                       name={`orgs[${index}].role`}
                       placeholder={placeholder}
-                      validate={required}
+                      validate={[
+                        required,
+                        this.validateMultipleLicensors,
+                      ]}
                     />
                   )}
                 </FormattedMessage>
