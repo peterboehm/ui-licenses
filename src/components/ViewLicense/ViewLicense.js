@@ -13,6 +13,7 @@ import {
 } from '@folio/stripes/components';
 
 import {
+  LicenseHeader,
   LicenseInfo,
   LicenseTerms,
 } from './Sections';
@@ -60,7 +61,7 @@ class ViewLicense extends React.Component {
 
   getInitialValues = () => {
     const license = cloneDeep(this.getLicense());
-    const { status, type } = license;
+    const { orgs, status, type } = license;
 
     if (status && status.id) {
       license.status = status.id;
@@ -68,6 +69,10 @@ class ViewLicense extends React.Component {
 
     if (type && type.id) {
       license.type = type.id;
+    }
+
+    if (orgs && orgs.length) {
+      license.orgs = orgs.map(o => ({ ...o, role: o.role.id }));
     }
 
     return license;
@@ -169,6 +174,7 @@ class ViewLicense extends React.Component {
         onClose={this.props.onClose}
         actionMenu={this.getActionMenu}
       >
+        <LicenseHeader {...sectionProps} />
         <AccordionSet>
           <LicenseInfo
             id="licenseInfo"

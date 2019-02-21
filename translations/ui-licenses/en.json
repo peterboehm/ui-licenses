@@ -7,12 +7,24 @@
   "newLicense": "New license",
   "updateLicense": "Update license",
 
-  "errors.endDateGreaterThanStartDate": "End date must be after the start date",
+  "notSet": "Not set",
+
+  "errors.endDateGreaterThanStartDate": "End date must be after the start date.",
+  "errors.multipleLicensors": "Only one Licensor per license is allowed.",
+
+  "header.licensor": "Licensor",
+
+  "organizations.add": "Add organization to agreement",
+  "organizations.licenseHasNone": "Agreement has no organizations.",
+  "organizations.selectRole": "Select a role",
+  "organizations.createNew": "Create new organization",
 
   "prop.description": "Description",
   "prop.endDate": "End date",
   "prop.name": "Name",
   "prop.openEnded": "Open ended",
+  "prop.orgName": "Name",
+  "prop.orgRole": "Role",
   "prop.parentLicense": "Parent License",
   "prop.terms": "License Terms",
   "prop.termName": "Name",
@@ -28,14 +40,13 @@
   "section.organizations": "Organizations",
   "section.terms": "Terms",
 
-  "warn.clearEndDate": "This value will be cleared when saving because \"Open ended\" is checked.",
-
   "settings.general": "General",
   "settings.general.message": "These are your general app settings.",
   "settings.some-feature": "Some Feature",
   "settings.some-feature.message": "These are your settings for some app feature.",
 
   "terms.add": "Add term",
-  "terms.notSet": "Not set"
+
+  "warn.clearEndDate": "This value will be cleared when saving because \"Open ended\" is checked."
 }
 

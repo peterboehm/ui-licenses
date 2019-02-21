@@ -16,6 +16,8 @@ import {
   TextField,
 } from '@folio/stripes/components';
 
+import LicenseFormOrganizations from './LicenseFormOrganizations';
+
 import { required } from '../../../util/validators';
 
 class LicenseFormInfo extends React.Component {
@@ -98,100 +100,98 @@ class LicenseFormInfo extends React.Component {
         open={this.props.open}
         onToggle={this.props.onToggle}
       >
-        <Row>
-          <Col xs={12}>
-            <FormattedMessage id="ui-licenses.placeholder.licenseName">
-              {placeholder => (
-                <Field
-                  id="edit-license-name"
-                  name="name"
-                  label={<FormattedMessage id="ui-licenses.prop.name" />}
-                  component={TextField}
-                  placeholder={placeholder}
-                  required
-                  validate={required}
-                />
-              )}
-            </FormattedMessage>
-          </Col>
-        </Row>
-        <Row>
-          <Col xs={12} md={6}>
-            <Field
-              id="edit-license-type"
-              component={Select}
-              dataOptions={this.getTypeValues()}
-              name="type"
-              label={<FormattedMessage id="ui-licenses.prop.type" />}
-              required
-            />
-          </Col>
-          <Col xs={12} md={6}>
-            <Field
-              id="edit-license-status"
-              component={Select}
-              dataOptions={this.getStatusValues()}
-              name="status"
-              label={<FormattedMessage id="ui-licenses.prop.status" />}
-              required
-            />
-          </Col>
-        </Row>
-        <Row>
-          <Col xs={12} md={5}>
-            <Field
-              id="edit-license-start-date"
-              name="startDate"
-              label={<FormattedMessage id="ui-licenses.prop.startDate" />}
-              component={Datepicker}
-              dateFormat="YYYY-MM-DD"
-              backendDateStandard="YYYY-MM-DD"
-            />
-          </Col>
-          <Col xs={10} md={5}>
-            <Field
-              id="edit-license-end-date"
-              name="endDate"
-              label={<FormattedMessage id="ui-licenses.prop.endDate" />}
-              component={Datepicker}
-              dateFormat="YYYY-MM-DD"
-              backendDateStandard="YYYY-MM-DD"
-              disabled={this.state.openEnded}
-              validate={this.validateEndDate}
-              warn={this.warnEndDate}
-            />
-          </Col>
-          <Col xs={2} style={{ paddingTop: 20 }}>
-            <Field
-              id="edit-license-open-ended"
-              name="openEnded"
-              label={<FormattedMessage id="ui-licenses.prop.openEnded" />}
-              component={Checkbox}
-              type="checkbox"
-            />
-          </Col>
-        </Row>
-        <Row>
-          <Col xs={12}>
-            <FormattedMessage id="ui-licenses.placeholder.licenseDescription">
-              {placeholder => (
-                <Field
-                  id="edit-license-description"
-                  name="description"
-                  label={<FormattedMessage id="ui-licenses.prop.description" />}
-                  placeholder={placeholder}
-                  component={TextArea}
-                />
-              )}
-            </FormattedMessage>
-          </Col>
-        </Row>
+        <React.Fragment>
+          <Row>
+            <Col xs={12}>
+              <FormattedMessage id="ui-licenses.placeholder.licenseName">
+                {placeholder => (
+                  <Field
+                    id="edit-license-name"
+                    name="name"
+                    label={<FormattedMessage id="ui-licenses.prop.name" />}
+                    component={TextField}
+                    placeholder={placeholder}
+                    required
+                    validate={required}
+                  />
+                )}
+              </FormattedMessage>
+            </Col>
+          </Row>
+          <Row>
+            <Col xs={12} md={6}>
+              <Field
+                id="edit-license-type"
+                component={Select}
+                dataOptions={this.getTypeValues()}
+                name="type"
+                label={<FormattedMessage id="ui-licenses.prop.type" />}
+                required
+              />
+            </Col>
+            <Col xs={12} md={6}>
+              <Field
+                id="edit-license-status"
+                component={Select}
+                dataOptions={this.getStatusValues()}
+                name="status"
+                label={<FormattedMessage id="ui-licenses.prop.status" />}
+                required
+              />
+            </Col>
+          </Row>
+          <Row>
+            <Col xs={12} md={5}>
+              <Field
+                id="edit-license-start-date"
+                name="startDate"
+                label={<FormattedMessage id="ui-licenses.prop.startDate" />}
+                component={Datepicker}
+                dateFormat="YYYY-MM-DD"
+                backendDateStandard="YYYY-MM-DD"
+              />
+            </Col>
+            <Col xs={10} md={5}>
+              <Field
+                id="edit-license-end-date"
+                name="endDate"
+                label={<FormattedMessage id="ui-licenses.prop.endDate" />}
+                component={Datepicker}
+                dateFormat="YYYY-MM-DD"
+                backendDateStandard="YYYY-MM-DD"
+                disabled={this.state.openEnded}
+                validate={this.validateEndDate}
+                warn={this.warnEndDate}
+              />
+            </Col>
+            <Col xs={2} style={{ paddingTop: 20 }}>
+              <Field
+                id="edit-license-open-ended"
+                name="openEnded"
+                label={<FormattedMessage id="ui-licenses.prop.openEnded" />}
+                component={Checkbox}
+                type="checkbox"
+              />
+            </Col>
+          </Row>
+          <Row>
+            <Col xs={12}>
+              <FormattedMessage id="ui-licenses.placeholder.licenseDescription">
+                {placeholder => (
+                  <Field
+                    id="edit-license-description"
+                    name="description"
+                    label={<FormattedMessage id="ui-licenses.prop.description" />}
+                    placeholder={placeholder}
+                    component={TextArea}
+                  />
+                )}
+              </FormattedMessage>
+            </Col>
+          </Row>
+        </React.Fragment>
         <AccordionSet>
-          <Accordion label={<FormattedMessage id="ui-licenses.section.organizations" />}>
-            Organizations component will be rendered here.
-            Pass a de-structured `sectionProps` object into it as props.
-            See how AgreementFormInfo in ui-agreements renders the AgreementFormInternalContacts
-          </Accordion>
+          <LicenseFormOrganizations {...sectionProps} />
         </AccordionSet>
       </Accordion>
     );
