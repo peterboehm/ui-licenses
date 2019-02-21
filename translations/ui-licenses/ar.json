@@ -66,8 +66,8 @@
     "section.terms": "الشروط",
     "prop.openEnded": "مفتوح انتهى",
     "warn.clearEndDate": "سيتم مسح هذه القائمة عند الحفظ بسبب تحديد \"مفتوح انتهى\"",
-    "prop.termName": "Name",
-    "prop.termValue": "Value",
-    "terms.add": "Add term",
-    "terms.notSet": "Not set"
+    "prop.termName": "الاسم",
+    "prop.termValue": "القيمة",
+    "terms.add": "إضافة مصطلح",
+    "terms.notSet": "لم يتم تعيينه"
 }
