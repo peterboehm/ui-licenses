@@ -30,6 +30,9 @@ class ViewLicense extends React.Component {
   });
 
   static propTypes = {
+    defaultLicenseValues: PropTypes.shape({
+      customProperties: PropTypes.object,
+    }),
     editLink: PropTypes.string,
     match: PropTypes.object,
     mutator: PropTypes.shape({
@@ -61,7 +64,7 @@ class ViewLicense extends React.Component {
 
   getInitialValues = () => {
     const license = cloneDeep(this.getLicense());
-    const { orgs, status, type } = license;
+    const { customProperties = {}, orgs, status, type } = license;
 
     if (status && status.id) {
       license.status = status.id;
@@ -74,6 +77,12 @@ class ViewLicense extends React.Component {
     if (orgs && orgs.length) {
       license.orgs = orgs.map(o => ({ ...o, role: o.role.id }));
     }
+
+    const defaultCustomProperties = get(this.props.defaultLicenseValues, ['customProperties'], {});
+    license.customProperties = {
+      ...defaultCustomProperties,
+      ...customProperties,
+    };
 
     return license;
   }

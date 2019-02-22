@@ -122,31 +122,31 @@ module.exports.test = (uiTestCtx, term = TERM) => {
           .click('#clickable-edit-license')
           .wait('#licenseFormInfo')
           .waitUntilNetworkIdle(2000)
-          .evaluate((expectedTerm) => {
-            const nameElement = document.querySelector('#edit-term-0-name');
-            const valueElement = document.querySelector('#edit-term-0-value');
+          .evaluate((expectedTerm, row) => {
+            const nameElement = document.querySelector(`#edit-term-${row}-name`);
+            const valueElement = document.querySelector(`#edit-term-${row}-value`);
 
             if (nameElement.selectedOptions[0].textContent !== expectedTerm.label) {
-              throw Error(`Expected #edit-term-0-name to have label ${expectedTerm.label}`);
+              throw Error(`Expected #edit-term-${row}-name to have label ${expectedTerm.label}`);
             }
             if (nameElement.value !== expectedTerm.name) {
-              throw Error(`Expected #edit-term-0-name to have value ${expectedTerm.name}`);
+              throw Error(`Expected #edit-term-${row}-name to have value ${expectedTerm.name}`);
             }
             const value = valueElement.selectedOptions ?
               valueElement.selectedOptions[0].textContent : valueElement.value;
 
             if (value !== expectedTerm.value) {
-              throw Error(`Expected #edit-term-0-value to be ${expectedTerm.value}. It is ${value}`);
+              throw Error(`Expected #edit-term-${row}-value to be ${expectedTerm.value}. It is ${value}`);
             }
-          }, term)
+          }, term, NUMBER_OF_TERMS - 1)
           .then(done)
           .catch(done);
       });
 
       it(`should edit term value to: ${term.editedValue}`, done => {
         nightmare
-          .insert('#edit-term-0-value', '')
-          .type('#edit-term-0-value', term.editedValue)
+          .insert(`#edit-term-${NUMBER_OF_TERMS - 1}-value`, '')
+          .type(`#edit-term-${NUMBER_OF_TERMS - 1}-value`, term.editedValue)
           .then(done)
           .catch(done);
       });
@@ -192,31 +192,31 @@ module.exports.test = (uiTestCtx, term = TERM) => {
           .click('#clickable-edit-license')
           .wait('#licenseFormInfo')
           .waitUntilNetworkIdle(2000)
-          .evaluate((expectedTerm) => {
-            const nameElement = document.querySelector('#edit-term-0-name');
-            const valueElement = document.querySelector('#edit-term-0-value');
+          .evaluate((expectedTerm, row) => {
+            const nameElement = document.querySelector(`#edit-term-${row}-name`);
+            const valueElement = document.querySelector(`#edit-term-${row}-value`);
 
             if (expectedTerm.label !== nameElement.selectedOptions[0].textContent) {
-              throw Error(`Expected #edit-term-0-name to have label ${expectedTerm.label}`);
+              throw Error(`Expected #edit-term-${row}-name to have label ${expectedTerm.label}`);
             }
             if (expectedTerm.name !== nameElement.value) {
-              throw Error(`Expected #edit-term-0-name to have label ${expectedTerm.name}`);
+              throw Error(`Expected #edit-term-${row}-name to have label ${expectedTerm.name}`);
             }
 
             const value = valueElement.selectedOptions ?
               valueElement.selectedOptions[0].textContent : valueElement.value;
 
             if (value !== expectedTerm.editedValue) {
-              throw Error(`Expected #edit-term-0-value to be ${expectedTerm.editedValue}. It is ${value}`);
+              throw Error(`Expected #edit-term-${row}-value to be ${expectedTerm.editedValue}. It is ${value}`);
             }
-          }, term)
+          }, term, NUMBER_OF_TERMS - 1)
           .then(done)
           .catch(done);
       });
 
       it('should remove term from license and save', done => {
         nightmare
-          .click('#edit-term-0-delete')
+          .click(`#edit-term-${NUMBER_OF_TERMS - 1}-delete`)
           .wait(500)
           .click('#clickable-updatelicense')
           .waitUntilNetworkIdle(2000) // Wait for record to be fetched

@@ -189,6 +189,7 @@ export default class Licenses extends React.Component {
         }}
         detailProps={{
           onUpdate: this.handleUpdate,
+          defaultLicenseValues: this.getDefaultLicenseValues(),
         }}
         editRecordComponent={EditLicense}
         initialResultCount={INITIAL_RESULT_COUNT}
