@@ -69,5 +69,14 @@
     "prop.termName": "Nome",
     "prop.termValue": "Valor",
     "terms.add": "Adicionar termo",
-    "terms.notSet": "Não configurado"
+    "terms.notSet": "Não configurado",
+    "notSet": "Not set",
+    "errors.multipleLicensors": "Only one Licensor per license is allowed.",
+    "header.licensor": "Licensor",
+    "organizations.add": "Add organization to agreement",
+    "organizations.licenseHasNone": "Agreement has no organizations.",
+    "organizations.selectRole": "Select a role",
+    "organizations.createNew": "Create new organization",
+    "prop.orgName": "Name",
+    "prop.orgRole": "Role"
 }

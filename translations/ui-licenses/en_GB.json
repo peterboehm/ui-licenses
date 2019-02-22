@@ -51,7 +51,7 @@
     "editLicense": "Edit license",
     "newLicense": "New license",
     "updateLicense": "Update license",
-    "errors.endDateGreaterThanStartDate": "End date must be after the start date",
+    "errors.endDateGreaterThanStartDate": "End date must be after the start date.",
     "prop.description": "Description",
     "prop.endDate": "End date",
     "prop.name": "Name",
@@ -69,5 +69,14 @@
     "prop.termName": "Name",
     "prop.termValue": "Value",
     "terms.add": "Add term",
-    "terms.notSet": "Not set"
+    "terms.notSet": "Not set",
+    "notSet": "Not set",
+    "errors.multipleLicensors": "Only one Licensor per license is allowed.",
+    "header.licensor": "Licensor",
+    "organizations.add": "Add organization to agreement",
+    "organizations.licenseHasNone": "Agreement has no organizations.",
+    "organizations.selectRole": "Select a role",
+    "organizations.createNew": "Create new organization",
+    "prop.orgName": "Name",
+    "prop.orgRole": "Role"
 }
