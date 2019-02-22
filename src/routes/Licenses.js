@@ -55,7 +55,7 @@ export default class Licenses extends React.Component {
       type: 'okapi',
       path: 'licenses/refdata/LicenseOrg/role',
     },
-    query: { initialValue: {} },
+    query: { },
     resultCount: { initialValue: INITIAL_RESULT_COUNT },
     selectedLicenseId: { initialValue: '' },
   });
@@ -73,30 +73,22 @@ export default class Licenses extends React.Component {
     browseOnly: PropTypes.bool,
   };
 
-  state = {
-    activeFilters: [],
-  }
-
   handleFilterChange = ({ name, values }) => {
-    this.setState((prevState) => ({
-      activeFilters: {
-        ...prevState.activeFilters,
-        [name]: values,
-      }
-    }), () => {
-      const { activeFilters } = this.state;
+    const newFilters = {
+      ...this.getActiveFilters(),
+      [name]: values,
+    };
 
-      const filters = Object.keys(activeFilters)
-        .map((filterName) => {
-          return activeFilters[filterName]
-            .map((filterValue) => `${filterName}.${filterValue}`)
-            .join(',');
-        })
-        .filter(filter => filter)
-        .join(',');
+    const filters = Object.keys(newFilters)
+      .map((filterName) => {
+        return newFilters[filterName]
+          .map(filterValue => `${filterName}.${filterValue}`)
+          .join(',');
+      })
+      .filter(filter => filter)
+      .join(',');
 
-      this.props.mutator.query.update({ filters });
-    });
+    this.props.mutator.query.update({ filters });
   }
 
   handleCreate = (license) => {
@@ -117,25 +109,6 @@ export default class Licenses extends React.Component {
     return this.props.mutator.selectedLicense.PUT(license);
   }
 
-  getActiveFilters = () => {
-    const { query } = this.props.resources;
-
-    if (!query || !query.filters) return undefined;
-
-    return query.filters
-      .split(',')
-      .reduce((filterMap, currentFilter) => {
-        const [name, value] = currentFilter.split('.');
-
-        if (!Array.isArray(filterMap[name])) {
-          filterMap[name] = [];
-        }
-
-        filterMap[name].push(value);
-        return filterMap;
-      }, {});
-  }
-
   getDefaultLicenseValues = () => {
     const status = get(this.props.resources.statusValues, ['records'], []).find(v => v.value === 'active') || {};
     const type = get(this.props.resources.typeValues, ['records'], []).find(v => v.value === 'local') || {};
@@ -150,6 +123,25 @@ export default class Licenses extends React.Component {
       type: type.id,
       customProperties,
     };
+  }
+
+  getActiveFilters = () => {
+    const { query } = this.props.resources;
+
+    if (!query || !query.filters) return {};
+
+    return query.filters
+      .split(',')
+      .reduce((filterMap, currentFilter) => {
+        const [name, value] = currentFilter.split('.');
+
+        if (!Array.isArray(filterMap[name])) {
+          filterMap[name] = [];
+        }
+
+        filterMap[name].push(value);
+        return filterMap;
+      }, {});
   }
 
   renderFilters = (onChange) => {
