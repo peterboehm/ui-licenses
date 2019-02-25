@@ -1,7 +1,7 @@
 {
   "name": "@folio/licenses",
   "version": "2.1.2",
-  "description": "License functionality for Stripes",
+  "description": "ERM License functionality for Stripes",
   "main": "src/index.js",
   "repository": "",
   "license": "Apache-2.0",
@@ -77,6 +77,11 @@
         ],
         "visible": true
       }
-    ]
+    ],
+    "icons": [{
+      "name": "app",
+      "alt": "ERM license functionality for Stripes",
+      "title": "Licenses"
+    }]
   }
 }
