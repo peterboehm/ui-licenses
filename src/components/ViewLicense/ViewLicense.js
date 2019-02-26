@@ -16,7 +16,7 @@ import {
   LicenseHeader,
   LicenseInfo,
   LicenseTerms,
-} from './Sections';
+} from './sections';
 
 import EditLicense from '../EditLicense';
 

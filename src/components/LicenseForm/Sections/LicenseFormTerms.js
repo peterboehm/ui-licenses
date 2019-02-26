@@ -11,7 +11,7 @@ import {
   Row,
 } from '@folio/stripes/components';
 
-import LicenseFormTermsList from '../../LicenseFormTermsList';
+import { TermsListField } from '../components';
 
 class LicenseFormTerms extends React.Component {
   static propTypes = {
@@ -81,7 +81,7 @@ class LicenseFormTerms extends React.Component {
         </Row>
         <Field
           name="customProperties"
-          component={LicenseFormTermsList}
+          component={TermsListField}
           availableTerms={this.state.terms}
         />
       </Accordion>
