@@ -31,7 +31,11 @@ export default class Licenses extends React.Component {
           'Status': 'status',
           'Start Date': 'startDate',
           'End Date': 'endDate'
-        }
+        },
+        filterKeys: {
+          orgs: 'orgs.org',
+          role: 'orgs.role',
+        },
       })
     },
     selectedLicense: {
