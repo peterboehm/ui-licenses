@@ -70,13 +70,13 @@
     "prop.termValue": "القيمة",
     "terms.add": "إضافة مصطلح",
     "terms.notSet": "لم يتم تعيينه",
-    "notSet": "Not set",
-    "errors.multipleLicensors": "Only one Licensor per license is allowed.",
-    "header.licensor": "Licensor",
-    "organizations.add": "Add organization to agreement",
-    "organizations.licenseHasNone": "Agreement has no organizations.",
-    "organizations.selectRole": "Select a role",
-    "organizations.createNew": "Create new organization",
-    "prop.orgName": "Name",
-    "prop.orgRole": "Role"
+    "notSet": "لم يتم تعيينه",
+    "errors.multipleLicensors": "يُسمح بمرخص واحد فقط لكل رخصة.",
+    "header.licensor": "المرخص",
+    "organizations.add": "إضافة مؤسسة إلى اتفاقية",
+    "organizations.licenseHasNone": "لا توجد مؤسسات بالاتفاقية",
+    "organizations.selectRole": "اختر دورًا",
+    "organizations.createNew": "إنشاء مؤسسة جديدة",
+    "prop.orgName": "الاسم",
+    "prop.orgRole": "الدور"
 }
