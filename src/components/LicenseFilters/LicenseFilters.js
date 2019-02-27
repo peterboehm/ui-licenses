@@ -113,7 +113,7 @@ export default class LicenseFilters extends React.Component {
         closedByDefault
         displayClearButton={activeFilters.length > 0}
         header={FilterAccordionHeader}
-        label={<FormattedMessage id="ui-agreements.settings.orgRoles.orgRole" />}
+        label={<FormattedMessage id="ui-licenses.prop.orgRole" />}
         onClearFilter={() => { this.props.onChange({ name: 'role', values: [] }); }}
       >
         <Selection
