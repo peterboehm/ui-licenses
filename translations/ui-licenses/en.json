@@ -9,16 +9,10 @@
 
   "notSet": "Not set",
 
-  "docs.addCoreDoc": "Add core document",
-  "docs.location": "Physical location",
-  "docs.name": "Document name",
-  "docs.noDocs": "No core documents have been added.",
-  "docs.note": "Note",
-  "docs.url": "URL",
+  "coreDocs.add": "Add core document",
+  "coreDocs.none": "No core documents have been added.",
 
-  "errors.docsMustHaveLocationOrURL": "Each document must specify either a location or URL.",
   "errors.endDateGreaterThanStartDate": "End date must be after the start date.",
-  "errors.invalidURL": "Please enter a valid URL (including \"http\" or \"https\").",
   "errors.multipleLicensors": "Only one Licensor per license is allowed.",
 
   "header.licensor": "Licensor",

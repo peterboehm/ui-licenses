@@ -15,6 +15,7 @@ import {
 import {
   LicenseHeader,
   LicenseInfo,
+  LicenseCoreDocs,
   LicenseTerms,
 } from './sections';
 
@@ -54,6 +55,7 @@ class ViewLicense extends React.Component {
   state = {
     sections: {
       licenseInfo: true,
+      licenseCoreDocs: true,
       licenseTerms: true,
     }
   }
@@ -188,6 +190,11 @@ class ViewLicense extends React.Component {
           <LicenseInfo
             id="licenseInfo"
             open={this.state.sections.licenseInfo}
+            {...sectionProps}
+          />
+          <LicenseCoreDocs
+            id="licenseCoreDocs"
+            open={this.state.sections.licenseCoreDocs}
             {...sectionProps}
           />
           <LicenseTerms

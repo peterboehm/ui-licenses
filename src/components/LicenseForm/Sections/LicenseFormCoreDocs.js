@@ -7,7 +7,7 @@ import {
   Accordion,
 } from '@folio/stripes/components';
 
-import { CoreDocsFieldArray } from '../components';
+import { DocumentsFieldArray } from '@folio/stripes-erm-components';
 
 class LicenseFormCoreDocs extends React.Component {
   static propTypes = {
@@ -25,7 +25,9 @@ class LicenseFormCoreDocs extends React.Component {
         onToggle={this.props.onToggle}
       >
         <FieldArray
-          component={CoreDocsFieldArray}
+          addDocBtnLabel={<FormattedMessage id="ui-licenses.coreDocs.add" />}
+          component={DocumentsFieldArray}
+          isEmptyMessage={<FormattedMessage id="ui-licenses.coreDocs.none" />}
           name="docs"
         />
         <div style={{ marginLeft: '2rem' }}>
