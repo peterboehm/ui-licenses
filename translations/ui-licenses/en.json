@@ -11,6 +11,9 @@
 
   "errors.endDateGreaterThanStartDate": "End date must be after the start date.",
   "errors.multipleLicensors": "Only one Licensor per license is allowed.",
+  
+  "filters.organization": "Organizations",
+  "filters.organizationRole": "Organization Role",
 
   "header.licensor": "Licensor",
 
