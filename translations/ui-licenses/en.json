@@ -13,7 +13,7 @@
   "errors.multipleLicensors": "Only one Licensor per license is allowed.",
   
   "filters.organization": "Organizations",
-  "filters.organizationRole": "Organization Role",
+  "filters.organizationRole": "Organization role",
 
   "header.licensor": "Licensor",
 
