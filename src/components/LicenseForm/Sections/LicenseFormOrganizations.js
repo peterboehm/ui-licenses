@@ -13,7 +13,6 @@ import {
   Layout,
   Row,
   Select,
-  Icon,
 } from '@folio/stripes/components';
 
 import {
@@ -97,9 +96,6 @@ class LicenseFormOrganizations extends React.Component {
           <FormattedMessage id="ui-licenses.prop.orgRole" />
         </Label>
       </Col>
-      <Col xs={1}>
-        <FormattedMessage id="stripes-core.button.delete" />
-      </Col>
     </Row>
   )
 
@@ -154,9 +150,7 @@ class LicenseFormOrganizations extends React.Component {
           id="add-license-org-btn"
           onClick={() => fields.push({ })}
         >
-          <Icon icon="plus-sign">
-            <FormattedMessage id="ui-licenses.organizations.add" />
-          </Icon>
+          <FormattedMessage id="ui-licenses.organizations.add" />
         </Button>
       </div>
     );
@@ -164,27 +158,29 @@ class LicenseFormOrganizations extends React.Component {
 
   render() {
     return (
-      <Accordion label={<FormattedMessage id="ui-licenses.section.organizations" />}>
-        <Row>
-          <Col xs={12}>
-            <FieldArray
-              name="orgs"
-              component={this.renderOrgList}
-            />
-            <Button
-              id="create-license-org-btn"
-              onClick={() => this.setState({ showCreateOrgModal: true })}
-            >
-              <FormattedMessage id="ui-licenses.organizations.createNew" />
-            </Button>
-            <CreateOrganizationModal
-              onClose={() => this.setState({ showCreateOrgModal: false })}
-              open={this.state.showCreateOrgModal}
-              path="licenses/org"
-            />
-          </Col>
-        </Row>
-      </Accordion>
+      <div style={{ marginLeft: '2rem' }}>
+        <Accordion label={<FormattedMessage id="ui-licenses.section.organizations" />}>
+          <Row>
+            <Col xs={12}>
+              <FieldArray
+                name="orgs"
+                component={this.renderOrgList}
+              />
+              <Button
+                id="create-license-org-btn"
+                onClick={() => this.setState({ showCreateOrgModal: true })}
+              >
+                <FormattedMessage id="ui-licenses.organizations.createNew" />
+              </Button>
+              <CreateOrganizationModal
+                onClose={() => this.setState({ showCreateOrgModal: false })}
+                open={this.state.showCreateOrgModal}
+                path="licenses/org"
+              />
+            </Col>
+          </Row>
+        </Accordion>
+      </div>
     );
   }
 }

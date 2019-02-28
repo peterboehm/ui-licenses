@@ -10,8 +10,9 @@ import {
 
 import {
   LicenseFormInfo,
+  LicenseFormCoreDocs,
   LicenseFormTerms,
-} from './Sections';
+} from './sections';
 
 class LicenseForm extends React.Component {
   static propTypes = {
@@ -22,7 +23,8 @@ class LicenseForm extends React.Component {
   state = {
     sections: {
       licenseFormInfo: true,
-      licenseFormTerms: true,
+      licenseFormDocs: false,
+      licenseFormTerms: false,
     }
   }
 
@@ -62,6 +64,7 @@ class LicenseForm extends React.Component {
           </Col>
         </Row>
         <LicenseFormInfo id="licenseFormInfo" open={sections.licenseFormInfo} {...sectionProps} />
+        <LicenseFormCoreDocs id="licenseFormDocs" open={sections.licenseFormDocs} {...sectionProps} />
         <LicenseFormTerms id="licenseFormTerms" open={sections.licenseFormTerms} {...sectionProps} />
       </AccordionSet>
     );

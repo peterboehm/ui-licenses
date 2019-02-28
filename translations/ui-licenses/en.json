@@ -9,6 +9,9 @@
 
   "notSet": "Not set",
 
+  "coreDocs.add": "Add core document",
+  "coreDocs.none": "No core documents have been added.",
+
   "errors.endDateGreaterThanStartDate": "End date must be after the start date.",
   "errors.multipleLicensors": "Only one Licensor per license is allowed.",
   
@@ -17,8 +20,8 @@
 
   "header.licensor": "Licensor",
 
-  "organizations.add": "Add organization to agreement",
-  "organizations.licenseHasNone": "Agreement has no organizations.",
+  "organizations.add": "Add organization",
+  "organizations.licenseHasNone": "No organizations have been added.",
   "organizations.selectRole": "Select a role",
   "organizations.createNew": "Create new organization",
 
@@ -42,6 +45,9 @@
   "section.licenseInformation": "License information",
   "section.organizations": "Organizations",
   "section.terms": "Terms",
+  "section.coreDocsAndAmendments": "Core documents and amendments",
+  "section.coreDocs": "Core documents",
+  "section.amendments": "Amendments",
 
   "settings.general": "General",
   "settings.general.message": "These are your general app settings.",
