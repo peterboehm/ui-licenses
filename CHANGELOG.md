@@ -7,6 +7,7 @@
 * Added ability to view, add, edit, and remove terms from licenses.
 * Added ability to view, add, edit, and remove organizations from licenses.
 * Added sticky license header.
+* Added ability to view, add, edit, and remove core documents from licenses.
 
 ## 1.1.0
 First Official Release for Q4 Release - 2018-12-11
