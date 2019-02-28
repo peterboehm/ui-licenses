@@ -78,5 +78,7 @@
     "organizations.selectRole": "اختر دورًا",
     "organizations.createNew": "إنشاء مؤسسة جديدة",
     "prop.orgName": "الاسم",
-    "prop.orgRole": "الدور"
+    "prop.orgRole": "الدور",
+    "filters.organization": "المؤسسات",
+    "filters.organizationRole": "دور المؤسسة"
 }

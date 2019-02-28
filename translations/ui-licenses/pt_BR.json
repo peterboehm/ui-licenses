@@ -78,5 +78,7 @@
     "organizations.selectRole": "Selecione uma função",
     "organizations.createNew": "Criar nova organização",
     "prop.orgName": "Nome",
-    "prop.orgRole": "Função"
+    "prop.orgRole": "Função",
+    "filters.organization": "Organizações",
+    "filters.organizationRole": "Função da organização"
 }
