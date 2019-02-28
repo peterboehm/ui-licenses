@@ -13,7 +13,6 @@ import {
   Layout,
   Row,
   Select,
-  Icon,
 } from '@folio/stripes/components';
 
 import {

@@ -9,7 +9,7 @@ import {
 } from '@folio/stripes/components';
 import { DocumentCard, Spinner } from '@folio/stripes-erm-components';
 
-export default class CoreDocs extends React.Component {
+export default class LicenseCoreDocs extends React.Component {
   static propTypes = {
     license: PropTypes.shape({
       docs: PropTypes.arrayOf(
