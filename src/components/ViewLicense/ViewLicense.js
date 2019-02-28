@@ -55,8 +55,8 @@ class ViewLicense extends React.Component {
   state = {
     sections: {
       licenseInfo: true,
-      licenseCoreDocs: true,
-      licenseTerms: true,
+      licenseCoreDocs: false,
+      licenseTerms: false,
     }
   }
 
