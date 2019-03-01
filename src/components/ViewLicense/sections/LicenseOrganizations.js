@@ -5,7 +5,7 @@ import { FormattedMessage } from 'react-intl';
 import { Link } from 'react-router-dom';
 import { Accordion, Badge, Icon, Layout } from '@folio/stripes/components';
 
-export default class Organizations extends React.Component {
+export default class LicenseOrganizations extends React.Component {
   static propTypes = {
     license: PropTypes.shape({
       orgs: PropTypes.arrayOf(
