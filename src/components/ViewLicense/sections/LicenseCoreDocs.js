@@ -45,7 +45,7 @@ export default class LicenseCoreDocs extends React.Component {
         label={<FormattedMessage id="ui-licenses.section.coreDocs" />}
       >
         <Layout className="padding-bottom-gutter">
-          { docs.length ? this.renderDocs(docs) : <FormattedMessage id="ui-licenses.docs.noDocs" /> }
+          { docs.length ? this.renderDocs(docs) : <FormattedMessage id="ui-licenses.coreDocs.none" /> }
         </Layout>
       </Accordion>
     );
