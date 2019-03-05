@@ -11,6 +11,7 @@ import { DocumentCard, Spinner } from '@folio/stripes-erm-components';
 
 export default class LicenseCoreDocs extends React.Component {
   static propTypes = {
+    id: PropTypes.string,
     license: PropTypes.shape({
       docs: PropTypes.arrayOf(
         PropTypes.shape({
@@ -23,6 +24,8 @@ export default class LicenseCoreDocs extends React.Component {
         }),
       ),
     }).isRequired,
+    onToggle: PropTypes.func,
+    open: PropTypes.bool,
   };
 
   renderDocs = (docs) => {
@@ -35,14 +38,17 @@ export default class LicenseCoreDocs extends React.Component {
   }
 
   render() {
+    const { id, onToggle, open } = this.props;
     const { docs = [] } = this.props.license;
 
     return (
       <Accordion
         displayWhenClosed={this.renderBadge()}
         displayWhenOpen={this.renderBadge()}
-        id="license-docs"
+        id={id}
         label={<FormattedMessage id="ui-licenses.section.coreDocs" />}
+        onToggle={onToggle}
+        open={open}
       >
         <Layout className="padding-bottom-gutter">
           { docs.length ? this.renderDocs(docs) : <FormattedMessage id="ui-licenses.coreDocs.none" /> }
