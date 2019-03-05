@@ -2,6 +2,7 @@
 
 ## 2.2.0
 * Added name export of Licenses search UI
+* Use `LicenseCard` when rendering license header.
 
 ## 2.1.0
 * Added ability to view, add, edit, and remove core documents from licenses.
