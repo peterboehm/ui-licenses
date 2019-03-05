@@ -59,6 +59,7 @@ export default class LicenseOrganizations extends React.Component {
   render() {
     return (
       <Accordion
+        closedByDefault
         displayWhenClosed={this.renderBadge()}
         displayWhenOpen={this.renderBadge()}
         id="license-orgs"
