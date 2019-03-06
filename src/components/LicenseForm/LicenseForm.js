@@ -14,6 +14,8 @@ import {
   LicenseFormTerms,
 } from './sections';
 
+import css from './LicenseForm.css';
+
 class LicenseForm extends React.Component {
   static propTypes = {
     parentMutator: PropTypes.object,
@@ -54,19 +56,21 @@ class LicenseForm extends React.Component {
     const { sections } = this.state;
 
     return (
-      <AccordionSet>
-        <Row end="xs">
-          <Col xs>
-            <ExpandAllButton
-              accordionStatus={sections}
-              onToggle={this.handleAllSectionsToggle}
-            />
-          </Col>
-        </Row>
-        <LicenseFormInfo id="licenseFormInfo" open={sections.licenseFormInfo} {...sectionProps} />
-        <LicenseFormCoreDocs id="licenseFormDocs" open={sections.licenseFormDocs} {...sectionProps} />
-        <LicenseFormTerms id="licenseFormTerms" open={sections.licenseFormTerms} {...sectionProps} />
-      </AccordionSet>
+      <div className={css.licenseForm}>
+        <AccordionSet>
+          <Row end="xs">
+            <Col xs>
+              <ExpandAllButton
+                accordionStatus={sections}
+                onToggle={this.handleAllSectionsToggle}
+              />
+            </Col>
+          </Row>
+          <LicenseFormInfo id="licenseFormInfo" open={sections.licenseFormInfo} {...sectionProps} />
+          <LicenseFormCoreDocs id="licenseFormDocs" open={sections.licenseFormDocs} {...sectionProps} />
+          <LicenseFormTerms id="licenseFormTerms" open={sections.licenseFormTerms} {...sectionProps} />
+        </AccordionSet>
+      </div>
     );
   }
 }
