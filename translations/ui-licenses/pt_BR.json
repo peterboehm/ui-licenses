@@ -73,12 +73,17 @@
     "notSet": "Não configurado",
     "errors.multipleLicensors": "É permitido somente um licenciante por licença.",
     "header.licensor": "Licenciante",
-    "organizations.add": "Adicionar organização ao contrato",
-    "organizations.licenseHasNone": "Contrato não tem organizações.",
+    "organizations.add": "Adicionar organização",
+    "organizations.licenseHasNone": "Nenhuma organização foi adicionada.",
     "organizations.selectRole": "Selecione uma função",
     "organizations.createNew": "Criar nova organização",
     "prop.orgName": "Nome",
     "prop.orgRole": "Função",
     "filters.organization": "Organizações",
-    "filters.organizationRole": "Função da organização"
+    "filters.organizationRole": "Função da organização",
+    "coreDocs.add": "Adicionar documento principal",
+    "coreDocs.none": "Nenhum documento principal foi adicionado.",
+    "section.coreDocsAndAmendments": "Documentos principais e alterações",
+    "section.coreDocs": "Documentos principais",
+    "section.amendments": "Alterações"
 }

@@ -80,5 +80,10 @@
     "prop.orgName": "Name",
     "prop.orgRole": "Role",
     "filters.organization": "Organizations",
-    "filters.organizationRole": "Organization role"
+    "filters.organizationRole": "Organization role",
+    "coreDocs.add": "Add core document",
+    "coreDocs.none": "No core documents have been added.",
+    "section.coreDocsAndAmendments": "Core documents and amendments",
+    "section.coreDocs": "Core documents",
+    "section.amendments": "Amendments"
 }
