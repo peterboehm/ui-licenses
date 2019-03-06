@@ -80,5 +80,10 @@
     "prop.orgName": "الاسم",
     "prop.orgRole": "الدور",
     "filters.organization": "المؤسسات",
-    "filters.organizationRole": "دور المؤسسة"
+    "filters.organizationRole": "دور المؤسسة",
+    "coreDocs.add": "إضافة وثيقة أساسية",
+    "coreDocs.none": "لم تتم إضافة أي وثيقة أساسية.",
+    "section.coreDocsAndAmendments": "الوثائق الأساسية والتعديلات",
+    "section.coreDocs": "الوثائق الأساسية",
+    "section.amendments": "تعديلات"
 }

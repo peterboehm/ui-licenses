@@ -73,12 +73,17 @@
     "notSet": "Not set",
     "errors.multipleLicensors": "Only one Licensor per license is allowed.",
     "header.licensor": "Licensor",
-    "organizations.add": "Add organization to agreement",
-    "organizations.licenseHasNone": "Agreement has no organizations.",
+    "organizations.add": "Add organization",
+    "organizations.licenseHasNone": "No organizations have been added.",
     "organizations.selectRole": "Select a role",
     "organizations.createNew": "Create new organization",
     "prop.orgName": "Name",
     "prop.orgRole": "Role",
     "filters.organization": "Organizations",
-    "filters.organizationRole": "Organization role"
+    "filters.organizationRole": "Organization role",
+    "coreDocs.add": "Add core document",
+    "coreDocs.none": "No core documents have been added.",
+    "section.coreDocsAndAmendments": "Core documents and amendments",
+    "section.coreDocs": "Core documents",
+    "section.amendments": "Amendments"
 }
