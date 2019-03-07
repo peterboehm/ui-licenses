@@ -70,6 +70,8 @@ export default class Licenses extends React.Component {
   });
 
   static propTypes = {
+    browseOnly: PropTypes.bool,
+    disableRecordCreation: PropTypes.bool,
     resources: PropTypes.shape({
       query: PropTypes.object,
       records: PropTypes.object,
@@ -79,7 +81,7 @@ export default class Licenses extends React.Component {
     }),
     mutator: PropTypes.object,
     onSelectRow: PropTypes.func,
-    browseOnly: PropTypes.bool,
+    packageInfo: PropTypes.object,
   };
 
   handleFilterChange = ({ name, values }) => {
@@ -192,6 +194,7 @@ export default class Licenses extends React.Component {
           onUpdate: this.handleUpdate,
           defaultLicenseValues: this.getDefaultLicenseValues(),
         }}
+        disableRecordCreation={this.props.disableRecordCreation}
         editRecordComponent={EditLicense}
         initialResultCount={INITIAL_RESULT_COUNT}
         key="licenses"
@@ -201,7 +204,7 @@ export default class Licenses extends React.Component {
         onCreate={this.handleCreate}
         onFilterChange={this.handleFilterChange}
         onSelectRow={this.props.onSelectRow}
-        packageInfo={packageInfo}
+        packageInfo={this.props.packageInfo || packageInfo}
         parentMutator={this.props.mutator}
         parentResources={this.props.resources}
         renderFilters={this.renderFilters}
