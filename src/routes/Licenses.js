@@ -82,7 +82,12 @@ export default class Licenses extends React.Component {
     mutator: PropTypes.object,
     onSelectRow: PropTypes.func,
     packageInfo: PropTypes.object,
-  };
+    showSingleResult: PropTypes.bool,
+  }
+
+  static defaultProps = {
+    showSingleResult: true,
+  }
 
   handleFilterChange = ({ name, values }) => {
     const newFilters = {
@@ -215,7 +220,7 @@ export default class Licenses extends React.Component {
           startDate: a => (a.startDate ? <FormattedDate value={a.startDate} /> : ''),
           endDate: this.renderEndDate,
         }}
-        showSingleResult
+        showSingleResult={this.props.showSingleResult}
         viewRecordComponent={ViewLicense}
         viewRecordPerms="ui-licenses.licenses.view"
         visibleColumns={['name', 'type', 'status', 'startDate', 'endDate']}
