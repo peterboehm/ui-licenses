@@ -1,4 +1,17 @@
-## 2.1.2 Open
+## 2.2.2 2019-03-12
+ * ERM-74 Incorrect label on "Add organization" button
+ * ERM-58 Default filter values removed when value from additional filter selected (Agreements)
+ * ERM-37 Manage core documents for a license
+   * ERM-40 Remove a core document from a license
+   * ERM-39 Edit license core document details
+   * ERM-38 Add core documents to a License
+ * ERM-36 Filter License Search Results by Organisation Role
+ * ERM-10 Remove an Organisation from a License
+ * ERM-9 Change a license organisation's role
+ * ERM-7 Add an Organisation to a License
+   * ERM-31 Add Basic Details area to License view
+   * ERM-30 Add ability to add organizations to licenses
+   * ERM-29 Create and use erm-stripes-components repo
 
 ## 2.1.1 2019-02-23
 
