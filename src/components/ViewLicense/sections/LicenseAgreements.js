@@ -1,0 +1,124 @@
+import React from 'react';
+import PropTypes from 'prop-types';
+import { get } from 'lodash';
+import { FormattedDate, FormattedMessage } from 'react-intl';
+import { IfInterface } from '@folio/stripes/core';
+import {
+  Accordion,
+  Badge,
+  InfoPopover,
+  Layout,
+  MultiColumnList,
+} from '@folio/stripes/components';
+import { Spinner } from '@folio/stripes-erm-components';
+
+export default class LicenseAgreements extends React.Component {
+  static propTypes = {
+    id: PropTypes.string,
+    license: PropTypes.shape({
+    }).isRequired,
+    linkedAgreements: PropTypes.arrayOf(PropTypes.shape({
+      note: PropTypes.string,
+      remoteId_object: PropTypes.shape({
+        agreementStatus: PropTypes.shape({
+          label: PropTypes.string,
+        }),
+        endDate: PropTypes.string,
+        id: PropTypes.string,
+        name: PropTypes.string,
+        startDate: PropTypes.string,
+      }),
+      status: PropTypes.shape({
+        value: PropTypes.string.isRequired,
+        label: PropTypes.string,
+      }).isRequired,
+    })).isRequired,
+    onToggle: PropTypes.func,
+    open: PropTypes.bool,
+  };
+
+  state = {
+    groupedLinkedAgreements: [],
+  }
+
+  static getDerivedStateFromProps(props, state) {
+    if (props.linkedAgreements.length !== state.groupedLinkedAgreements.length) {
+      return {
+        groupedLinkedAgreements: [
+          ...props.linkedAgreements.filter(a => a.status.value === 'controlling'),
+          ...props.linkedAgreements.filter(a => a.status.value !== 'controlling'),
+        ]
+      };
+    }
+
+    return null;
+  }
+
+  renderLinkedAgreements = () => {
+    return (
+      <MultiColumnList
+        columnMapping={{
+          linkNote: '',
+          name: <FormattedMessage id="ui-licenses.prop.name" />,
+          startDate: <FormattedMessage id="ui-licenses.prop.startDate" />,
+          endDate: <FormattedMessage id="ui-licenses.prop.endDate" />,
+          agreementStatus: <FormattedMessage id="ui-licenses.prop.agreementStatus" />,
+          linkStatus: <FormattedMessage id="ui-licenses.prop.linkStatus" />,
+        }}
+        columnWidths={{
+          linkNote: 30,
+          name: '30%',
+          startDate: '15%',
+          endDate: '15%',
+          agreementStatus: '15%',
+          linkStatus: '15%',
+        }}
+        contentData={this.state.groupedLinkedAgreements}
+        formatter={{
+          linkNote: link => (link.note ? <InfoPopover content={link.note} /> : null),
+          name: ({ owner:agreement = {} }) => agreement.name,
+          startDate: ({ owner:agreement = {} }) => (agreement.startDate ? <FormattedDate value={agreement.startDate} /> : '-'),
+          endDate: ({ owner:agreement = {} }) => (agreement.endDate ? <FormattedDate value={agreement.endDate} /> : '-'),
+          agreementStatus: ({ owner:agreement = {} }) => get(agreement, ['agreementStatus', 'label'], '-'),
+          linkStatus: link => (link.status ? link.status.label : '-'),
+        }}
+        id="linked-agreements-table"
+        interactive={false}
+        visibleColumns={[
+          'linkNote',
+          'name',
+          'startDate',
+          'endDate',
+          'agreementStatus',
+          'linkStatus',
+        ]}
+      />
+    );
+  }
+
+  renderBadge = () => {
+    const count = this.props.linkedAgreements.length;
+    return count !== undefined ? <Badge>{count}</Badge> : <Spinner />;
+  }
+
+  render() {
+    const { id, onToggle, open } = this.props;
+
+    return (
+      <IfInterface name="erm">
+        <Accordion
+          displayWhenClosed={this.renderBadge()}
+          displayWhenOpen={this.renderBadge()}
+          id={id}
+          label={<FormattedMessage id="ui-licenses.section.licenseAgreements" />}
+          onToggle={onToggle}
+          open={open}
+        >
+          <Layout className="padding-bottom-gutter">
+            { this.state.groupedLinkedAgreements.length ? this.renderLinkedAgreements() : <FormattedMessage id="ui-licenses.licenseAgreements.none" /> }
+          </Layout>
+        </Accordion>
+      </IfInterface>
+    );
+  }
+}
