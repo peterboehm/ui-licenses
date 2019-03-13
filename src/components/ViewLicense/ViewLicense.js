@@ -13,9 +13,10 @@ import {
 } from '@folio/stripes/components';
 
 import {
+  LicenseAgreements,
+  LicenseCoreDocs,
   LicenseHeader,
   LicenseInfo,
-  LicenseCoreDocs,
   LicenseTerms,
 } from './sections';
 
@@ -26,6 +27,14 @@ class ViewLicense extends React.Component {
     selectedLicense: {
       type: 'okapi',
       path: 'licenses/licenses/:{id}',
+    },
+    linkedAgreements: {
+      type: 'okapi',
+      path: 'licenses/licenses/:{id}/linkedAgreements',
+      params: {
+        sort: 'owner.startDate;asc'
+      },
+      throwErrors: false,
     },
     query: {},
   });
@@ -57,6 +66,7 @@ class ViewLicense extends React.Component {
       licenseInfo: true,
       licenseCoreDocs: false,
       licenseTerms: false,
+      linkedAgreements: false,
     }
   }
 
@@ -92,6 +102,7 @@ class ViewLicense extends React.Component {
   getSectionProps = () => {
     return {
       license: this.getLicense(),
+      linkedAgreements: get(this.props.resources.linkedAgreements, ['records'], []),
       onToggle: this.handleSectionToggle,
       parentResources: this.props.parentResources,
       stripes: this.props.stripes,
@@ -200,6 +211,11 @@ class ViewLicense extends React.Component {
           <LicenseTerms
             id="licenseTerms"
             open={this.state.sections.licenseTerms}
+            {...sectionProps}
+          />
+          <LicenseAgreements
+            id="licenseAgreements"
+            open={this.state.sections.licenseAgreements}
             {...sectionProps}
           />
         </AccordionSet>

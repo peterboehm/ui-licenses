@@ -1,5 +1,8 @@
 # Change history for ui-licenses
 
+## 2.3.0 (IN PROGRESS)
+* Added ability to view agreements linked to a license.
+
 ## 2.2.0
 * Added name export of Licenses search UI
 * Use `LicenseCard` when rendering license header.
