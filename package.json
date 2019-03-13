@@ -28,7 +28,7 @@
   },
   "dependencies": {
     "@folio/stripes-erm-components": "^1.0.6",
-    "lodash": "^4.17.4",
+    "lodash": "^4.17.11",
     "prop-types": "^15.6.0",
     "react-intl": "^2.4.0",
     "react-router-dom": "^4.1.1",

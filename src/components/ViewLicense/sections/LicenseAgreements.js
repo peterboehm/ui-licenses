@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { get } from 'lodash';
 import { FormattedDate, FormattedMessage } from 'react-intl';
+import Link from 'react-router-dom/Link';
 import { IfInterface } from '@folio/stripes/core';
 import {
   Accordion,
@@ -76,7 +77,7 @@ export default class LicenseAgreements extends React.Component {
         contentData={this.state.groupedLinkedAgreements}
         formatter={{
           linkNote: link => (link.note ? <InfoPopover content={link.note} /> : null),
-          name: ({ owner:agreement = {} }) => agreement.name,
+          name: ({ owner:agreement = {} }) => <Link to={`/erm/agreements/view/${agreement.id}`}>{agreement.name}</Link>,
           startDate: ({ owner:agreement = {} }) => (agreement.startDate ? <FormattedDate value={agreement.startDate} /> : '-'),
           endDate: ({ owner:agreement = {} }) => (agreement.endDate ? <FormattedDate value={agreement.endDate} /> : '-'),
           agreementStatus: ({ owner:agreement = {} }) => get(agreement, ['agreementStatus', 'label'], '-'),
