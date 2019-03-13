@@ -85,5 +85,9 @@
     "coreDocs.none": "لم تتم إضافة أي وثيقة أساسية.",
     "section.coreDocsAndAmendments": "الوثائق الأساسية والتعديلات",
     "section.coreDocs": "الوثائق الأساسية",
-    "section.amendments": "تعديلات"
+    "section.amendments": "تعديلات",
+    "licenseAgreements.none": "No agreements currently linked to this license.",
+    "prop.agreementStatus": "Agreement status",
+    "prop.linkStatus": "Link status",
+    "section.licenseAgreements": "Agreements linked to this license"
 }

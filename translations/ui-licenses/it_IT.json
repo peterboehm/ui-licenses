@@ -51,7 +51,7 @@
     "editLicense": "Modifica licenza",
     "newLicense": "Nuova licenza",
     "updateLicense": "Update license",
-    "errors.endDateGreaterThanStartDate": "End date must be after the start date.",
+    "errors.endDateGreaterThanStartDate": "La data di fine deve essere successiva alla data di inizio.",
     "prop.description": "Descrizione",
     "prop.endDate": "End date",
     "prop.name": "Name",
@@ -73,8 +73,8 @@
     "notSet": "Not set",
     "errors.multipleLicensors": "Only one Licensor per license is allowed.",
     "header.licensor": "Licensor",
-    "organizations.add": "Add organization",
-    "organizations.licenseHasNone": "No organizations have been added.",
+    "organizations.add": "Aggiungi organizzazione",
+    "organizations.licenseHasNone": "Nessuna organizzazione è stata aggiunta.",
     "organizations.selectRole": "Select a role",
     "organizations.createNew": "Create new organization",
     "prop.orgName": "Name",
@@ -85,5 +85,9 @@
     "coreDocs.none": "No core documents have been added.",
     "section.coreDocsAndAmendments": "Core documents and amendments",
     "section.coreDocs": "Core documents",
-    "section.amendments": "Amendments"
+    "section.amendments": "Amendments",
+    "licenseAgreements.none": "No agreements currently linked to this license.",
+    "prop.agreementStatus": "Agreement status",
+    "prop.linkStatus": "Link status",
+    "section.licenseAgreements": "Agreements linked to this license"
 }
