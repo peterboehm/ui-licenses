@@ -85,5 +85,9 @@
     "coreDocs.none": "Nenhum documento principal foi adicionado.",
     "section.coreDocsAndAmendments": "Documentos principais e alterações",
     "section.coreDocs": "Documentos principais",
-    "section.amendments": "Alterações"
+    "section.amendments": "Alterações",
+    "licenseAgreements.none": "No agreements currently linked to this license.",
+    "prop.agreementStatus": "Agreement status",
+    "prop.linkStatus": "Link status",
+    "section.licenseAgreements": "Agreements linked to this license"
 }
