@@ -86,8 +86,8 @@
     "section.coreDocsAndAmendments": "Documentos principais e alterações",
     "section.coreDocs": "Documentos principais",
     "section.amendments": "Alterações",
-    "licenseAgreements.none": "No agreements currently linked to this license.",
-    "prop.agreementStatus": "Agreement status",
-    "prop.linkStatus": "Link status",
-    "section.licenseAgreements": "Agreements linked to this license"
+    "licenseAgreements.none": "Nenhum contrato atualmente vinculado a esta licença.",
+    "prop.agreementStatus": "Status do contrato",
+    "prop.linkStatus": "Status do link",
+    "section.licenseAgreements": "Contratos ligados a esta licença"
 }
