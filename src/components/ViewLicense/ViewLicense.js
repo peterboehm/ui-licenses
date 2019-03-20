@@ -66,7 +66,7 @@ class ViewLicense extends React.Component {
       licenseInfo: true,
       licenseCoreDocs: false,
       licenseTerms: false,
-      linkedAgreements: false,
+      licenseAgreements: false,
     }
   }
 
