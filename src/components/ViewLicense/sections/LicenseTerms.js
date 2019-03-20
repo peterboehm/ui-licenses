@@ -17,7 +17,7 @@ export default class LicenseTerms extends React.Component {
   }
 
   render() {
-    const { id, open, onToggle, license, parentResources } = this.props;
+    const { id, license, onToggle, open, parentResources } = this.props;
     const terms = get(parentResources.terms, ['records'], []);
     return (
       <Accordion
