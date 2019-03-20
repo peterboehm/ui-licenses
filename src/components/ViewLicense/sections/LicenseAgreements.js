@@ -17,10 +17,11 @@ export default class LicenseAgreements extends React.Component {
   static propTypes = {
     id: PropTypes.string,
     license: PropTypes.shape({
+      id: PropTypes.string,
     }).isRequired,
     linkedAgreements: PropTypes.arrayOf(PropTypes.shape({
       note: PropTypes.string,
-      remoteId_object: PropTypes.shape({
+      owner: PropTypes.shape({
         agreementStatus: PropTypes.shape({
           label: PropTypes.string,
         }),
@@ -42,8 +43,12 @@ export default class LicenseAgreements extends React.Component {
     groupedLinkedAgreements: [],
   }
 
+
   static getDerivedStateFromProps(props, state) {
-    if (props.linkedAgreements.length !== state.groupedLinkedAgreements.length) {
+    if (
+      (props.linkedAgreements.length !== state.groupedLinkedAgreements.length) ||
+      (get(props.linkedAgreements, [0, 'owner', 'id']) !== get(state.groupedLinkedAgreements, [0, 'owner', 'id']))
+    ) {
       return {
         groupedLinkedAgreements: [
           ...props.linkedAgreements.filter(a => a.status.value === 'controlling'),
