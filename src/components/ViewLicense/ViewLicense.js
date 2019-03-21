@@ -32,7 +32,7 @@ class ViewLicense extends React.Component {
       type: 'okapi',
       path: 'licenses/licenses/:{id}/linkedAgreements',
       params: {
-        sort: 'owner.startDate;asc'
+        sort: 'owner.startDate;desc'
       },
       throwErrors: false,
     },
