@@ -1,3 +1,8 @@
+## 2.3.0 2019-03-22
+ * ERM-125 Sort order of Agreements linked to a license is incorrect
+ * ERM-97 Update existing license terms view to use shared component
+ * ERM-63 View linked agreement details in a license 
+
 ## 2.2.2 2019-03-12
  * ERM-74 Incorrect label on "Add organization" button
  * ERM-58 Default filter values removed when value from additional filter selected (Agreements)
