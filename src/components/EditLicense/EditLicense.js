@@ -32,6 +32,7 @@ class EditLicense extends React.Component {
           {ariaLabel => (
             <IconButton
               icon="times"
+              id="close-license-form-button"
               onClick={this.props.onCancel}
               aria-label={ariaLabel}
             />
