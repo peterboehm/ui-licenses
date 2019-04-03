@@ -59,6 +59,10 @@ export default class Licenses extends React.Component {
       type: 'okapi',
       path: 'licenses/refdata/LicenseOrg/role',
     },
+    documentCategories: {
+      type: 'okapi',
+      path: 'licenses/refdata/DocumentAttachment/atType',
+    },
     query: {
       initialValue: {
         filters: 'status.Active',

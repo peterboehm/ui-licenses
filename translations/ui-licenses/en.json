@@ -60,6 +60,7 @@
   "settings.some-feature": "Some Feature",
   "settings.some-feature.message": "These are your settings for some app feature.",
 
+  "supplementaryDocs.add": "Add supplementary document",
   "supplementaryDocs.none": "No supplementary documents have been added",
 
   "terms.add": "Add term",

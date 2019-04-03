@@ -15,7 +15,7 @@ export default class LicenseSupplement extends React.Component {
     license: PropTypes.shape({
       supplementaryDocs: PropTypes.arrayOf(
         PropTypes.shape({
-          category: PropTypes.string,
+          atType: PropTypes.string,
           dateCreated: PropTypes.string,
           lastUpdated: PropTypes.string,
           location: PropTypes.string,
