@@ -43,6 +43,7 @@
   "prop.status": "Status",
   "prop.type": "Type",
 
+  "placeholder.documentCategory": "Enter a category",
   "placeholder.licenseName": "Enter the license name",
   "placeholder.licenseDescription": "Enter a description of the license",
 

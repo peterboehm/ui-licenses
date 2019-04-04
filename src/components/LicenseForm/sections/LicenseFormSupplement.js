@@ -13,23 +13,9 @@ import { DocumentsFieldArray } from '@folio/stripes-erm-components';
 class LicenseFormSupplement extends React.Component {
     static propTypes = {
       id: PropTypes.string,
-      /*       license: PropTypes.shape({
-        supplementaryDocs: PropTypes.arrayOf(
-          PropTypes.shape({
-            category: PropTypes.string,
-            dateCreated: PropTypes.string,
-            lastUpdated: PropTypes.string,
-            location: PropTypes.string,
-            name: PropTypes.string.isRequired,
-            note: PropTypes.string,
-            url: PropTypes.string,
-          }),
-        ),
-      }).isRequired, */
       onToggle: PropTypes.func,
       open: PropTypes.bool,
       parentResources: PropTypes.shape({
-        //  documentCategories: PropTypes.arrayOf(PropTypes.object),
         documentCategories: PropTypes.arrayOf(PropTypes.shape({
           id: PropTypes.string,
           label: PropTypes.string,
