@@ -55,8 +55,8 @@ module.exports.test = (uiTestCtx) => {
         console.log(`\tCreating ${name}`);
 
         nightmare
-          .wait('#clickable-licenses-module')
-          .click('#clickable-licenses-module')
+          .wait('#app-list-item-clickable-licenses-module')
+          .click('#app-list-item-clickable-licenses-module')
           .wait('#licenses-module-display')
           .wait('#clickable-newlicense')
           .click('#clickable-newlicense')
@@ -150,7 +150,7 @@ module.exports.test = (uiTestCtx) => {
         it(`should find ${licensor.name} in header as Licensor`, done => {
           nightmare
             .evaluate(o => {
-              const headerLicensor = document.querySelector('[data-test-header-licensor-name]').textContent;
+              const headerLicensor = document.querySelector('[data-test-license-card-licensor-name]').textContent;
               if (headerLicensor !== o.name) {
                 throw Error(`Expected to find Licensor as ${o.name}. It is ${headerLicensor}.`);
               }

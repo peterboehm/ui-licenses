@@ -1,6 +1,16 @@
 # Change history for ui-licenses
 
-## 2.0.0 IN PROGRESS
+## 2.3.0 (IN PROGRESS)
+* Added ability to view agreements linked to a license.
+
+## 2.2.0
+* Added name export of Licenses search UI
+* Use `LicenseCard` when rendering license header.
+
+## 2.1.0
+* Added ability to view, add, edit, and remove core documents from licenses.
+
+## 2.0.0
 * Upgrade to Stripes 2.0
 * Removed usage of lookbehinds in regexes (avail in 2.0.1)
 * Added License Status filter to search.

@@ -31,7 +31,11 @@ export default class Licenses extends React.Component {
           'Status': 'status',
           'Start Date': 'startDate',
           'End Date': 'endDate'
-        }
+        },
+        filterKeys: {
+          orgs: 'orgs.org',
+          role: 'orgs.role',
+        },
       })
     },
     selectedLicense: {
@@ -55,12 +59,19 @@ export default class Licenses extends React.Component {
       type: 'okapi',
       path: 'licenses/refdata/LicenseOrg/role',
     },
-    query: { },
+    query: {
+      initialValue: {
+        filters: 'status.Active',
+        sort: 'Name',
+      }
+    },
     resultCount: { initialValue: INITIAL_RESULT_COUNT },
     selectedLicenseId: { initialValue: '' },
   });
 
   static propTypes = {
+    browseOnly: PropTypes.bool,
+    disableRecordCreation: PropTypes.bool,
     resources: PropTypes.shape({
       query: PropTypes.object,
       records: PropTypes.object,
@@ -70,8 +81,13 @@ export default class Licenses extends React.Component {
     }),
     mutator: PropTypes.object,
     onSelectRow: PropTypes.func,
-    browseOnly: PropTypes.bool,
-  };
+    packageInfo: PropTypes.object,
+    showSingleResult: PropTypes.bool,
+  }
+
+  static defaultProps = {
+    showSingleResult: true,
+  }
 
   handleFilterChange = ({ name, values }) => {
     const newFilters = {
@@ -183,6 +199,7 @@ export default class Licenses extends React.Component {
           onUpdate: this.handleUpdate,
           defaultLicenseValues: this.getDefaultLicenseValues(),
         }}
+        disableRecordCreation={this.props.disableRecordCreation}
         editRecordComponent={EditLicense}
         initialResultCount={INITIAL_RESULT_COUNT}
         key="licenses"
@@ -192,7 +209,7 @@ export default class Licenses extends React.Component {
         onCreate={this.handleCreate}
         onFilterChange={this.handleFilterChange}
         onSelectRow={this.props.onSelectRow}
-        packageInfo={packageInfo}
+        packageInfo={this.props.packageInfo || packageInfo}
         parentMutator={this.props.mutator}
         parentResources={this.props.resources}
         renderFilters={this.renderFilters}
@@ -203,7 +220,7 @@ export default class Licenses extends React.Component {
           startDate: a => (a.startDate ? <FormattedDate value={a.startDate} /> : ''),
           endDate: this.renderEndDate,
         }}
-        showSingleResult
+        showSingleResult={this.props.showSingleResult}
         viewRecordComponent={ViewLicense}
         viewRecordPerms="ui-licenses.licenses.view"
         visibleColumns={['name', 'type', 'status', 'startDate', 'endDate']}

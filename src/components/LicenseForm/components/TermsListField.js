@@ -5,7 +5,6 @@ import { FormattedMessage } from 'react-intl';
 import {
   Button,
   Col,
-  Icon,
   IconButton,
   Row,
   Select,
@@ -18,7 +17,7 @@ const TERM_TYPE_TEXT = 'com.k_int.web.toolkit.custprops.types.CustomPropertyText
 const TERM_TYPE_NUMBER = 'com.k_int.web.toolkit.custprops.types.CustomPropertyInteger';
 const TERM_TYPE_SELECT = 'com.k_int.web.toolkit.custprops.types.CustomPropertyRefdata';
 
-export default class LicenseFormTermsList extends React.Component {
+export default class TermsListField extends React.Component {
   static propTypes = {
     input: PropTypes.shape({
       name: PropTypes.string,
@@ -203,9 +202,7 @@ export default class LicenseFormTermsList extends React.Component {
           });
         }}
       >
-        <Icon icon="plus-sign">
-          <FormattedMessage id="ui-licenses.terms.add" />
-        </Icon>
+        <FormattedMessage id="ui-licenses.terms.add" />
       </Button>
     );
   }

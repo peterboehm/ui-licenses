@@ -13,10 +13,12 @@ import {
 } from '@folio/stripes/components';
 
 import {
+  LicenseAgreements,
+  LicenseCoreDocs,
   LicenseHeader,
   LicenseInfo,
   LicenseTerms,
-} from './Sections';
+} from './sections';
 
 import EditLicense from '../EditLicense';
 
@@ -25,6 +27,14 @@ class ViewLicense extends React.Component {
     selectedLicense: {
       type: 'okapi',
       path: 'licenses/licenses/:{id}',
+    },
+    linkedAgreements: {
+      type: 'okapi',
+      path: 'licenses/licenses/:{id}/linkedAgreements',
+      params: {
+        sort: 'owner.startDate;desc'
+      },
+      throwErrors: false,
     },
     query: {},
   });
@@ -54,7 +64,9 @@ class ViewLicense extends React.Component {
   state = {
     sections: {
       licenseInfo: true,
-      licenseTerms: true,
+      licenseCoreDocs: false,
+      licenseTerms: false,
+      licenseAgreements: false,
     }
   }
 
@@ -90,6 +102,7 @@ class ViewLicense extends React.Component {
   getSectionProps = () => {
     return {
       license: this.getLicense(),
+      linkedAgreements: get(this.props.resources.linkedAgreements, ['records'], []),
       onToggle: this.handleSectionToggle,
       parentResources: this.props.parentResources,
       stripes: this.props.stripes,
@@ -190,9 +203,19 @@ class ViewLicense extends React.Component {
             open={this.state.sections.licenseInfo}
             {...sectionProps}
           />
+          <LicenseCoreDocs
+            id="licenseCoreDocs"
+            open={this.state.sections.licenseCoreDocs}
+            {...sectionProps}
+          />
           <LicenseTerms
             id="licenseTerms"
             open={this.state.sections.licenseTerms}
+            {...sectionProps}
+          />
+          <LicenseAgreements
+            id="licenseAgreements"
+            open={this.state.sections.licenseAgreements}
             {...sectionProps}
           />
         </AccordionSet>

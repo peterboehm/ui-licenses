@@ -9,18 +9,28 @@
 
   "notSet": "Not set",
 
+  "coreDocs.add": "Add core document",
+  "coreDocs.none": "No core documents have been added.",
+
   "errors.endDateGreaterThanStartDate": "End date must be after the start date.",
   "errors.multipleLicensors": "Only one Licensor per license is allowed.",
 
+  "filters.organization": "Organizations",
+  "filters.organizationRole": "Organization role",
+
   "header.licensor": "Licensor",
 
-  "organizations.add": "Add organization to agreement",
-  "organizations.licenseHasNone": "Agreement has no organizations.",
+  "licenseAgreements.none": "No agreements currently linked to this license.",
+
+  "organizations.add": "Add organization",
+  "organizations.licenseHasNone": "No organizations have been added.",
   "organizations.selectRole": "Select a role",
   "organizations.createNew": "Create new organization",
 
+  "prop.agreementStatus": "Agreement status",
   "prop.description": "Description",
   "prop.endDate": "End date",
+  "prop.linkStatus": "Link status",
   "prop.name": "Name",
   "prop.openEnded": "Open ended",
   "prop.orgName": "Name",
@@ -39,6 +49,10 @@
   "section.licenseInformation": "License information",
   "section.organizations": "Organizations",
   "section.terms": "Terms",
+  "section.coreDocsAndAmendments": "Core documents and amendments",
+  "section.coreDocs": "Core documents",
+  "section.amendments": "Amendments",
+  "section.licenseAgreements": "Agreements linked to this license",
 
   "settings.general": "General",
   "settings.general.message": "These are your general app settings.",

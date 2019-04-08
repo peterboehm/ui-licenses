@@ -22,8 +22,8 @@ const createLicense = (nightmare, done, defaultValues, resourceId) => {
   const values = defaultValues || generateLicenseValues();
 
   nightmare
-    .wait('#clickable-licenses-module')
-    .click('#clickable-licenses-module')
+    .wait('#app-list-item-clickable-licenses-module')
+    .click('#app-list-item-clickable-licenses-module')
     .wait('#licenses-module-display')
     .wait('#clickable-newlicense')
     .click('#clickable-newlicense')
@@ -93,8 +93,8 @@ module.exports.test = (uiTestCtx) => {
 
       it('should open app and navigate to Licenses', done => {
         nightmare
-          .wait('#clickable-licenses-module')
-          .click('#clickable-licenses-module')
+          .wait('#app-list-item-clickable-licenses-module')
+          .click('#app-list-item-clickable-licenses-module')
           .wait('#licenses-module-display')
           .evaluate(() => document.location.pathname)
           .then(pathName => {
@@ -115,8 +115,8 @@ module.exports.test = (uiTestCtx) => {
       it('should create license with correct default values', done => {
         const name = `Default License #${generateNumber()}`;
         nightmare
-          .wait('#clickable-licenses-module')
-          .click('#clickable-licenses-module')
+          .wait('#app-list-item-clickable-licenses-module')
+          .click('#app-list-item-clickable-licenses-module')
           .wait('#licenses-module-display')
           .wait('#clickable-newlicense')
           .click('#clickable-newlicense')

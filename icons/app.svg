@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="48px" height="48px" viewBox="0 0 48 48" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.2 (67145) - http://www.bohemiancoding.com/sketch -->
+    <title>App icon / 48px / Dark Outline / Licenses</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <rect id="path-1" x="0" y="0" width="48" height="48" rx="12"></rect>
+        <linearGradient x1="50%" y1="0.333333333%" x2="50%" y2="101.041667%" id="linearGradient-3">
+            <stop stop-color="#353434" offset="0%"></stop>
+            <stop stop-color="#232425" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="App-icon-/-48px-/-Dark-Outline-/-Licenses" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Icon">
+            <mask id="mask-2" fill="white">
+                <use xlink:href="#path-1"></use>
+            </mask>
+            <g id="Mask"></g>
+            <g id="Licenses" mask="url(#mask-2)">
+                <rect id="Rectangle-path" fill="url(#linearGradient-3)" fill-rule="nonzero" x="0" y="0" width="48" height="48"></rect>
+                <polygon id="Shape" stroke="#FDC506" stroke-width="1.7" stroke-linejoin="round" points="24.08 12.08 12.04 29 36.3 29"></polygon>
+                <path d="M36.3,29 L12,29 L10.34,29 C10.34,33.14 16.52,36.5 24.16,36.5 C31.8,36.5 38,33.14 38,29 L36.3,29 Z" id="Shape" fill="#FDC506" fill-rule="nonzero"></path>
+            </g>
+            <rect id="Outline" stroke-opacity="0.2" stroke="#000000" mask="url(#mask-2)" x="0.5" y="0.5" width="47" height="47" rx="12"></rect>
+        </g>
+    </g>
+</svg>
