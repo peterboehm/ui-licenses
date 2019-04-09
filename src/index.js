@@ -1,9 +1,24 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Switch from 'react-router-dom/Switch';
-import Route from 'react-router-dom/Route';
-import Licenses from './routes/Licenses';
+import Link from 'react-router-dom/Link';
+
+import { Route } from '@folio/stripes/core';
+
+// import Licenses from './routes/Licenses';
 import Settings from './settings';
+
+const Licenses = (props) => (
+  <div style={{ display: 'flex' }}>
+    <div style={{ margin: '1em' }}>Licenses</div>
+    <div style={{ margin: '1em' }}>{props.children}</div>
+  </div>
+);
+
+const CreateLicense = (props) => <div style={{ margin: '1em' }}>Create License</div>;
+const ViewLicense = (props) => <div style={{ margin: '1em' }}>View License</div>;
+const EditLicense = (props) => <div style={{ margin: '1em' }}>Edit License</div>;
+const ViewLicenseAmendments = (props) => <div style={{ margin: '1em' }}>View License Amendments</div>;
 
 class App extends React.Component {
   static propTypes = {
@@ -12,23 +27,50 @@ class App extends React.Component {
     stripes: PropTypes.object.isRequired,
   }
 
-  constructor(props) {
-    super(props);
-    this.connectedLicenses = props.stripes.connect(Licenses);
-  }
-
   render() {
     if (this.props.showSettings) {
       return <Settings {...this.props} />;
     }
 
+    const { match: { path } } = this.props;
+
     return (
-      <Switch>
-        <Route
-          path={`${this.props.match.path}`}
-          render={() => <this.connectedLicenses {...this.props} />}
-        />
-      </Switch>
+      <div>
+        <div>
+          <span style={{ margin: '1em' }}><Link to="/licenses">/licenses</Link></span>
+          <span style={{ margin: '1em' }}><Link to="/licenses/create">/licenses/create</Link></span>
+          <span style={{ margin: '1em' }}><Link to="/licenses/123">/licenses/123</Link></span>
+          <span style={{ margin: '1em' }}><Link to="/licenses/123/edit">/licenses/123/edit</Link></span>
+          <span style={{ margin: '1em' }}><Link to="/licenses/123/amendments">/licenses/123/amendments</Link></span>
+        </div>
+        <Switch>
+          <Route
+            component={CreateLicense}
+            exact
+            path={`${path}/create`}
+          />
+          <Route
+            component={EditLicense}
+            exact
+            path={`${path}/:id/edit`}
+          />
+          <Route
+            component={ViewLicenseAmendments}
+            exact
+            path={`${path}/:id/amendments`}
+          />
+          <Route
+            component={Licenses}
+            path={path}
+          >
+            <Route
+              component={ViewLicense}
+              exact
+              path={`${path}/:id`}
+            />
+          </Route>
+        </Switch>
+      </div>
     );
   }
 }
