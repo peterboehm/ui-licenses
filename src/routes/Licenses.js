@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import { FormattedDate, FormattedMessage } from 'react-intl';
 import { get } from 'lodash';
 
+import { getSASParams } from '@folio/stripes-erm-components';
 import { SearchAndSort } from '@folio/stripes/smart-components';
 
-import getSASParams from '../util/getSASParams';
 import packageInfo from '../../package';
 
 import EditLicense from '../components/EditLicense';
