@@ -17,6 +17,7 @@
     "test-select-term": "stripes test nightmare --run select-term",
     "test-orgs": "stripes test nightmare --run orgs",
     "test-core-docs": "stripes test nightmare --run core-docs",
+    "test-more-docs": "stripes test nightmare --run more-docs",
     "lint": "eslint src"
   },
   "devDependencies": {

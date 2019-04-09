@@ -1,26 +1,30 @@
 const Docs = require('./docs');
 
 const DOCS = [{
-  name: 'Final Copy',
+  name: 'Supplementary document 1',
+  category: '',
   note: 'Signed and filed',
   location: 'Filing Cabinet',
   url: 'http://licenses.com/final'
 }, {
-  name: 'Initial Copy',
+  name: 'Supplementary document 2',
+  category: 'Product Data Sheet',
   url: 'http://licenses.com/initial'
 }];
 
 const EDITED_DOC = {
   docToEdit: DOCS[0].name,
-  name: 'Final Copy v2',
+  name: 'Supplementary document 1 v2',
+  category: 'Vendor Terms And Conditions',
   note: 'Need to sign',
   location: 'Printer Tray',
   url: 'http://licenses.com/final2'
 };
 
-const DELETED_DOC = DOCS[1].name;
+//  const DELETED_DOC = DOCS[1].name;
+const DELETED_DOC = '';
 
-const DOCS_FIELD_NAME = 'docs';
+const DOCS_FIELD_NAME = 'supplementaryDocs';
 
 module.exports.test = (uiTestCtx) => {
   Docs.test(
