@@ -5,7 +5,7 @@ import Link from 'react-router-dom/Link';
 
 import { Route } from '@folio/stripes/core';
 
-// import Licenses from './routes/Licenses';
+import LicensesRoute from './routes/LicensesRoute';
 import Settings from './settings';
 
 const Licenses = (props) => (
@@ -60,7 +60,7 @@ class App extends React.Component {
             path={`${path}/:id/amendments`}
           />
           <Route
-            component={Licenses}
+            component={LicensesRoute}
             path={path}
           >
             <Route

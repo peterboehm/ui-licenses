@@ -15,8 +15,8 @@ const FILTERS = [
 export default class LicenseFilters extends React.Component {
   static propTypes = {
     activeFilters: PropTypes.object,
-    onChange: PropTypes.func.isRequired,
-    resources: PropTypes.object.isRequired,
+    data: PropTypes.object.isRequired,
+    filterHandlers: PropTypes.object,
   };
 
   static defaultProps = {
@@ -35,7 +35,7 @@ export default class LicenseFilters extends React.Component {
     const newState = {};
 
     FILTERS.forEach(filter => {
-      const values = get(props.resources, [`${filter}Values`, 'records'], []);
+      const values = props.data[`${filter}Values`];
       if (values.length !== state[filter].length) {
         newState[filter] = values.map(({ label }) => ({ label, value: label }));
       }
@@ -44,10 +44,6 @@ export default class LicenseFilters extends React.Component {
     if (Object.keys(newState).length) return newState;
 
     return null;
-  }
-
-  createClearFilterHandler = (name) => () => {
-    this.props.onChange({ name, values: [] });
   }
 
   renderCheckboxFilter = (name, props) => {
@@ -59,13 +55,13 @@ export default class LicenseFilters extends React.Component {
         displayClearButton={activeFilters.length > 0}
         header={FilterAccordionHeader}
         label={<FormattedMessage id={`ui-licenses.prop.${name}`} />}
-        onClearFilter={() => { this.props.onChange({ name, values: [] }); }}
+        onClearFilter={() => { this.props.filterHandlers.clearGroup(name); }}
         {...props}
       >
         <CheckboxFilter
           dataOptions={this.state[name]}
           name={name}
-          onChange={this.props.onChange}
+          onChange={(group) => { this.props.filterHandlers.state({ [group.name]: group.values }); }}
           selectedValues={activeFilters}
         />
       </Accordion>
@@ -82,15 +78,15 @@ export default class LicenseFilters extends React.Component {
         header={FilterAccordionHeader}
         label={<FormattedMessage id="ui-licenses.filters.organization" />}
         onClearFilter={() => {
-          this.props.onChange({ name: 'orgs', values: [] });
-          this.props.onChange({ name: 'role', values: [] });
+          this.props.filterHandlers.clearGroup('orgs');
+          this.props.filterHandlers.clearGroup('role');
         }}
       >
         <OrganizationSelection
           path="licenses/org"
           input={{
             name: 'license-orgs-filter',
-            onChange: value => this.props.onChange({ name: 'orgs', values: [value] }),
+            onChange: value => this.props.filterHandlers.state({ orgs: [value] }),
             value: activeFilters[0] || '',
           }}
         />
@@ -99,7 +95,7 @@ export default class LicenseFilters extends React.Component {
   }
 
   renderRoleLabel = () => {
-    const roles = get(this.props.resources.orgRoleValues, ['records'], []);
+    const roles = this.props.data.orgRoleValues;
     const dataOptions = roles.map(role => ({
       value: role.id,
       label: role.label,
@@ -114,13 +110,13 @@ export default class LicenseFilters extends React.Component {
         displayClearButton={activeFilters.length > 0}
         header={FilterAccordionHeader}
         label={<FormattedMessage id="ui-licenses.filters.organizationRole" />}
-        onClearFilter={() => { this.props.onChange({ name: 'role', values: [] }); }}
+        onClearFilter={() => { this.props.filterHandlers.clearGroup('role'); }}
       >
         <Selection
           dataOptions={dataOptions}
           disabled={orgFilters.length === 0}
           value={activeFilters[0] || ''}
-          onChange={value => this.props.onChange({ name: 'role', values: [value] })}
+          onChange={value => this.props.filterHandlers.state({ role: [value] })}
         />
       </Accordion>
     );
