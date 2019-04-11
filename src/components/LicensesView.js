@@ -31,7 +31,8 @@ export default class LicensesView extends React.Component {
   static propTypes = {
     contentRef: PropTypes.object,
     data: PropTypes.object,
-    initialSearch: PropTypes.string,
+    initialFilterState: PropTypes.object,
+    initialSortState: PropTypes.string,
     queryGetter: PropTypes.func,
     querySetter: PropTypes.func,
     onNeedMoreData: PropTypes.func,
@@ -111,7 +112,8 @@ export default class LicensesView extends React.Component {
       onNeedMoreData,
       queryGetter,
       querySetter,
-      initialSearch,
+      initialFilterState,
+      initialSortState,
       source,
       visibleColumns,
     } = this.props;
@@ -141,7 +143,8 @@ export default class LicensesView extends React.Component {
         <SearchAndSortQuery
           queryGetter={queryGetter}
           querySetter={querySetter}
-          // initialSearch={initialSearch}
+          initialFilterState={initialFilterState}
+          initialSortState={initialSortState}
         >
           {
             ({

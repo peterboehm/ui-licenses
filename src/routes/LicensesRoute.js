@@ -56,7 +56,7 @@ class LicensesRoute extends React.Component {
     query: {
       initialValue: {
         filters: 'status.Active',
-        sort: 'Name',
+        sort: 'name',
       }
     },
     resultCount: { initialValue: INITIAL_RESULT_COUNT },
@@ -64,8 +64,12 @@ class LicensesRoute extends React.Component {
   });
 
   static propTypes = {
+    children: PropTypes.node,
     mutator: PropTypes.object,
     resources: PropTypes.object,
+    stripes: PropTypes.shape({
+      logger: PropTypes.object,
+    }),
   }
 
   constructor(props) {
@@ -107,7 +111,7 @@ class LicensesRoute extends React.Component {
     }
   }
 
-  querySetter = ({ nsValues, state}) => {
+  querySetter = ({ nsValues, state }) => {
     if (/reset/.test(state.changeType)) {
       this.props.mutator.query.replace(nsValues);
     } else {
@@ -116,7 +120,7 @@ class LicensesRoute extends React.Component {
   }
 
   queryGetter = () => {
-    return get(this.props.resource, 'query', {});
+    return get(this.props.resources, 'query', {});
   }
 
   render() {
@@ -128,7 +132,11 @@ class LicensesRoute extends React.Component {
 
     return (
       <LicensesView
-        initialSearch="?sort=name&filters=status.Active"
+        // initialSearch="?sort=name&filters=status.Active"
+        initialFilterState={{
+          status: ['Active']
+        }}
+        initialSortState="name"
         source={this.source}
         queryGetter={this.queryGetter}
         querySetter={this.querySetter}
@@ -148,217 +156,217 @@ class LicensesRoute extends React.Component {
 
 export default withStripes(stripesConnect(LicensesRoute));
 
-class Licenses extends React.Component {
-  static manifest = Object.freeze({
-    records: {
-      type: 'okapi',
-      records: 'results',
-      recordsRequired: '%{resultCount}',
-      perRequest: 100,
-      limitParam: 'perPage',
-      path: 'licenses/licenses',
-      params: getSASParams({
-        searchKey: 'name',
-        columnMap: {
-          'Name': 'name',
-          'Type': 'type',
-          'Status': 'status',
-          'Start Date': 'startDate',
-          'End Date': 'endDate'
-        },
-        filterKeys: {
-          orgs: 'orgs.org',
-          role: 'orgs.role',
-        },
-      })
-    },
-    selectedLicense: {
-      type: 'okapi',
-      path: 'licenses/licenses/${selectedLicenseId}', // eslint-disable-line no-template-curly-in-string
-      fetch: false,
-    },
-    terms: {
-      type: 'okapi',
-      path: 'licenses/custprops',
-    },
-    statusValues: {
-      type: 'okapi',
-      path: 'licenses/refdata/License/status',
-    },
-    typeValues: {
-      type: 'okapi',
-      path: 'licenses/refdata/License/type',
-    },
-    orgRoleValues: {
-      type: 'okapi',
-      path: 'licenses/refdata/LicenseOrg/role',
-    },
-    query: {
-      initialValue: {
-        filters: 'status.Active',
-        sort: 'Name',
-      }
-    },
-    resultCount: { initialValue: INITIAL_RESULT_COUNT },
-    selectedLicenseId: { initialValue: '' },
-  });
+// class Licenses extends React.Component {
+//   static manifest = Object.freeze({
+//     records: {
+//       type: 'okapi',
+//       records: 'results',
+//       recordsRequired: '%{resultCount}',
+//       perRequest: 100,
+//       limitParam: 'perPage',
+//       path: 'licenses/licenses',
+//       params: getSASParams({
+//         searchKey: 'name',
+//         columnMap: {
+//           'Name': 'name',
+//           'Type': 'type',
+//           'Status': 'status',
+//           'Start Date': 'startDate',
+//           'End Date': 'endDate'
+//         },
+//         filterKeys: {
+//           orgs: 'orgs.org',
+//           role: 'orgs.role',
+//         },
+//       })
+//     },
+//     selectedLicense: {
+//       type: 'okapi',
+//       path: 'licenses/licenses/${selectedLicenseId}', // eslint-disable-line no-template-curly-in-string
+//       fetch: false,
+//     },
+//     terms: {
+//       type: 'okapi',
+//       path: 'licenses/custprops',
+//     },
+//     statusValues: {
+//       type: 'okapi',
+//       path: 'licenses/refdata/License/status',
+//     },
+//     typeValues: {
+//       type: 'okapi',
+//       path: 'licenses/refdata/License/type',
+//     },
+//     orgRoleValues: {
+//       type: 'okapi',
+//       path: 'licenses/refdata/LicenseOrg/role',
+//     },
+//     query: {
+//       initialValue: {
+//         filters: 'status.Active',
+//         sort: 'Name',
+//       }
+//     },
+//     resultCount: { initialValue: INITIAL_RESULT_COUNT },
+//     selectedLicenseId: { initialValue: '' },
+//   });
 
-  static propTypes = {
-    browseOnly: PropTypes.bool,
-    disableRecordCreation: PropTypes.bool,
-    resources: PropTypes.shape({
-      query: PropTypes.object,
-      records: PropTypes.object,
-      statusValues: PropTypes.object,
-      terms: PropTypes.object,
-      typeValues: PropTypes.object,
-    }),
-    mutator: PropTypes.object,
-    onSelectRow: PropTypes.func,
-    packageInfo: PropTypes.object,
-    showSingleResult: PropTypes.bool,
-  }
+//   static propTypes = {
+//     browseOnly: PropTypes.bool,
+//     disableRecordCreation: PropTypes.bool,
+//     resources: PropTypes.shape({
+//       query: PropTypes.object,
+//       records: PropTypes.object,
+//       statusValues: PropTypes.object,
+//       terms: PropTypes.object,
+//       typeValues: PropTypes.object,
+//     }),
+//     mutator: PropTypes.object,
+//     onSelectRow: PropTypes.func,
+//     packageInfo: PropTypes.object,
+//     showSingleResult: PropTypes.bool,
+//   }
 
-  static defaultProps = {
-    showSingleResult: true,
-  }
+//   static defaultProps = {
+//     showSingleResult: true,
+//   }
 
-  handleFilterChange = ({ name, values }) => {
-    const newFilters = {
-      ...this.getActiveFilters(),
-      [name]: values,
-    };
+//   handleFilterChange = ({ name, values }) => {
+//     const newFilters = {
+//       ...this.getActiveFilters(),
+//       [name]: values,
+//     };
 
-    const filters = Object.keys(newFilters)
-      .map((filterName) => {
-        return newFilters[filterName]
-          .map(filterValue => `${filterName}.${filterValue}`)
-          .join(',');
-      })
-      .filter(filter => filter)
-      .join(',');
+//     const filters = Object.keys(newFilters)
+//       .map((filterName) => {
+//         return newFilters[filterName]
+//           .map(filterValue => `${filterName}.${filterValue}`)
+//           .join(',');
+//       })
+//       .filter(filter => filter)
+//       .join(',');
 
-    this.props.mutator.query.update({ filters });
-  }
+//     this.props.mutator.query.update({ filters });
+//   }
 
-  handleCreate = (license) => {
-    const { mutator } = this.props;
+//   handleCreate = (license) => {
+//     const { mutator } = this.props;
 
-    mutator.records.POST(license)
-      .then((newLicense) => {
-        mutator.query.update({
-          _path: `/licenses/view/${newLicense.id}`,
-          layer: '',
-        });
-      });
-  };
+//     mutator.records.POST(license)
+//       .then((newLicense) => {
+//         mutator.query.update({
+//           _path: `/licenses/view/${newLicense.id}`,
+//           layer: '',
+//         });
+//       });
+//   };
 
-  handleUpdate = (license) => {
-    this.props.mutator.selectedLicenseId.replace(license.id);
+//   handleUpdate = (license) => {
+//     this.props.mutator.selectedLicenseId.replace(license.id);
 
-    return this.props.mutator.selectedLicense.PUT(license);
-  }
+//     return this.props.mutator.selectedLicense.PUT(license);
+//   }
 
-  getDefaultLicenseValues = () => {
-    const status = get(this.props.resources.statusValues, ['records'], []).find(v => v.value === 'active') || {};
-    const type = get(this.props.resources.typeValues, ['records'], []).find(v => v.value === 'local') || {};
+//   getDefaultLicenseValues = () => {
+//     const status = get(this.props.resources.statusValues, ['records'], []).find(v => v.value === 'active') || {};
+//     const type = get(this.props.resources.typeValues, ['records'], []).find(v => v.value === 'local') || {};
 
-    const customProperties = {};
-    get(this.props.resources.terms, ['records'], [])
-      .filter(term => term.primary)
-      .forEach(term => { customProperties[term.name] = ''; });
+//     const customProperties = {};
+//     get(this.props.resources.terms, ['records'], [])
+//       .filter(term => term.primary)
+//       .forEach(term => { customProperties[term.name] = ''; });
 
-    return {
-      status: status.id,
-      type: type.id,
-      customProperties,
-    };
-  }
+//     return {
+//       status: status.id,
+//       type: type.id,
+//       customProperties,
+//     };
+//   }
 
-  getActiveFilters = () => {
-    const { query } = this.props.resources;
+//   getActiveFilters = () => {
+//     const { query } = this.props.resources;
 
-    if (!query || !query.filters) return {};
+//     if (!query || !query.filters) return {};
 
-    return query.filters
-      .split(',')
-      .reduce((filterMap, currentFilter) => {
-        const [name, value] = currentFilter.split('.');
+//     return query.filters
+//       .split(',')
+//       .reduce((filterMap, currentFilter) => {
+//         const [name, value] = currentFilter.split('.');
 
-        if (!Array.isArray(filterMap[name])) {
-          filterMap[name] = [];
-        }
+//         if (!Array.isArray(filterMap[name])) {
+//           filterMap[name] = [];
+//         }
 
-        filterMap[name].push(value);
-        return filterMap;
-      }, {});
-  }
+//         filterMap[name].push(value);
+//         return filterMap;
+//       }, {});
+//   }
 
-  renderFilters = (onChange) => {
-    return (
-      <LicenseFilters
-        activeFilters={this.getActiveFilters()}
-        onChange={onChange}
-        resources={this.props.resources}
-      />
-    );
-  }
+//   renderFilters = (onChange) => {
+//     return (
+//       <LicenseFilters
+//         activeFilters={this.getActiveFilters()}
+//         onChange={onChange}
+//         resources={this.props.resources}
+//       />
+//     );
+//   }
 
-  renderEndDate = (license) => {
-    if (license.openEnded) return <FormattedMessage id="ui-licenses.prop.openEnded" />;
-    if (license.endDate) return <FormattedDate value={license.endDate} />;
+//   renderEndDate = (license) => {
+//     if (license.openEnded) return <FormattedMessage id="ui-licenses.prop.openEnded" />;
+//     if (license.endDate) return <FormattedDate value={license.endDate} />;
 
-    return '';
-  }
+//     return '';
+//   }
 
-  render() {
-    return (
-      <SearchAndSort
-        browseOnly={this.props.browseOnly}
-        columnMapping={{
-          name: <FormattedMessage id="ui-licenses.prop.name" />,
-          type: <FormattedMessage id="ui-licenses.prop.type" />,
-          status: <FormattedMessage id="ui-licenses.prop.status" />,
-          startDate: <FormattedMessage id="ui-licenses.prop.startDate" />,
-          endDate: <FormattedMessage id="ui-licenses.prop.endDate" />
-        }}
-        columnWidths={{
-          name: 300,
-          type: 150,
-          status: 150,
-          startDate: 200,
-          endDate: 200
-        }}
-        detailProps={{
-          onUpdate: this.handleUpdate,
-          defaultLicenseValues: this.getDefaultLicenseValues(),
-        }}
-        disableRecordCreation={this.props.disableRecordCreation}
-        editRecordComponent={EditLicense}
-        initialResultCount={INITIAL_RESULT_COUNT}
-        key="licenses"
-        newRecordInitialValues={this.getDefaultLicenseValues()}
-        newRecordPerms="ui-licenses.licenses.edit"
-        objectName="license"
-        onCreate={this.handleCreate}
-        onFilterChange={this.handleFilterChange}
-        onSelectRow={this.props.onSelectRow}
-        packageInfo={this.props.packageInfo || packageInfo}
-        parentMutator={this.props.mutator}
-        parentResources={this.props.resources}
-        renderFilters={this.renderFilters}
-        resultCountIncrement={INITIAL_RESULT_COUNT}
-        resultsFormatter={{
-          type: a => a.type && a.type.label,
-          status: a => a.status && a.status.label,
-          startDate: a => (a.startDate ? <FormattedDate value={a.startDate} /> : ''),
-          endDate: this.renderEndDate,
-        }}
-        showSingleResult={this.props.showSingleResult}
-        viewRecordComponent={ViewLicense}
-        viewRecordPerms="ui-licenses.licenses.view"
-        visibleColumns={['name', 'type', 'status', 'startDate', 'endDate']}
-      />
-    );
-  }
-}
+//   render() {
+//     return (
+//       <SearchAndSort
+//         browseOnly={this.props.browseOnly}
+//         columnMapping={{
+//           name: <FormattedMessage id="ui-licenses.prop.name" />,
+//           type: <FormattedMessage id="ui-licenses.prop.type" />,
+//           status: <FormattedMessage id="ui-licenses.prop.status" />,
+//           startDate: <FormattedMessage id="ui-licenses.prop.startDate" />,
+//           endDate: <FormattedMessage id="ui-licenses.prop.endDate" />
+//         }}
+//         columnWidths={{
+//           name: 300,
+//           type: 150,
+//           status: 150,
+//           startDate: 200,
+//           endDate: 200
+//         }}
+//         detailProps={{
+//           onUpdate: this.handleUpdate,
+//           defaultLicenseValues: this.getDefaultLicenseValues(),
+//         }}
+//         disableRecordCreation={this.props.disableRecordCreation}
+//         editRecordComponent={EditLicense}
+//         initialResultCount={INITIAL_RESULT_COUNT}
+//         key="licenses"
+//         newRecordInitialValues={this.getDefaultLicenseValues()}
+//         newRecordPerms="ui-licenses.licenses.edit"
+//         objectName="license"
+//         onCreate={this.handleCreate}
+//         onFilterChange={this.handleFilterChange}
+//         onSelectRow={this.props.onSelectRow}
+//         packageInfo={this.props.packageInfo || packageInfo}
+//         parentMutator={this.props.mutator}
+//         parentResources={this.props.resources}
+//         renderFilters={this.renderFilters}
+//         resultCountIncrement={INITIAL_RESULT_COUNT}
+//         resultsFormatter={{
+//           type: a => a.type && a.type.label,
+//           status: a => a.status && a.status.label,
+//           startDate: a => (a.startDate ? <FormattedDate value={a.startDate} /> : ''),
+//           endDate: this.renderEndDate,
+//         }}
+//         showSingleResult={this.props.showSingleResult}
+//         viewRecordComponent={ViewLicense}
+//         viewRecordPerms="ui-licenses.licenses.view"
+//         visibleColumns={['name', 'type', 'status', 'startDate', 'endDate']}
+//       />
+//     );
+//   }
+// }
