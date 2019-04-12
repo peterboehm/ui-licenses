@@ -1,18 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedDate, FormattedMessage } from 'react-intl';
 import { get } from 'lodash';
 
 import { stripesConnect, withStripes } from '@folio/stripes/core';
 import { StripesConnectedSource } from '@folio/stripes/smart-components';
 
 import getSASParams from '../util/getSASParams';
-import packageInfo from '../../package';
 
-import EditLicense from '../components/EditLicense';
-import LicenseFilters from '../components/LicenseFilters';
-import ViewLicense from '../components/ViewLicense';
-import LicensesView from '../components/LicensesView';
+import View from '../components/Licenses';
 
 const INITIAL_RESULT_COUNT = 100;
 const RESULT_COUNT_INCREMENT = 100;
@@ -65,6 +60,9 @@ class LicensesRoute extends React.Component {
 
   static propTypes = {
     children: PropTypes.node,
+    location: PropTypes.shape({
+      search: PropTypes.string,
+    }).isRequired,
     mutator: PropTypes.object,
     resources: PropTypes.object,
     stripes: PropTypes.shape({
@@ -72,11 +70,25 @@ class LicensesRoute extends React.Component {
     }),
   }
 
+  state = {
+    hideView: true,
+  }
+
   constructor(props) {
     super(props);
 
     this.logger = props.stripes.logger;
     this.searchField = React.createRef();
+  }
+
+  static getDerivedStateFromProps(props) {
+    const { location: { pathname } } = props;
+    // Hide the view if we're on a create or edit route.
+    const hideView = /\/create|\/edit/.test(pathname);
+
+    return {
+      hideView,
+    };
   }
 
   componentDidMount() {
@@ -106,19 +118,24 @@ class LicensesRoute extends React.Component {
   }
 
   render() {
-    const { children, resources } = this.props;
+    const { children, location, resources } = this.props;
 
     if (this.source) {
       this.source.update(this.props, 'licenses');
     }
 
+    if (this.state.hideView) {
+      return children;
+    }
+
     return (
-      <LicensesView
+      <View
         // initialSearch="?sort=name&filters=status.Active"
         initialFilterState={{
           status: ['Active']
         }}
         initialSortState="name"
+        searchString={location.search}
         source={this.source}
         queryGetter={this.queryGetter}
         querySetter={this.querySetter}
@@ -131,7 +148,7 @@ class LicensesRoute extends React.Component {
         }}
       >
         {children}
-      </LicensesView>
+      </View>
     );
   }
 }

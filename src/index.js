@@ -6,19 +6,13 @@ import Link from 'react-router-dom/Link';
 import { Route } from '@folio/stripes/core';
 
 import LicensesRoute from './routes/LicensesRoute';
+import ViewLicenseRoute from './routes/ViewLicenseRoute';
+
 import Settings from './settings';
 
-const Licenses = (props) => (
-  <div style={{ display: 'flex' }}>
-    <div style={{ margin: '1em' }}>Licenses</div>
-    <div style={{ margin: '1em' }}>{props.children}</div>
-  </div>
-);
-
-const CreateLicense = (props) => <div style={{ margin: '1em' }}>Create License</div>;
-const ViewLicense = (props) => <div style={{ margin: '1em' }}>View License</div>;
-const EditLicense = (props) => <div style={{ margin: '1em' }}>Edit License</div>;
-const ViewLicenseAmendments = (props) => <div style={{ margin: '1em' }}>View License Amendments</div>;
+const CreateLicenseRoute = (props) => <div style={{ margin: '1em' }}>Create License</div>;
+const EditLicenseRoute = (props) => <div style={{ margin: '1em' }}>Edit License</div>;
+const ViewLicenseAmendmentsRoute = (props) => <div style={{ margin: '1em' }}>View License Amendments</div>;
 
 class App extends React.Component {
   static propTypes = {
@@ -32,7 +26,7 @@ class App extends React.Component {
       return <Settings {...this.props} />;
     }
 
-    const { match: { path } } = this.props;
+    const { match: { path }, stripes } = this.props;
 
     return (
       <div>
@@ -44,30 +38,11 @@ class App extends React.Component {
           <span style={{ margin: '1em' }}><Link to="/licenses/123/amendments">/licenses/123/amendments</Link></span>
         </div>
         <Switch>
-          <Route
-            component={CreateLicense}
-            exact
-            path={`${path}/create`}
-          />
-          <Route
-            component={EditLicense}
-            exact
-            path={`${path}/:id/edit`}
-          />
-          <Route
-            component={ViewLicenseAmendments}
-            exact
-            path={`${path}/:id/amendments`}
-          />
-          <Route
-            component={LicensesRoute}
-            path={path}
-          >
-            <Route
-              component={ViewLicense}
-              exact
-              path={`${path}/:id`}
-            />
+          <Route path={path} component={LicensesRoute}>
+            <Route path={`${path}/create`} exact component={CreateLicenseRoute} />
+            <Route path={`${path}/:id`} exact component={ViewLicenseRoute} />
+            <Route path={`${path}/:id/edit`} exact component={EditLicenseRoute} />
+            <Route path={`${path}/:id/amendments`} exact component={ViewLicenseAmendmentsRoute} />
           </Route>
         </Switch>
       </div>
@@ -76,4 +51,4 @@ class App extends React.Component {
 }
 
 export default App;
-export { Licenses };
+export { LicensesRoute as Licenses };

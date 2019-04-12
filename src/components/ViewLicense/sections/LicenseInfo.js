@@ -19,10 +19,6 @@ class LicenseInfo extends React.Component {
     open: PropTypes.bool,
   };
 
-  onSetParentLicense(license) {
-    this.props.license.parent = { id : license.id, name: license.name };
-  }
-
   renderEndDate(license) {
     if (license.openEnded) return <FormattedMessage id="ui-licenses.prop.openEnded" />;
     if (license.endDate) return <FormattedDate value={license.endDate} />;

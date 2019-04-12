@@ -1,10 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import noop from 'lodash/noop';
-import get from 'lodash/get';
+import Link from 'react-router-dom/Link';
+import { noop } from 'lodash';
 import { FormattedDate, FormattedMessage } from 'react-intl';
 
-import { IntlConsumer, AppIcon } from '@folio/stripes/core';
 import {
   MultiColumnList,
   SearchField,
@@ -23,9 +22,9 @@ import {
 
 import { LicenseEndDate } from '@folio/stripes-erm-components';
 
-import LicenseFilters from './LicenseFilters';
+import LicenseFilters from '../LicenseFilters';
 
-import css from './LicensesView.css';
+import css from './Licenses.css';
 
 export default class LicensesView extends React.Component {
   static propTypes = {
@@ -72,11 +71,53 @@ export default class LicensesView extends React.Component {
     endDate: license => (license.endDate ? <LicenseEndDate license={license} /> : ''),
   }
 
+  rowFormatter = (row) => {
+    const { rowClass, rowData, rowIndex, rowProps, cells } = row;
+
+    return (
+      <Link
+        aria-rowindex={rowIndex + 2}
+        className={rowClass}
+        data-label={[
+          rowData.name,
+          this.formatter.type(rowData),
+          this.formatter.status(rowData),
+        ].join('...')}
+        key={`row-${rowIndex}`}
+        role="row"
+        to={this.rowURL(rowData.id)}
+        {...rowProps}
+      >
+        {cells}
+      </Link>
+    );
+  }
+
+  rowURL = (id) => {
+    return `/licenses/${id}${this.props.searchString}`;
+  }
 
   toggleFilterPane = () => {
     this.setState(curState => ({
       filterPaneIsVisible: !curState.filterPaneIsVisible,
     }));
+  }
+
+  renderIsEmptyMessage = (query, source) => {
+    if (!source) {
+      return 'no source yet';
+    }
+
+    return (
+      <div data-test-licenses-no-results-message>
+        <NoResultsMessage
+          source={source}
+          searchTerm={query.query || ''}
+          filterPaneIsVisible
+          toggleFilterPane={noop}
+        />
+      </div>
+    );
   }
 
   renderResultsFirstMenu = (filters) => {
@@ -87,7 +128,7 @@ export default class LicensesView extends React.Component {
 
     return (
       <PaneMenu>
-        <FormattedMessage id="stripes-smart-components.numberOfFilters" values={{ count: filterCount}}>
+        <FormattedMessage id="stripes-smart-components.numberOfFilters" values={{ count: filterCount }}>
           {appliedFiltersMessage => (
             <FormattedMessage id={hideOrShowMessageId}>
               {hideOrShowMessage => (
@@ -105,8 +146,18 @@ export default class LicensesView extends React.Component {
     );
   }
 
+  renderResultsPaneSubtitle = (source) => {
+    if (source && source.loaded()) {
+      const count = source ? source.totalCount() : 0;
+      return <FormattedMessage id="stripes-smart-components.searchResultsCountHeader" values={{ count }} />;
+    }
+
+    return <FormattedMessage id="stripes-smart-components.searchCriteria" />;
+  }
+
   render() {
     const {
+      children,
       contentRef,
       data,
       onNeedMoreData,
@@ -121,22 +172,6 @@ export default class LicensesView extends React.Component {
     const query = queryGetter() || {};
     const count = source ? source.totalCount() : 0;
     const sortOrder = query.sort || '';
-    const resultsStatusMessage = source ? (
-      <div data-test-licenses-no-results-message>
-        <NoResultsMessage
-          source={source}
-          searchTerm={query.query || ''}
-          filterPaneIsVisible
-          toggleFilterPane={noop}
-        />
-      </div>
-    ) : 'no source yet';
-
-    const resultsHeader = 'License Search Results';
-    let resultPaneSub = <FormattedMessage id="stripes-smart-components.searchCriteria" />;
-    if (source && source.loaded()) {
-      resultPaneSub = <FormattedMessage id="stripes-smart-components.searchResultsCountHeader" values={{ count }} />;
-    }
 
     return (
       <div data-test-licenses ref={contentRef}>
@@ -163,7 +198,11 @@ export default class LicensesView extends React.Component {
               return (
                 <Paneset id="licenses-paneset">
                   {this.state.filterPaneIsVisible &&
-                    <Pane defaultWidth="22%" paneTitle="License Search">
+                    <Pane
+                      defaultWidth="22%"
+                      onClose={this.toggleFilterPane}
+                      paneTitle={<FormattedMessage id="stripes-smart-components.searchAndFilter" />}
+                    >
                       <form onSubmit={onSubmitSearch}>
                         <div className={css.searchGroupWrap}>
                           <SearchField
@@ -213,25 +252,27 @@ export default class LicensesView extends React.Component {
                     defaultWidth="fill"
                     firstMenu={this.renderResultsFirstMenu(activeFilters)}
                     padContent={false}
-                    paneSub={resultPaneSub}
-                    paneTitle={resultsHeader}
+                    paneTitle={<FormattedMessage id="ui-licenses.meta.title" />}
+                    paneSub={this.renderResultsPaneSubtitle(source)}
                   >
                     <MultiColumnList
-                      visibleColumns={visibleColumns}
-                      contentData={data.licenses}
-                      totalCount={count}
+                      autosize
                       columnMapping={this.columnMapping}
                       columnWidths={this.columnWidths}
+                      contentData={data.licenses}
                       formatter={this.formatter}
-                      onNeedMoreData={onNeedMoreData}
+                      isEmptyMessage={this.renderIsEmptyMessage(query, source)}
                       onHeaderClick={onSort}
-                      sortOrder={sortOrder.replace(/^-/, '').replace(/,.*/, '')}
+                      onNeedMoreData={onNeedMoreData}
+                      rowFormatter={this.rowFormatter}
                       sortDirection={sortOrder.startsWith('-') ? 'descending' : 'ascending'}
-                      isEmptyMessage={resultsStatusMessage}
-                      autosize
+                      sortOrder={sortOrder.replace(/^-/, '').replace(/,.*/, '')}
+                      totalCount={count}
                       virtualize
+                      visibleColumns={visibleColumns}
                     />
                   </Pane>
+                  { children }
                 </Paneset>
               );
             }
