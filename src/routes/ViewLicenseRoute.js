@@ -34,6 +34,11 @@ class ViewLicenseRoute extends React.Component {
       pathname: PropTypes.string.isRequired,
       search: PropTypes.string.isRequired,
     }).isRequired,
+    mutator: PropTypes.shape({
+      query: PropTypes.shape({
+        update: PropTypes.func.isRequired,
+      }).isRequired,
+    }).isRequired,
     resources: PropTypes.shape({
       linkedAgreements: PropTypes.object,
       license: PropTypes.object,
@@ -46,6 +51,14 @@ class ViewLicenseRoute extends React.Component {
 
   handleClose = () => {
     this.props.history.push(`/licenses${this.props.location.search}`);
+  }
+
+  handleTogglerHelper = (helper) => {
+    const { mutator, resources } = this.props;
+    const currentHelper = resources.query.helper;
+    const nextHelper = currentHelper !== helper ? helper : null;
+
+    mutator.query.update({ helper: nextHelper });
   }
 
   render() {
@@ -63,6 +76,7 @@ class ViewLicenseRoute extends React.Component {
         editUrl={stripes.hasPerm('ui-licenses.licenses.edit') && `${location.pathname}/edit${location.search}`}
         isLoading={get(resources, 'license.isPending')}
         onClose={this.handleClose}
+        onToggleHelper={this.handleTogglerHelper}
       />
     );
   }

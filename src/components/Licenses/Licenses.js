@@ -134,7 +134,7 @@ export default class LicensesView extends React.Component {
               {hideOrShowMessage => (
                 <FilterPaneToggle
                   visible={filterPaneIsVisible}
-                  aria-label={`${hideOrShowMessage} \n\n${appliedFiltersMessage}`}
+                  aria-label={`${hideOrShowMessage}...s${appliedFiltersMessage}`}
                   onClick={this.toggleFilterPane}
                   badge={!filterPaneIsVisible && filterCount ? filterCount : undefined}
                 />
