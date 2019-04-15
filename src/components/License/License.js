@@ -22,7 +22,7 @@ import {
   LicenseTerms,
 } from './sections';
 
-class ViewLicense extends React.Component {
+class License extends React.Component {
   static propTypes = {
     data: PropTypes.shape({
       license: PropTypes.object,
@@ -42,13 +42,13 @@ class ViewLicense extends React.Component {
     }
   }
 
-  getSectionProps = (sectionId) => {
+  getSectionProps = (id) => {
     const { data } = this.props;
 
     return {
-      id: sectionId,
+      id,
       onToggle: this.handleSectionToggle,
-      open: this.state.sections[sectionId],
+      open: this.state.sections[id],
       license: data.license,
       terms: data.terms,
     };
@@ -63,15 +63,10 @@ class ViewLicense extends React.Component {
     }));
   }
 
-  getActionMenu = ({ onToggle }) => {
+  getActionMenu = () => {
     const { editUrl } = this.props;
 
     if (!editUrl) return null;
-
-    // const handleClick = () => {
-    //   this.props.onEdit();
-    //   onToggle();
-    // };
 
     return (
       <React.Fragment>
@@ -96,7 +91,7 @@ class ViewLicense extends React.Component {
         dismissible
         id="pane-view-license"
         onClose={this.props.onClose}
-        paneTitle="Loading..."
+        paneTitle={<FormattedMessage id="ui-licenses.loading" />}
       >
         <Layout className="marginTop1">
           <Spinner />
@@ -159,4 +154,4 @@ class ViewLicense extends React.Component {
   }
 }
 
-export default ViewLicense;
+export default License;

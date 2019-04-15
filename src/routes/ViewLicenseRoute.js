@@ -4,7 +4,7 @@ import { get } from 'lodash';
 
 import { stripesConnect } from '@folio/stripes/core';
 
-import View from '../components/ViewLicense';
+import View from '../components/License';
 
 class ViewLicenseRoute extends React.Component {
   static manifest = Object.freeze({
@@ -22,6 +22,7 @@ class ViewLicenseRoute extends React.Component {
     terms: {
       type: 'okapi',
       path: 'licenses/custprops',
+      shouldRefresh: () => false,
     },
     query: {},
   });

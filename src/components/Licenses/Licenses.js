@@ -7,12 +7,14 @@ import { FormattedDate, FormattedMessage } from 'react-intl';
 import {
   MultiColumnList,
   SearchField,
-  Paneset,
   Pane,
   Icon,
   Button,
   PaneMenu,
+  Paneset,
 } from '@folio/stripes/components';
+
+import { IfPermission } from '@folio/stripes/core';
 
 import {
   SearchAndSortQuery,
@@ -30,11 +32,13 @@ export default class LicensesView extends React.Component {
   static propTypes = {
     contentRef: PropTypes.object,
     data: PropTypes.object,
-    initialFilterState: PropTypes.object,
-    initialSortState: PropTypes.string,
+    // initialFilterState: PropTypes.object,
+    // initialSortState: PropTypes.string,
+    initialSearch: PropTypes.string,
     queryGetter: PropTypes.func,
     querySetter: PropTypes.func,
     onNeedMoreData: PropTypes.func,
+    searchString: PropTypes.string,
     source: PropTypes.object,
     visibleColumns: PropTypes.arrayOf(PropTypes.string),
   }
@@ -155,6 +159,32 @@ export default class LicensesView extends React.Component {
     return <FormattedMessage id="stripes-smart-components.searchCriteria" />;
   }
 
+  renderResultsLastMenu() {
+    if (this.props.disableRecordCreation) {
+      return null;
+    }
+
+    return (
+      <IfPermission perm="ui-licenses.licenses.edit">
+        <PaneMenu>
+          <FormattedMessage id="stripes-smart-components.addNew">
+            {ariaLabel => (
+              <Button
+                aria-label={ariaLabel}
+                buttonStyle="primary"
+                id="clickable-new-license"
+                marginBottom0
+                to={`/licenses/create${this.props.searchString}`}
+              >
+                <FormattedMessage id="stripes-smart-components.new" />
+              </Button>
+            )}
+          </FormattedMessage>
+        </PaneMenu>
+      </IfPermission>
+    );
+  }
+
   render() {
     const {
       children,
@@ -163,8 +193,9 @@ export default class LicensesView extends React.Component {
       onNeedMoreData,
       queryGetter,
       querySetter,
-      initialFilterState,
-      initialSortState,
+      // initialFilterState,
+      // initialSortState,
+      initialSearch,
       source,
       visibleColumns,
     } = this.props;
@@ -178,8 +209,9 @@ export default class LicensesView extends React.Component {
         <SearchAndSortQuery
           queryGetter={queryGetter}
           querySetter={querySetter}
-          initialFilterState={initialFilterState}
-          initialSortState={initialSortState}
+          // initialFilterState={initialFilterState}
+          // initialSortState={initialSortState}
+          initialSearch={initialSearch}
         >
           {
             ({
@@ -210,16 +242,21 @@ export default class LicensesView extends React.Component {
                             autoFocus
                             className={css.searchField}
                             data-test-license-search-input
+                            id="input-license-search"
                             inputRef={this.searchField}
                             marginBottom0
                             name="query"
                             onChange={getSearchHandlers().query}
+                            onClear={() => {
+                              getSearchHandlers().clear();
+                              onSubmitSearch();
+                            }}
                             value={searchValue.query}
                           />
                           <Button
                             buttonStyle="primary"
-                            data-test-user-search-submit
                             disabled={!searchValue.query || searchValue.query === ''}
+                            id="clickable-search-licenses"
                             fullWidth
                             marginBottom0
                             type="submit"
@@ -251,6 +288,7 @@ export default class LicensesView extends React.Component {
                   <Pane
                     defaultWidth="fill"
                     firstMenu={this.renderResultsFirstMenu(activeFilters)}
+                    lastMenu={this.renderResultsLastMenu()}
                     padContent={false}
                     paneTitle={<FormattedMessage id="ui-licenses.meta.title" />}
                     paneSub={this.renderResultsPaneSubtitle(source)}
@@ -261,6 +299,7 @@ export default class LicensesView extends React.Component {
                       columnWidths={this.columnWidths}
                       contentData={data.licenses}
                       formatter={this.formatter}
+                      id="list-licenses"
                       isEmptyMessage={this.renderIsEmptyMessage(query, source)}
                       onHeaderClick={onSort}
                       onNeedMoreData={onNeedMoreData}

@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { get } from 'lodash';
 import { Field } from 'redux-form';
 
 import {
@@ -25,11 +24,9 @@ class LicenseFormInfo extends React.Component {
     id: PropTypes.string,
     onToggle: PropTypes.func,
     open: PropTypes.bool,
-    parentMutator: PropTypes.object,
-    parentResources: PropTypes.shape({
-      statusValues: PropTypes.object,
-      typeValues: PropTypes.object,
-      endDateSemanticsValues: PropTypes.object,
+    data: PropTypes.shape({
+      statusValues: PropTypes.array,
+      typeValues: PropTypes.array,
     }),
   };
 
@@ -37,32 +34,10 @@ class LicenseFormInfo extends React.Component {
     openEnded: false,
   }
 
-  getStatusValues() {
-    return get(this.props.parentResources.statusValues, ['records'], [])
-      .map(({ id, label }) => ({ label, value: id }));
-  }
-
-  getTypeValues() {
-    return get(this.props.parentResources.typeValues, ['records'], [])
-      .map(({ id, label }) => ({ label, value: id }));
-  }
-
-  getEndDateOpenEnded() {
-    return get(this.props.parentResources.endDateSemanticsValues, ['records'], [])
-      .find(v => v.value === 'open_ended') || {};
-  }
-
-  getSectionProps() {
-    return {
-      parentMutator: this.props.parentMutator,
-      parentResources: this.props.parentResources,
-    };
-  }
-
-  warnEndDate = (endDate, allValues) => {
+  warnEndDate = (_value, allValues) => {
     this.setState({ openEnded: allValues.openEnded });
 
-    if (allValues.openEnded && endDate) {
+    if (allValues.openEnded && allValues.endDate) {
       return (
         <div data-test-warn-clear-end-date>
           <FormattedMessage id="ui-licenses.warn.clearEndDate" />
@@ -91,14 +66,14 @@ class LicenseFormInfo extends React.Component {
   }
 
   render() {
-    const sectionProps = this.getSectionProps();
+    const { data, id, onToggle, open } = this.props;
 
     return (
       <Accordion
-        id={this.props.id}
+        id={id}
         label={<FormattedMessage id="ui-licenses.section.licenseInformation" />}
-        open={this.props.open}
-        onToggle={this.props.onToggle}
+        open={open}
+        onToggle={onToggle}
       >
         <React.Fragment>
           <Row>
@@ -123,7 +98,7 @@ class LicenseFormInfo extends React.Component {
               <Field
                 id="edit-license-type"
                 component={Select}
-                dataOptions={this.getTypeValues()}
+                dataOptions={data.typeValues}
                 name="type"
                 label={<FormattedMessage id="ui-licenses.prop.type" />}
                 required
@@ -133,7 +108,7 @@ class LicenseFormInfo extends React.Component {
               <Field
                 id="edit-license-status"
                 component={Select}
-                dataOptions={this.getStatusValues()}
+                dataOptions={data.statusValues}
                 name="status"
                 label={<FormattedMessage id="ui-licenses.prop.status" />}
                 required
@@ -171,6 +146,7 @@ class LicenseFormInfo extends React.Component {
                 label={<FormattedMessage id="ui-licenses.prop.openEnded" />}
                 component={Checkbox}
                 type="checkbox"
+                warn={this.warnEndDate}
               />
             </Col>
           </Row>
@@ -191,7 +167,7 @@ class LicenseFormInfo extends React.Component {
           </Row>
         </React.Fragment>
         <AccordionSet>
-          <LicenseFormOrganizations {...sectionProps} />
+          <LicenseFormOrganizations data={data} />
         </AccordionSet>
       </Accordion>
     );

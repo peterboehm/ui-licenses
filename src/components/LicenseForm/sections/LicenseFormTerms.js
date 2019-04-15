@@ -19,8 +19,8 @@ class LicenseFormTerms extends React.Component {
     intl: intlShape.isRequired,
     onToggle: PropTypes.func,
     open: PropTypes.bool,
-    parentResources: PropTypes.shape({
-      terms: PropTypes.object,
+    data: PropTypes.shape({
+      terms: PropTypes.array,
     }),
   };
 
@@ -29,7 +29,7 @@ class LicenseFormTerms extends React.Component {
   }
 
   static getDerivedStateFromProps(props, state) {
-    const terms = get(props.parentResources, ['terms', 'records'], []);
+    const { terms } = props.data;
     if (terms.length !== state.terms.length) {
       return {
         terms: terms.map((term) => {
@@ -57,12 +57,14 @@ class LicenseFormTerms extends React.Component {
   }
 
   render() {
+    const { id, onToggle, open } = this.props;
+
     return (
       <Accordion
-        id={this.props.id}
+        id={id}
         label={<FormattedMessage id="ui-licenses.section.terms" />}
-        open={this.props.open}
-        onToggle={this.props.onToggle}
+        open={open}
+        onToggle={onToggle}
       >
         <Row>
           <Col xs={5}>

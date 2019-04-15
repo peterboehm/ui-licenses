@@ -39,14 +39,17 @@ class LicensesRoute extends React.Component {
     statusValues: {
       type: 'okapi',
       path: 'licenses/refdata/License/status',
+      shouldRefresh: () => false,
     },
     typeValues: {
       type: 'okapi',
       path: 'licenses/refdata/License/type',
+      shouldRefresh: () => false,
     },
     orgRoleValues: {
       type: 'okapi',
       path: 'licenses/refdata/LicenseOrg/role',
+      shouldRefresh: () => false,
     },
     query: {
       initialValue: {
@@ -70,15 +73,15 @@ class LicensesRoute extends React.Component {
     }),
   }
 
-  state = {
-    hideView: true,
-  }
-
   constructor(props) {
     super(props);
 
     this.logger = props.stripes.logger;
     this.searchField = React.createRef();
+  }
+
+  state = {
+    hideView: true,
   }
 
   static getDerivedStateFromProps(props) {
@@ -98,6 +101,18 @@ class LicensesRoute extends React.Component {
       this.searchField.current.focus();
     }
   }
+
+  // componentDidUpdate(nextProps) {
+  //   const oldLicenses = get(this.props.resources, 'licenses.records', []);
+  //   const newLicenses = get(nextProps.resources, 'licenses.records', []);
+
+  //   if (newLicenses.length === 1 && oldLicenses.length !== 1) {
+  //     const { history, location } = nextProps;
+  //     const record = newLicenses[0];
+  //     history.push(`/licenses/${record.id}${location.search}`);
+  //   }
+  // }
+
 
   handleNeedMoreData = () => {
     if (this.source) {
@@ -130,11 +145,11 @@ class LicensesRoute extends React.Component {
 
     return (
       <View
-        // initialSearch="?sort=name&filters=status.Active"
-        initialFilterState={{
-          status: ['Active']
-        }}
-        initialSortState="name"
+        initialSearch="?sort=name&filters=status.Active"
+        // initialFilterState={{
+        //   status: ['Active']
+        // }}
+        // initialSortState="name"
         searchString={location.search}
         source={this.source}
         queryGetter={this.queryGetter}

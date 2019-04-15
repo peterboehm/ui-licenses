@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { get } from 'lodash';
+import { cloneDeep, get } from 'lodash';
 
 import { stripesConnect } from '@folio/stripes/core';
 
-import View from '../components/EditLicense';
+import Form from '../components/LicenseForm';
 
-class ViewLicenseRoute extends React.Component {
+class EditLicenseRoute extends React.Component {
   static manifest = Object.freeze({
     license: {
       type: 'okapi',
@@ -56,31 +56,61 @@ class ViewLicenseRoute extends React.Component {
     }).isRequired,
   };
 
+  getInitialValues = () => {
+    const { resources } = this.props;
+    const license = get(resources, 'license.records[0]', {});
+    const initialValues = cloneDeep(license);
+    const {
+      orgs = [],
+      status = {},
+      type = {},
+    } = initialValues;
+
+    // Set the values of dropdown-controlled props as values rather than objects.
+    initialValues.orgs = orgs.map(o => ({ ...o, role: o.role.value }));
+    initialValues.status = status.value;
+    initialValues.type = type.value;
+
+    // Add the default terms to the already-set terms.
+    initialValues.customProperties = initialValues.customProperties || {};
+    const terms = get(resources, 'terms.records', []);
+    terms
+      .filter(t => t.primary)
+      .forEach(t => { initialValues.customProperties[t.name] = ''; });
+
+    return initialValues;
+  }
+
+
   handleClose = () => {
     const { location, match } = this.props;
     this.props.history.push(`/licenses/${match.params.id}${location.search}`);
   }
 
   handleSubmit = (license) => {
-    this.props.mutator.license.PUT(license);
+    this.props.mutator.license
+      .PUT(license)
+      .then(this.handleClose);
   }
 
   fetchIsPending = () => {
-    return Object.values(this.props.resources).some(resource => resource.isPending);
+    return Object.values(this.props.resources)
+      .filter(resource => resource)
+      .some(resource => resource.isPending);
   }
 
   render() {
-    const { location, resources } = this.props;
+    const { resources } = this.props;
 
     return (
-      <View
+      <Form
         data={{
-          license: get(resources, 'license.records[0]', {}),
           orgRoleValues: get(resources, 'orgRoleValues.records', []),
-          statusValues: get(resources, 'orgRoleValues.records', []),
+          statusValues: get(resources, 'statusValues.records', []),
           terms: get(resources, 'terms.records', []),
-          typeValues: get(resources, 'orgRoleValues.records', []),
+          typeValues: get(resources, 'typeValues.records', []),
         }}
+        initialValues={this.getInitialValues()}
         isLoading={this.fetchIsPending()}
         onClose={this.handleClose}
         onSubmit={this.handleSubmit}
@@ -89,4 +119,4 @@ class ViewLicenseRoute extends React.Component {
   }
 }
 
-export default stripesConnect(ViewLicenseRoute);
+export default stripesConnect(EditLicenseRoute);
