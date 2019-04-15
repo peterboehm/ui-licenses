@@ -18,7 +18,7 @@ module.exports.test = (uiTestCtx) => {
   const orgs = ORGS;
 
   describe(`ui-licenses: set orgs: "${orgs.map(o => o.name).join(', ')}"`, function test() {
-    const { config, helpers: { login, logout } } = uiTestCtx;
+    const { config, helpers } = uiTestCtx;
     const nightmare = new Nightmare(config.nightmare);
 
     this.timeout(Number(config.test_timeout));
@@ -42,12 +42,17 @@ module.exports.test = (uiTestCtx) => {
 
     describe('login > open licenses > create license > edit orgs > logout', () => {
       before((done) => {
-        login(nightmare, config, done);
+        helpers.login(nightmare, config, done);
       });
 
       after((done) => {
-        logout(nightmare, config, done);
+        helpers.logout(nightmare, config, done);
       });
+
+      it('should open Licenses app', done => {
+        helpers.clickApp(nightmare, done, 'licenses');
+      });
+
 
       it('should navigate to create license page', done => {
         const name = `Orgs License #${generateNumber()}`;
@@ -55,11 +60,9 @@ module.exports.test = (uiTestCtx) => {
         console.log(`\tCreating ${name}`);
 
         nightmare
-          .wait('#app-list-item-clickable-licenses-module')
-          .click('#app-list-item-clickable-licenses-module')
-          .wait('#licenses-module-display')
-          .wait('#clickable-newlicense')
-          .click('#clickable-newlicense')
+          .wait('#list-licenses')
+          .wait('#clickable-new-license')
+          .click('#clickable-new-license')
 
           .waitUntilNetworkIdle(2000) // Wait for the default values to be fetched and set.
 
@@ -122,7 +125,7 @@ module.exports.test = (uiTestCtx) => {
 
       it('should create license', done => {
         nightmare
-          .click('#clickable-createlicense')
+          .click('#clickable-create-license')
           .waitUntilNetworkIdle(2000) // Wait for record to be fetched
           .then(done)
           .catch(done);
@@ -255,7 +258,7 @@ module.exports.test = (uiTestCtx) => {
 
       it('should save updated license', done => {
         nightmare
-          .click('#clickable-updatelicense')
+          .click('#clickable-update-license')
           .waitUntilNetworkIdle(2000) // Wait for record to be fetched
           .then(done)
           .catch(done);

@@ -22,11 +22,9 @@ const createLicense = (nightmare, done, defaultValues, resourceId) => {
   const values = defaultValues || generateLicenseValues();
 
   nightmare
-    .wait('#app-list-item-clickable-licenses-module')
-    .click('#app-list-item-clickable-licenses-module')
-    .wait('#licenses-module-display')
-    .wait('#clickable-newlicense')
-    .click('#clickable-newlicense')
+    .wait('#list-licenses')
+    .wait('#clickable-new-license')
+    .click('#clickable-new-license')
 
     .waitUntilNetworkIdle(2000) // Wait for the default values to be fetched and set.
 
@@ -40,7 +38,7 @@ const createLicense = (nightmare, done, defaultValues, resourceId) => {
 
     .insert('#edit-license-description', values.description)
 
-    .click('#clickable-createlicense')
+    .click('#clickable-create-license')
     .wait('#licenseInfo')
     .waitUntilNetworkIdle(500)
     .evaluate(expectedValues => {
@@ -76,7 +74,7 @@ module.exports.createLicense = createLicense;
 
 module.exports.test = (uiTestCtx) => {
   describe('ui-licenses: basic license crud', function test() {
-    const { config, helpers: { login, logout } } = uiTestCtx;
+    const { config, helpers } = uiTestCtx;
     const nightmare = new Nightmare(config.nightmare);
     const values = generateLicenseValues();
 
@@ -84,28 +82,20 @@ module.exports.test = (uiTestCtx) => {
 
     describe('login > open licenses > create, view, edit license > logout', () => {
       before((done) => {
-        login(nightmare, config, done);
+        helpers.login(nightmare, config, done);
       });
 
       after((done) => {
-        logout(nightmare, config, done);
+        helpers.logout(nightmare, config, done);
       });
 
-      it('should open app and navigate to Licenses', done => {
-        nightmare
-          .wait('#app-list-item-clickable-licenses-module')
-          .click('#app-list-item-clickable-licenses-module')
-          .wait('#licenses-module-display')
-          .evaluate(() => document.location.pathname)
-          .then(pathName => {
-            if (!pathName.includes('/licenses')) throw Error('URL is incorrect');
-            done();
-          })
-          .catch(done);
+      it('should open Licenses app', done => {
+        helpers.clickApp(nightmare, done, 'licenses');
       });
 
       it('should clear default status filters', done => {
         nightmare
+          .waitUntilNetworkIdle(1000)
           .wait('#filter-accordion-status button[icon=times-circle-solid]')
           .click('#filter-accordion-status button[icon=times-circle-solid]')
           .then(done)
@@ -115,17 +105,15 @@ module.exports.test = (uiTestCtx) => {
       it('should create license with correct default values', done => {
         const name = `Default License #${generateNumber()}`;
         nightmare
-          .wait('#app-list-item-clickable-licenses-module')
-          .click('#app-list-item-clickable-licenses-module')
-          .wait('#licenses-module-display')
-          .wait('#clickable-newlicense')
-          .click('#clickable-newlicense')
+          .wait('#list-licenses')
+          .wait('#clickable-new-license')
+          .click('#clickable-new-license')
 
           .waitUntilNetworkIdle(2000) // Wait for the default values to be fetched and set.
 
           .insert('#edit-license-name', name)
 
-          .click('#clickable-createlicense')
+          .click('#clickable-create-license')
           .wait('#licenseInfo')
           .waitUntilNetworkIdle(1000)
           .evaluate(expectedName => {
@@ -149,7 +137,7 @@ module.exports.test = (uiTestCtx) => {
           .catch(done);
       });
 
-      it('should create license', done => {
+      it(`should create license: ${values.name}`, done => {
         createLicense(nightmare, done, values);
       });
 
@@ -157,8 +145,10 @@ module.exports.test = (uiTestCtx) => {
         nightmare
           .wait('#input-license-search')
           .insert('#input-license-search', values.name)
-          .click('[data-test-search-and-sort-submit]')
-          .wait(1000) // If another license was open wait for the new one to be open before the next operation.
+          .click('#clickable-search-licenses')
+          .waitUntilNetworkIdle(1000)
+          .wait('#list-licenses a[role="row"]')
+          .click('#list-licenses a[role="row"]')
           .wait('#licenseInfo')
           .waitUntilNetworkIdle(1000)
           .evaluate(expectedValues => {
@@ -190,7 +180,7 @@ module.exports.test = (uiTestCtx) => {
 
           .type('#edit-license-type', values.editedType)
           .type('#edit-license-status', values.editedStatus)
-          .click('#clickable-updatelicense')
+          .click('#clickable-update-license')
           .wait('#licenseInfo')
           .waitUntilNetworkIdle(1000)
           .evaluate(expectedValues => {
@@ -215,7 +205,7 @@ module.exports.test = (uiTestCtx) => {
 
       it('should reject endDate <= startDate', done => {
         nightmare
-          .click('#clickable-newlicense')
+          .click('#clickable-new-license')
           .wait('#licenseFormInfo')
           .waitUntilNetworkIdle(1000)
           .insert('#edit-license-name', 'Invalid Date')
@@ -230,9 +220,7 @@ module.exports.test = (uiTestCtx) => {
             }
           })
           .then(() => {
-            nightmare
-              .click('form button[icon=times]')
-              .click('[data-test-confirmation-modal-cancel-button]');
+            nightmare.click('#close-license-form-button');
           })
           .then(done)
           .catch(done);
@@ -240,7 +228,7 @@ module.exports.test = (uiTestCtx) => {
 
       it('should create open-ended license', done => {
         nightmare
-          .click('#clickable-newlicense')
+          .click('#clickable-new-license')
           .wait('#licenseFormInfo')
           .waitUntilNetworkIdle(1000)
           .insert('#edit-license-name', `Open Ended License #${generateNumber()}`)
@@ -254,7 +242,7 @@ module.exports.test = (uiTestCtx) => {
               throw Error('Expected to find #edit-license-end-date disabled');
             }
           })
-          .click('#clickable-createlicense')
+          .click('#clickable-create-license')
           .wait('#licenseInfo')
           .waitUntilNetworkIdle(1000)
 
