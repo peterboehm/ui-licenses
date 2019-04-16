@@ -4,8 +4,7 @@ import { get } from 'lodash';
 
 import { stripesConnect, withStripes } from '@folio/stripes/core';
 import { StripesConnectedSource } from '@folio/stripes/smart-components';
-
-import getSASParams from '../util/getSASParams';
+import { getSASParams } from '@folio/stripes-erm-components';
 
 import View from '../components/Licenses';
 
