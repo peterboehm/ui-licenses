@@ -64,8 +64,9 @@ module.exports.test = (uiTestCtx) => {
           .wait('#clickable-new-license')
           .click('#clickable-new-license')
 
-          .waitUntilNetworkIdle(2000) // Wait for the default values to be fetched and set.
-
+          .wait('#accordion-toggle-button-licenseFormOrgs')
+          .click('#accordion-toggle-button-licenseFormOrgs')
+          .waitUntilNetworkIdle(1000)
           .insert('#edit-license-name', name)
 
           .then(done)
@@ -168,8 +169,9 @@ module.exports.test = (uiTestCtx) => {
           .click('[class*=paneHeader] [class*=dropdown] button')
           .wait('#clickable-edit-license')
           .click('#clickable-edit-license')
-          .wait('#licenseFormInfo')
-          .waitUntilNetworkIdle(2000)
+          .wait('#accordion-toggle-button-licenseFormOrgs')
+          .click('#accordion-toggle-button-licenseFormOrgs')
+          .waitUntilNetworkIdle(1000)
           .then(done)
           .catch(done);
       });

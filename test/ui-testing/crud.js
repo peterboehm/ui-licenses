@@ -147,10 +147,7 @@ module.exports.test = (uiTestCtx) => {
           .insert('#input-license-search', values.name)
           .click('#clickable-search-licenses')
           .waitUntilNetworkIdle(1000)
-          .wait('#list-licenses a[role="row"]')
-          .click('#list-licenses a[role="row"]')
           .wait('#licenseInfo')
-          .waitUntilNetworkIdle(1000)
           .evaluate(expectedValues => {
             const node = document.querySelector('[data-test-license-name]');
             if (!node || !node.innerText) throw Error('No license name node found.');
@@ -169,7 +166,7 @@ module.exports.test = (uiTestCtx) => {
           .click('[class*=paneHeader] [class*=dropdown] button')
           .wait('#clickable-edit-license')
           .click('#clickable-edit-license')
-          .wait('#licenseFormInfo')
+          .wait('#edit-license-name')
           .insert('#edit-license-name', '')
           .insert('#edit-license-name', values.editedName)
 
@@ -206,13 +203,12 @@ module.exports.test = (uiTestCtx) => {
       it('should reject endDate <= startDate', done => {
         nightmare
           .click('#clickable-new-license')
-          .wait('#licenseFormInfo')
-          .waitUntilNetworkIdle(1000)
+          .wait('#edit-license-name')
           .insert('#edit-license-name', 'Invalid Date')
 
           .type('#edit-license-end-date', '2020-01-04\u000d')
           .type('#edit-license-start-date', '2020-01-05\u000d')
-          .click('#clickable-update-license')
+          .click('#clickable-create-license')
 
           .evaluate(() => {
             if (!document.querySelector('[data-test-error-end-date-too-early]')) {
@@ -220,7 +216,9 @@ module.exports.test = (uiTestCtx) => {
             }
           })
           .then(() => {
-            nightmare.click('#close-license-form-button');
+            nightmare
+              .click('#close-license-form-button')
+              .click('#clickable-cancel-editing-confirmation-cancel');
           })
           .then(done)
           .catch(done);
@@ -228,9 +226,9 @@ module.exports.test = (uiTestCtx) => {
 
       it('should create open-ended license', done => {
         nightmare
+          .wait('#clickable-new-license')
           .click('#clickable-new-license')
-          .wait('#licenseFormInfo')
-          .waitUntilNetworkIdle(1000)
+          .wait('#edit-license-name')
           .insert('#edit-license-name', `Open Ended License #${generateNumber()}`)
           .type('#edit-license-end-date', '2020-01-11\u000d')
           .click('#edit-license-open-ended')

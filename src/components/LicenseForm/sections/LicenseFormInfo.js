@@ -146,7 +146,6 @@ class LicenseFormInfo extends React.Component {
                 label={<FormattedMessage id="ui-licenses.prop.openEnded" />}
                 component={Checkbox}
                 type="checkbox"
-                warn={this.warnEndDate}
               />
             </Col>
           </Row>

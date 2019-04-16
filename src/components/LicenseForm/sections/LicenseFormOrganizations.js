@@ -30,6 +30,7 @@ class LicenseFormOrganizations extends React.Component {
       <div style={{ marginLeft: '2rem' }}>
         <Accordion
           closedByDefault
+          id="licenseFormOrgs"
           label={<FormattedMessage id="ui-licenses.section.organizations" />}
         >
           <Row>

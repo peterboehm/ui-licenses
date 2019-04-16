@@ -73,7 +73,6 @@ class License extends React.Component {
         <Button
           buttonStyle="dropdownItem"
           id="clickable-edit-license"
-          // onClick={handleClick}
           to={editUrl}
         >
           <Icon icon="edit">
