@@ -157,22 +157,18 @@ class LicensesRoute extends React.Component {
 
     return (
       <View
-        initialSearch="?sort=name&filters=status.Active"
-        // initialFilterState={{
-        //   status: ['Active']
-        // }}
-        // initialSortState="name"
-        searchString={location.search}
-        source={this.source}
-        queryGetter={this.queryGetter}
-        querySetter={this.querySetter}
-        onNeedMoreData={this.handleNeedMoreData}
         data={{
           licenses: get(resources, 'licenses.records', []),
           statusValues: get(resources, 'statusValues.records', []),
           typeValues: get(resources, 'typeValues.records', []),
           orgRoleValues: get(resources, 'orgRoleValues.records', []),
         }}
+        initialSearch="?sort=name&filters=status.Active"
+        onNeedMoreData={this.handleNeedMoreData}
+        queryGetter={this.queryGetter}
+        querySetter={this.querySetter}
+        searchString={location.search}
+        source={this.source}
       >
         {children}
       </View>

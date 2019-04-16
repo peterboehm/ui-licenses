@@ -3,6 +3,8 @@
 
   "loading": "Loading...",
 
+  "searchInputLabel": "Search Licenses",
+
   "closeEditLicense": "Close edit license pane",
   "createLicense": "Create license",
   "editLicense": "Edit license",

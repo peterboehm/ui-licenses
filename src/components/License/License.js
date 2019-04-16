@@ -5,10 +5,8 @@ import { FormattedMessage } from 'react-intl';
 import {
   AccordionSet,
   Icon,
-  IconButton,
   Layout,
   Pane,
-  PaneMenu,
   Button,
 } from '@folio/stripes/components';
 
@@ -99,33 +97,6 @@ class License extends React.Component {
     );
   }
 
-  renderLastMenu = () => {
-    const {
-      data: { license: { tags = [] } },
-      tagsEnabled,
-      onToggleHelper
-    } = this.props;
-
-    return (
-      <PaneMenu>
-        { tagsEnabled &&
-          <IconButton
-            icon="tag"
-            id="clickable-show-tags"
-            badgeCount={tags.length}
-            onClick={() => onToggleHelper('tags')}
-          />
-        }
-        <IconButton
-          icon="clock"
-          id="clickable-show-workflow"
-          badgeCount={tags.length}
-          onClick={() => onToggleHelper('workflow')}
-        />
-      </PaneMenu>
-    );
-  }
-
   render() {
     const { data, isLoading, onClose } = this.props;
 
@@ -137,7 +108,6 @@ class License extends React.Component {
         defaultWidth="45%"
         dismissible
         id="pane-view-license"
-        lastMenu={this.renderLastMenu()}
         onClose={onClose}
         paneTitle={data.license.name}
       >

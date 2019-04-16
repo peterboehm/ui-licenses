@@ -28,16 +28,14 @@ import LicenseFilters from '../LicenseFilters';
 
 import css from './Licenses.css';
 
-export default class LicensesView extends React.Component {
+export default class Licenses extends React.Component {
   static propTypes = {
     contentRef: PropTypes.object,
     data: PropTypes.object,
-    // initialFilterState: PropTypes.object,
-    // initialSortState: PropTypes.string,
     initialSearch: PropTypes.string,
+    onNeedMoreData: PropTypes.func,
     queryGetter: PropTypes.func,
     querySetter: PropTypes.func,
-    onNeedMoreData: PropTypes.func,
     searchString: PropTypes.string,
     source: PropTypes.object,
     visibleColumns: PropTypes.arrayOf(PropTypes.string),
@@ -167,7 +165,7 @@ export default class LicensesView extends React.Component {
     return (
       <IfPermission perm="ui-licenses.licenses.edit">
         <PaneMenu>
-          <FormattedMessage id="stripes-smart-components.addNew">
+          <FormattedMessage id="ui-licenses.createLicense">
             {ariaLabel => (
               <Button
                 aria-label={ariaLabel}
@@ -193,8 +191,6 @@ export default class LicensesView extends React.Component {
       onNeedMoreData,
       queryGetter,
       querySetter,
-      // initialFilterState,
-      // initialSortState,
       initialSearch,
       source,
       visibleColumns,
@@ -209,8 +205,6 @@ export default class LicensesView extends React.Component {
         <SearchAndSortQuery
           queryGetter={queryGetter}
           querySetter={querySetter}
-          // initialFilterState={initialFilterState}
-          // initialSortState={initialSortState}
           initialSearch={initialSearch}
         >
           {
@@ -236,23 +230,29 @@ export default class LicensesView extends React.Component {
                       paneTitle={<FormattedMessage id="stripes-smart-components.searchAndFilter" />}
                     >
                       <form onSubmit={onSubmitSearch}>
+                        {/* TODO: Use forthcoming <SearchGroup> or similar component */}
                         <div className={css.searchGroupWrap}>
-                          <SearchField
-                            aria-label="license search"
-                            autoFocus
-                            className={css.searchField}
-                            data-test-license-search-input
-                            id="input-license-search"
-                            inputRef={this.searchField}
-                            marginBottom0
-                            name="query"
-                            onChange={getSearchHandlers().query}
-                            onClear={() => {
-                              getSearchHandlers().clear();
-                              onSubmitSearch();
-                            }}
-                            value={searchValue.query}
-                          />
+                          <FormattedMessage id="ui-licenses.searchInputLabel">
+                            { ariaLabel => (
+                              <SearchField
+                                aria-label={ariaLabel}
+                                autoFocus
+                                className={css.searchField}
+                                data-test-license-search-input
+                                id="input-license-search"
+                                inputRef={this.searchField}
+                                marginBottom0
+                                name="query"
+                                onChange={getSearchHandlers().query}
+                                onClear={() => {
+                                  getSearchHandlers().clear();
+                                  // TODO: Add way to trigger search automatically
+                                  // onSubmitSearch();
+                                }}
+                                value={searchValue.query}
+                              />
+                            )}
+                          </FormattedMessage>
                           <Button
                             buttonStyle="primary"
                             disabled={!searchValue.query || searchValue.query === ''}
@@ -261,7 +261,7 @@ export default class LicensesView extends React.Component {
                             marginBottom0
                             type="submit"
                           >
-                            Search
+                            <FormattedMessage id="stripes-smart-components.search" />
                           </Button>
                         </div>
                         <div className={css.resetButtonWrap}>
