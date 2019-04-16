@@ -212,7 +212,7 @@ module.exports.test = (uiTestCtx) => {
 
           .type('#edit-license-end-date', '2020-01-04\u000d')
           .type('#edit-license-start-date', '2020-01-05\u000d')
-          .wait(1000)
+          .click('#clickable-update-license')
 
           .evaluate(() => {
             if (!document.querySelector('[data-test-error-end-date-too-early]')) {

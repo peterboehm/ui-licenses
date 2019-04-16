@@ -63,14 +63,22 @@ class LicensesRoute extends React.Component {
 
   static propTypes = {
     children: PropTypes.node,
+    history: PropTypes.shape({
+      push: PropTypes.func.isRequired,
+    }).isRequired,
     location: PropTypes.shape({
       search: PropTypes.string,
     }).isRequired,
     mutator: PropTypes.object,
     resources: PropTypes.object,
+    showSingleResult: PropTypes.bool,
     stripes: PropTypes.shape({
       logger: PropTypes.object,
     }),
+  }
+
+  static defaultProps = {
+    showSingleResult: true,
   }
 
   constructor(props) {
@@ -102,16 +110,21 @@ class LicensesRoute extends React.Component {
     }
   }
 
-  // componentDidUpdate(nextProps) {
-  //   const oldLicenses = get(this.props.resources, 'licenses.records', []);
-  //   const newLicenses = get(nextProps.resources, 'licenses.records', []);
+  componentDidUpdate(prevProps) {
+    const prevSource = new StripesConnectedSource(prevProps, this.logger, 'licenses');
+    const oldCount = prevSource.totalCount();
+    const oldRecords = prevSource.records();
+    const newCount = this.source.totalCount();
+    const newRecords = this.source.records();
 
-  //   if (newLicenses.length === 1 && oldLicenses.length !== 1) {
-  //     const { history, location } = nextProps;
-  //     const record = newLicenses[0];
-  //     history.push(`/licenses/${record.id}${location.search}`);
-  //   }
-  // }
+    if (this.props.showSingleResult && newCount === 1) {
+      if (oldCount !== 1 || (oldCount === 1 && oldRecords[0].id !== newRecords[0].id)) {
+        const { history, location } = this.props;
+        const record = newRecords[0];
+        history.push(`/licenses/${record.id}${location.search}`);
+      }
+    }
+  }
 
 
   handleNeedMoreData = () => {

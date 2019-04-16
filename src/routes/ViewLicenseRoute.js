@@ -18,6 +18,7 @@ class ViewLicenseRoute extends React.Component {
       params: {
         sort: 'owner.startDate;desc'
       },
+      throwErrors: false,
     },
     terms: {
       type: 'okapi',
