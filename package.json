@@ -52,8 +52,7 @@
     "permissionSets": [
       {
         "permissionName": "module.licenses.enabled",
-        "displayName": "UI: ui-licenses module is enabled",
-        "visible": true
+        "displayName": "UI: ui-licenses module is enabled"
       },
       {
         "permissionName": "ui-licenses.licenses.view",

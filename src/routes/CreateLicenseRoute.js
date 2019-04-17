@@ -5,6 +5,7 @@ import { get } from 'lodash';
 import { stripesConnect } from '@folio/stripes/core';
 
 import View from '../components/LicenseForm';
+import NoPermissions from '../components/NoPermissions';
 
 class CreateLicenseRoute extends React.Component {
   static manifest = Object.freeze({
@@ -59,7 +60,18 @@ class CreateLicenseRoute extends React.Component {
       terms: PropTypes.object,
       typeValues: PropTypes.object,
     }).isRequired,
+    stripes: PropTypes.shape({
+      hasPerm: PropTypes.func.isRequired,
+    }).isRequired,
   };
+
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      hasPerms: props.stripes.hasPerm('ui-licenses.licenses.edit'),
+    };
+  }
 
   getInitialValues = () => {
     const { resources } = this.props;
@@ -102,6 +114,8 @@ class CreateLicenseRoute extends React.Component {
 
   render() {
     const { resources } = this.props;
+
+    if (!this.state.hasPerms) return <NoPermissions />;
 
     return (
       <View

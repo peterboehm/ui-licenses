@@ -7,6 +7,7 @@ import { StripesConnectedSource } from '@folio/stripes/smart-components';
 import { getSASParams } from '@folio/stripes-erm-components';
 
 import View from '../components/Licenses';
+import NoPermissions from '../components/NoPermissions';
 
 const INITIAL_RESULT_COUNT = 100;
 const RESULT_COUNT_INCREMENT = 100;
@@ -71,6 +72,7 @@ class LicensesRoute extends React.Component {
     mutator: PropTypes.object,
     resources: PropTypes.object,
     stripes: PropTypes.shape({
+      hasPerm: PropTypes.func.isRequired,
       logger: PropTypes.object,
     }),
   }
@@ -80,10 +82,11 @@ class LicensesRoute extends React.Component {
 
     this.logger = props.stripes.logger;
     this.searchField = React.createRef();
-  }
 
-  state = {
-    hideView: true,
+    this.state = {
+      hasPerms: props.stripes.hasPerm('ui-licenses.licenses.view'),
+      hideView: true,
+    };
   }
 
   static getDerivedStateFromProps(props) {
@@ -147,6 +150,8 @@ class LicensesRoute extends React.Component {
     if (this.source) {
       this.source.update(this.props, 'licenses');
     }
+
+    if (!this.state.hasPerms) return <NoPermissions />;
 
     if (this.state.hideView) {
       return children;

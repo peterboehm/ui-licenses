@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Switch from 'react-router-dom/Switch';
-
 import { Route } from '@folio/stripes/core';
 
 import LicensesRoute from './routes/LicensesRoute';
