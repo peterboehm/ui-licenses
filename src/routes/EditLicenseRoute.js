@@ -15,18 +15,27 @@ class EditLicenseRoute extends React.Component {
     terms: {
       type: 'okapi',
       path: 'licenses/custprops',
+      shouldRefresh: () => false,
     },
     statusValues: {
       type: 'okapi',
       path: 'licenses/refdata/License/status',
+      shouldRefresh: () => false,
     },
     typeValues: {
       type: 'okapi',
       path: 'licenses/refdata/License/type',
+      shouldRefresh: () => false,
     },
     orgRoleValues: {
       type: 'okapi',
       path: 'licenses/refdata/LicenseOrg/role',
+      shouldRefresh: () => false,
+    },
+    documentCategories: {
+      type: 'okapi',
+      path: 'licenses/refdata/DocumentAttachment/atType',
+      shouldRefresh: () => false,
     },
   });
 
@@ -63,13 +72,15 @@ class EditLicenseRoute extends React.Component {
     const {
       orgs = [],
       status = {},
+      supplementaryDocs = [],
       type = {},
     } = initialValues;
 
     // Set the values of dropdown-controlled props as values rather than objects.
-    initialValues.orgs = orgs.map(o => ({ ...o, role: o.role.value }));
     initialValues.status = status.value;
     initialValues.type = type.value;
+    initialValues.orgs = orgs.map(o => ({ ...o, role: o.role.value }));
+    initialValues.supplementaryDocs = supplementaryDocs.map(o => ({ ...o, atType: get(o, 'atType.value') }));
 
     // Add the default terms to the already-set terms.
     initialValues.customProperties = initialValues.customProperties || {};
@@ -105,6 +116,7 @@ class EditLicenseRoute extends React.Component {
     return (
       <Form
         data={{
+          documentCategories: get(resources, 'documentCategories.records', []),
           orgRoleValues: get(resources, 'orgRoleValues.records', []),
           statusValues: get(resources, 'statusValues.records', []),
           terms: get(resources, 'terms.records', []),

@@ -17,6 +17,7 @@ import {
   LicenseCoreDocs,
   LicenseHeader,
   LicenseInfo,
+  LicenseSupplement,
   LicenseTerms,
 } from './sections';
 
@@ -36,6 +37,7 @@ class License extends React.Component {
       licenseInfo: true,
       licenseCoreDocs: false,
       licenseTerms: false,
+      licenseSupplement: false,
       licenseAgreements: false,
     }
   }
@@ -116,6 +118,7 @@ class License extends React.Component {
           <LicenseInfo {...this.getSectionProps('licenseInfo')} />
           <LicenseCoreDocs {...this.getSectionProps('licenseCoreDocs')} />
           <LicenseTerms {...this.getSectionProps('licenseTerms')} />
+          <LicenseSupplement {...this.getSectionProps('licenseSupplement')} />
           <LicenseAgreements {...this.getSectionProps('licenseAgreements')} />
         </AccordionSet>
       </Pane>

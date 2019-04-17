@@ -33,6 +33,11 @@ class CreateLicenseRoute extends React.Component {
       path: 'licenses/refdata/LicenseOrg/role',
       shouldRefresh: () => false,
     },
+    documentCategories: {
+      type: 'okapi',
+      path: 'licenses/refdata/DocumentAttachment/atType',
+      shouldRefresh: () => false,
+    },
   });
 
   static propTypes = {
@@ -101,6 +106,7 @@ class CreateLicenseRoute extends React.Component {
     return (
       <View
         data={{
+          documentCategories: get(resources, 'documentCategories.records', []),
           orgRoleValues: get(resources, 'orgRoleValues.records', []),
           statusValues: get(resources, 'statusValues.records', []),
           terms: get(resources, 'terms.records', []),
