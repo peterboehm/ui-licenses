@@ -145,11 +145,12 @@ module.exports.test = (uiTestCtx,
               }
 
               if (d.category) {
-                const categoryElements = [...document.querySelectorAll(`[id^=${field}-category-]`)];
-                const categoryElement = categoryElements.find(e => e.value == d.category); // eslint-disable-line eqeqeq
+                const categoryElements = [...document.querySelectorAll(`select[id^=${field}-category-]`)];
+                const categoryElement = categoryElements.find(e => e.selectedOptions[0].textContent == d.category); // eslint-disable-line eqeqeq
                 if (!categoryElement) {
                   throw Error(`Failed to find doc category field with loaded value of ${d.category}`);
                 }
+                console.log('Found category value e.label');
               }
 
               if (d.note) {
@@ -176,6 +177,7 @@ module.exports.test = (uiTestCtx,
                 }
               }
             }, doc, docsFieldName)
+            .wait(5000)
             .then(done)
             .catch(done);
         });
@@ -214,54 +216,6 @@ module.exports.test = (uiTestCtx,
             .catch(done);
         });
       }
-
-      /* if (editedDoc) {
-        it(`should edit license with changed doc ${editedDoc.name}`, done => {
-        //  nightmare
-          let chain = nightmare
-            .evaluate((d, field) => {
-              const nameElements = [...document.querySelectorAll(`[id^=${field}-name-]`)];
-              const index = nameElements.findIndex(e => e.value === d.docToEdit);
-              if (index === -1) {
-                throw Error(`Failed to find doc name text field with loaded value of ${d.docToEdit}`);
-              }
-
-              return index;
-            }, editedDoc, docsFieldName)
-          if (docsFieldName === 'supplementaryDocs') {
-            //  let chain = nightmare
-            chain = chain
-              .then(row => {
-                return nightmare
-                  .insert(`#${docsFieldName}-name-${row}`, '')
-                  .insert(`#${docsFieldName}-name-${row}`, editedDoc.name)
-                  .type(`#${docsFieldName}-category-${row}`, editedDoc.category)
-                  .insert(`#${docsFieldName}-note-${row}`, '')
-                  .insert(`#${docsFieldName}-note-${row}`, editedDoc.note)
-                  .insert(`#${docsFieldName}-location-${row}`, '')
-                  .insert(`#${docsFieldName}-location-${row}`, editedDoc.location)
-                  .insert(`#${docsFieldName}-url-${row}`, '')
-                  .insert(`#${docsFieldName}-url-${row}`, editedDoc.url);
-              });
-          } else {
-            chain = chain
-              .then(row => {
-                return nightmare
-                  .insert(`#${docsFieldName}-name-${row}`, '')
-                  .insert(`#${docsFieldName}-name-${row}`, editedDoc.name)
-                  .insert(`#${docsFieldName}-note-${row}`, '')
-                  .insert(`#${docsFieldName}-note-${row}`, editedDoc.note)
-                  .insert(`#${docsFieldName}-location-${row}`, '')
-                  .insert(`#${docsFieldName}-location-${row}`, editedDoc.location)
-                  .insert(`#${docsFieldName}-url-${row}`, '')
-                  .insert(`#${docsFieldName}-url-${row}`, editedDoc.url);
-              });
-          }
-          chain
-            .then(done)
-            .catch(done);
-        });
-      } */
 
       if (deletedDoc) {
         it(`should delete doc ${deletedDoc}`, done => {

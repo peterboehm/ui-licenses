@@ -5,11 +5,11 @@ const DOCS = [{
   category: '',
   note: 'Signed and filed',
   location: 'Filing Cabinet',
-  url: 'http://licenses.com/final'
+  url: 'http://licenses.com/sd1'
 }, {
   name: 'Supplementary document 2',
   category: 'Product Data Sheet',
-  url: 'http://licenses.com/initial'
+  url: 'http://licenses.com/sd2'
 }];
 
 const EDITED_DOC = {
@@ -18,11 +18,10 @@ const EDITED_DOC = {
   category: 'Vendor Terms And Conditions',
   note: 'Need to sign',
   location: 'Printer Tray',
-  url: 'http://licenses.com/final2'
+  url: 'http://licenses.com/sd1_v2'
 };
 
-//  const DELETED_DOC = DOCS[1].name;
-const DELETED_DOC = '';
+const DELETED_DOC = DOCS[1].name;
 
 const DOCS_FIELD_NAME = 'supplementaryDocs';
 

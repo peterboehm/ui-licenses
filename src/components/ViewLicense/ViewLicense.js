@@ -87,6 +87,15 @@ class ViewLicense extends React.Component {
     }
   }
 
+  getSupplDocs() {
+    const supplementaryDocs = get(this.props.parentResources.supplementaryDocs, ['records'], []);
+
+    return supplementaryDocs.map((doc, i) => ({
+      ...supplementaryDocs[i],
+      ...doc
+    }));
+  }
+
   getLicense = () => {
     return get(this.props.resources.selectedLicense, ['records', 0], {});
   }
@@ -110,7 +119,7 @@ class ViewLicense extends React.Component {
     if (supplementaryDocs && supplementaryDocs.length) {
       license.supplementaryDocs = supplementaryDocs.map(s => ({
         ...s,
-        atType: s.atType ? s.atType.id : undefined,
+        atType: s.atType ? s.atType.value : undefined,
       }));
     }
 
