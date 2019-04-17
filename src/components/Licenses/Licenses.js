@@ -14,7 +14,7 @@ import {
   Paneset,
 } from '@folio/stripes/components';
 
-import { IfPermission } from '@folio/stripes/core';
+import { AppIcon, IfPermission } from '@folio/stripes/core';
 
 import {
   SearchAndSortQuery,
@@ -32,17 +32,22 @@ export default class Licenses extends React.Component {
   static propTypes = {
     contentRef: PropTypes.object,
     data: PropTypes.object,
+    disableRecordCreation: PropTypes.bool,
     initialSearch: PropTypes.string,
     onNeedMoreData: PropTypes.func,
+    onSelectRow: PropTypes.func,
     queryGetter: PropTypes.func,
     querySetter: PropTypes.func,
     searchString: PropTypes.string,
     source: PropTypes.object,
+    syncToLocationSearch: PropTypes.bool,
     visibleColumns: PropTypes.arrayOf(PropTypes.string),
   }
 
   static defaultProps = {
     data: {},
+    searchString: '',
+    syncToLocationSearch: true,
     visibleColumns: ['name', 'type', 'status', 'startDate', 'endDate'],
   }
 
@@ -74,10 +79,18 @@ export default class Licenses extends React.Component {
   }
 
   rowFormatter = (row) => {
-    const { rowClass, rowData, rowIndex, rowProps, cells } = row;
+    const { rowClass, rowData, rowIndex, rowProps = {}, cells } = row;
+    let RowComponent;
+
+    if (this.props.onSelectRow) {
+      RowComponent = 'div';
+    } else {
+      RowComponent = Link;
+      rowProps.to = this.rowURL(rowData.id);
+    }
 
     return (
-      <Link
+      <RowComponent
         aria-rowindex={rowIndex + 2}
         className={rowClass}
         data-label={[
@@ -87,11 +100,10 @@ export default class Licenses extends React.Component {
         ].join('...')}
         key={`row-${rowIndex}`}
         role="row"
-        to={this.rowURL(rowData.id)}
         {...rowProps}
       >
         {cells}
-      </Link>
+      </RowComponent>
     );
   }
 
@@ -189,10 +201,12 @@ export default class Licenses extends React.Component {
       contentRef,
       data,
       onNeedMoreData,
+      onSelectRow,
       queryGetter,
       querySetter,
       initialSearch,
       source,
+      syncToLocationSearch,
       visibleColumns,
     } = this.props;
 
@@ -203,9 +217,10 @@ export default class Licenses extends React.Component {
     return (
       <div data-test-licenses ref={contentRef}>
         <SearchAndSortQuery
+          initialSearch={initialSearch}
           queryGetter={queryGetter}
           querySetter={querySetter}
-          initialSearch={initialSearch}
+          syncToLocationSearch={syncToLocationSearch}
         >
           {
             ({
@@ -286,6 +301,7 @@ export default class Licenses extends React.Component {
                     </Pane>
                   }
                   <Pane
+                    appIcon={<AppIcon app="licenses" />}
                     defaultWidth="fill"
                     firstMenu={this.renderResultsFirstMenu(activeFilters)}
                     lastMenu={this.renderResultsLastMenu()}
@@ -303,6 +319,7 @@ export default class Licenses extends React.Component {
                       isEmptyMessage={this.renderIsEmptyMessage(query, source)}
                       onHeaderClick={onSort}
                       onNeedMoreData={onNeedMoreData}
+                      onRowClick={onSelectRow}
                       rowFormatter={this.rowFormatter}
                       sortDirection={sortOrder.startsWith('-') ? 'descending' : 'ascending'}
                       sortOrder={sortOrder.replace(/^-/, '').replace(/,.*/, '')}

@@ -38,4 +38,4 @@ class App extends React.Component {
 }
 
 export default App;
-export { LicensesRoute as Licenses };
+export { default as Licenses } from './components/Licenses';
