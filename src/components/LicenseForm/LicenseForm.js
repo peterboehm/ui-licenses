@@ -23,6 +23,7 @@ import {
   LicenseFormInfo,
   LicenseFormCoreDocs,
   LicenseFormTerms,
+  LicenseFormSupplement,
 } from './sections';
 
 import css from './LicenseForm.css';
@@ -47,6 +48,7 @@ class LicenseForm extends React.Component {
       licenseFormInfo: true,
       licenseFormDocs: false,
       licenseFormTerms: false,
+      licenseFormSupplement: false
     }
   }
 
@@ -166,6 +168,7 @@ class LicenseForm extends React.Component {
                 <LicenseFormInfo {...this.getSectionProps('licenseFormInfo')} />
                 <LicenseFormCoreDocs {...this.getSectionProps('licenseFormDocs')} />
                 <LicenseFormTerms {...this.getSectionProps('licenseFormTerms')} />
+                <LicenseFormSupplement {...this.getSectionProps('licenseFormSupplement')} />
               </AccordionSet>
             </div>
           </form>

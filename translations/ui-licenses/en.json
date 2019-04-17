@@ -47,6 +47,7 @@
   "prop.status": "Status",
   "prop.type": "Type",
 
+  "placeholder.documentCategory": "Enter a category",
   "placeholder.licenseName": "Enter the license name",
   "placeholder.licenseDescription": "Enter a description of the license",
 
@@ -57,11 +58,15 @@
   "section.coreDocs": "Core documents",
   "section.amendments": "Amendments",
   "section.licenseAgreements": "Agreements linked to this license",
+  "section.supplementInformation": "Supplementary information",
 
   "settings.general": "General",
   "settings.general.message": "These are your general app settings.",
   "settings.some-feature": "Some Feature",
   "settings.some-feature.message": "These are your settings for some app feature.",
+
+  "supplementaryDocs.add": "Add supplementary document",
+  "supplementaryDocs.none": "No supplementary documents have been added",
 
   "terms.add": "Add term",
 
