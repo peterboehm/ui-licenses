@@ -18,6 +18,7 @@ import {
   LicenseHeader,
   LicenseInfo,
   LicenseTerms,
+  LicenseSupplement,
 } from './sections';
 
 import EditLicense from '../EditLicense';
@@ -56,7 +57,22 @@ class ViewLicense extends React.Component {
     paneWidth: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     parentResources: PropTypes.object,
     resources: PropTypes.shape({
-      selectedLicense: PropTypes.object,
+      selectedLicense: PropTypes.shape({
+        supplementaryDocs: PropTypes.arrayOf(PropTypes.shape({
+          atType: PropTypes.arrayOf(PropTypes.shape({
+            id: PropTypes.string,
+            label: PropTypes.string,
+            value: PropTypes.string,
+          })),
+          dateCreated: PropTypes.string,
+          id: PropTypes.string,
+          lastUpdated: PropTypes.string,
+          location: PropTypes.string,
+          name: PropTypes.string.isRequired,
+          note: PropTypes.string,
+          url: PropTypes.string,
+        }))
+      }),
     }),
     stripes: PropTypes.object,
   };
@@ -67,7 +83,17 @@ class ViewLicense extends React.Component {
       licenseCoreDocs: false,
       licenseTerms: false,
       licenseAgreements: false,
+      licenseSupplement: false,
     }
+  }
+
+  getSupplDocs() {
+    const supplementaryDocs = get(this.props.parentResources.supplementaryDocs, ['records'], []);
+
+    return supplementaryDocs.map((doc, i) => ({
+      ...supplementaryDocs[i],
+      ...doc
+    }));
   }
 
   getLicense = () => {
@@ -76,7 +102,7 @@ class ViewLicense extends React.Component {
 
   getInitialValues = () => {
     const license = cloneDeep(this.getLicense());
-    const { customProperties = {}, orgs, status, type } = license;
+    const { customProperties = {}, orgs, status, type, supplementaryDocs } = license;
 
     if (status && status.id) {
       license.status = status.id;
@@ -88,6 +114,13 @@ class ViewLicense extends React.Component {
 
     if (orgs && orgs.length) {
       license.orgs = orgs.map(o => ({ ...o, role: o.role.id }));
+    }
+
+    if (supplementaryDocs && supplementaryDocs.length) {
+      license.supplementaryDocs = supplementaryDocs.map(s => ({
+        ...s,
+        atType: s.atType ? s.atType.value : undefined,
+      }));
     }
 
     const defaultCustomProperties = get(this.props.defaultLicenseValues, ['customProperties'], {});
@@ -211,6 +244,11 @@ class ViewLicense extends React.Component {
           <LicenseTerms
             id="licenseTerms"
             open={this.state.sections.licenseTerms}
+            {...sectionProps}
+          />
+          <LicenseSupplement
+            id="licenseSupplement"
+            open={this.state.sections.licenseSupplement}
             {...sectionProps}
           />
           <LicenseAgreements
