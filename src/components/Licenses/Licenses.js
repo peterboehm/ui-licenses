@@ -217,6 +217,7 @@ export default class Licenses extends React.Component {
         <SearchAndSortQuery
           initialFilterState={{ status: ['Active'] }}
           initialSortState={{ sort: 'name' }}
+          initialSearchState={{ query: '' }}
           queryGetter={queryGetter}
           querySetter={querySetter}
           syncToLocationSearch={syncToLocationSearch}

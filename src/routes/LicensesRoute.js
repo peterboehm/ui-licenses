@@ -168,7 +168,6 @@ class LicensesRoute extends React.Component {
           typeValues: get(resources, 'typeValues.records', []),
           orgRoleValues: get(resources, 'orgRoleValues.records', []),
         }}
-        initialSearch="?sort=name&filters=status.Active"
         onNeedMoreData={this.handleNeedMoreData}
         queryGetter={this.queryGetter}
         querySetter={this.querySetter}
