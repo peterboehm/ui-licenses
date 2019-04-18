@@ -29,17 +29,19 @@ class OrganizationsFieldArray extends React.Component {
     roles: PropTypes.arrayOf(PropTypes.object), // eslint-disable-line react/no-unused-prop-types
   }
 
+  static defaultProps = {
+    roles: [],
+  }
+
   state = {
     licensorRoleId: undefined,
-    roles: [],
   }
 
   static getDerivedStateFromProps(nextProps, state) {
     const { roles } = nextProps;
-    if (state.roles.length !== roles.length) {
+    if (!state.licensorRoleId && roles.length) {
       return {
         licensorRoleId: (roles.find(r => r.value === 'licensor') || {}).id,
-        roles: roles.map(({ id, label }) => ({ value: id, label })),
       };
     }
 
@@ -107,7 +109,7 @@ class OrganizationsFieldArray extends React.Component {
             {placeholder => (
               <Field
                 component={Select}
-                dataOptions={this.state.roles}
+                dataOptions={this.props.roles}
                 id={`org-role-${i}`}
                 name={`${name}[${i}].role`}
                 placeholder={placeholder}

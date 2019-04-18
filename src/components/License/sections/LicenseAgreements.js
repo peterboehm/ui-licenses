@@ -18,23 +18,23 @@ export default class LicenseAgreements extends React.Component {
     id: PropTypes.string,
     license: PropTypes.shape({
       id: PropTypes.string,
-    }).isRequired,
-    linkedAgreements: PropTypes.arrayOf(PropTypes.shape({
-      note: PropTypes.string,
-      owner: PropTypes.shape({
-        agreementStatus: PropTypes.shape({
-          label: PropTypes.string,
+      linkedAgreements: PropTypes.arrayOf(PropTypes.shape({
+        note: PropTypes.string,
+        owner: PropTypes.shape({
+          agreementStatus: PropTypes.shape({
+            label: PropTypes.string,
+          }),
+          endDate: PropTypes.string,
+          id: PropTypes.string,
+          name: PropTypes.string,
+          startDate: PropTypes.string,
         }),
-        endDate: PropTypes.string,
-        id: PropTypes.string,
-        name: PropTypes.string,
-        startDate: PropTypes.string,
-      }),
-      status: PropTypes.shape({
-        value: PropTypes.string.isRequired,
-        label: PropTypes.string,
-      }).isRequired,
-    })).isRequired,
+        status: PropTypes.shape({
+          value: PropTypes.string.isRequired,
+          label: PropTypes.string,
+        }).isRequired,
+      })).isRequired,
+    }).isRequired,
     onToggle: PropTypes.func,
     open: PropTypes.bool,
   };
@@ -45,14 +45,16 @@ export default class LicenseAgreements extends React.Component {
 
 
   static getDerivedStateFromProps(props, state) {
+    const { license: { linkedAgreements } } = props;
+
     if (
-      (props.linkedAgreements.length !== state.groupedLinkedAgreements.length) ||
-      (get(props.linkedAgreements, [0, 'owner', 'id']) !== get(state.groupedLinkedAgreements, [0, 'owner', 'id']))
+      (linkedAgreements.length !== state.groupedLinkedAgreements.length) ||
+      (get(linkedAgreements, [0, 'owner', 'id']) !== get(state.groupedLinkedAgreements, [0, 'owner', 'id']))
     ) {
       return {
         groupedLinkedAgreements: [
-          ...props.linkedAgreements.filter(a => a.status.value === 'controlling'),
-          ...props.linkedAgreements.filter(a => a.status.value !== 'controlling'),
+          ...linkedAgreements.filter(a => a.status.value === 'controlling'),
+          ...linkedAgreements.filter(a => a.status.value !== 'controlling'),
         ]
       };
     }
@@ -81,7 +83,7 @@ export default class LicenseAgreements extends React.Component {
         }}
         contentData={this.state.groupedLinkedAgreements}
         formatter={{
-          linkNote: link => (link.note ? <InfoPopover content={link.note} /> : null),
+          linkNote: link => (link.note ? <InfoPopover content={link.note} /> : ''),
           name: ({ owner:agreement = {} }) => <Link to={`/erm/agreements/view/${agreement.id}`}>{agreement.name}</Link>,
           startDate: ({ owner:agreement = {} }) => (agreement.startDate ? <FormattedDate value={agreement.startDate} /> : '-'),
           endDate: ({ owner:agreement = {} }) => (agreement.endDate ? <FormattedDate value={agreement.endDate} /> : '-'),
@@ -103,7 +105,7 @@ export default class LicenseAgreements extends React.Component {
   }
 
   renderBadge = () => {
-    const count = this.props.linkedAgreements.length;
+    const count = this.props.license.linkedAgreements.length;
     return count !== undefined ? <Badge>{count}</Badge> : <Spinner />;
   }
 

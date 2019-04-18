@@ -1,6 +1,6 @@
 {
   "name": "@folio/licenses",
-  "version": "2.5.0",
+  "version": "3.0.0",
   "description": "ERM License functionality for Stripes",
   "main": "src/index.js",
   "repository": "",
@@ -11,7 +11,7 @@
   "scripts": {
     "start": "stripes serve",
     "build": "stripes build --output ./output",
-    "test": "stripes test nightmare --run crud/text-term/select-term/orgs/core-docs",
+    "test": "stripes test nightmare --run crud/text-term/select-term/orgs/core-docs/more-docs",
     "test-crud": "stripes test nightmare --run crud",
     "test-text-term": "stripes test nightmare --run text-term",
     "test-select-term": "stripes test nightmare --run select-term",
@@ -28,7 +28,7 @@
     "eslint": "^5.5.0"
   },
   "dependencies": {
-    "@folio/stripes-erm-components": "^1.3.1",
+    "@folio/stripes-erm-components": "^1.3.2",
     "lodash": "^4.17.11",
     "prop-types": "^15.6.0",
     "react-intl": "^2.4.0",
@@ -43,7 +43,7 @@
     "type": "app",
     "displayName": "ui-licenses.meta.title",
     "route": "/licenses",
-    "home": "/licenses?sort=Name&filters=status.Active",
+    "home": "/licenses?sort=name&filters=status.Active",
     "hasSettings": true,
     "queryResource": "query",
     "okapiInterfaces": {
@@ -52,8 +52,7 @@
     "permissionSets": [
       {
         "permissionName": "module.licenses.enabled",
-        "displayName": "UI: ui-licenses module is enabled",
-        "visible": true
+        "displayName": "UI: ui-licenses module is enabled"
       },
       {
         "permissionName": "ui-licenses.licenses.view",

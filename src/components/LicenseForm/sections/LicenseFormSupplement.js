@@ -1,44 +1,37 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { get } from 'lodash';
 import { FormattedMessage } from 'react-intl';
 import { FieldArray } from 'redux-form';
 
-import {
-  Accordion,
-} from '@folio/stripes/components';
-
+import { Accordion } from '@folio/stripes/components';
 import { DocumentsFieldArray } from '@folio/stripes-erm-components';
 
 class LicenseFormSupplement extends React.Component {
     static propTypes = {
+      data: PropTypes.shape({
+        documentCategories: PropTypes.array,
+      }).isRequired,
       id: PropTypes.string,
       onToggle: PropTypes.func,
       open: PropTypes.bool,
-      parentResources: PropTypes.shape({
-        documentCategories: PropTypes.arrayOf(PropTypes.shape({
-          id: PropTypes.string,
-          label: PropTypes.string,
-          value: PropTypes.string,
-        })).isRequired,
-      })
     };
 
     render() {
-      const documentCategories = get(this.props.parentResources.documentCategories, ['records'], []);
+      const { data, id, onToggle, open } = this.props;
+
       return (
         <Accordion
-          id={this.props.id}
+          id={id}
           label={<FormattedMessage id="ui-licenses.section.supplementInformation" />}
-          open={this.props.open}
-          onToggle={this.props.onToggle}
+          open={open}
+          onToggle={onToggle}
         >
           <FieldArray
             addDocBtnLabel={<FormattedMessage id="ui-licenses.supplementaryDocs.add" />}
             component={DocumentsFieldArray}
             isEmptyMessage={<FormattedMessage id="ui-licenses.supplementaryDocs.none" />}
             name="supplementaryDocs"
-            documentCategories={documentCategories}
+            documentCategories={data.documentCategories}
           />
         </Accordion>
       );

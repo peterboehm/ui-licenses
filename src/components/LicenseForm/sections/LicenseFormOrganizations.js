@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { get } from 'lodash';
 import { FormattedMessage } from 'react-intl';
 import { FieldArray } from 'redux-form';
 
@@ -17,8 +16,8 @@ import OrganizationsFieldArray from '../components/OrganizationsFieldArray';
 
 class LicenseFormOrganizations extends React.Component {
   static propTypes = {
-    parentResources: PropTypes.shape({
-      orgRoleValues: PropTypes.object,
+    data: PropTypes.shape({
+      orgRoleValues: PropTypes.array,
     }),
   };
 
@@ -29,13 +28,17 @@ class LicenseFormOrganizations extends React.Component {
   render() {
     return (
       <div style={{ marginLeft: '2rem' }}>
-        <Accordion label={<FormattedMessage id="ui-licenses.section.organizations" />}>
+        <Accordion
+          closedByDefault
+          id="licenseFormOrgs"
+          label={<FormattedMessage id="ui-licenses.section.organizations" />}
+        >
           <Row>
             <Col xs={12}>
               <FieldArray
                 name="orgs"
                 component={OrganizationsFieldArray}
-                roles={get(this.props.parentResources.orgRoleValues, ['records'], [])}
+                roles={this.props.data.orgRoleValues}
               />
               <Button
                 id="create-license-org-btn"

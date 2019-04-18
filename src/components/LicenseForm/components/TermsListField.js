@@ -130,10 +130,18 @@ export default class TermsListField extends React.Component {
       controlledFieldValue = controlledFieldValue.value;
     }
 
-    // Figure out which component we're rendering
+    // Figure out which component we're rendering and specify its unique props.
     let FieldComponent = TextArea;
-    if (term.type === TERM_TYPE_SELECT) FieldComponent = Select;
-    if (term.type === TERM_TYPE_NUMBER) FieldComponent = TextField;
+    const fieldProps = {};
+    if (term.type === TERM_TYPE_SELECT) {
+      FieldComponent = Select;
+      fieldProps.dataOptions = term.options;
+    }
+
+    if (term.type === TERM_TYPE_NUMBER) {
+      FieldComponent = TextField;
+      fieldProps.type = 'number';
+    }
 
     const handleChange = e => {
       onChange({
@@ -149,11 +157,10 @@ export default class TermsListField extends React.Component {
     return (
       <FieldComponent
         data-test-term-value
-        dataOptions={term.options}
         id={`edit-term-${i}-value`}
         onChange={handleChange}
-        type={term.type === TERM_TYPE_NUMBER ? 'number' : undefined}
         value={controlledFieldValue}
+        {...fieldProps}
       />
     );
   }

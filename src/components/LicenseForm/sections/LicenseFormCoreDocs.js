@@ -3,9 +3,7 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { FieldArray } from 'redux-form';
 
-import {
-  Accordion,
-} from '@folio/stripes/components';
+import { Accordion } from '@folio/stripes/components';
 
 import { DocumentsFieldArray } from '@folio/stripes-erm-components';
 
@@ -17,12 +15,14 @@ class LicenseFormCoreDocs extends React.Component {
   };
 
   render() {
+    const { id, onToggle, open } = this.props;
+
     return (
       <Accordion
-        id={this.props.id}
+        id={id}
         label={<FormattedMessage id="ui-licenses.section.coreDocsAndAmendments" />}
-        open={this.props.open}
-        onToggle={this.props.onToggle}
+        open={open}
+        onToggle={onToggle}
       >
         <FieldArray
           addDocBtnLabel={<FormattedMessage id="ui-licenses.coreDocs.add" />}

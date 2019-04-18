@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { get } from 'lodash';
 import { FormattedMessage } from 'react-intl';
 import { Accordion } from '@folio/stripes/components';
 import { LicenseTermsList } from '@folio/stripes-erm-components';
@@ -11,14 +10,12 @@ export default class LicenseTerms extends React.Component {
     id: PropTypes.string,
     onToggle: PropTypes.func,
     open: PropTypes.bool,
-    parentResources: PropTypes.shape({
-      terms: PropTypes.object,
-    }),
+    terms: PropTypes.arrayOf(PropTypes.object),
   }
 
   render() {
-    const { id, license, onToggle, open, parentResources } = this.props;
-    const terms = get(parentResources.terms, ['records'], []);
+    const { id, license, onToggle, open, terms } = this.props;
+
     return (
       <Accordion
         id={id}
