@@ -272,7 +272,6 @@ export default class Licenses extends React.Component {
                             buttonStyle="primary"
                             disabled={!searchValue.query || searchValue.query === ''}
                             id="clickable-search-licenses"
-                            fullWidth
                             marginBottom0
                             type="submit"
                           >
