@@ -33,7 +33,6 @@ export default class Licenses extends React.Component {
     contentRef: PropTypes.object,
     data: PropTypes.object,
     disableRecordCreation: PropTypes.bool,
-    initialSearch: PropTypes.string,
     onNeedMoreData: PropTypes.func,
     onSelectRow: PropTypes.func,
     queryGetter: PropTypes.func,
@@ -204,7 +203,6 @@ export default class Licenses extends React.Component {
       onSelectRow,
       queryGetter,
       querySetter,
-      initialSearch,
       source,
       syncToLocationSearch,
       visibleColumns,
@@ -217,7 +215,8 @@ export default class Licenses extends React.Component {
     return (
       <div data-test-licenses ref={contentRef}>
         <SearchAndSortQuery
-          initialSearch={initialSearch}
+          initialFilterState={{ status: ['Active'] }}
+          initialSortState={{ sort: 'name' }}
           queryGetter={queryGetter}
           querySetter={querySetter}
           syncToLocationSearch={syncToLocationSearch}

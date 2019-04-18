@@ -51,12 +51,7 @@ class LicensesRoute extends React.Component {
       path: 'licenses/refdata/LicenseOrg/role',
       shouldRefresh: () => false,
     },
-    query: {
-      initialValue: {
-        filters: 'status.Active',
-        sort: 'name',
-      }
-    },
+    query: { initialValue: {} },
     resultCount: { initialValue: INITIAL_RESULT_COUNT },
   });
 
@@ -133,8 +128,16 @@ class LicensesRoute extends React.Component {
   }
 
   querySetter = ({ nsValues, state }) => {
+    const defaults = {
+      filters: null,
+      query: null,
+      sort: null,
+    };
+
     if (/reset/.test(state.changeType)) {
-      this.props.mutator.query.replace(nsValues);
+      // A mutator's `replace()` function doesn't update the URL of the page. As a result,
+      // we always use `update()` but fully specify the values we want to null out.
+      this.props.mutator.query.update({ ...defaults, ...nsValues });
     } else {
       this.props.mutator.query.update(nsValues);
     }

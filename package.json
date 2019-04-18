@@ -11,7 +11,7 @@
   "scripts": {
     "start": "stripes serve",
     "build": "stripes build --output ./output",
-    "test": "stripes test nightmare --run crud/text-term/select-term/orgs/core-docs",
+    "test": "stripes test nightmare --run crud/text-term/select-term/orgs/core-docs/more-docs",
     "test-crud": "stripes test nightmare --run crud",
     "test-text-term": "stripes test nightmare --run text-term",
     "test-select-term": "stripes test nightmare --run select-term",
@@ -43,7 +43,7 @@
     "type": "app",
     "displayName": "ui-licenses.meta.title",
     "route": "/licenses",
-    "home": "/licenses?sort=Name&filters=status.Active",
+    "home": "/licenses?sort=name&filters=status.Active",
     "hasSettings": true,
     "queryResource": "query",
     "okapiInterfaces": {
