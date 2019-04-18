@@ -7,8 +7,8 @@ const ORGS = [{
   role: 'Licensor',
   toDelete: true,
 }, {
-  name: `Consortium ${generateNumber()}`,
-  role: 'Consortium',
+  name: `Licensee ${generateNumber()}`,
+  role: 'Licensee',
   editedName: `Consortium Admin ${generateNumber()}`,
   editedRole: 'Consortium Administrator',
 }];
