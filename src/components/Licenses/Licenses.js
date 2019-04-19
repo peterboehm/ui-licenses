@@ -271,6 +271,7 @@ export default class Licenses extends React.Component {
                           <Button
                             buttonStyle="primary"
                             disabled={!searchValue.query || searchValue.query === ''}
+                            fullWidth
                             id="clickable-search-licenses"
                             marginBottom0
                             type="submit"
@@ -283,7 +284,6 @@ export default class Licenses extends React.Component {
                             buttonStyle="none"
                             id="clickable-reset-all"
                             disabled={disableReset()}
-                            fullWidth
                             onClick={resetAll}
                           >
                             <Icon icon="times-circle-solid">
