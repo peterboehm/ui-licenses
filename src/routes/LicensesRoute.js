@@ -106,7 +106,7 @@ class LicensesRoute extends React.Component {
     const newCount = this.source.totalCount();
     const newRecords = this.source.records();
 
-    if (newCount === 1) {
+    if (newCount === 1 && this.state.hideView === false) {
       const { history, location } = this.props;
 
       const prevSource = new StripesConnectedSource(prevProps, this.logger, 'licenses');
