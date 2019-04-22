@@ -5,7 +5,6 @@
     "settings.some-feature.message": "这些是您的某些应用功能设置。",
     "meta.title": "许可证",
     "prop.status": "状态",
-    "closeNewLicense": "关闭新许可证",
     "createLicense": "创建许可证",
     "editLicense": "编辑许可证",
     "newLicense": "新许可证",
@@ -47,5 +46,12 @@
     "licenseAgreements.none": "No agreements currently linked to this license.",
     "prop.agreementStatus": "Agreement status",
     "prop.linkStatus": "Link status",
-    "section.licenseAgreements": "Agreements linked to this license"
+    "section.licenseAgreements": "Agreements linked to this license",
+    "placeholder.documentCategory": "Enter a category",
+    "section.supplementInformation": "Supplementary information",
+    "supplementaryDocs.add": "Add supplementary document",
+    "supplementaryDocs.none": "No supplementary documents have been added",
+    "loading": "Loading...",
+    "searchInputLabel": "Search Licenses",
+    "closeEditLicense": "Close edit license pane"
 }
