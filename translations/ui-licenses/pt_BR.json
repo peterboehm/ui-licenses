@@ -5,7 +5,6 @@
     "settings.some-feature.message": "Estas são suas configurações para alguns recursos do aplicativo.",
     "meta.title": "Licenças",
     "prop.status": "Status",
-    "closeNewLicense": "Fechar nova licença",
     "createLicense": "Criar licença",
     "editLicense": "Editar licença",
     "newLicense": "Nova licença",
@@ -24,7 +23,7 @@
     "section.organizations": "Organizações",
     "section.terms": "Termos",
     "prop.openEnded": "Acabou de abrir",
-    "warn.clearEndDate": "Este valor será limpo ao salvar porque \"Aberto\" está marcado.",
+    "warn.clearEndDate": "A data final será apagada porque \"Aberto\" está marcado.",
     "prop.termName": "Nome",
     "prop.termValue": "Valor",
     "terms.add": "Adicionar termo",
@@ -47,5 +46,12 @@
     "licenseAgreements.none": "Nenhum contrato atualmente vinculado a esta licença.",
     "prop.agreementStatus": "Status do contrato",
     "prop.linkStatus": "Status do link",
-    "section.licenseAgreements": "Contratos ligados a esta licença"
+    "section.licenseAgreements": "Contratos ligados a esta licença",
+    "placeholder.documentCategory": "Digite uma categoria",
+    "section.supplementInformation": "Informação suplementar",
+    "supplementaryDocs.add": "Adicionar documento suplementar",
+    "supplementaryDocs.none": "Nenhum documento suplementar foi adicionado",
+    "loading": "Carregando...",
+    "searchInputLabel": "Pesquisa de licenças",
+    "closeEditLicense": "Fechar o painel de edição de licença"
 }

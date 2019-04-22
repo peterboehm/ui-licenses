@@ -5,7 +5,6 @@
     "settings.some-feature.message": "هذه هي إعداداتك لبعض خصائص التطبيق.",
     "meta.title": "تراخيص",
     "prop.status": "الحالة",
-    "closeNewLicense": "إغلاق الرخصة الجديدة",
     "createLicense": "إنشاء رخصة",
     "editLicense": "تحرير رخصة",
     "newLicense": "رخصة جديدة",
@@ -47,5 +46,12 @@
     "licenseAgreements.none": "لا توجد اتفاقيات مرتبطة بهذه الرخصة حاليًا",
     "prop.agreementStatus": "حالة الاتفاقية",
     "prop.linkStatus": "حالة الرابط",
-    "section.licenseAgreements": "ربط اتفاقيات بهذه الرخصة"
+    "section.licenseAgreements": "ربط اتفاقيات بهذه الرخصة",
+    "placeholder.documentCategory": "إدخال فئة",
+    "section.supplementInformation": "معلومات تكميلية",
+    "supplementaryDocs.add": "إضافة وثيقة تكميلية",
+    "supplementaryDocs.none": "لم تتم إضافة أي وثائق تكميلية",
+    "loading": "جاري التحميل...",
+    "searchInputLabel": "بحث التراخيص",
+    "closeEditLicense": "إغلاق جزء تحرير الرخصة"
 }

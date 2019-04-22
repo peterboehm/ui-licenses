@@ -5,7 +5,6 @@
     "settings.some-feature.message": "These are your settings for some app feature.",
     "meta.title": "Licenses",
     "prop.status": "Status",
-    "closeNewLicense": "Close new license",
     "createLicense": "Create license",
     "editLicense": "Edit license",
     "newLicense": "New license",
@@ -47,5 +46,12 @@
     "licenseAgreements.none": "No agreements currently linked to this license.",
     "prop.agreementStatus": "Agreement status",
     "prop.linkStatus": "Link status",
-    "section.licenseAgreements": "Agreements linked to this license"
+    "section.licenseAgreements": "Agreements linked to this license",
+    "placeholder.documentCategory": "Enter a category",
+    "section.supplementInformation": "Supplementary information",
+    "supplementaryDocs.add": "Add supplementary document",
+    "supplementaryDocs.none": "No supplementary documents have been added",
+    "loading": "Loading...",
+    "searchInputLabel": "Search licenses",
+    "closeEditLicense": "Close edit license pane"
 }
