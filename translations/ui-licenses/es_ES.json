@@ -23,7 +23,7 @@
     "section.organizations": "Organizations",
     "section.terms": "Terms",
     "prop.openEnded": "Open ended",
-    "warn.clearEndDate": "End date will be cleared because \"Open ended\" is checked.",
+    "warn.clearEndDate": "La fecha de finalización se borrará porque se ha marcado \"Open ended\".",
     "prop.termName": "Name",
     "prop.termValue": "Value",
     "terms.add": "Add term",
@@ -47,11 +47,11 @@
     "prop.agreementStatus": "Agreement status",
     "prop.linkStatus": "Link status",
     "section.licenseAgreements": "Agreements linked to this license",
-    "placeholder.documentCategory": "Enter a category",
-    "section.supplementInformation": "Supplementary information",
-    "supplementaryDocs.add": "Add supplementary document",
-    "supplementaryDocs.none": "No supplementary documents have been added",
-    "loading": "Loading...",
-    "searchInputLabel": "Search Licenses",
-    "closeEditLicense": "Close edit license pane"
+    "placeholder.documentCategory": "Introduzca una categoría",
+    "section.supplementInformation": "Información suplementaria",
+    "supplementaryDocs.add": "Añadir documento suplementario",
+    "supplementaryDocs.none": "No se han añadido documentos suplementarios",
+    "loading": "Cargando....",
+    "searchInputLabel": "Búsqueda de licencias",
+    "closeEditLicense": "Cerrar el panel de licencia de edición"
 }
