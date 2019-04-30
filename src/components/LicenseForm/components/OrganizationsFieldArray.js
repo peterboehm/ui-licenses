@@ -33,25 +33,9 @@ class OrganizationsFieldArray extends React.Component {
     roles: [],
   }
 
-  state = {
-    licensorRoleId: undefined,
-  }
-
-  static getDerivedStateFromProps(nextProps, state) {
-    const { roles } = nextProps;
-    if (!state.licensorRoleId && roles.length) {
-      return {
-        licensorRoleId: (roles.find(r => r.value === 'licensor') || {}).id,
-      };
-    }
-
-    return null;
-  }
-
   validateMultipleLicensors = (value, allValues) => {
-    const { licensorRoleId } = this.state;
-    if (value === licensorRoleId) {
-      const licensorOrgs = allValues.orgs.filter(o => o.role === licensorRoleId);
+    if (value === 'licensor') {
+      const licensorOrgs = allValues.orgs.filter(o => o.role === 'licensor');
       if (licensorOrgs.length > 1) {
         return <FormattedMessage id="ui-licenses.errors.multipleLicensors" />;
       }
