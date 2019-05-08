@@ -15,6 +15,7 @@ import {
   TextField,
 } from '@folio/stripes/components';
 
+import LicenseFormInternalContacts from './LicenseFormInternalContacts';
 import LicenseFormOrganizations from './LicenseFormOrganizations';
 
 import { required } from '../../../util/validators';
@@ -166,6 +167,7 @@ class LicenseFormInfo extends React.Component {
           </Row>
         </React.Fragment>
         <AccordionSet>
+          <LicenseFormInternalContacts data={data} />
           <LicenseFormOrganizations data={data} />
         </AccordionSet>
       </Accordion>
