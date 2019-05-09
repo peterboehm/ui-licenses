@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { get } from 'lodash';
+import { get, difference } from 'lodash';
 
 import { stripesConnect } from '@folio/stripes/core';
 
@@ -25,6 +25,13 @@ class ViewLicenseRoute extends React.Component {
       path: 'licenses/custprops',
       shouldRefresh: () => false,
     },
+    users: {
+      type: 'okapi',
+      path: '/users',
+      fetch: false,
+      accumulate: true,
+      shouldRefresh: () => false,
+    },
     query: {},
   });
 
@@ -45,11 +52,44 @@ class ViewLicenseRoute extends React.Component {
       linkedAgreements: PropTypes.object,
       license: PropTypes.object,
       terms: PropTypes.object,
+      users: PropTypes.object,
     }).isRequired,
     stripes: PropTypes.shape({
       hasPerm: PropTypes.func.isRequired,
     }).isRequired,
   };
+
+  componentDidMount() {
+    const contacts = get(this.props.resources, 'license.records[0].contacts', []);
+    if (contacts.length) {
+      this.fetchUsers(contacts);
+    }
+  }
+
+  componentDidUpdate(prevProps) {
+    const prevLicense = get(prevProps.resources, 'license.records[0]', {});
+    const currLicense = get(this.props.resources, 'license.records[0]', {});
+    const prevContacts = prevLicense.contacts || [];
+    const currContacts = currLicense.contacts || [];
+    const newContacts = difference(currContacts, prevContacts);
+    if (prevLicense.id !== currLicense.id || newContacts.length) {
+      this.fetchUsers(newContacts);
+    }
+  }
+
+  fetchUsers = (newContacts) => {
+    const { mutator } = this.props;
+    newContacts.forEach(contact => mutator.users.GET({ path: `users/${contact.user}` }));
+  }
+
+  getLicenseContacts = () => {
+    const { resources } = this.props;
+    const contacts = get(resources, 'license.records[0].contacts', []);
+    return contacts.map(contact => ({
+      ...contact,
+      user: get(resources, 'users.records', []).find(u => u.id === contact.user) || { personal: {} },
+    }));
+  }
 
   handleClose = () => {
     this.props.history.push(`/licenses${this.props.location.search}`);
@@ -71,6 +111,7 @@ class ViewLicenseRoute extends React.Component {
         data={{
           license: {
             ...get(resources, 'license.records[0]', {}),
+            contacts: this.getLicenseContacts(),
             linkedAgreements: get(resources, 'linkedAgreements.records', []),
           },
           terms: get(resources, 'terms.records', []),

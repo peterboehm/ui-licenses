@@ -8,7 +8,9 @@ import {
   KeyValue,
   Row,
 } from '@folio/stripes/components';
+import { LicenseEndDate } from '@folio/stripes-erm-components';
 
+import LicenseInternalContacts from './LicenseInternalContacts';
 import LicenseOrganizations from './LicenseOrganizations';
 
 class LicenseInfo extends React.Component {
@@ -19,22 +21,15 @@ class LicenseInfo extends React.Component {
     open: PropTypes.bool,
   };
 
-  renderEndDate(license) {
-    if (license.openEnded) return <FormattedMessage id="ui-licenses.prop.openEnded" />;
-    if (license.endDate) return <FormattedDate value={license.endDate} />;
-
-    return '-';
-  }
-
   render() {
-    const { license } = this.props;
+    const { id, license, onToggle, open } = this.props;
 
     return (
       <Accordion
-        id={this.props.id}
+        id={id}
         label={<FormattedMessage id="ui-licenses.section.licenseInformation" />}
-        open={this.props.open}
-        onToggle={this.props.onToggle}
+        open={open}
+        onToggle={onToggle}
       >
         <React.Fragment>
           <Row>
@@ -71,7 +66,7 @@ class LicenseInfo extends React.Component {
             <Col xs={6} md={3}>
               <KeyValue label={<FormattedMessage id="ui-licenses.prop.endDate" />}>
                 <div data-test-license-end-date>
-                  {this.renderEndDate(license)}
+                  <LicenseEndDate license={license} />
                 </div>
               </KeyValue>
             </Col>
@@ -86,7 +81,10 @@ class LicenseInfo extends React.Component {
             </Col>
           </Row>
         </React.Fragment>
-        <LicenseOrganizations license={this.props.license} />
+        <div style={{ marginLeft: '2rem' }}>
+          <LicenseInternalContacts license={license} />
+          <LicenseOrganizations license={license} />
+        </div>
       </Accordion>
     );
   }

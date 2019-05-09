@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { cloneDeep, get } from 'lodash';
+import { cloneDeep, difference, get } from 'lodash';
 
 import { stripesConnect } from '@folio/stripes/core';
 
@@ -36,6 +36,18 @@ class EditLicenseRoute extends React.Component {
     documentCategories: {
       type: 'okapi',
       path: 'licenses/refdata/DocumentAttachment/atType',
+      shouldRefresh: () => false,
+    },
+    contactRoleValues: {
+      type: 'okapi',
+      path: 'licenses/refdata/InternalContact/role',
+      shouldRefresh: () => false,
+    },
+    users: {
+      type: 'okapi',
+      path: '/users',
+      fetch: false,
+      accumulate: true,
       shouldRefresh: () => false,
     },
   });
@@ -77,11 +89,35 @@ class EditLicenseRoute extends React.Component {
     };
   }
 
+  componentDidMount() {
+    const contacts = get(this.props.resources, 'license.records[0].contacts', []);
+    if (contacts.length) {
+      this.fetchUsers(contacts);
+    }
+  }
+
+  componentDidUpdate(prevProps) {
+    const prevLicense = get(prevProps.resources, 'license.records[0]', {});
+    const currLicense = get(this.props.resources, 'license.records[0]', {});
+    const prevContacts = prevLicense.contacts || [];
+    const currContacts = currLicense.contacts || [];
+    const newContacts = difference(currContacts, prevContacts);
+    if (prevLicense.id !== currLicense.id || newContacts.length) {
+      this.fetchUsers(newContacts);
+    }
+  }
+
+  fetchUsers = (newContacts) => {
+    const { mutator } = this.props;
+    newContacts.forEach(contact => mutator.users.GET({ path: `users/${contact.user}` }));
+  }
+
   getInitialValues = () => {
     const { resources } = this.props;
     const license = get(resources, 'license.records[0]', {});
     const initialValues = cloneDeep(license);
     const {
+      contacts = [],
       orgs = [],
       status = {},
       supplementaryDocs = [],
@@ -91,6 +127,7 @@ class EditLicenseRoute extends React.Component {
     // Set the values of dropdown-controlled props as values rather than objects.
     initialValues.status = status.value;
     initialValues.type = type.value;
+    initialValues.contacts = contacts.map(c => ({ ...c, role: c.role.value }));
     initialValues.orgs = orgs.map(o => ({ ...o, role: o.role.value }));
     initialValues.supplementaryDocs = supplementaryDocs.map(o => ({ ...o, atType: get(o, 'atType.value') }));
 
@@ -130,11 +167,13 @@ class EditLicenseRoute extends React.Component {
     return (
       <Form
         data={{
+          contactRoleValues: get(resources, 'contactRoleValues.records', []),
           documentCategories: get(resources, 'documentCategories.records', []),
           orgRoleValues: get(resources, 'orgRoleValues.records', []),
           statusValues: get(resources, 'statusValues.records', []),
           terms: get(resources, 'terms.records', []),
           typeValues: get(resources, 'typeValues.records', []),
+          users: get(resources, 'users.records', []),
         }}
         initialValues={this.getInitialValues()}
         isLoading={this.fetchIsPending()}

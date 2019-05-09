@@ -14,7 +14,7 @@ import {
   Paneset,
   Row,
 } from '@folio/stripes/components';
-
+import { TitleManager } from '@folio/stripes/core';
 import stripesForm from '@folio/stripes/form';
 
 import { Spinner } from '@folio/stripes-erm-components';
@@ -147,32 +147,38 @@ class LicenseForm extends React.Component {
 
     return (
       <Paneset>
-        <Pane
-          defaultWidth="100%"
-          id="pane-license-form"
-          firstMenu={this.renderFirstMenu()}
-          lastMenu={this.renderLastMenu()}
-          paneTitle={id ? name : <FormattedMessage id="ui-licenses.createLicense" />}
-        >
-          <form id="form-license">
-            <div className={css.licenseForm}>
-              <AccordionSet>
-                <Row end="xs">
-                  <Col xs>
-                    <ExpandAllButton
-                      accordionStatus={this.state.sections}
-                      onToggle={this.handleAllSectionsToggle}
-                    />
-                  </Col>
-                </Row>
-                <LicenseFormInfo {...this.getSectionProps('licenseFormInfo')} />
-                <LicenseFormCoreDocs {...this.getSectionProps('licenseFormDocs')} />
-                <LicenseFormTerms {...this.getSectionProps('licenseFormTerms')} />
-                <LicenseFormSupplement {...this.getSectionProps('licenseFormSupplement')} />
-              </AccordionSet>
-            </div>
-          </form>
-        </Pane>
+        <FormattedMessage id="ui-licenses.create">
+          {create => (
+            <Pane
+              defaultWidth="100%"
+              id="pane-license-form"
+              firstMenu={this.renderFirstMenu()}
+              lastMenu={this.renderLastMenu()}
+              paneTitle={id ? name : <FormattedMessage id="ui-licenses.createLicense" />}
+            >
+              <TitleManager record={id ? name : create}>
+                <form id="form-license">
+                  <div className={css.licenseForm}>
+                    <AccordionSet>
+                      <Row end="xs">
+                        <Col xs>
+                          <ExpandAllButton
+                            accordionStatus={this.state.sections}
+                            onToggle={this.handleAllSectionsToggle}
+                          />
+                        </Col>
+                      </Row>
+                      <LicenseFormInfo {...this.getSectionProps('licenseFormInfo')} />
+                      <LicenseFormCoreDocs {...this.getSectionProps('licenseFormDocs')} />
+                      <LicenseFormTerms {...this.getSectionProps('licenseFormTerms')} />
+                      <LicenseFormSupplement {...this.getSectionProps('licenseFormSupplement')} />
+                    </AccordionSet>
+                  </div>
+                </form>
+              </TitleManager>
+            </Pane>
+          )}
+        </FormattedMessage>
       </Paneset>
     );
   }

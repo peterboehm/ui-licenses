@@ -7,6 +7,7 @@
 
   "closeEditLicense": "Close edit license pane",
   "createLicense": "Create license",
+  "create": "Create",
   "editLicense": "Edit license",
   "newLicense": "New license",
   "updateLicense": "Update license",
@@ -51,14 +52,15 @@
   "placeholder.licenseName": "Enter the license name",
   "placeholder.licenseDescription": "Enter a description of the license",
 
+  "section.amendments": "Amendments",
+  "section.coreDocs": "Core documents",
+  "section.coreDocsAndAmendments": "Core documents and amendments",
+  "section.internalContacts": "Internal contacts",
+  "section.licenseAgreements": "Agreements linked to this license",
   "section.licenseInformation": "License information",
   "section.organizations": "Organizations",
-  "section.terms": "Terms",
-  "section.coreDocsAndAmendments": "Core documents and amendments",
-  "section.coreDocs": "Core documents",
-  "section.amendments": "Amendments",
-  "section.licenseAgreements": "Agreements linked to this license",
   "section.supplementInformation": "Supplementary information",
+  "section.terms": "Terms",
 
   "settings.general": "General",
   "settings.general.message": "These are your general app settings.",

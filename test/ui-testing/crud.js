@@ -93,15 +93,6 @@ module.exports.test = (uiTestCtx) => {
         helpers.clickApp(nightmare, done, 'licenses');
       });
 
-      it('should clear default status filters', done => {
-        nightmare
-          .waitUntilNetworkIdle(1000)
-          .wait('#filter-accordion-status button[icon=times-circle-solid]')
-          .click('#filter-accordion-status button[icon=times-circle-solid]')
-          .then(done)
-          .catch(done);
-      });
-
       it('should create license with correct default values', done => {
         const name = `Default License #${generateNumber()}`;
         nightmare
@@ -139,6 +130,15 @@ module.exports.test = (uiTestCtx) => {
 
       it(`should create license: ${values.name}`, done => {
         createLicense(nightmare, done, values);
+      });
+
+      it('should clear default status filters', done => {
+        nightmare
+          .waitUntilNetworkIdle(1000)
+          .wait('#filter-accordion-status button[icon=times-circle-solid]')
+          .click('#filter-accordion-status button[icon=times-circle-solid]')
+          .then(done)
+          .catch(done);
       });
 
       it(`should search for and find license: ${values.name}`, done => {

@@ -39,6 +39,11 @@ class CreateLicenseRoute extends React.Component {
       path: 'licenses/refdata/DocumentAttachment/atType',
       shouldRefresh: () => false,
     },
+    contactRoleValues: {
+      type: 'okapi',
+      path: 'licenses/refdata/InternalContact/role',
+      shouldRefresh: () => false,
+    },
   });
 
   static propTypes = {
@@ -120,11 +125,13 @@ class CreateLicenseRoute extends React.Component {
     return (
       <View
         data={{
+          contactRoleValues: get(resources, 'contactRoleValues.records', []),
           documentCategories: get(resources, 'documentCategories.records', []),
           orgRoleValues: get(resources, 'orgRoleValues.records', []),
           statusValues: get(resources, 'statusValues.records', []),
           terms: get(resources, 'terms.records', []),
           typeValues: get(resources, 'typeValues.records', []),
+          users: get(resources, 'users.records', []),
         }}
         initialValues={this.getInitialValues()}
         isLoading={this.fetchIsPending()}

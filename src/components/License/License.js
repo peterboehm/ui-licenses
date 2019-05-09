@@ -9,7 +9,7 @@ import {
   Pane,
   Button,
 } from '@folio/stripes/components';
-
+import { TitleManager } from '@folio/stripes/core';
 import { Spinner } from '@folio/stripes-erm-components';
 
 import {
@@ -26,6 +26,7 @@ class License extends React.Component {
     data: PropTypes.shape({
       license: PropTypes.object,
       terms: PropTypes.array,
+      users: PropTypes.array,
     }),
     editUrl: PropTypes.string,
     onEdit: PropTypes.func,
@@ -51,6 +52,7 @@ class License extends React.Component {
       open: this.state.sections[id],
       license: data.license,
       terms: data.terms,
+      users: data.users,
     };
   }
 
@@ -113,14 +115,16 @@ class License extends React.Component {
         onClose={onClose}
         paneTitle={data.license.name}
       >
-        <LicenseHeader {...this.getSectionProps()} />
-        <AccordionSet>
-          <LicenseInfo {...this.getSectionProps('licenseInfo')} />
-          <LicenseCoreDocs {...this.getSectionProps('licenseCoreDocs')} />
-          <LicenseTerms {...this.getSectionProps('licenseTerms')} />
-          <LicenseSupplement {...this.getSectionProps('licenseSupplement')} />
-          <LicenseAgreements {...this.getSectionProps('licenseAgreements')} />
-        </AccordionSet>
+        <TitleManager record={data.license.name}>
+          <LicenseHeader {...this.getSectionProps()} />
+          <AccordionSet>
+            <LicenseInfo {...this.getSectionProps('licenseInfo')} />
+            <LicenseCoreDocs {...this.getSectionProps('licenseCoreDocs')} />
+            <LicenseTerms {...this.getSectionProps('licenseTerms')} />
+            <LicenseSupplement {...this.getSectionProps('licenseSupplement')} />
+            <LicenseAgreements {...this.getSectionProps('licenseAgreements')} />
+          </AccordionSet>
+        </TitleManager>
       </Pane>
     );
   }
