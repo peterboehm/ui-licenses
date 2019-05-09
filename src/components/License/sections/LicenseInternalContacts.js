@@ -50,7 +50,10 @@ export default class LicenseInternalContacts extends React.Component {
       const role = get(contact, 'role.label', '');
 
       return (
-        <div key={contact.user.id}>
+        <div
+          data-test-license-contact
+          key={contact.user.id}
+        >
           <Link to={`/users/view/${contact.user.id}`}>{displayName}</Link>
           ,&nbsp;
           <span>{role}</span>
