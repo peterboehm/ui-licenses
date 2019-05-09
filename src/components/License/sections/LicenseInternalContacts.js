@@ -37,7 +37,7 @@ export default class LicenseInternalContacts extends React.Component {
 
     if (!contacts.length) return <FormattedMessage id="ui-agreements.contacts.noContacts" />;
 
-    return contacts.map(contact => {
+    return contacts.map((contact, i) => {
       if (!contact.user) return null;
 
       const firstName = get(contact, 'user.personal.firstName');
@@ -52,7 +52,7 @@ export default class LicenseInternalContacts extends React.Component {
       return (
         <div
           data-test-license-contact
-          key={contact.user.id}
+          key={`${contact.user.id}-${i}`}
         >
           <Link to={`/users/view/${contact.user.id}`}>{displayName}</Link>
           ,&nbsp;
