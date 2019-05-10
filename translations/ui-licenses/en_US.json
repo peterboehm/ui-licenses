@@ -53,5 +53,7 @@
     "supplementaryDocs.none": "No supplementary documents have been added",
     "loading": "Loading...",
     "searchInputLabel": "Search licenses",
-    "closeEditLicense": "Close edit license pane"
+    "closeEditLicense": "Close edit license pane",
+    "create": "Create",
+    "section.internalContacts": "Internal contacts"
 }

@@ -53,5 +53,7 @@
     "supplementaryDocs.none": "لم تتم إضافة أي وثائق تكميلية",
     "loading": "جاري التحميل...",
     "searchInputLabel": "بحث التراخيص",
-    "closeEditLicense": "إغلاق جزء تحرير الرخصة"
+    "closeEditLicense": "إغلاق جزء تحرير الرخصة",
+    "create": "Create",
+    "section.internalContacts": "Internal contacts"
 }

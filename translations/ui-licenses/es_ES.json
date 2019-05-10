@@ -53,5 +53,7 @@
     "supplementaryDocs.none": "No se han añadido documentos suplementarios",
     "loading": "Cargando....",
     "searchInputLabel": "Búsqueda de licencias",
-    "closeEditLicense": "Cerrar el panel de licencia de edición"
+    "closeEditLicense": "Cerrar el panel de licencia de edición",
+    "create": "Create",
+    "section.internalContacts": "Internal contacts"
 }
