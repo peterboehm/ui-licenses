@@ -43,6 +43,7 @@
   "prop.parentLicense": "Parent License",
   "prop.terms": "License Terms",
   "prop.termName": "Name",
+  "prop.termNote": "Note",
   "prop.termValue": "Value",
   "prop.startDate": "Start date",
   "prop.status": "Status",
