@@ -3,10 +3,10 @@
 const generateNumber = () => Math.round(Math.random() * 100000);
 
 const CONTACTS = [{
-  role: 'General Contact',
+  role: 'Negotiator',
   editedRole: 'Subject Specialist',
 }, {
-  role: 'Agreement Owner',
+  role: 'License Owner',
   delete: true,
 }];
 
