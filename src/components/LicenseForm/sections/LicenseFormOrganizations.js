@@ -10,12 +10,11 @@ import {
   Row,
 } from '@folio/stripes/components';
 
-import { CreateOrganizationModal } from '@folio/stripes-erm-components';
-
-import OrganizationsFieldArray from '../components/OrganizationsFieldArray';
+import { CreateOrganizationModal, OrganizationsFieldArray } from '@folio/stripes-erm-components';
 
 class LicenseFormOrganizations extends React.Component {
   static propTypes = {
+    change: PropTypes.func,
     data: PropTypes.shape({
       orgRoleValues: PropTypes.array,
     }),
@@ -38,6 +37,7 @@ class LicenseFormOrganizations extends React.Component {
               <FieldArray
                 name="orgs"
                 component={OrganizationsFieldArray}
+                change={this.props.change}
                 roles={this.props.data.orgRoleValues}
               />
               <Button

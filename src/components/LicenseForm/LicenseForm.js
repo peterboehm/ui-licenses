@@ -168,7 +168,7 @@ class LicenseForm extends React.Component {
                           />
                         </Col>
                       </Row>
-                      <LicenseFormInfo {...this.getSectionProps('licenseFormInfo')} />
+                      <LicenseFormInfo {...this.getSectionProps('licenseFormInfo')} change={this.props.change} />
                       <LicenseFormCoreDocs {...this.getSectionProps('licenseFormDocs')} />
                       <LicenseFormTerms {...this.getSectionProps('licenseFormTerms')} />
                       <LicenseFormSupplement {...this.getSectionProps('licenseFormSupplement')} />

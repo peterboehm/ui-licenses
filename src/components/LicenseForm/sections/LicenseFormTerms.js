@@ -11,7 +11,7 @@ import {
   Row,
 } from '@folio/stripes/components';
 
-import { TermsListField } from '../components';
+import TermsListField from '../components';
 
 class LicenseFormTerms extends React.Component {
   static propTypes = {
