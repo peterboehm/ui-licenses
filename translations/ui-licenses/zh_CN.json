@@ -54,6 +54,7 @@
     "loading": "Loading...",
     "searchInputLabel": "Search Licenses",
     "closeEditLicense": "Close edit license pane",
-    "create": "Create",
-    "section.internalContacts": "Internal contacts"
+    "create": "创建",
+    "section.internalContacts": "内部联系人",
+    "prop.termNote": "Note"
 }
