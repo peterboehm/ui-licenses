@@ -12,6 +12,7 @@ class EditLicenseRoute extends React.Component {
     license: {
       type: 'okapi',
       path: 'licenses/licenses/:{id}',
+      shouldRefresh: () => false,
     },
     terms: {
       type: 'okapi',

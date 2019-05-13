@@ -13,6 +13,7 @@ class CreateLicenseRoute extends React.Component {
       type: 'okapi',
       path: 'licenses/licenses',
       fetch: false,
+      shouldRefresh: () => false,
     },
     terms: {
       type: 'okapi',
@@ -113,8 +114,8 @@ class CreateLicenseRoute extends React.Component {
 
   fetchIsPending = () => {
     return Object.values(this.props.resources)
-      .filter(resource => resource)
-      .some(resource => resource.isPending);
+      .filter(r => r && r.resource !== 'licenses')
+      .some(r => r.isPending);
   }
 
   render() {
