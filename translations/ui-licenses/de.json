@@ -55,5 +55,6 @@
     "searchInputLabel": "Search Licenses",
     "closeEditLicense": "Close edit license pane",
     "create": "Create",
-    "section.internalContacts": "Internal contacts"
+    "section.internalContacts": "Internal contacts",
+    "prop.termNote": "Note"
 }
