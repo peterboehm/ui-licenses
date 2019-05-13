@@ -55,5 +55,6 @@
     "searchInputLabel": "Búsqueda de licencias",
     "closeEditLicense": "Cerrar el panel de licencia de edición",
     "create": "Create",
-    "section.internalContacts": "Internal contacts"
+    "section.internalContacts": "Internal contacts",
+    "prop.termNote": "Note"
 }

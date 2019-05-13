@@ -55,5 +55,6 @@
     "searchInputLabel": "بحث التراخيص",
     "closeEditLicense": "إغلاق جزء تحرير الرخصة",
     "create": "إنشاء",
-    "section.internalContacts": "جهات الاتصال الداخلية"
+    "section.internalContacts": "جهات الاتصال الداخلية",
+    "prop.termNote": "Note"
 }

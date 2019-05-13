@@ -55,5 +55,6 @@
     "searchInputLabel": "Pesquisa de licenças",
     "closeEditLicense": "Fechar o painel de edição de licença",
     "create": "Criar",
-    "section.internalContacts": "Contatos internos"
+    "section.internalContacts": "Contatos internos",
+    "prop.termNote": "Note"
 }
