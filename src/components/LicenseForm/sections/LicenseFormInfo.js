@@ -22,7 +22,6 @@ import { required } from '../../../util/validators';
 
 class LicenseFormInfo extends React.Component {
   static propTypes = {
-    change: PropTypes.func,
     id: PropTypes.string,
     onToggle: PropTypes.func,
     open: PropTypes.bool,
@@ -169,7 +168,7 @@ class LicenseFormInfo extends React.Component {
         </React.Fragment>
         <AccordionSet>
           <LicenseFormInternalContacts data={data} />
-          <LicenseFormOrganizations data={data} change={this.props.change} />
+          <LicenseFormOrganizations data={data} />
         </AccordionSet>
       </Accordion>
     );
