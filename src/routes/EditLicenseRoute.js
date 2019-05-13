@@ -135,7 +135,7 @@ class EditLicenseRoute extends React.Component {
     initialValues.customProperties = initialValues.customProperties || {};
     const terms = get(resources, 'terms.records', []);
     terms
-      .filter(t => t.primary)
+      .filter(t => t.primary && initialValues.customProperties[t.name] === undefined)
       .forEach(t => { initialValues.customProperties[t.name] = ''; });
 
     return initialValues;

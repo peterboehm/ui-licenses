@@ -6,6 +6,7 @@ import {
   Button,
   Col,
   IconButton,
+  Label,
   Row,
   Select,
   TextArea,
@@ -196,6 +197,37 @@ export default class TermsListField extends React.Component {
     );
   }
 
+  renderTermNote = (term, i) => {
+    const { input: { onChange, value } } = this.props;
+    const termObject = value[term.value] ? value[term.value][0] : {};
+    const { note } = termObject;
+
+    const handleChange = e => {
+      onChange({
+        ...value,
+        [term.value]: [{
+          ...termObject,
+          note: e.target.value
+        }],
+      });
+    };
+
+    return (
+      <div>
+        <Label htmlFor={`edit-term-${i}-note`}>
+          <FormattedMessage id="ui-licenses.prop.termNote" />
+        </Label>
+        <TextArea
+          data-test-term-note
+          fullWidth
+          id={`edit-term-${i}-note`}
+          onChange={handleChange}
+          value={note}
+        />
+      </div>
+    );
+  }
+
   renderAddTerm = () => {
     return (
       <Button
@@ -218,17 +250,24 @@ export default class TermsListField extends React.Component {
     return (
       <div>
         { this.state.terms.map((term, i) => (
-          <Row key={term.value}>
-            <Col xs={5}>
-              {this.renderTermName(term, i)}
-            </Col>
-            <Col xs={6}>
-              { this.renderTermValue(term, i) }
-            </Col>
-            <Col xs={1}>
-              {this.renderTermDelete(term, i)}
-            </Col>
-          </Row>
+          <React.Fragment key={term.value}>
+            <Row>
+              <Col xs={5}>
+                {this.renderTermName(term, i)}
+              </Col>
+              <Col xs={6}>
+                { this.renderTermValue(term, i) }
+              </Col>
+              <Col xs={1}>
+                {this.renderTermDelete(term, i)}
+              </Col>
+            </Row>
+            <Row>
+              <Col xs={6} xsOffset={5}>
+                {this.renderTermNote(term, i)}
+              </Col>
+            </Row>
+          </React.Fragment>
         ))}
         {this.renderAddTerm()}
       </div>
