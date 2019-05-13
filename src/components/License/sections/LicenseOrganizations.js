@@ -31,7 +31,7 @@ export default class LicenseOrganizations extends React.Component {
             <Layout
               className="marginTopHalf"
               data-test-license-org
-              key={o.org.id}
+              key={`${o.org.id}-${o.role.value}`}
             >
               {o.org.orgsUuid ?
                 <Link to={`/organizations/view/${o.org.orgsUuid}`}>{o.org.name}</Link> :
