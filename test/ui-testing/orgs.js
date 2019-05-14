@@ -74,17 +74,17 @@ module.exports.test = (uiTestCtx) => {
       });
 
       orgs.forEach((org, row) => {
-        createOrg(org);
+        //createOrg(org);
 
-        it('should add org line', done => {
+        it('should add org', done => {
           nightmare
             .click('#add-license-org-btn')
             .evaluate((r) => {
-              if (!document.querySelector(`#org-name-${r}`)) {
-                throw Error('Expected name dropdown to exist.');
+              if (!document.querySelector(`#orgs-nameOrg-${r}-search-button`)) {
+                throw Error('Expected organization picker button to exist.');
               }
 
-              if (!document.querySelector(`#org-role-${r}`)) {
+              if (!document.querySelector(`#orgs-role-${r}`)) {
                 throw Error('Expected role dropdown to exist.');
               }
             }, row)
@@ -92,33 +92,43 @@ module.exports.test = (uiTestCtx) => {
             .catch(done);
         });
 
-        it(`should select org: ${org.name}`, done => {
+        it('should select org', done => {
           nightmare
-            .click(`#org-name-${row}`)
-            .insert(`#sl-container-org-name-${row} input`, org.name)
-            .waitUntilNetworkIdle(2000)
-            .click(`#sl-container-org-name-${row} ul li[aria-selected=false]`)
-            .evaluate((r, o) => {
-              const nameElement = document.querySelector(`#org-name-${r}`);
-              const name = nameElement.textContent;
-              if (name !== o.name) {
-                throw Error(`Expected name to be ${o.name} and is ${name}`);
+            .click(`#orgs-nameOrg-${row}-search-button`)
+            .wait('#clickable-filter-status-active')
+            .click('#clickable-filter-status-active')
+            .wait(`#list-plugin-find-organization [aria-rowindex="${row + 3}"] > a`)
+            .click(`#list-plugin-find-organization [aria-rowindex="${row + 3}"] > a`)
+            .evaluate((r, _orgs) => {
+              const orgElement = document.querySelector(`#orgs-nameOrg-${r}`);
+              const name = orgElement.value;
+              if (!name) {
+                throw Error('Org field has no value!');
               }
-            }, row, org)
+
+              return name;
+            }, row, orgs)
+            .then(name => {
+              orgs[row].name = name;
+            })
             .then(done)
             .catch(done);
         });
 
         it(`should assign role: ${org.role}`, done => {
           nightmare
-            .type(`#org-role-${row}`, org.role)
+            .waitUntilNetworkIdle(2000)
+            .wait(`#orgs-role-${row}`)
+            .click(`#orgs-role-${row}`)
+            .type(`#orgs-role-${row}`, org.role)
             .evaluate((r, o) => {
-              const roleElement = document.querySelector(`#org-role-${r}`);
+              const roleElement = document.querySelector(`#orgs-role-${r}`);
               const role = roleElement.selectedOptions[0].textContent;
               if (role !== o.role) {
-                throw Error(`Expected role to be ${o.role} and is ${role}`);
+                throw Error(`Expected role to be ${o.role} but is ${role}`);
               }
             }, row, org)
+            .waitUntilNetworkIdle(1000)
             .then(done)
             .catch(done);
         });
@@ -150,20 +160,6 @@ module.exports.test = (uiTestCtx) => {
         });
       });
 
-      if (licensor) {
-        it(`should find ${licensor.name} in header as Licensor`, done => {
-          nightmare
-            .evaluate(o => {
-              const headerLicensor = document.querySelector('[data-test-license-card-licensor-name]').textContent;
-              if (headerLicensor !== o.name) {
-                throw Error(`Expected to find Licensor as ${o.name}. It is ${headerLicensor}.`);
-              }
-            }, licensor)
-            .then(done)
-            .catch(done);
-        });
-      }
-
       it('should open edit license', done => {
         nightmare
           .click('[class*=paneHeader] [class*=dropdown] button')
@@ -176,17 +172,17 @@ module.exports.test = (uiTestCtx) => {
           .catch(done);
       });
 
-      orgs.forEach(org => {
-        it(`should find correctly loaded values for ${org.name}`, done => {
+      orgs.forEach((org, i) => {
+        it(`should find correctly loaded values for org ${i}`, done => {
           nightmare
             .evaluate(o => {
-              const nameElements = [...document.querySelectorAll('button[id^=org-name-]')];
-              const nameElement = nameElements.find(e => e.textContent === o.name);
-              if (!nameElement) {
-                throw Error(`Failed to find org name select with loaded value of ${o.name}`);
+              const orgElements = [...document.querySelectorAll('input[id^=orgs-nameOrg-]')];
+              const orgElement = orgElements.find(e => e.value === o.name);
+              if (!orgElement) {
+                throw Error(`Failed to find org name picker with loaded org of ${o.name}`);
               }
 
-              const roleElementId = nameElement.id.replace('name', 'role');
+              const roleElementId = orgElement.id.replace('nameOrg', 'role');
               const roleElement = document.getElementById(roleElementId);
               const roleValue = roleElement.selectedOptions[0].textContent;
               if (roleValue !== o.role) {
@@ -199,41 +195,41 @@ module.exports.test = (uiTestCtx) => {
       });
 
       if (orgToEdit) {
-        const newOrg = { name: orgToEdit.editedName, role: orgToEdit.editedRole };
 
-        createOrg(newOrg);
-
-        it(`should edit license with new org ${newOrg.name}`, done => {
+        it('should edit license', done => {
           nightmare
             .evaluate(o => {
-              const nameElements = [...document.querySelectorAll('button[id^=org-name-]')];
-              const index = nameElements.findIndex(e => e.textContent === o.name);
+              const nameElements = [...document.querySelectorAll('input[id^=orgs-nameOrg-]')];
+              const index = nameElements.findIndex(e => e.value === o.name);
               if (index === -1) {
-                throw Error(`Failed to find org name select with loaded value of ${o.name}`);
+                throw Error(`Failed to find org picker with loaded value of ${o.name}`);
               }
 
               return index;
             }, orgToEdit)
             .then(row => {
               return nightmare
-                .click(`#org-name-${row}`)
-                .insert(`#sl-container-org-name-${row} input`, newOrg.name)
+                .click(`#orgs-nameOrg-${row}-search-button`)
+                .wait('#clickable-filter-status-active')
+                .click('#clickable-filter-status-active')
+                .wait('#list-plugin-find-organization [aria-rowindex="10"]')
+                .click('#list-plugin-find-organization [aria-rowindex="10"]')
                 .waitUntilNetworkIdle(2000)
-                .click(`#sl-container-org-name-${row} ul li[aria-selected=false]`)
-                .type(`#org-role-${row}`, newOrg.role)
-                .evaluate((r, o) => {
-                  const nameElement = document.querySelector(`#org-name-${r}`);
-                  const name = nameElement.textContent;
-                  if (name !== o.name) {
-                    throw Error(`Expected name to be ${o.name} and is ${name}`);
+                .wait(`#orgs-role-${row}`)
+                .click(`#orgs-role-${row}`)
+                .type(`#orgs-role-${row}`, orgToEdit.editedRole)
+                .evaluate((r, _orgs) => {
+                  const orgElement = document.querySelector(`#orgs-nameOrg-${r}`);
+                  const name = orgElement.value;
+                  if (!name) {
+                    throw Error('Org name field has no value!');
                   }
 
-                  const roleElement = document.querySelector(`#org-role-${r}`);
-                  const role = roleElement.selectedOptions[0].textContent;
-                  if (role !== o.role) {
-                    throw Error(`Expected role to be ${o.role} and is ${role}`);
-                  }
-                }, row, newOrg);
+                  return name;
+                }, row, orgs)
+                .then(name => {
+                  orgToEdit.editedName = name;
+                });
             })
             .then(done)
             .catch(done);
@@ -241,18 +237,18 @@ module.exports.test = (uiTestCtx) => {
       }
 
       if (orgToDelete) {
-        it(`should delete org ${orgToDelete.name}`, done => {
+        it('should delete org', done => {
           nightmare
             .evaluate(o => {
-              const nameElements = [...document.querySelectorAll('button[id^=org-name-]')];
-              const index = nameElements.findIndex(e => e.textContent === o.name);
+              const nameElements = [...document.querySelectorAll('input[id^=orgs-nameOrg-]')];
+              const index = nameElements.findIndex(e => e.value === o.name);
               if (index === -1) {
-                throw Error(`Failed to find org name select with loaded value of ${o.name}`);
+                throw Error(`Failed to find org picker with loaded user of ${o.name}`);
               }
 
               return index;
             }, orgToDelete)
-            .then(row => nightmare.click(`#org-delete-${row}`))
+            .then(row => nightmare.click(`#orgs-delete-${row}`))
             .then(done)
             .catch(done);
         });
@@ -266,32 +262,14 @@ module.exports.test = (uiTestCtx) => {
           .catch(done);
       });
 
-      if (orgToEdit) {
-        it(`should find "${orgToEdit.editedName}" in Organizations list with role ${orgToEdit.editedRole}`, done => {
-          nightmare
-            .evaluate(o => {
-              const rows = [...document.querySelectorAll('[data-test-license-org]')].map(e => e.textContent);
-              const row = rows.find(r => r.indexOf(o.editedName) >= 0);
-              if (!row) {
-                throw Error(`Could not find row with an org named ${o.editedName}`);
-              }
-              if (row.indexOf(o.editedRole) < 0) {
-                throw Error(`Expected row for "${o.editedName}" to contain role ${o.editedRole}.`);
-              }
-            }, orgToEdit)
-            .then(done)
-            .catch(done);
-        });
-      }
-
       if (orgToDelete) {
-        it(`should NOT find "${orgToDelete.name}" in Organizations list with role ${orgToDelete.role}`, done => {
+        it(`should NOT find org in organizations list with role ${orgToDelete.role}`, done => {
           nightmare
             .evaluate(o => {
               const rows = [...document.querySelectorAll('[data-test-license-org]')].map(e => e.textContent);
               const row = rows.find(r => r.indexOf(o.name) >= 0);
               if (row) {
-                throw Error(`Found a row with an org named ${o.name} when it should have been deleted.`);
+                throw Error(`Found a row with a org named ${o.name} when it should have been deleted.`);
               }
             }, orgToDelete)
             .then(done)
