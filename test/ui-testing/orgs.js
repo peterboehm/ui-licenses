@@ -23,19 +23,6 @@ module.exports.test = (uiTestCtx) => {
 
     this.timeout(Number(config.test_timeout));
 
-    const createOrg = (org) => {
-      it(`should create org: ${org.name}`, done => {
-        nightmare
-          .click('#create-license-org-btn')
-          .wait(1000)
-          .insert('#create-org-modal-name-field', org.name)
-          .click('#create-org-modal-submit-btn')
-          .waitUntilNetworkIdle(1000)
-          .then(done)
-          .catch(done);
-      });
-    };
-
     const licensor = orgs.find(o => o.role === 'Licensor');
     const orgToEdit = orgs.find(o => o.editedName);
     const orgToDelete = orgs.find(o => o.toDelete);
@@ -74,8 +61,6 @@ module.exports.test = (uiTestCtx) => {
       });
 
       orgs.forEach((org, row) => {
-        //createOrg(org);
-
         it('should add org', done => {
           nightmare
             .click('#add-license-org-btn')
