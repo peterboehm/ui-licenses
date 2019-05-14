@@ -129,7 +129,7 @@ class EditLicenseRoute extends React.Component {
     initialValues.status = status.value;
     initialValues.type = type.value;
     initialValues.contacts = contacts.map(c => ({ ...c, role: c.role.value }));
-    initialValues.orgs = orgs.map(o => ({ ...o, role: o.role.value }));
+    initialValues.orgs = orgs.map(o => ({ ...o, role: o.role ? o.role.value : undefined }));
     initialValues.supplementaryDocs = supplementaryDocs.map(o => ({ ...o, atType: get(o, 'atType.value') }));
 
     // Add the default terms to the already-set terms.

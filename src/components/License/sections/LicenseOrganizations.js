@@ -26,18 +26,19 @@ export default class LicenseOrganizations extends React.Component {
   renderOrgList = (orgs) => {
     return (
       <React.Fragment>
-        { orgs.map((o, index) => (
-          <Layout
-            className="marginTopHalf"
-            data-test-license-org
-            key={index}
-          >
-            {o.org.vendorsUuid ?
-              <Link to={`/vendors/view/${o.org.vendorsUuid}`}>{o.org.name}</Link> :
-              o.org.name
-            }
-            {o.role && `, ${o.role.label}`}
-          </Layout>
+        {orgs.map(o => (
+          o.org ?
+            <Layout
+              className="marginTopHalf"
+              data-test-license-org
+              key={`${o.org.id}-${o.role.value}`}
+            >
+              {o.org.orgsUuid ?
+                <Link to={`/organizations/view/${o.org.orgsUuid}`}>{o.org.name}</Link> :
+                o.org.name
+              }
+              {o.role && `, ${o.role.label}`}
+            </Layout> : null
         ))}
       </React.Fragment>
     );
@@ -66,7 +67,7 @@ export default class LicenseOrganizations extends React.Component {
         label={<FormattedMessage id="ui-licenses.section.organizations" />}
       >
         <Layout className="padding-bottom-gutter">
-          { this.renderOrganizations() }
+          {this.renderOrganizations()}
         </Layout>
       </Accordion>
     );

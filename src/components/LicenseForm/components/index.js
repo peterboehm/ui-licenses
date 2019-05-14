@@ -1,2 +1,1 @@
-export { default as OrganizationsFieldArray } from './OrganizationsFieldArray';
-export { default as TermsListField } from './TermsListField';
+export { default as TermsListField } from './TermsListField'; // eslint-disable-line import/prefer-default-export
