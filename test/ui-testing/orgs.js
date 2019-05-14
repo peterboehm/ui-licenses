@@ -63,7 +63,7 @@ module.exports.test = (uiTestCtx) => {
       orgs.forEach((org, row) => {
         it('should add org', done => {
           nightmare
-            .click('#add-license-org-btn')
+            .click('#add-org-btn')
             .evaluate((r) => {
               if (!document.querySelector(`#orgs-nameOrg-${r}-search-button`)) {
                 throw Error('Expected organization picker button to exist.');
