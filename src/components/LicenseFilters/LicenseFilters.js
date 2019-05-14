@@ -56,6 +56,7 @@ export default class LicenseFilters extends React.Component {
         header={FilterAccordionHeader}
         label={<FormattedMessage id={`ui-licenses.prop.${name}`} />}
         onClearFilter={() => { this.props.filterHandlers.clearGroup(name); }}
+        separator={false}
         {...props}
       >
         <CheckboxFilter
@@ -85,6 +86,7 @@ export default class LicenseFilters extends React.Component {
             orgs: [],
           });
         }}
+        separator={false}
       >
         <OrganizationSelection
           path="licenses/org"
@@ -116,6 +118,7 @@ export default class LicenseFilters extends React.Component {
         header={FilterAccordionHeader}
         label={<FormattedMessage id="ui-licenses.filters.organizationRole" />}
         onClearFilter={() => { this.props.filterHandlers.clearGroup('role'); }}
+        separator={false}
       >
         <Selection
           dataOptions={dataOptions}
