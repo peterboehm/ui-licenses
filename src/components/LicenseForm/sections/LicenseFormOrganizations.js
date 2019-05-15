@@ -5,12 +5,11 @@ import { FieldArray } from 'redux-form';
 
 import {
   Accordion,
-  Button,
   Col,
   Row,
 } from '@folio/stripes/components';
 
-import { CreateOrganizationModal, OrganizationsFieldArray } from '@folio/stripes-erm-components';
+import { OrganizationsFieldArray } from '@folio/stripes-erm-components';
 
 class LicenseFormOrganizations extends React.Component {
   static propTypes = {
@@ -18,10 +17,6 @@ class LicenseFormOrganizations extends React.Component {
       orgRoleValues: PropTypes.array,
     }),
   };
-
-  state = {
-    showCreateOrgModal: false,
-  }
 
   render() {
     return (
@@ -37,17 +32,6 @@ class LicenseFormOrganizations extends React.Component {
                 name="orgs"
                 component={OrganizationsFieldArray}
                 roles={this.props.data.orgRoleValues}
-              />
-              <Button
-                id="create-license-org-btn"
-                onClick={() => this.setState({ showCreateOrgModal: true })}
-              >
-                <FormattedMessage id="ui-licenses.organizations.createNew" />
-              </Button>
-              <CreateOrganizationModal
-                onClose={() => this.setState({ showCreateOrgModal: false })}
-                open={this.state.showCreateOrgModal}
-                path="licenses/org"
               />
             </Col>
           </Row>
