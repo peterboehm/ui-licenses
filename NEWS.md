@@ -1,4 +1,12 @@
-## 3.1.0 OPEN
+## 3.1.0 2019-05-21
+ * ERM-219 Support Organizations app as source of Organizations in Licenses
+   * ERM-232 Front-end updates
+ * ERM-212 Remove horizontal rules between filters in Agreements and License apps
+ * ERM-163 View internal contacts for a license
+ * ERM-162 Manage internal contacts for a license
+   * ERM-180 Use generalised contacts component
+   * ERM-179 Generalise agreements/contacts to shared component
+ * ERM-75  Clearing the organization filter value not working as expected 
 
 ## 3.0.0 2019-05-07
 
