@@ -11,6 +11,7 @@ class LicenseFormCoreDocs extends React.Component {
   static propTypes = {
     handlers: PropTypes.shape({
       onDeleteFile: PropTypes.func.isRequired,
+      onDownloadFile: PropTypes.func.isRequired,
       onUploadFile: PropTypes.func.isRequired,
     }),
     id: PropTypes.string,

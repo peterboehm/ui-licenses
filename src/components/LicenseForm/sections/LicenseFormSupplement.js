@@ -11,13 +11,18 @@ class LicenseFormSupplement extends React.Component {
       data: PropTypes.shape({
         documentCategories: PropTypes.array,
       }).isRequired,
+      handlers: PropTypes.shape({
+        onDeleteFile: PropTypes.func.isRequired,
+        onDownloadFile: PropTypes.func.isRequired,
+        onUploadFile: PropTypes.func.isRequired,
+      }).isRequired,
       id: PropTypes.string,
       onToggle: PropTypes.func,
       open: PropTypes.bool,
     };
 
     render() {
-      const { data, id, onToggle, open } = this.props;
+      const { data, handlers, id, onToggle, open } = this.props;
 
       return (
         <Accordion
@@ -29,9 +34,12 @@ class LicenseFormSupplement extends React.Component {
           <FieldArray
             addDocBtnLabel={<FormattedMessage id="ui-licenses.supplementaryDocs.add" />}
             component={DocumentsFieldArray}
+            documentCategories={data.documentCategories}
             isEmptyMessage={<FormattedMessage id="ui-licenses.supplementaryDocs.none" />}
             name="supplementaryDocs"
-            documentCategories={data.documentCategories}
+            onDeleteFile={handlers.onDeleteFile}
+            onDownloadFile={handlers.onDownloadFile}
+            onUploadFile={handlers.onUploadFile}
           />
         </Accordion>
       );
