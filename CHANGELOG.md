@@ -1,6 +1,9 @@
 # Change history for ui-licenses
 
-## 2.3.0 (IN PROGRESS)
+## 3.2.0
+* Added ability to attach files to documents.
+
+## 2.3.0
 * Added ability to view agreements linked to a license.
 
 ## 2.2.0

@@ -31,6 +31,7 @@ import css from './LicenseForm.css';
 class LicenseForm extends React.Component {
   static propTypes = {
     data: PropTypes.object,
+    handlers: PropTypes.object,
     initialValues: PropTypes.object,
     handleSubmit: PropTypes.func.isRequired,
     onClose: PropTypes.func.isRequired,
@@ -53,10 +54,11 @@ class LicenseForm extends React.Component {
   }
 
   getSectionProps(id) {
-    const { data } = this.props;
+    const { data, handlers } = this.props;
 
     return {
       data,
+      handlers,
       id,
       onToggle: this.handleSectionToggle,
       open: this.state.sections[id],

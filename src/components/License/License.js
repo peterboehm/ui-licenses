@@ -44,13 +44,14 @@ class License extends React.Component {
   }
 
   getSectionProps = (id) => {
-    const { data } = this.props;
+    const { data, handlers } = this.props;
 
     return {
       id,
+      handlers,
+      license: data.license,
       onToggle: this.handleSectionToggle,
       open: this.state.sections[id],
-      license: data.license,
       terms: data.terms,
       users: data.users,
     };

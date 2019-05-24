@@ -9,13 +9,22 @@ import { DocumentsFieldArray } from '@folio/stripes-erm-components';
 
 class LicenseFormCoreDocs extends React.Component {
   static propTypes = {
+    handlers: PropTypes.shape({
+      onDeleteFile: PropTypes.func.isRequired,
+      onDownloadFile: PropTypes.func.isRequired,
+      onUploadFile: PropTypes.func.isRequired,
+    }),
     id: PropTypes.string,
     onToggle: PropTypes.func,
     open: PropTypes.bool,
   };
 
+  getDeleteFilePath = (file) => `/licenses/files/${file.id}`
+
+  getUploadFilePath = () => '/licenses/files'
+
   render() {
-    const { id, onToggle, open } = this.props;
+    const { handlers, id, onToggle, open } = this.props;
 
     return (
       <Accordion
@@ -27,6 +36,9 @@ class LicenseFormCoreDocs extends React.Component {
         <FieldArray
           addDocBtnLabel={<FormattedMessage id="ui-licenses.coreDocs.add" />}
           component={DocumentsFieldArray}
+          onDeleteFile={handlers.onDeleteFile}
+          onDownloadFile={handlers.onDownloadFile}
+          onUploadFile={handlers.onUploadFile}
           isEmptyMessage={<FormattedMessage id="ui-licenses.coreDocs.none" />}
           name="docs"
         />
