@@ -6,6 +6,8 @@ import { stripesConnect } from '@folio/stripes/core';
 
 import View from '../components/License';
 
+import { handleDownloadFile } from './handlers/file';
+
 class ViewLicenseRoute extends React.Component {
   static manifest = Object.freeze({
     license: {
@@ -56,6 +58,7 @@ class ViewLicenseRoute extends React.Component {
     }).isRequired,
     stripes: PropTypes.shape({
       hasPerm: PropTypes.func.isRequired,
+      okapi: PropTypes.object.isRequired,
     }).isRequired,
   };
 
@@ -91,6 +94,10 @@ class ViewLicenseRoute extends React.Component {
     }));
   }
 
+  handleDownloadFile = (file) => {
+    handleDownloadFile(file, this.props.stripes.okapi);
+  }
+
   handleClose = () => {
     this.props.history.push(`/licenses${this.props.location.search}`);
   }
@@ -117,6 +124,9 @@ class ViewLicenseRoute extends React.Component {
           terms: get(resources, 'terms.records', []),
         }}
         editUrl={stripes.hasPerm('ui-licenses.licenses.edit') && `${location.pathname}/edit${location.search}`}
+        handlers={{
+          onDownloadFile: this.handleDownloadFile,
+        }}
         isLoading={get(resources, 'license.isPending')}
         onClose={this.handleClose}
         onToggleHelper={this.handleTogglerHelper}

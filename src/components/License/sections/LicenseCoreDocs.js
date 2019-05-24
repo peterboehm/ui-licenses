@@ -12,6 +12,9 @@ import { DocumentCard, Spinner } from '@folio/stripes-erm-components';
 export default class LicenseCoreDocs extends React.Component {
   static propTypes = {
     id: PropTypes.string,
+    handlers: PropTypes.shape({
+      onDownloadFile: PropTypes.func,
+    }),
     license: PropTypes.shape({
       docs: PropTypes.arrayOf(
         PropTypes.shape({
@@ -29,7 +32,13 @@ export default class LicenseCoreDocs extends React.Component {
   };
 
   renderDocs = (docs) => {
-    return docs.map(doc => <DocumentCard key={doc.id} {...doc} />);
+    return docs.map(doc => (
+      <DocumentCard
+        key={doc.id}
+        onDownloadFile={this.props.handlers.onDownloadFile}
+        {...doc}
+      />
+    ));
   }
 
   renderBadge = () => {

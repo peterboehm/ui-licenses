@@ -7,6 +7,12 @@ import { stripesConnect } from '@folio/stripes/core';
 import View from '../components/LicenseForm';
 import NoPermissions from '../components/NoPermissions';
 
+import {
+  handleDeleteFile,
+  handleDownloadFile,
+  handleUploadFile,
+} from './handlers/file';
+
 class CreateLicenseRoute extends React.Component {
   static manifest = Object.freeze({
     licenses: {
@@ -68,6 +74,7 @@ class CreateLicenseRoute extends React.Component {
     }).isRequired,
     stripes: PropTypes.shape({
       hasPerm: PropTypes.func.isRequired,
+      okapi: PropTypes.object.isRequired,
     }).isRequired,
   };
 
@@ -112,6 +119,18 @@ class CreateLicenseRoute extends React.Component {
       });
   }
 
+  handleDeleteFile = (file) => {
+    return handleDeleteFile(file, this.props.stripes.okapi);
+  }
+
+  handleDownloadFile = (file) => {
+    handleDownloadFile(file, this.props.stripes.okapi);
+  }
+
+  handleUploadFile = (file) => {
+    return handleUploadFile(file, this.props.stripes.okapi);
+  }
+
   fetchIsPending = () => {
     return Object.values(this.props.resources)
       .filter(r => r && r.resource !== 'licenses')
@@ -133,6 +152,11 @@ class CreateLicenseRoute extends React.Component {
           terms: get(resources, 'terms.records', []),
           typeValues: get(resources, 'typeValues.records', []),
           users: get(resources, 'users.records', []),
+        }}
+        handlers={{
+          onDeleteFile: this.handleDeleteFile,
+          onDownloadFile: this.handleDownloadFile,
+          onUploadFile: this.handleUploadFile,
         }}
         initialValues={this.getInitialValues()}
         isLoading={this.fetchIsPending()}
