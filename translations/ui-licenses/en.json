@@ -14,6 +14,9 @@
 
   "notSet": "Not set",
 
+  "amendments.create": "Create amendment",
+  "amendments.amendmentInfo": "Amendment information",
+
   "coreDocs.add": "Add core document",
   "coreDocs.none": "No core documents have been added.",
 

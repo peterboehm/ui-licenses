@@ -29,7 +29,9 @@ class License extends React.Component {
       terms: PropTypes.array,
       users: PropTypes.array,
     }),
-    editUrl: PropTypes.string,
+    urls: PropTypes.shape({
+      edit: PropTypes.string,
+    }).isRequired,
     onEdit: PropTypes.func,
     stripes: PropTypes.object,
   };
@@ -46,11 +48,12 @@ class License extends React.Component {
   }
 
   getSectionProps = (id) => {
-    const { data, handlers } = this.props;
+    const { data, handlers, urls } = this.props;
 
     return {
       id,
       handlers,
+      urls,
       license: data.license,
       onToggle: this.handleSectionToggle,
       open: this.state.sections[id],
@@ -69,16 +72,16 @@ class License extends React.Component {
   }
 
   getActionMenu = () => {
-    const { editUrl } = this.props;
+    const { urls } = this.props;
 
-    if (!editUrl) return null;
+    if (!urls.edit) return null;
 
     return (
       <React.Fragment>
         <Button
           buttonStyle="dropdownItem"
           id="clickable-edit-license"
-          to={editUrl}
+          to={urls.edit()}
         >
           <Icon icon="edit">
             <FormattedMessage id="ui-licenses.editLicense" />

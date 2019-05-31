@@ -110,8 +110,13 @@ class ViewLicenseRoute extends React.Component {
     mutator.query.update({ helper: nextHelper });
   }
 
+  urls = {
+    edit: this.props.stripes.hasPerm('ui-licenses.licenses.edit') && (() => `${this.props.location.pathname}/edit${this.props.location.search}`),
+    amendment: amendmentId => `${this.props.location.pathname}/amendments/${amendmentId}${this.props.location.search}`,
+  }
+
   render() {
-    const { location, resources, stripes } = this.props;
+    const { resources } = this.props;
 
     return (
       <View
@@ -123,13 +128,13 @@ class ViewLicenseRoute extends React.Component {
           },
           terms: get(resources, 'terms.records', []),
         }}
-        editUrl={stripes.hasPerm('ui-licenses.licenses.edit') && `${location.pathname}/edit${location.search}`}
         handlers={{
           onDownloadFile: this.handleDownloadFile,
         }}
         isLoading={get(resources, 'license.isPending')}
         onClose={this.handleClose}
         onToggleHelper={this.handleTogglerHelper}
+        urls={this.urls}
       />
     );
   }

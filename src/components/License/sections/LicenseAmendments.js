@@ -16,10 +16,13 @@ export default class LicenseAmendments extends React.Component {
     id: PropTypes.string,
     onToggle: PropTypes.func,
     open: PropTypes.bool,
+    urls: PropTypes.shape({
+      amendment: PropTypes.func.isRequired,
+    }).isRequired
   };
 
   render() {
-    const { id, license, onToggle, open } = this.props;
+    const { id, license, onToggle, open, urls } = this.props;
 
     return (
       <Accordion
@@ -31,7 +34,7 @@ export default class LicenseAmendments extends React.Component {
         <MultiColumnList
           columnMapping={{
             name: <FormattedMessage id="ui-licenses.prop.name" />,
-            status: <FormattedMessage id="ui-licenses.prop.agreementStatus" />,
+            status: <FormattedMessage id="ui-licenses.prop.status" />,
             startDate: <FormattedMessage id="ui-licenses.prop.startDate" />,
             endDate: <FormattedMessage id="ui-licenses.prop.endDate" />,
           }}
@@ -43,7 +46,7 @@ export default class LicenseAmendments extends React.Component {
           }}
           contentData={license.amendments || []}
           formatter={{
-            name: a => <Link to={`/licenses/${license.id}/amendments/${a.id}`}>{a.name}</Link>,
+            name: a => <Link to={urls.amendment(a.id)}>{a.name || a.id}</Link>,
             status: a => get(a, ['status', 'label'], '-'),
             startDate: a => (a.startDate ? <FormattedDate value={a.startDate} /> : '-'),
             endDate: a => <LicenseEndDate license={a} />,
