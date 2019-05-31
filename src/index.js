@@ -7,7 +7,10 @@ import LicensesRoute from './routes/LicensesRoute';
 import CreateLicenseRoute from './routes/CreateLicenseRoute';
 import EditLicenseRoute from './routes/EditLicenseRoute';
 import ViewLicenseRoute from './routes/ViewLicenseRoute';
+
 import ViewAmendmentsRoute from './routes/ViewAmendmentsRoute';
+import CreateAmendmentRoute from './routes/CreateAmendmentRoute';
+import EditAmendmentRoute from './routes/EditAmendmentRoute';
 
 import Settings from './settings';
 
@@ -31,7 +34,9 @@ class App extends React.Component {
           <Route path={`${path}/create`} exact component={CreateLicenseRoute} />
           <Route path={`${path}/:id`} exact component={ViewLicenseRoute} />
           <Route path={`${path}/:id/edit`} exact component={EditLicenseRoute} />
+          <Route path={`${path}/:id/amendments/create`} exact component={CreateAmendmentRoute} />
           <Route path={`${path}/:id/amendments/:amendmentId`} exact component={ViewAmendmentsRoute} />
+          <Route path={`${path}/:id/amendments/:amendmentId/edit`} exact component={EditAmendmentRoute} />
         </Switch>
       </Route>
     );

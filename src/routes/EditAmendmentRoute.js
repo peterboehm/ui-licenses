@@ -1,0 +1,153 @@
+import React from 'react';
+import PropTypes from 'prop-types';
+import { cloneDeep, get } from 'lodash';
+
+import { stripesConnect } from '@folio/stripes/core';
+
+
+import {
+  handleDeleteFile,
+  handleDownloadFile,
+  handleUploadFile,
+} from './handlers/file';
+
+const View = props => <div>{`Edit Amendment ${props.initialValues.id}!`}</div>;
+
+class EditAmendmentRoute extends React.Component {
+  static manifest = Object.freeze({
+    license: {
+      type: 'okapi',
+      path: 'licenses/licenses/:{id}',
+      shouldRefresh: () => false,
+    },
+    documentCategories: {
+      type: 'okapi',
+      path: 'licenses/refdata/DocumentAttachment/atType',
+      shouldRefresh: () => false,
+    },
+    statusValues: {
+      type: 'okapi',
+      path: 'licenses/refdata/License/status',
+      shouldRefresh: () => false,
+    },
+    terms: {
+      type: 'okapi',
+      path: 'licenses/custprops',
+      shouldRefresh: () => false,
+    },
+  });
+
+  static propTypes = {
+    history: PropTypes.shape({
+      push: PropTypes.func.isRequired,
+    }).isRequired,
+    location: PropTypes.shape({
+      search: PropTypes.string.isRequired,
+    }).isRequired,
+    match: PropTypes.shape({
+      params: PropTypes.shape({
+        id: PropTypes.string.isRequired,
+        amendmentId: PropTypes.string.isRequired,
+      }).isRequired,
+    }).isRequired,
+    resources: PropTypes.shape({
+      documentCategories: PropTypes.object,
+      license: PropTypes.object,
+      statusValues: PropTypes.object,
+      terms: PropTypes.object,
+    }).isRequired,
+    stripes: PropTypes.shape({
+      hasPerm: PropTypes.func.isRequired,
+      okapi: PropTypes.object.isRequired,
+    }).isRequired,
+  };
+
+  state = {
+    selectedAmendment: {}
+  }
+
+  static getDerivedStateFromProps(props, state) {
+    const { resources, match: { params } } = props;
+    const amendments = get(resources, 'license.records[0].amendments', []);
+    const selectedAmendment = amendments.find(a => a.id === params.amendmentId);
+    if (selectedAmendment && selectedAmendment.id !== state.selectedAmendment.id) {
+      return { selectedAmendment };
+    }
+
+    return null;
+  }
+
+  getInitialValues = () => {
+    const initialValues = cloneDeep(this.state.selectedAmendment);
+    const {
+      status = {},
+      supplementaryDocs = [],
+    } = initialValues;
+
+    // Set the values of dropdown-controlled props as values rather than objects.
+    initialValues.status = status.value;
+    initialValues.supplementaryDocs = supplementaryDocs.map(o => ({ ...o, atType: get(o, 'atType.value') }));
+
+    // Add the default terms to the already-set terms.
+    initialValues.customProperties = initialValues.customProperties || {};
+    const terms = get(this.props.resources, 'terms.records', []);
+    terms
+      .filter(t => t.primary && initialValues.customProperties[t.name] === undefined)
+      .forEach(t => { initialValues.customProperties[t.name] = ''; });
+
+    return initialValues;
+  }
+
+  handleClose = () => {
+    const { location, match } = this.props;
+    this.props.history.push(`/licenses/${match.params.id}${location.search}`);
+  }
+
+  handleSubmit = () => {
+    console.error('NOT IMPLEMENTED');
+  }
+
+  handleDeleteFile = (file) => {
+    return handleDeleteFile(file, this.props.stripes.okapi);
+  }
+
+  handleDownloadFile = (file) => {
+    handleDownloadFile(file, this.props.stripes.okapi);
+  }
+
+  handleUploadFile = (file) => {
+    return handleUploadFile(file, this.props.stripes.okapi);
+  }
+
+  fetchIsPending = () => {
+    return Object.values(this.props.resources)
+      .filter(r => r && r.resource !== 'licenses')
+      .some(r => r.isPending);
+  }
+
+  render() {
+    const { resources } = this.props;
+
+    return (
+      <View
+        data={{
+          license: get(resources, 'license.records[0]', {}),
+          documentCategories: get(resources, 'documentCategories.records', []),
+          statusValues: get(resources, 'statusValues.records', []),
+          terms: get(resources, 'terms.records', []),
+        }}
+        handlers={{
+          onDeleteFile: this.handleDeleteFile,
+          onDownloadFile: this.handleDownloadFile,
+          onUploadFile: this.handleUploadFile,
+        }}
+        initialValues={this.getInitialValues()}
+        isLoading={get(resources, 'license.isPending')}
+        onClose={this.handleClose}
+        onSubmit={this.handleSubmit}
+      />
+    );
+  }
+}
+
+export default stripesConnect(EditAmendmentRoute);
