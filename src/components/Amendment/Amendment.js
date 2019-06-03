@@ -5,37 +5,101 @@ import { FormattedDate, FormattedMessage } from 'react-intl';
 
 import {
   Accordion,
+  Button,
   Col,
   KeyValue,
+  Layout,
+  Pane,
+  PaneMenu,
   Row,
 } from '@folio/stripes/components';
+
+import { IfPermission } from '@folio/stripes/core';
 
 import {
   LicenseCard,
   LicenseEndDate,
+  Spinner,
 } from '@folio/stripes-erm-components';
 
 export default class Amendment extends React.Component {
   static propTypes = {
-    amendment: PropTypes.shape({
-      id: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-      status: PropTypes.shape({
-        label: PropTypes.string.isRequired,
+    data: PropTypes.shape({
+      amendment: PropTypes.shape({
+        id: PropTypes.string,
+        name: PropTypes.string,
+        status: PropTypes.shape({
+          label: PropTypes.string,
+        }),
       }).isRequired,
+      license: PropTypes.object.isRequired,
     }),
-    license: PropTypes.object,
+    handlers: PropTypes.shape({
+      onClose: PropTypes.func.isRequired,
+    }),
+    isLoading: PropTypes.bool,
+    urls: PropTypes.shape({
+      editAmendment: PropTypes.func,
+      viewLicense: PropTypes.func,
+    }),
   }
 
+  renderLoadingPane = () => {
+    return (
+      <Pane
+        defaultWidth="45%"
+        dismissible
+        id="pane-view-amendment"
+        onClose={this.props.handlers.onClose}
+        paneTitle={<FormattedMessage id="ui-licenses.loading" />}
+      >
+        <Layout className="marginTop1">
+          <Spinner />
+        </Layout>
+      </Pane>
+    );
+  }
+
+  renderEditAmendmentPaneMenu = () => (
+    <IfPermission perm="ui-licenses.licenses.edit">
+      <PaneMenu>
+        <FormattedMessage id="ui-licenses.amendments.create">
+          {ariaLabel => (
+            <Button
+              aria-label={ariaLabel}
+              buttonStyle="primary"
+              id="clickable-edit-amendment"
+              marginBottom0
+              to={this.props.urls.editAmendment()}
+            >
+              <FormattedMessage id="stripes-components.button.edit" />
+            </Button>
+          )}
+        </FormattedMessage>
+      </PaneMenu>
+    </IfPermission>
+  )
+
   render() {
-    const { amendment, license } = this.props;
+    const {
+      data: { amendment, license },
+      handlers: { onClose },
+      isLoading,
+    } = this.props;
+
+    if (isLoading) return this.renderLoadingPane();
 
     return (
-      <div>
-        <LicenseCard
-          license={license}
-          renderName={false}
-        />
+      <Pane
+        defaultWidth="45%"
+        dismissible
+        id="pane-view-amendment"
+        lastMenu={this.renderEditAmendmentPaneMenu()}
+        onClose={onClose}
+        paneTitle={amendment.name}
+      >
+
+        <LicenseCard license={license} />
         <Accordion
           id="amendment-info-accordion"
           label={<FormattedMessage id="ui-licenses.amendments.amendmentInfo" />}
@@ -82,7 +146,7 @@ export default class Amendment extends React.Component {
             </Col>
           </Row>
         </Accordion>
-      </div>
+      </Pane>
     );
   }
 }

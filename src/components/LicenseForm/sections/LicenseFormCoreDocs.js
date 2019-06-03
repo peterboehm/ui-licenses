@@ -19,10 +19,6 @@ class LicenseFormCoreDocs extends React.Component {
     open: PropTypes.bool,
   };
 
-  getDeleteFilePath = (file) => `/licenses/files/${file.id}`
-
-  getUploadFilePath = () => '/licenses/files'
-
   render() {
     const { handlers, id, onToggle, open } = this.props;
 

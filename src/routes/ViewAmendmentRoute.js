@@ -4,7 +4,7 @@ import { get } from 'lodash';
 
 import { stripesConnect } from '@folio/stripes/core';
 
-import View from '../components/ViewAmendments';
+import View from '../components/Amendment';
 
 import { handleDownloadFile } from './handlers/file';
 
@@ -44,6 +44,22 @@ class ViewAmendmentsRoute extends React.Component {
     }).isRequired,
   };
 
+  state = {
+    selectedAmendment: {}
+  }
+
+  static getDerivedStateFromProps(props, state) {
+    const { match, resources } = props;
+    const amendments = get(resources, 'license.records[0].amendments', []);
+    const selectedAmendmentId = get(match, 'params.amendmentId');
+    const selectedAmendment = amendments.find(a => a.id === selectedAmendmentId);
+    if (selectedAmendment && selectedAmendment.id !== state.selectedAmendment.id) {
+      return { selectedAmendment };
+    }
+
+    return null;
+  }
+
   handleClose = () => {
     const { location, match } = this.props;
     this.props.history.push(`/licenses/${match.params.id}${location.search}`);
@@ -60,27 +76,26 @@ class ViewAmendmentsRoute extends React.Component {
   }
 
   urls = {
-    createAmendment: () => `/licenses/${this.props.match.params.id}/amendments/create${this.props.location.search}`,
+    viewLicense: () => `/licenses/${this.props.match.params.id}${this.props.location.search}`,
     editAmendment: () => `/licenses/${this.props.match.params.id}/amendments/${this.props.match.params.amendmentId}/edit${this.props.location.search}`,
-    viewAmendment: amendmentId => `/licenses/${this.props.match.params.id}/amendments/${amendmentId}${this.props.location.search}`,
   }
 
   render() {
-    const { match, resources } = this.props;
+    const { resources } = this.props;
+    const { selectedAmendment } = this.state;
 
     return (
       <View
         data={{
+          amendment: selectedAmendment,
           license: get(resources, 'license.records[0]', {}),
           terms: get(resources, 'terms.records', []),
         }}
         handlers={{
+          onClose: this.handleClose,
           onDownloadFile: this.handleDownloadFile,
         }}
         isLoading={get(resources, 'license.isPending')}
-        onClose={this.handleClose}
-        onSubmit={this.handleSubmit}
-        selectedAmendmentId={match.params.amendmentId}
         urls={this.urls}
       />
     );
