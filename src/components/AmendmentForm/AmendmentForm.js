@@ -21,6 +21,8 @@ import { Spinner } from '@folio/stripes-erm-components';
 
 import {
   AmendmentFormInfo,
+  FormCoreDocs,
+  FormSupplementaryDocs,
   FormTerms,
 } from '../formSections';
 
@@ -45,8 +47,9 @@ class AmendmentForm extends React.Component {
 
   state = {
     sections: {
-      licenseFormTerms: false,
-      licenseFormSupplement: false
+      amendmentFormCoreDocs: false,
+      amendmentFormSupplementaryDocs: false,
+      amendmentFormTerms: false,
     }
   }
 
@@ -168,9 +171,9 @@ class AmendmentForm extends React.Component {
                           />
                         </Col>
                       </Row>
-                      { /* <LicenseFormCoreDocs {...this.getSectionProps('licenseFormDocs')} /> */ }
+                      <FormCoreDocs {...this.getSectionProps('amendmentFormCoreDocs')} />
                       <FormTerms {...this.getSectionProps('amendmentFormTerms')} />
-                      { /* <LicenseFormSupplement {...this.getSectionProps('licenseFormSupplement')} /> */ }
+                      <FormSupplementaryDocs {...this.getSectionProps('amendmentFormSupplementaryDocs')} />
                     </AccordionSet>
                   </div>
                 </form>

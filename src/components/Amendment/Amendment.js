@@ -21,6 +21,8 @@ import { Spinner } from '@folio/stripes-erm-components';
 import {
   AmendmentInfo,
   AmendmentLicense,
+  CoreDocs,
+  SupplementaryDocs,
   Terms,
 } from '../viewSections';
 
@@ -48,6 +50,8 @@ export default class Amendment extends React.Component {
 
   state = {
     sections: {
+      amendmentCoreDocs: false,
+      amendmentSupplementaryDocs: false,
       amendmentTerms: false,
     }
   }
@@ -181,7 +185,9 @@ export default class Amendment extends React.Component {
                 <ExpandAllButton accordionStatus={this.state.sections} onToggle={this.handleAllSectionsToggle} />
               </Col>
             </Row>
+            <CoreDocs {...this.getSectionProps('amendmentCoreDocs')} />
             <Terms {...this.getSectionProps('amendmentTerms')} />
+            <SupplementaryDocs {...this.getSectionProps('amendmentSupplementaryDocs')} />
           </AccordionSet>
         </TitleManager>
       </Pane>

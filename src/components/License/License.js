@@ -19,10 +19,10 @@ import { Spinner } from '@folio/stripes-erm-components';
 import {
   LicenseAgreements,
   LicenseAmendments,
-  LicenseCoreDocs,
   LicenseHeader,
   LicenseInfo,
-  LicenseSupplement,
+  CoreDocs,
+  SupplementaryDocs,
   Terms,
 } from '../viewSections';
 
@@ -163,10 +163,10 @@ class License extends React.Component {
               </Col>
             </Row>
             <LicenseInfo {...this.getSectionProps('licenseInfo')} />
-            <LicenseCoreDocs {...this.getSectionProps('licenseCoreDocs')} />
+            <CoreDocs {...this.getSectionProps('licenseCoreDocs')} />
             <Terms {...this.getSectionProps('licenseTerms')} />
             <LicenseAmendments {...this.getSectionProps('licenseAmendments')} />
-            <LicenseSupplement {...this.getSectionProps('licenseSupplement')} />
+            <SupplementaryDocs {...this.getSectionProps('licenseSupplement')} />
             <LicenseAgreements {...this.getSectionProps('licenseAgreements')} />
           </AccordionSet>
         </TitleManager>
