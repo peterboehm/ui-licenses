@@ -14,7 +14,7 @@ import {
   Paneset,
   Row,
 } from '@folio/stripes/components';
-import { TitleManager } from '@folio/stripes/core';
+import { AppIcon, TitleManager } from '@folio/stripes/core';
 import stripesForm from '@folio/stripes/form';
 
 import { Spinner } from '@folio/stripes-erm-components';
@@ -153,6 +153,7 @@ class LicenseForm extends React.Component {
         <FormattedMessage id="ui-licenses.create">
           {create => (
             <Pane
+              appIcon={<AppIcon app="licenses" />}
               defaultWidth="100%"
               id="pane-license-form"
               firstMenu={this.renderFirstMenu()}

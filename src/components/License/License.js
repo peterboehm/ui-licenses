@@ -10,7 +10,7 @@ import {
   Pane,
   PaneMenu,
 } from '@folio/stripes/components';
-import { IfPermission, TitleManager } from '@folio/stripes/core';
+import { AppIcon, IfPermission, TitleManager } from '@folio/stripes/core';
 import { Spinner } from '@folio/stripes-erm-components';
 
 import {
@@ -138,6 +138,7 @@ class License extends React.Component {
     return (
       <Pane
         actionMenu={this.getActionMenu}
+        appIcon={<AppIcon app="licenses" />}
         defaultWidth="45%"
         dismissible
         id="pane-view-license"
