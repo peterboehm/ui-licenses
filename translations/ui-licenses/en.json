@@ -14,11 +14,12 @@
 
   "notSet": "Not set",
 
+  "amendments.add": "Add amendment",
   "amendments.closePane": "Close edit amendment pane",
   "amendments.create": "Create amendment",
   "amendments.amendmentInfo": "Amendment information",
+  "amendments.delete": "Delete amendment",
   "amendments.edit": "Edit amendment",
-  "amendments.new": "New amendment",
   "amendments.update": "Update amendment",
 
   "coreDocs.add": "Add core document",

@@ -5,6 +5,8 @@ import { FormattedDate, FormattedMessage } from 'react-intl';
 import Link from 'react-router-dom/Link';
 import {
   Accordion,
+  Badge,
+  Button,
   MultiColumnList,
 } from '@folio/stripes/components';
 
@@ -12,20 +14,41 @@ import { LicenseEndDate } from '@folio/stripes-erm-components';
 
 export default class LicenseAmendments extends React.Component {
   static propTypes = {
-    license: PropTypes.object,
+    license: PropTypes.shape({
+      amendments: PropTypes.array,
+    }),
     id: PropTypes.string,
     onToggle: PropTypes.func,
     open: PropTypes.bool,
     urls: PropTypes.shape({
-      amendment: PropTypes.func.isRequired,
+      addAmendment: PropTypes.func,
+      viewAmendment: PropTypes.func.isRequired,
     }).isRequired
   };
+
+  renderAddAmendmentButton = () => {
+    const { urls } = this.props;
+    if (!urls.addAmendment) return null;
+
+    return (
+      <Button to={urls.addAmendment()}>
+        <FormattedMessage id="ui-licenses.amendments.add" />
+      </Button>
+    );
+  }
+
+  renderBadge = () => {
+    const count = get(this.props.license, 'amendments.length', 0);
+    return <Badge>{count}</Badge>;
+  }
 
   render() {
     const { id, license, onToggle, open, urls } = this.props;
 
     return (
       <Accordion
+        displayWhenClosed={this.renderBadge()}
+        displayWhenOpen={this.renderAddAmendmentButton()}
         id={id}
         label={<FormattedMessage id="ui-licenses.section.amendments" />}
         open={open}
@@ -46,7 +69,7 @@ export default class LicenseAmendments extends React.Component {
           }}
           contentData={license.amendments || []}
           formatter={{
-            name: a => <Link to={urls.amendment(a.id)}>{a.name || a.id}</Link>,
+            name: a => <Link to={urls.viewAmendment(a.id)}>{a.name}</Link>,
             status: a => get(a, ['status', 'label'], '-'),
             startDate: a => (a.startDate ? <FormattedDate value={a.startDate} /> : '-'),
             endDate: a => <LicenseEndDate license={a} />,

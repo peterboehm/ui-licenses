@@ -34,6 +34,11 @@ class ViewAmendmentsRoute extends React.Component {
         id: PropTypes.string.isRequired,
       }).isRequired,
     }).isRequired,
+    mutator: PropTypes.shape({
+      license: PropTypes.shape({
+        PUT: PropTypes.func.isRequired,
+      }).isRequired,
+    }).isRequired,
     resources: PropTypes.shape({
       license: PropTypes.object,
       terms: PropTypes.object,
@@ -58,6 +63,21 @@ class ViewAmendmentsRoute extends React.Component {
     this.props.history.push(`/licenses/${match.params.id}${location.search}`);
   }
 
+  handleDelete = () => {
+    const license = get(this.props.resources, 'license.records[0]', {});
+    const { match: { params } } = this.props;
+
+    this.props.mutator.license
+      .PUT({
+        ...license,
+        amendments: [{
+          id: params.amendmentId,
+          _delete: true,
+        }],
+      })
+      .then(this.handleClose);
+  }
+
   handleDownloadFile = (file) => {
     handleDownloadFile(file, this.props.stripes.okapi);
   }
@@ -69,8 +89,7 @@ class ViewAmendmentsRoute extends React.Component {
   }
 
   urls = {
-    viewLicense: () => `/licenses/${this.props.match.params.id}${this.props.location.search}`,
-    editAmendment: () => `/licenses/${this.props.match.params.id}/amendments/${this.props.match.params.amendmentId}/edit${this.props.location.search}`,
+    editAmendment: this.props.stripes.hasPerm('ui-licenses.licenses.edit') && (() => `/licenses/${this.props.match.params.id}/amendments/${this.props.match.params.amendmentId}/edit${this.props.location.search}`),
   }
 
   render() {
@@ -85,6 +104,7 @@ class ViewAmendmentsRoute extends React.Component {
         }}
         handlers={{
           onClose: this.handleClose,
+          onDelete: this.props.stripes.hasPerm('ui-licenses.licenses.edit') && this.handleDelete,
           onDownloadFile: this.handleDownloadFile,
         }}
         isLoading={get(resources, 'license.isPending')}

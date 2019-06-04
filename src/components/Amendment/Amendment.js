@@ -8,6 +8,7 @@ import {
   Button,
   Col,
   Headline,
+  Icon,
   KeyValue,
   Layout,
   Pane,
@@ -37,12 +38,35 @@ export default class Amendment extends React.Component {
     }),
     handlers: PropTypes.shape({
       onClose: PropTypes.func.isRequired,
+      onDelete: PropTypes.func,
     }),
     isLoading: PropTypes.bool,
     urls: PropTypes.shape({
       editAmendment: PropTypes.func,
-      viewLicense: PropTypes.func,
     }),
+  }
+
+  renderActionMenu = ({ onToggle }) => {
+    const { handlers } = this.props;
+
+    if (!handlers.onDelete) return null;
+
+    return (
+      <React.Fragment>
+        <Button
+          buttonStyle="dropdownItem"
+          id="clickable-delete-amendment"
+          onClick={() => {
+            handlers.onDelete();
+            onToggle();
+          }}
+        >
+          <Icon icon="trash">
+            <FormattedMessage id="ui-licenses.amendments.delete" />
+          </Icon>
+        </Button>
+      </React.Fragment>
+    );
   }
 
   renderLoadingPane = () => {
@@ -90,10 +114,9 @@ export default class Amendment extends React.Component {
 
     if (isLoading) return this.renderLoadingPane();
 
-    console.log(amendment.name);
-
     return (
       <Pane
+        actionMenu={this.renderActionMenu}
         defaultWidth="45%"
         dismissible
         id="pane-view-amendment"
