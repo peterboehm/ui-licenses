@@ -163,7 +163,6 @@ module.exports.test = (uiTestCtx) => {
 
       it(`should edit license to: ${values.editedName}`, done => {
         nightmare
-          .click('[class*=paneHeader] [class*=dropdown] button')
           .wait('#clickable-edit-license')
           .click('#clickable-edit-license')
           .wait('#edit-license-name')

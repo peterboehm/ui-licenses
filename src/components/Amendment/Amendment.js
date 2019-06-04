@@ -16,7 +16,7 @@ import {
   Row,
 } from '@folio/stripes/components';
 
-import { IfPermission } from '@folio/stripes/core';
+import { IfPermission, TitleManager } from '@folio/stripes/core';
 
 import {
   LicenseCard,
@@ -47,24 +47,37 @@ export default class Amendment extends React.Component {
   }
 
   renderActionMenu = ({ onToggle }) => {
-    const { handlers } = this.props;
+    const { handlers, urls } = this.props;
 
-    if (!handlers.onDelete) return null;
+    if (!urls.editAmendment && !handlers.onDelete) return null;
 
     return (
       <React.Fragment>
-        <Button
-          buttonStyle="dropdownItem"
-          id="clickable-delete-amendment"
-          onClick={() => {
-            handlers.onDelete();
-            onToggle();
-          }}
-        >
-          <Icon icon="trash">
-            <FormattedMessage id="ui-licenses.amendments.delete" />
-          </Icon>
-        </Button>
+        {urls.editAmendment &&
+          <Button
+            buttonStyle="dropdownItem"
+            id="clickable-dropdown-edit-amendment"
+            to={urls.editAmendment()}
+          >
+            <Icon icon="edit">
+              <FormattedMessage id="ui-licenses.amendments.edit" />
+            </Icon>
+          </Button>
+        }
+        {handlers.onDelete &&
+          <Button
+            buttonStyle="dropdownItem"
+            id="clickable-delete-amendment"
+            onClick={() => {
+              handlers.onDelete();
+              onToggle();
+            }}
+          >
+            <Icon icon="trash">
+              <FormattedMessage id="ui-licenses.amendments.delete" />
+            </Icon>
+          </Button>
+        }
       </React.Fragment>
     );
   }
@@ -124,60 +137,62 @@ export default class Amendment extends React.Component {
         onClose={onClose}
         paneTitle={amendment.name}
       >
-        <Headline
-          faded
-          margin="none"
-          size="large"
-        >
-          <FormattedMessage id="ui-licenses.section.licenseInformation" />
-        </Headline>
-        <LicenseCard license={license} />
-        <Accordion
-          id="amendment-info-accordion"
-          label={<FormattedMessage id="ui-licenses.amendments.amendmentInfo" />}
-        >
-          <Row>
-            <Col xs={12}>
-              <KeyValue label={<FormattedMessage id="ui-licenses.prop.name" />}>
-                <div data-test-amendment-name>
-                  {amendment.name || amendment.id}
-                </div>
-              </KeyValue>
-            </Col>
-          </Row>
-          <Row>
-            <Col xs={6} md={3}>
-              <KeyValue label={<FormattedMessage id="ui-licenses.prop.status" />}>
-                <div data-test-amendment-status>
-                  {get(amendment, ['status', 'label'], '-')}
-                </div>
-              </KeyValue>
-            </Col>
-            <Col xs={6} md={3}>
-              <KeyValue label={<FormattedMessage id="ui-licenses.prop.startDate" />}>
-                <div data-test-amendment-start-date>
-                  {amendment.startDate ? <FormattedDate value={amendment.startDate} /> : '-'}
-                </div>
-              </KeyValue>
-            </Col>
-            <Col xs={6} md={3}>
-              <KeyValue label={<FormattedMessage id="ui-licenses.prop.endDate" />}>
-                <div data-test-amendment-end-date>
-                  <LicenseEndDate license={amendment} />
-                </div>
-              </KeyValue>
-            </Col>
-          </Row>
-          <Row>
-            <Col xs={12}>
-              <KeyValue label={<FormattedMessage id="ui-licenses.prop.description" />}>
-                <div data-test-amendment-description>
-                  {amendment.description || '-'}
-                </div>
-              </KeyValue>
-            </Col>
-          </Row>
-        </Accordion>
+        <TitleManager record={amendment.name}>
+          <Headline
+            faded
+            margin="none"
+            size="large"
+          >
+            <FormattedMessage id="ui-licenses.section.licenseInformation" />
+          </Headline>
+          <LicenseCard license={license} />
+          <Accordion
+            id="amendment-info-accordion"
+            label={<FormattedMessage id="ui-licenses.amendments.amendmentInfo" />}
+          >
+            <Row>
+              <Col xs={12}>
+                <KeyValue label={<FormattedMessage id="ui-licenses.prop.name" />}>
+                  <div data-test-amendment-name>
+                    {amendment.name || amendment.id}
+                  </div>
+                </KeyValue>
+              </Col>
+            </Row>
+            <Row>
+              <Col xs={6} md={3}>
+                <KeyValue label={<FormattedMessage id="ui-licenses.prop.status" />}>
+                  <div data-test-amendment-status>
+                    {get(amendment, ['status', 'label'], '-')}
+                  </div>
+                </KeyValue>
+              </Col>
+              <Col xs={6} md={3}>
+                <KeyValue label={<FormattedMessage id="ui-licenses.prop.startDate" />}>
+                  <div data-test-amendment-start-date>
+                    {amendment.startDate ? <FormattedDate value={amendment.startDate} /> : '-'}
+                  </div>
+                </KeyValue>
+              </Col>
+              <Col xs={6} md={3}>
+                <KeyValue label={<FormattedMessage id="ui-licenses.prop.endDate" />}>
+                  <div data-test-amendment-end-date>
+                    <LicenseEndDate license={amendment} />
+                  </div>
+                </KeyValue>
+              </Col>
+            </Row>
+            <Row>
+              <Col xs={12}>
+                <KeyValue label={<FormattedMessage id="ui-licenses.prop.description" />}>
+                  <div data-test-amendment-description>
+                    {amendment.description || '-'}
+                  </div>
+                </KeyValue>
+              </Col>
+            </Row>
+          </Accordion>
+        </TitleManager>
       </Pane>
     );
   }

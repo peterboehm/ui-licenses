@@ -195,13 +195,13 @@ class EditLicenseRoute extends React.Component {
           users: get(resources, 'users.records', []),
         }}
         handlers={{
+          onClose: this.handleClose,
           onDeleteFile: this.handleDeleteFile,
           onDownloadFile: this.handleDownloadFile,
           onUploadFile: this.handleUploadFile,
         }}
         initialValues={this.getInitialValues()}
         isLoading={this.fetchIsPending()}
-        onClose={this.handleClose}
         onSubmit={this.handleSubmit}
       />
     );

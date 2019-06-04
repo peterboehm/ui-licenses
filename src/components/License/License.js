@@ -4,12 +4,13 @@ import { FormattedMessage } from 'react-intl';
 
 import {
   AccordionSet,
+  Button,
   Icon,
   Layout,
   Pane,
-  Button,
+  PaneMenu,
 } from '@folio/stripes/components';
-import { TitleManager } from '@folio/stripes/core';
+import { IfPermission, TitleManager } from '@folio/stripes/core';
 import { Spinner } from '@folio/stripes-erm-components';
 
 import {
@@ -29,10 +30,12 @@ class License extends React.Component {
       terms: PropTypes.array,
       users: PropTypes.array,
     }),
+    handlers: PropTypes.shape({
+      onClose: PropTypes.func.isRequired,
+    }).isRequired,
     urls: PropTypes.shape({
       edit: PropTypes.func,
     }).isRequired,
-    onEdit: PropTypes.func,
     stripes: PropTypes.object,
   };
 
@@ -80,7 +83,7 @@ class License extends React.Component {
       <React.Fragment>
         <Button
           buttonStyle="dropdownItem"
-          id="clickable-edit-license"
+          id="clickable-dropdown-edit-license"
           to={urls.edit()}
         >
           <Icon icon="edit">
@@ -91,13 +94,33 @@ class License extends React.Component {
     );
   }
 
+  renderEditLicensePaneMenu = () => (
+    <IfPermission perm="ui-licenses.licenses.edit">
+      <PaneMenu>
+        <FormattedMessage id="ui-licenses.editLicense">
+          {ariaLabel => (
+            <Button
+              aria-label={ariaLabel}
+              buttonStyle="primary"
+              id="clickable-edit-license"
+              marginBottom0
+              to={this.props.urls.edit()}
+            >
+              <FormattedMessage id="stripes-components.button.edit" />
+            </Button>
+          )}
+        </FormattedMessage>
+      </PaneMenu>
+    </IfPermission>
+  )
+
   renderLoadingPane = () => {
     return (
       <Pane
         defaultWidth="45%"
         dismissible
         id="pane-view-license"
-        onClose={this.props.onClose}
+        onClose={this.props.handlers.onClose}
         paneTitle={<FormattedMessage id="ui-licenses.loading" />}
       >
         <Layout className="marginTop1">
@@ -108,7 +131,7 @@ class License extends React.Component {
   }
 
   render() {
-    const { data, isLoading, onClose } = this.props;
+    const { data, isLoading, handlers } = this.props;
 
     if (isLoading) return this.renderLoadingPane();
 
@@ -118,7 +141,8 @@ class License extends React.Component {
         defaultWidth="45%"
         dismissible
         id="pane-view-license"
-        onClose={onClose}
+        lastMenu={this.renderEditLicensePaneMenu()}
+        onClose={handlers.onClose}
         paneTitle={data.license.name}
       >
         <TitleManager record={data.license.name}>

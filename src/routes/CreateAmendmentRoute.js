@@ -111,12 +111,12 @@ class CreateAmendmentRoute extends React.Component {
           terms: get(resources, 'terms.records', []),
         }}
         handlers={{
+          onClose: this.handleClose,
           onDeleteFile: this.handleDeleteFile,
           onDownloadFile: this.handleDownloadFile,
           onUploadFile: this.handleUploadFile,
         }}
         isLoading={get(resources, 'license.isPending')}
-        onClose={this.handleClose}
         onSubmit={this.handleSubmit}
       />
     );

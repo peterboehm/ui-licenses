@@ -31,10 +31,11 @@ import css from './LicenseForm.css';
 class LicenseForm extends React.Component {
   static propTypes = {
     data: PropTypes.object,
-    handlers: PropTypes.object,
+    handlers: PropTypes.PropTypes.shape({
+      onClose: PropTypes.func.isRequired,
+    }),
     initialValues: PropTypes.object,
     handleSubmit: PropTypes.func.isRequired,
-    onClose: PropTypes.func.isRequired,
     onSubmit: PropTypes.func.isRequired,
     pristine: PropTypes.bool,
     submitting: PropTypes.bool,
@@ -85,7 +86,7 @@ class LicenseForm extends React.Component {
           dismissible
           defaultWidth="100%"
           id="pane-license-form"
-          onClose={this.props.onClose}
+          onClose={this.props.handlers.onClose}
           paneTitle={<FormattedMessage id="ui-licenses.loading" />}
         >
           <Layout className="marginTop1">
@@ -104,7 +105,7 @@ class LicenseForm extends React.Component {
             <IconButton
               icon="times"
               id="close-license-form-button"
-              onClick={this.props.onClose}
+              onClick={this.props.handlers.onClose}
               aria-label={ariaLabel}
             />
           )}

@@ -160,7 +160,6 @@ module.exports.test = (uiTestCtx) => {
 
       it('should open edit license', done => {
         nightmare
-          .click('[class*=paneHeader] [class*=dropdown] button')
           .wait('#clickable-edit-license')
           .click('#clickable-edit-license')
           .wait('#accordion-toggle-button-licenseFormOrgs')
