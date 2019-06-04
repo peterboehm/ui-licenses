@@ -30,7 +30,7 @@ class License extends React.Component {
       users: PropTypes.array,
     }),
     urls: PropTypes.shape({
-      edit: PropTypes.string,
+      edit: PropTypes.func,
     }).isRequired,
     onEdit: PropTypes.func,
     stripes: PropTypes.object,

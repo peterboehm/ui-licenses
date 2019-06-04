@@ -10,7 +10,7 @@ import {
   handleUploadFile,
 } from './handlers/file';
 
-const View = props => <div>Create Amendment!</div>;
+import Form from '../components/AmendmentForm';
 
 class CreateAmendmentRoute extends React.Component {
   static manifest = Object.freeze({
@@ -48,6 +48,11 @@ class CreateAmendmentRoute extends React.Component {
         id: PropTypes.string.isRequired,
       }).isRequired,
     }).isRequired,
+    mutator: PropTypes.shape({
+      license: PropTypes.shape({
+        PUT: PropTypes.func.isRequired,
+      }).isRequired,
+    }).isRequired,
     resources: PropTypes.shape({
       documentCategories: PropTypes.object,
       license: PropTypes.object,
@@ -65,8 +70,15 @@ class CreateAmendmentRoute extends React.Component {
     this.props.history.push(`/licenses/${match.params.id}${location.search}`);
   }
 
-  handleSubmit = () => {
-    console.error('NOT IMPLEMENTED');
+  handleSubmit = (amendment) => {
+    const license = get(this.props.resources, 'license.records[0]', {});
+
+    this.props.mutator.license
+      .PUT({
+        ...license,
+        amendments: [amendment]
+      })
+      .then(this.handleClose);
   }
 
   handleDeleteFile = (file) => {
@@ -91,7 +103,7 @@ class CreateAmendmentRoute extends React.Component {
     const { resources } = this.props;
 
     return (
-      <View
+      <Form
         data={{
           license: get(resources, 'license.records[0]', {}),
           documentCategories: get(resources, 'documentCategories.records', []),

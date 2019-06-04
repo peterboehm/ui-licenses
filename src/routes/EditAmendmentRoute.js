@@ -4,14 +4,13 @@ import { cloneDeep, get } from 'lodash';
 
 import { stripesConnect } from '@folio/stripes/core';
 
-
 import {
   handleDeleteFile,
   handleDownloadFile,
   handleUploadFile,
 } from './handlers/file';
 
-const View = props => <div>{`Edit Amendment ${props.initialValues.id}!`}</div>;
+import Form from '../components/AmendmentForm';
 
 class EditAmendmentRoute extends React.Component {
   static manifest = Object.freeze({
@@ -48,6 +47,11 @@ class EditAmendmentRoute extends React.Component {
       params: PropTypes.shape({
         id: PropTypes.string.isRequired,
         amendmentId: PropTypes.string.isRequired,
+      }).isRequired,
+    }).isRequired,
+    mutator: PropTypes.shape({
+      license: PropTypes.shape({
+        PUT: PropTypes.func.isRequired,
       }).isRequired,
     }).isRequired,
     resources: PropTypes.shape({
@@ -100,11 +104,18 @@ class EditAmendmentRoute extends React.Component {
 
   handleClose = () => {
     const { location, match } = this.props;
-    this.props.history.push(`/licenses/${match.params.id}${location.search}`);
+    this.props.history.push(`/licenses/${match.params.id}/amendments/${match.params.amendmentId}${location.search}`);
   }
 
-  handleSubmit = () => {
-    console.error('NOT IMPLEMENTED');
+  handleSubmit = (amendment) => {
+    const license = get(this.props.resources, 'license.records[0]', {});
+
+    this.props.mutator.license
+      .PUT({
+        ...license,
+        amendments: [amendment]
+      })
+      .then(this.handleClose);
   }
 
   handleDeleteFile = (file) => {
@@ -129,7 +140,7 @@ class EditAmendmentRoute extends React.Component {
     const { resources } = this.props;
 
     return (
-      <View
+      <Form
         data={{
           license: get(resources, 'license.records[0]', {}),
           documentCategories: get(resources, 'documentCategories.records', []),
@@ -137,13 +148,13 @@ class EditAmendmentRoute extends React.Component {
           terms: get(resources, 'terms.records', []),
         }}
         handlers={{
+          onClose: this.handleClose,
           onDeleteFile: this.handleDeleteFile,
           onDownloadFile: this.handleDownloadFile,
           onUploadFile: this.handleUploadFile,
         }}
         initialValues={this.getInitialValues()}
         isLoading={get(resources, 'license.isPending')}
-        onClose={this.handleClose}
         onSubmit={this.handleSubmit}
       />
     );

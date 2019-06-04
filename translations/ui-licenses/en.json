@@ -14,8 +14,12 @@
 
   "notSet": "Not set",
 
+  "amendments.closePane": "Close edit amendment pane",
   "amendments.create": "Create amendment",
   "amendments.amendmentInfo": "Amendment information",
+  "amendments.edit": "Edit amendment",
+  "amendments.new": "New amendment",
+  "amendments.update": "Update amendment",
 
   "coreDocs.add": "Add core document",
   "coreDocs.none": "No core documents have been added.",
@@ -55,8 +59,11 @@
   "placeholder.documentCategory": "Enter a category",
   "placeholder.licenseName": "Enter the license name",
   "placeholder.licenseDescription": "Enter a description of the license",
+  "placeholder.amendmentName": "Enter the amendment name",
+  "placeholder.amendmentDescription": "Enter a description of the amendment",
 
   "section.amendments": "Amendments",
+  "section.amendmentInformation": "Amendment information",
   "section.coreDocs": "Core documents",
   "section.coreDocsAndAmendments": "Core documents and amendments",
   "section.internalContacts": "Internal contacts",

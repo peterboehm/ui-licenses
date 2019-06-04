@@ -20,21 +20,19 @@ import stripesForm from '@folio/stripes/form';
 import { Spinner } from '@folio/stripes-erm-components';
 
 import {
-  LicenseFormInfo,
-  LicenseFormCoreDocs,
-  LicenseFormTerms,
-  LicenseFormSupplement,
+  AmendmentFormInfo,
 } from '../formSections';
 
-import css from './LicenseForm.css';
+import css from './AmendmentForm.css';
 
-class LicenseForm extends React.Component {
+class AmendmentForm extends React.Component {
   static propTypes = {
     data: PropTypes.object,
-    handlers: PropTypes.object,
+    handlers: PropTypes.shape({
+      onClose: PropTypes.func.isRequired,
+    }),
     initialValues: PropTypes.object,
     handleSubmit: PropTypes.func.isRequired,
-    onClose: PropTypes.func.isRequired,
     onSubmit: PropTypes.func.isRequired,
     pristine: PropTypes.bool,
     submitting: PropTypes.bool,
@@ -84,8 +82,8 @@ class LicenseForm extends React.Component {
         <Pane
           dismissible
           defaultWidth="100%"
-          id="pane-license-form"
-          onClose={this.props.onClose}
+          id="pane-amendment-form"
+          onClose={this.props.handlers.onClose}
           paneTitle={<FormattedMessage id="ui-licenses.loading" />}
         >
           <Layout className="marginTop1">
@@ -99,12 +97,12 @@ class LicenseForm extends React.Component {
   renderFirstMenu() {
     return (
       <PaneMenu>
-        <FormattedMessage id="ui-licenses.closeEditLicense">
+        <FormattedMessage id="ui-licenses.amendments.closePane">
           {ariaLabel => (
             <IconButton
               icon="times"
-              id="close-license-form-button"
-              onClick={this.props.onClose}
+              id="close-amendment-form-button"
+              onClick={this.props.handlers.onClose}
               aria-label={ariaLabel}
             />
           )}
@@ -119,11 +117,11 @@ class LicenseForm extends React.Component {
     let id;
     let label;
     if (initialValues && initialValues.id) {
-      id = 'clickable-update-license';
-      label = <FormattedMessage id="ui-licenses.updateLicense" />;
+      id = 'clickable-update-amendment';
+      label = <FormattedMessage id="ui-licenses.amendments.update" />;
     } else {
-      id = 'clickable-create-license';
-      label = <FormattedMessage id="ui-licenses.createLicense" />;
+      id = 'clickable-create-amendment';
+      label = <FormattedMessage id="ui-licenses.amendments.create" />;
     }
 
     return (
@@ -153,14 +151,14 @@ class LicenseForm extends React.Component {
           {create => (
             <Pane
               defaultWidth="100%"
-              id="pane-license-form"
+              id="pane-amendment-form"
               firstMenu={this.renderFirstMenu()}
               lastMenu={this.renderLastMenu()}
-              paneTitle={id ? name : <FormattedMessage id="ui-licenses.createLicense" />}
+              paneTitle={id ? name : <FormattedMessage id="ui-licenses.amendments.create" />}
             >
               <TitleManager record={id ? name : create}>
-                <form id="form-license">
-                  <div className={css.licenseForm}>
+                <form id="form-amendment">
+                  <div className={css.amendmentForm}>
                     <AccordionSet>
                       <Row end="xs">
                         <Col xs>
@@ -170,10 +168,10 @@ class LicenseForm extends React.Component {
                           />
                         </Col>
                       </Row>
-                      <LicenseFormInfo {...this.getSectionProps('licenseFormInfo')} />
-                      <LicenseFormCoreDocs {...this.getSectionProps('licenseFormDocs')} />
-                      <LicenseFormTerms {...this.getSectionProps('licenseFormTerms')} />
-                      <LicenseFormSupplement {...this.getSectionProps('licenseFormSupplement')} />
+                      <AmendmentFormInfo {...this.getSectionProps('amendmentFormInfo')} />
+                      { /* <LicenseFormCoreDocs {...this.getSectionProps('licenseFormDocs')} /> */ }
+                      { /* <LicenseFormTerms {...this.getSectionProps('licenseFormTerms')} /> */ }
+                      { /* <LicenseFormSupplement {...this.getSectionProps('licenseFormSupplement')} /> */ }
                     </AccordionSet>
                   </div>
                 </form>
@@ -187,8 +185,8 @@ class LicenseForm extends React.Component {
 }
 
 export default stripesForm({
-  form: 'EditLicense',
+  form: 'EditAmendment',
   navigationCheck: true,
   enableReinitialize: true,
   keepDirtyOnReinitialize: true,
-})(LicenseForm);
+})(AmendmentForm);

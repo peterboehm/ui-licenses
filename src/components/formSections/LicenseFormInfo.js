@@ -18,7 +18,7 @@ import {
 import LicenseFormInternalContacts from './LicenseFormInternalContacts';
 import LicenseFormOrganizations from './LicenseFormOrganizations';
 
-import { required } from '../../../util/validators';
+import { required } from '../../util/validators';
 
 class LicenseFormInfo extends React.Component {
   static propTypes = {

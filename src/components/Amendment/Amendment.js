@@ -7,6 +7,7 @@ import {
   Accordion,
   Button,
   Col,
+  Headline,
   KeyValue,
   Layout,
   Pane,
@@ -89,6 +90,8 @@ export default class Amendment extends React.Component {
 
     if (isLoading) return this.renderLoadingPane();
 
+    console.log(amendment.name);
+
     return (
       <Pane
         defaultWidth="45%"
@@ -98,7 +101,13 @@ export default class Amendment extends React.Component {
         onClose={onClose}
         paneTitle={amendment.name}
       >
-
+        <Headline
+          faded
+          margin="none"
+          size="large"
+        >
+          <FormattedMessage id="ui-licenses.section.licenseInformation" />
+        </Headline>
         <LicenseCard license={license} />
         <Accordion
           id="amendment-info-accordion"

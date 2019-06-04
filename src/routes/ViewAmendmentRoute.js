@@ -44,20 +44,13 @@ class ViewAmendmentsRoute extends React.Component {
     }).isRequired,
   };
 
-  state = {
-    selectedAmendment: {}
-  }
-
-  static getDerivedStateFromProps(props, state) {
-    const { match, resources } = props;
+  getAmendment = () => {
+    const { match, resources } = this.props;
     const amendments = get(resources, 'license.records[0].amendments', []);
     const selectedAmendmentId = get(match, 'params.amendmentId');
-    const selectedAmendment = amendments.find(a => a.id === selectedAmendmentId);
-    if (selectedAmendment && selectedAmendment.id !== state.selectedAmendment.id) {
-      return { selectedAmendment };
-    }
+    const selectedAmendment = amendments.find(a => a.id === selectedAmendmentId) || {};
 
-    return null;
+    return selectedAmendment;
   }
 
   handleClose = () => {
@@ -82,12 +75,11 @@ class ViewAmendmentsRoute extends React.Component {
 
   render() {
     const { resources } = this.props;
-    const { selectedAmendment } = this.state;
 
     return (
       <View
         data={{
-          amendment: selectedAmendment,
+          amendment: this.getAmendment(),
           license: get(resources, 'license.records[0]', {}),
           terms: get(resources, 'terms.records', []),
         }}
