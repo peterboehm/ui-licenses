@@ -13,7 +13,7 @@ import {
 
 import { TermsListField } from './components';
 
-class LicenseFormTerms extends React.Component {
+class FormTerms extends React.Component {
   static propTypes = {
     id: PropTypes.string,
     intl: intlShape.isRequired,
@@ -91,4 +91,4 @@ class LicenseFormTerms extends React.Component {
   }
 }
 
-export default injectIntl(LicenseFormTerms);
+export default injectIntl(FormTerms);

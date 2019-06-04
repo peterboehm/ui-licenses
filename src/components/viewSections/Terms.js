@@ -4,17 +4,17 @@ import { FormattedMessage } from 'react-intl';
 import { Accordion } from '@folio/stripes/components';
 import { LicenseTermsList } from '@folio/stripes-erm-components';
 
-export default class LicenseTerms extends React.Component {
+export default class Terms extends React.Component {
   static propTypes = {
-    license: PropTypes.shape({ customProperties: PropTypes.object }),
     id: PropTypes.string,
     onToggle: PropTypes.func,
     open: PropTypes.bool,
+    record: PropTypes.shape({ customProperties: PropTypes.object }),
     terms: PropTypes.arrayOf(PropTypes.object),
   }
 
   render() {
-    const { id, license, onToggle, open, terms } = this.props;
+    const { id, onToggle, open, record, terms } = this.props;
 
     return (
       <Accordion
@@ -24,7 +24,7 @@ export default class LicenseTerms extends React.Component {
         onToggle={onToggle}
       >
         <LicenseTermsList
-          license={license}
+          license={record}
           terms={terms}
         />
       </Accordion>

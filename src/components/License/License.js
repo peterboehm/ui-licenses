@@ -5,10 +5,13 @@ import { FormattedMessage } from 'react-intl';
 import {
   AccordionSet,
   Button,
+  Col,
+  ExpandAllButton,
   Icon,
   Layout,
   Pane,
   PaneMenu,
+  Row,
 } from '@folio/stripes/components';
 import { AppIcon, IfPermission, TitleManager } from '@folio/stripes/core';
 import { Spinner } from '@folio/stripes-erm-components';
@@ -20,8 +23,8 @@ import {
   LicenseHeader,
   LicenseInfo,
   LicenseSupplement,
-  LicenseTerms,
-} from './sections';
+  Terms,
+} from '../viewSections';
 
 class License extends React.Component {
   static propTypes = {
@@ -60,6 +63,7 @@ class License extends React.Component {
       license: data.license,
       onToggle: this.handleSectionToggle,
       open: this.state.sections[id],
+      record: data.license,
       terms: data.terms,
       users: data.users,
     };
@@ -72,6 +76,10 @@ class License extends React.Component {
         [id]: !prevState.sections[id],
       }
     }));
+  }
+
+  handleAllSectionsToggle = (sections) => {
+    this.setState({ sections });
   }
 
   getActionMenu = () => {
@@ -149,9 +157,14 @@ class License extends React.Component {
         <TitleManager record={data.license.name}>
           <LicenseHeader {...this.getSectionProps()} />
           <AccordionSet>
+            <Row end="xs">
+              <Col xs>
+                <ExpandAllButton accordionStatus={this.state.sections} onToggle={this.handleAllSectionsToggle} />
+              </Col>
+            </Row>
             <LicenseInfo {...this.getSectionProps('licenseInfo')} />
             <LicenseCoreDocs {...this.getSectionProps('licenseCoreDocs')} />
-            <LicenseTerms {...this.getSectionProps('licenseTerms')} />
+            <Terms {...this.getSectionProps('licenseTerms')} />
             <LicenseAmendments {...this.getSectionProps('licenseAmendments')} />
             <LicenseSupplement {...this.getSectionProps('licenseSupplement')} />
             <LicenseAgreements {...this.getSectionProps('licenseAgreements')} />

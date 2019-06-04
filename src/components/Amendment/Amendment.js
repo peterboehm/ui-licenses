@@ -1,15 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { get } from 'lodash';
-import { FormattedDate, FormattedMessage } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 
 import {
-  Accordion,
+  AccordionSet,
   Button,
   Col,
-  Headline,
+  ExpandAllButton,
   Icon,
-  KeyValue,
   Layout,
   Pane,
   PaneMenu,
@@ -18,11 +16,13 @@ import {
 
 import { IfPermission, TitleManager } from '@folio/stripes/core';
 
+import { Spinner } from '@folio/stripes-erm-components';
+
 import {
-  LicenseCard,
-  LicenseEndDate,
-  Spinner,
-} from '@folio/stripes-erm-components';
+  AmendmentInfo,
+  AmendmentLicense,
+  Terms,
+} from '../viewSections';
 
 export default class Amendment extends React.Component {
   static propTypes = {
@@ -44,6 +44,41 @@ export default class Amendment extends React.Component {
     urls: PropTypes.shape({
       editAmendment: PropTypes.func,
     }),
+  }
+
+  state = {
+    sections: {
+      amendmentTerms: false,
+    }
+  }
+
+  getSectionProps = (id) => {
+    const { data, handlers, urls } = this.props;
+
+    return {
+      amendment: data.amendment,
+      id,
+      handlers,
+      license: data.license,
+      onToggle: this.handleSectionToggle,
+      open: this.state.sections[id],
+      record: data.amendment,
+      terms: data.terms,
+      urls,
+    };
+  }
+
+  handleSectionToggle = ({ id }) => {
+    this.setState((prevState) => ({
+      sections: {
+        ...prevState.sections,
+        [id]: !prevState.sections[id],
+      }
+    }));
+  }
+
+  handleAllSectionsToggle = (sections) => {
+    this.setState({ sections });
   }
 
   renderActionMenu = ({ onToggle }) => {
@@ -120,7 +155,7 @@ export default class Amendment extends React.Component {
 
   render() {
     const {
-      data: { amendment, license },
+      data: { amendment },
       handlers: { onClose },
       isLoading,
     } = this.props;
@@ -138,60 +173,16 @@ export default class Amendment extends React.Component {
         paneTitle={amendment.name}
       >
         <TitleManager record={amendment.name}>
-          <Headline
-            faded
-            margin="none"
-            size="large"
-          >
-            <FormattedMessage id="ui-licenses.section.licenseInformation" />
-          </Headline>
-          <LicenseCard license={license} />
-          <Accordion
-            id="amendment-info-accordion"
-            label={<FormattedMessage id="ui-licenses.amendments.amendmentInfo" />}
-          >
-            <Row>
-              <Col xs={12}>
-                <KeyValue label={<FormattedMessage id="ui-licenses.prop.name" />}>
-                  <div data-test-amendment-name>
-                    {amendment.name || amendment.id}
-                  </div>
-                </KeyValue>
+          <AmendmentLicense {...this.getSectionProps()} />
+          <AmendmentInfo {...this.getSectionProps()} />
+          <AccordionSet>
+            <Row end="xs">
+              <Col xs>
+                <ExpandAllButton accordionStatus={this.state.sections} onToggle={this.handleAllSectionsToggle} />
               </Col>
             </Row>
-            <Row>
-              <Col xs={6} md={3}>
-                <KeyValue label={<FormattedMessage id="ui-licenses.prop.status" />}>
-                  <div data-test-amendment-status>
-                    {get(amendment, ['status', 'label'], '-')}
-                  </div>
-                </KeyValue>
-              </Col>
-              <Col xs={6} md={3}>
-                <KeyValue label={<FormattedMessage id="ui-licenses.prop.startDate" />}>
-                  <div data-test-amendment-start-date>
-                    {amendment.startDate ? <FormattedDate value={amendment.startDate} /> : '-'}
-                  </div>
-                </KeyValue>
-              </Col>
-              <Col xs={6} md={3}>
-                <KeyValue label={<FormattedMessage id="ui-licenses.prop.endDate" />}>
-                  <div data-test-amendment-end-date>
-                    <LicenseEndDate license={amendment} />
-                  </div>
-                </KeyValue>
-              </Col>
-            </Row>
-            <Row>
-              <Col xs={12}>
-                <KeyValue label={<FormattedMessage id="ui-licenses.prop.description" />}>
-                  <div data-test-amendment-description>
-                    {amendment.description || '-'}
-                  </div>
-                </KeyValue>
-              </Col>
-            </Row>
-          </Accordion>
+            <Terms {...this.getSectionProps('amendmentTerms')} />
+          </AccordionSet>
         </TitleManager>
       </Pane>
     );

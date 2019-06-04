@@ -4,7 +4,6 @@ import { FormattedMessage } from 'react-intl';
 import { Field } from 'redux-form';
 
 import {
-  Accordion,
   Checkbox,
   Col,
   Datepicker,
@@ -18,9 +17,6 @@ import { required } from '../../util/validators';
 
 class AmendmentFormInfo extends React.Component {
   static propTypes = {
-    id: PropTypes.string,
-    onToggle: PropTypes.func,
-    open: PropTypes.bool,
     data: PropTypes.shape({
       statusValues: PropTypes.array,
       typeValues: PropTypes.array,
@@ -63,14 +59,12 @@ class AmendmentFormInfo extends React.Component {
   }
 
   render() {
-    const { data, id, onToggle, open } = this.props;
+    const { data } = this.props;
 
     return (
-      <Accordion
-        id={id}
+      <div
+        id="amendment-form-info"
         label={<FormattedMessage id="ui-licenses.section.amendmentInformation" />}
-        open={open}
-        onToggle={onToggle}
       >
         <Row>
           <Col xs={12}>
@@ -150,7 +144,7 @@ class AmendmentFormInfo extends React.Component {
             </FormattedMessage>
           </Col>
         </Row>
-      </Accordion>
+      </div>
     );
   }
 }
