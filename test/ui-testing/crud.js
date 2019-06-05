@@ -8,7 +8,7 @@ const generateLicenseValues = () => {
     name: `Fledgling License #${number}`,
     description: `This license of count #${number} is still in its initial stages.`,
     type: 'Alliance',
-    status: 'In Negotiation',
+    status: 'In negotiation',
     startDate: '2020-01-01',
     endDate: '2020-01-11',
 

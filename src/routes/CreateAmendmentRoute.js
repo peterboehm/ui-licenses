@@ -65,6 +65,22 @@ class CreateAmendmentRoute extends React.Component {
     }).isRequired,
   };
 
+  getInitialValues = () => {
+    const { resources } = this.props;
+
+    const status = get(resources, 'statusValues.records', []).find(v => v.value === 'active') || {};
+
+    const customProperties = {};
+    get(resources, 'terms.records', [])
+      .filter(term => term.primary)
+      .forEach(term => { customProperties[term.name] = ''; });
+
+    return {
+      status: status.value,
+      customProperties,
+    };
+  }
+
   handleClose = () => {
     const { location, match } = this.props;
     this.props.history.push(`/licenses/${match.params.id}${location.search}`);
@@ -116,7 +132,8 @@ class CreateAmendmentRoute extends React.Component {
           onDownloadFile: this.handleDownloadFile,
           onUploadFile: this.handleUploadFile,
         }}
-        isLoading={get(resources, 'license.isPending')}
+        initialValues={this.getInitialValues()}
+        isLoading={this.fetchIsPending()}
         onSubmit={this.handleSubmit}
       />
     );

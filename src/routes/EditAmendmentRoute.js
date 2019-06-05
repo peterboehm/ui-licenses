@@ -154,7 +154,7 @@ class EditAmendmentRoute extends React.Component {
           onUploadFile: this.handleUploadFile,
         }}
         initialValues={this.getInitialValues()}
-        isLoading={get(resources, 'license.isPending')}
+        isLoading={this.fetchIsPending()}
         onSubmit={this.handleSubmit}
       />
     );
