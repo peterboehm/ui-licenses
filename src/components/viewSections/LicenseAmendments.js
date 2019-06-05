@@ -31,7 +31,7 @@ export default class LicenseAmendments extends React.Component {
     if (!urls.addAmendment) return null;
 
     return (
-      <Button to={urls.addAmendment()}>
+      <Button id="add-amendment-button" to={urls.addAmendment()}>
         <FormattedMessage id="ui-licenses.amendments.add" />
       </Button>
     );
