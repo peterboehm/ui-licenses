@@ -86,7 +86,7 @@ class LicensesRoute extends React.Component {
 
   static getDerivedStateFromProps(props) {
     const { location: { pathname } } = props;
-    // Hide the view if we're on a create or edit route.
+    // Hide the view if we're on a create, edit, or amendments route.
     const hideView = /\/create|\/edit/.test(pathname);
 
     return {

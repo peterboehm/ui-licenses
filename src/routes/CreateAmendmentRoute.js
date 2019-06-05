@@ -4,41 +4,19 @@ import { get } from 'lodash';
 
 import { stripesConnect } from '@folio/stripes/core';
 
-import View from '../components/LicenseForm';
-import NoPermissions from '../components/NoPermissions';
-
 import {
   handleDeleteFile,
   handleDownloadFile,
   handleUploadFile,
 } from './handlers/file';
 
-class CreateLicenseRoute extends React.Component {
+import Form from '../components/AmendmentForm';
+
+class CreateAmendmentRoute extends React.Component {
   static manifest = Object.freeze({
-    licenses: {
+    license: {
       type: 'okapi',
-      path: 'licenses/licenses',
-      fetch: false,
-      shouldRefresh: () => false,
-    },
-    terms: {
-      type: 'okapi',
-      path: 'licenses/custprops',
-      shouldRefresh: () => false,
-    },
-    statusValues: {
-      type: 'okapi',
-      path: 'licenses/refdata/License/status',
-      shouldRefresh: () => false,
-    },
-    typeValues: {
-      type: 'okapi',
-      path: 'licenses/refdata/License/type',
-      shouldRefresh: () => false,
-    },
-    orgRoleValues: {
-      type: 'okapi',
-      path: 'licenses/refdata/LicenseOrg/role',
+      path: 'licenses/licenses/:{id}',
       shouldRefresh: () => false,
     },
     documentCategories: {
@@ -46,9 +24,14 @@ class CreateLicenseRoute extends React.Component {
       path: 'licenses/refdata/DocumentAttachment/atType',
       shouldRefresh: () => false,
     },
-    contactRoleValues: {
+    statusValues: {
       type: 'okapi',
-      path: 'licenses/refdata/InternalContact/role',
+      path: 'licenses/refdata/License/status',
+      shouldRefresh: () => false,
+    },
+    terms: {
+      type: 'okapi',
+      path: 'licenses/custprops',
       shouldRefresh: () => false,
     },
   });
@@ -60,17 +43,21 @@ class CreateLicenseRoute extends React.Component {
     location: PropTypes.shape({
       search: PropTypes.string.isRequired,
     }).isRequired,
+    match: PropTypes.shape({
+      params: PropTypes.shape({
+        id: PropTypes.string.isRequired,
+      }).isRequired,
+    }).isRequired,
     mutator: PropTypes.shape({
-      licenses: PropTypes.shape({
-        POST: PropTypes.func.isRequired,
+      license: PropTypes.shape({
+        PUT: PropTypes.func.isRequired,
       }).isRequired,
     }).isRequired,
     resources: PropTypes.shape({
+      documentCategories: PropTypes.object,
       license: PropTypes.object,
-      orgRoleValues: PropTypes.object,
       statusValues: PropTypes.object,
       terms: PropTypes.object,
-      typeValues: PropTypes.object,
     }).isRequired,
     stripes: PropTypes.shape({
       hasPerm: PropTypes.func.isRequired,
@@ -78,19 +65,10 @@ class CreateLicenseRoute extends React.Component {
     }).isRequired,
   };
 
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      hasPerms: props.stripes.hasPerm('ui-licenses.licenses.edit'),
-    };
-  }
-
   getInitialValues = () => {
     const { resources } = this.props;
 
     const status = get(resources, 'statusValues.records', []).find(v => v.value === 'active') || {};
-    const type = get(resources, 'typeValues.records', []).find(v => v.value === 'local') || {};
 
     const customProperties = {};
     get(resources, 'terms.records', [])
@@ -99,24 +77,24 @@ class CreateLicenseRoute extends React.Component {
 
     return {
       status: status.value,
-      type: type.value,
       customProperties,
     };
   }
 
   handleClose = () => {
-    const { location } = this.props;
-    this.props.history.push(`/licenses${location.search}`);
+    const { location, match } = this.props;
+    this.props.history.push(`/licenses/${match.params.id}${location.search}`);
   }
 
-  handleSubmit = (license) => {
-    const { history, location, mutator } = this.props;
+  handleSubmit = (amendment) => {
+    const license = get(this.props.resources, 'license.records[0]', {});
 
-    mutator.licenses
-      .POST(license)
-      .then(({ id }) => {
-        history.push(`/licenses/${id}${location.search}`);
-      });
+    this.props.mutator.license
+      .PUT({
+        ...license,
+        amendments: [amendment]
+      })
+      .then(this.handleClose);
   }
 
   handleDeleteFile = (file) => {
@@ -140,18 +118,13 @@ class CreateLicenseRoute extends React.Component {
   render() {
     const { resources } = this.props;
 
-    if (!this.state.hasPerms) return <NoPermissions />;
-
     return (
-      <View
+      <Form
         data={{
-          contactRoleValues: get(resources, 'contactRoleValues.records', []),
+          license: get(resources, 'license.records[0]', {}),
           documentCategories: get(resources, 'documentCategories.records', []),
-          orgRoleValues: get(resources, 'orgRoleValues.records', []),
           statusValues: get(resources, 'statusValues.records', []),
           terms: get(resources, 'terms.records', []),
-          typeValues: get(resources, 'typeValues.records', []),
-          users: get(resources, 'users.records', []),
         }}
         handlers={{
           onClose: this.handleClose,
@@ -167,4 +140,4 @@ class CreateLicenseRoute extends React.Component {
   }
 }
 
-export default stripesConnect(CreateLicenseRoute);
+export default stripesConnect(CreateAmendmentRoute);

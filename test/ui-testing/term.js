@@ -120,7 +120,6 @@ module.exports.test = (uiTestCtx, term = TERM) => {
 
       it('should edit license and find term', done => {
         nightmare
-          .click('[class*=paneHeader] [class*=dropdown] button')
           .wait('#clickable-edit-license')
           .click('#clickable-edit-license')
           .wait('#licenseFormInfo')
@@ -191,7 +190,6 @@ module.exports.test = (uiTestCtx, term = TERM) => {
 
       it('should edit license and find edited term', done => {
         nightmare
-          .click('[class*=paneHeader] [class*=dropdown] button')
           .wait('#clickable-edit-license')
           .click('#clickable-edit-license')
           .wait('#licenseFormInfo')

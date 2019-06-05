@@ -1,11 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { cloneDeep, difference, get } from 'lodash';
+import { cloneDeep, get } from 'lodash';
 
 import { stripesConnect } from '@folio/stripes/core';
-
-import Form from '../components/LicenseForm';
-import NoPermissions from '../components/NoPermissions';
 
 import {
   handleDeleteFile,
@@ -13,31 +10,13 @@ import {
   handleUploadFile,
 } from './handlers/file';
 
-class EditLicenseRoute extends React.Component {
+import Form from '../components/AmendmentForm';
+
+class EditAmendmentRoute extends React.Component {
   static manifest = Object.freeze({
     license: {
       type: 'okapi',
       path: 'licenses/licenses/:{id}',
-      shouldRefresh: () => false,
-    },
-    terms: {
-      type: 'okapi',
-      path: 'licenses/custprops',
-      shouldRefresh: () => false,
-    },
-    statusValues: {
-      type: 'okapi',
-      path: 'licenses/refdata/License/status',
-      shouldRefresh: () => false,
-    },
-    typeValues: {
-      type: 'okapi',
-      path: 'licenses/refdata/License/type',
-      shouldRefresh: () => false,
-    },
-    orgRoleValues: {
-      type: 'okapi',
-      path: 'licenses/refdata/LicenseOrg/role',
       shouldRefresh: () => false,
     },
     documentCategories: {
@@ -45,16 +24,14 @@ class EditLicenseRoute extends React.Component {
       path: 'licenses/refdata/DocumentAttachment/atType',
       shouldRefresh: () => false,
     },
-    contactRoleValues: {
+    statusValues: {
       type: 'okapi',
-      path: 'licenses/refdata/InternalContact/role',
+      path: 'licenses/refdata/License/status',
       shouldRefresh: () => false,
     },
-    users: {
+    terms: {
       type: 'okapi',
-      path: '/users',
-      fetch: false,
-      accumulate: true,
+      path: 'licenses/custprops',
       shouldRefresh: () => false,
     },
   });
@@ -69,6 +46,7 @@ class EditLicenseRoute extends React.Component {
     match: PropTypes.shape({
       params: PropTypes.shape({
         id: PropTypes.string.isRequired,
+        amendmentId: PropTypes.string.isRequired,
       }).isRequired,
     }).isRequired,
     mutator: PropTypes.shape({
@@ -77,11 +55,10 @@ class EditLicenseRoute extends React.Component {
       }).isRequired,
     }).isRequired,
     resources: PropTypes.shape({
+      documentCategories: PropTypes.object,
       license: PropTypes.object,
-      orgRoleValues: PropTypes.object,
       statusValues: PropTypes.object,
       terms: PropTypes.object,
-      typeValues: PropTypes.object,
     }).isRequired,
     stripes: PropTypes.shape({
       hasPerm: PropTypes.func.isRequired,
@@ -89,59 +66,35 @@ class EditLicenseRoute extends React.Component {
     }).isRequired,
   };
 
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      hasPerms: props.stripes.hasPerm('ui-licenses.licenses.edit'),
-    };
+  state = {
+    selectedAmendment: {}
   }
 
-  componentDidMount() {
-    const contacts = get(this.props.resources, 'license.records[0].contacts', []);
-    if (contacts.length) {
-      this.fetchUsers(contacts);
+  static getDerivedStateFromProps(props, state) {
+    const { resources, match: { params } } = props;
+    const amendments = get(resources, 'license.records[0].amendments', []);
+    const selectedAmendment = amendments.find(a => a.id === params.amendmentId);
+    if (selectedAmendment && selectedAmendment.id !== state.selectedAmendment.id) {
+      return { selectedAmendment };
     }
-  }
 
-  componentDidUpdate(prevProps) {
-    const prevLicense = get(prevProps.resources, 'license.records[0]', {});
-    const currLicense = get(this.props.resources, 'license.records[0]', {});
-    const prevContacts = prevLicense.contacts || [];
-    const currContacts = currLicense.contacts || [];
-    const newContacts = difference(currContacts, prevContacts);
-    if (prevLicense.id !== currLicense.id || newContacts.length) {
-      this.fetchUsers(newContacts);
-    }
-  }
-
-  fetchUsers = (newContacts) => {
-    const { mutator } = this.props;
-    newContacts.forEach(contact => mutator.users.GET({ path: `users/${contact.user}` }));
+    return null;
   }
 
   getInitialValues = () => {
-    const { resources } = this.props;
-    const license = get(resources, 'license.records[0]', {});
-    const initialValues = cloneDeep(license);
+    const initialValues = cloneDeep(this.state.selectedAmendment);
     const {
-      contacts = [],
-      orgs = [],
       status = {},
       supplementaryDocs = [],
-      type = {},
     } = initialValues;
 
     // Set the values of dropdown-controlled props as values rather than objects.
     initialValues.status = status.value;
-    initialValues.type = type.value;
-    initialValues.contacts = contacts.map(c => ({ ...c, role: c.role.value }));
-    initialValues.orgs = orgs.map(o => ({ ...o, role: o.role ? o.role.value : undefined }));
     initialValues.supplementaryDocs = supplementaryDocs.map(o => ({ ...o, atType: get(o, 'atType.value') }));
 
     // Add the default terms to the already-set terms.
     initialValues.customProperties = initialValues.customProperties || {};
-    const terms = get(resources, 'terms.records', []);
+    const terms = get(this.props.resources, 'terms.records', []);
     terms
       .filter(t => t.primary && initialValues.customProperties[t.name] === undefined)
       .forEach(t => { initialValues.customProperties[t.name] = ''; });
@@ -151,12 +104,17 @@ class EditLicenseRoute extends React.Component {
 
   handleClose = () => {
     const { location, match } = this.props;
-    this.props.history.push(`/licenses/${match.params.id}${location.search}`);
+    this.props.history.push(`/licenses/${match.params.id}/amendments/${match.params.amendmentId}${location.search}`);
   }
 
-  handleSubmit = (license) => {
+  handleSubmit = (amendment) => {
+    const license = get(this.props.resources, 'license.records[0]', {});
+
     this.props.mutator.license
-      .PUT(license)
+      .PUT({
+        ...license,
+        amendments: [amendment]
+      })
       .then(this.handleClose);
   }
 
@@ -174,25 +132,20 @@ class EditLicenseRoute extends React.Component {
 
   fetchIsPending = () => {
     return Object.values(this.props.resources)
-      .filter(resource => resource)
-      .some(resource => resource.isPending);
+      .filter(r => r && r.resource !== 'licenses')
+      .some(r => r.isPending);
   }
 
   render() {
     const { resources } = this.props;
 
-    if (!this.state.hasPerms) return <NoPermissions />;
-
     return (
       <Form
         data={{
-          contactRoleValues: get(resources, 'contactRoleValues.records', []),
+          license: get(resources, 'license.records[0]', {}),
           documentCategories: get(resources, 'documentCategories.records', []),
-          orgRoleValues: get(resources, 'orgRoleValues.records', []),
           statusValues: get(resources, 'statusValues.records', []),
           terms: get(resources, 'terms.records', []),
-          typeValues: get(resources, 'typeValues.records', []),
-          users: get(resources, 'users.records', []),
         }}
         handlers={{
           onClose: this.handleClose,
@@ -208,4 +161,4 @@ class EditLicenseRoute extends React.Component {
   }
 }
 
-export default stripesConnect(EditLicenseRoute);
+export default stripesConnect(EditAmendmentRoute);

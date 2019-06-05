@@ -8,14 +8,14 @@ const DOCS = [{
   url: 'http://licenses.com/sd1'
 }, {
   name: 'Supplementary document 2',
-  category: 'Product Data Sheet',
+  category: 'Product data sheet',
   url: 'http://licenses.com/sd2'
 }];
 
 const EDITED_DOC = {
   docToEdit: DOCS[0].name,
   name: 'Supplementary document 1 v2',
-  category: 'Vendor Terms And Conditions',
+  category: 'Vendor terms and conditions',
   note: 'Need to sign',
   location: 'Printer Tray',
   url: 'http://licenses.com/sd1_v2'

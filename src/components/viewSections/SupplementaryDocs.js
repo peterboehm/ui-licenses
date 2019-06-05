@@ -9,14 +9,14 @@ import {
 } from '@folio/stripes/components';
 import { DocumentCard, Spinner } from '@folio/stripes-erm-components';
 
-export default class LicenseCoreDocs extends React.Component {
+export default class SupplementaryDocs extends React.Component {
   static propTypes = {
     id: PropTypes.string,
     handlers: PropTypes.shape({
       onDownloadFile: PropTypes.func,
     }),
-    license: PropTypes.shape({
-      docs: PropTypes.arrayOf(
+    record: PropTypes.shape({
+      supplementaryDocs: PropTypes.arrayOf(
         PropTypes.shape({
           dateCreated: PropTypes.string,
           lastUpdated: PropTypes.string,
@@ -31,6 +31,7 @@ export default class LicenseCoreDocs extends React.Component {
     open: PropTypes.bool,
   };
 
+
   renderDocs = (docs) => {
     return docs.map(doc => (
       <DocumentCard
@@ -42,25 +43,25 @@ export default class LicenseCoreDocs extends React.Component {
   }
 
   renderBadge = () => {
-    const count = get(this.props.license, ['docs', 'length']);
+    const count = get(this.props.record, ['supplementaryDocs', 'length']);
     return count !== undefined ? <Badge>{count}</Badge> : <Spinner />;
   }
 
   render() {
     const { id, onToggle, open } = this.props;
-    const { docs = [] } = this.props.license;
+    const { supplementaryDocs = [] } = this.props.record;
 
     return (
       <Accordion
         displayWhenClosed={this.renderBadge()}
         displayWhenOpen={this.renderBadge()}
         id={id}
-        label={<FormattedMessage id="ui-licenses.section.coreDocs" />}
+        label={<FormattedMessage id="ui-licenses.section.supplementInformation" />}
         onToggle={onToggle}
         open={open}
       >
         <Layout className="padding-bottom-gutter">
-          { docs.length ? this.renderDocs(docs) : <FormattedMessage id="ui-licenses.coreDocs.none" /> }
+          { supplementaryDocs.length ? this.renderDocs(supplementaryDocs) : <FormattedMessage id="ui-licenses.supplementaryDocs.none" /> }
         </Layout>
       </Accordion>
     );

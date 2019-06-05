@@ -7,7 +7,7 @@ import { Accordion } from '@folio/stripes/components';
 
 import { DocumentsFieldArray } from '@folio/stripes-erm-components';
 
-class LicenseFormCoreDocs extends React.Component {
+export default class FormCoreDocs extends React.Component {
   static propTypes = {
     handlers: PropTypes.shape({
       onDeleteFile: PropTypes.func.isRequired,
@@ -19,17 +19,13 @@ class LicenseFormCoreDocs extends React.Component {
     open: PropTypes.bool,
   };
 
-  getDeleteFilePath = (file) => `/licenses/files/${file.id}`
-
-  getUploadFilePath = () => '/licenses/files'
-
   render() {
     const { handlers, id, onToggle, open } = this.props;
 
     return (
       <Accordion
         id={id}
-        label={<FormattedMessage id="ui-licenses.section.coreDocsAndAmendments" />}
+        label={<FormattedMessage id="ui-licenses.section.coreDocs" />}
         open={open}
         onToggle={onToggle}
       >
@@ -42,18 +38,7 @@ class LicenseFormCoreDocs extends React.Component {
           isEmptyMessage={<FormattedMessage id="ui-licenses.coreDocs.none" />}
           name="docs"
         />
-        <div style={{ marginLeft: '2rem' }}>
-          <Accordion
-            closedByDefault
-            id="license-core-docs-amendments"
-            label={<FormattedMessage id="ui-licenses.section.amendments" />}
-          >
-            TBD
-          </Accordion>
-        </div>
       </Accordion>
     );
   }
 }
-
-export default LicenseFormCoreDocs;

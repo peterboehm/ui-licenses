@@ -8,7 +8,7 @@ const generateLicenseValues = () => {
     name: `Fledgling License #${number}`,
     description: `This license of count #${number} is still in its initial stages.`,
     type: 'Alliance',
-    status: 'In Negotiation',
+    status: 'In negotiation',
     startDate: '2020-01-01',
     endDate: '2020-01-11',
 
@@ -163,7 +163,6 @@ module.exports.test = (uiTestCtx) => {
 
       it(`should edit license to: ${values.editedName}`, done => {
         nightmare
-          .click('[class*=paneHeader] [class*=dropdown] button')
           .wait('#clickable-edit-license')
           .click('#clickable-edit-license')
           .wait('#edit-license-name')

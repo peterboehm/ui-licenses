@@ -6,7 +6,7 @@ import { FieldArray } from 'redux-form';
 import { Accordion } from '@folio/stripes/components';
 import { DocumentsFieldArray } from '@folio/stripes-erm-components';
 
-class LicenseFormSupplement extends React.Component {
+export default class FormSupplementaryDocs extends React.Component {
     static propTypes = {
       data: PropTypes.shape({
         documentCategories: PropTypes.array,
@@ -45,5 +45,3 @@ class LicenseFormSupplement extends React.Component {
       );
     }
 }
-
-export default LicenseFormSupplement;

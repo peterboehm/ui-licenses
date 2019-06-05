@@ -4,9 +4,9 @@ const generateNumber = () => Math.round(Math.random() * 100000);
 
 const CONTACTS = [{
   role: 'Negotiator',
-  editedRole: 'Subject Specialist',
+  editedRole: 'Subject specialist',
 }, {
-  role: 'License Owner',
+  role: 'License owner',
   delete: true,
 }];
 
@@ -136,7 +136,6 @@ module.exports.test = (uiTestCtx) => {
 
       it('should open edit license', done => {
         nightmare
-          .click('[class*=paneHeader] [class*=dropdown] button')
           .wait('#clickable-edit-license')
           .click('#clickable-edit-license')
           .wait('#accordion-toggle-button-licenseFormContacts')
