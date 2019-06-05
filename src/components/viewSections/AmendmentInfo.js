@@ -12,7 +12,7 @@ import {
 
 import { LicenseEndDate } from '@folio/stripes-erm-components';
 
-export default class Amendment extends React.Component {
+export default class AmendmentInfo extends React.Component {
   static propTypes = {
     amendment: PropTypes.shape({
       endDate: PropTypes.string,
