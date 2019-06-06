@@ -40,7 +40,6 @@
     "filters.organizationRole": "Organization role",
     "coreDocs.add": "Add core document",
     "coreDocs.none": "No core documents have been added.",
-    "section.coreDocsAndAmendments": "Core documents and amendments",
     "section.coreDocs": "Core documents",
     "section.amendments": "Amendments",
     "licenseAgreements.none": "No agreements currently linked to this license.",
@@ -56,5 +55,15 @@
     "closeEditLicense": "Cerrar el panel de licencia de edición",
     "create": "Create",
     "section.internalContacts": "Internal contacts",
-    "prop.termNote": "Note"
+    "prop.termNote": "Note",
+    "amendments.add": "Add amendment",
+    "amendments.closePane": "Close edit amendment pane",
+    "amendments.create": "Create amendment",
+    "amendments.amendmentInfo": "Amendment information",
+    "amendments.delete": "Delete amendment",
+    "amendments.edit": "Edit amendment",
+    "amendments.update": "Update amendment",
+    "placeholder.amendmentName": "Enter the amendment name",
+    "placeholder.amendmentDescription": "Enter a description of the amendment",
+    "section.amendmentInformation": "Amendment information"
 }
