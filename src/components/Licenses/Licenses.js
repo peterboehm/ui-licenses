@@ -66,15 +66,15 @@ export default class Licenses extends React.Component {
     name: 300,
     type: 150,
     status: 150,
-    startDate: 200,
-    endDate: 200
+    startDate: 150,
+    endDate: 150
   }
 
   formatter = {
     type: ({ type }) => type && type.label,
     status: ({ status }) => status && status.label,
     startDate: ({ startDate }) => (startDate ? <FormattedDate value={startDate} /> : ''),
-    endDate: license => (license.endDate ? <LicenseEndDate license={license} /> : ''),
+    endDate: license => <LicenseEndDate license={license} />,
   }
 
   rowFormatter = (row) => {
