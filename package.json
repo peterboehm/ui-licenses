@@ -24,13 +24,14 @@
   },
   "devDependencies": {
     "@folio/eslint-config-stripes": "^3.2.1",
-    "@folio/stripes-cli": "^1.8.0",
     "@folio/stripes": "^2.0.0",
+    "@folio/stripes-cli": "^1.8.0",
     "babel-eslint": "^9.0.0",
     "eslint": "^5.5.0"
   },
   "dependencies": {
     "@folio/stripes-erm-components": "^1.3.6",
+    "compose-function": "^3.0.3",
     "lodash": "^4.17.11",
     "prop-types": "^15.6.0",
     "react-intl": "^2.4.0",
@@ -81,10 +82,12 @@
         "visible": true
       }
     ],
-    "icons": [{
-      "name": "app",
-      "alt": "ERM license functionality for Stripes",
-      "title": "Licenses"
-    }]
+    "icons": [
+      {
+        "name": "app",
+        "alt": "ERM license functionality for Stripes",
+        "title": "Licenses"
+      }
+    ]
   }
 }
