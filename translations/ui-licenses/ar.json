@@ -40,7 +40,6 @@
     "filters.organizationRole": "دور المؤسسة",
     "coreDocs.add": "إضافة وثيقة أساسية",
     "coreDocs.none": "لم تتم إضافة أي وثيقة أساسية.",
-    "section.coreDocsAndAmendments": "الوثائق الأساسية والتعديلات",
     "section.coreDocs": "الوثائق الأساسية",
     "section.amendments": "تعديلات",
     "licenseAgreements.none": "لا توجد اتفاقيات مرتبطة بهذه الرخصة حاليًا",
@@ -56,5 +55,15 @@
     "closeEditLicense": "إغلاق جزء تحرير الرخصة",
     "create": "إنشاء",
     "section.internalContacts": "جهات الاتصال الداخلية",
-    "prop.termNote": "ملاحظة"
+    "prop.termNote": "ملاحظة",
+    "amendments.add": "Add amendment",
+    "amendments.closePane": "Close edit amendment pane",
+    "amendments.create": "Create amendment",
+    "amendments.amendmentInfo": "Amendment information",
+    "amendments.delete": "Delete amendment",
+    "amendments.edit": "Edit amendment",
+    "amendments.update": "Update amendment",
+    "placeholder.amendmentName": "Enter the amendment name",
+    "placeholder.amendmentDescription": "Enter a description of the amendment",
+    "section.amendmentInformation": "Amendment information"
 }

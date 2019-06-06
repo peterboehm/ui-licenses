@@ -40,7 +40,6 @@
     "filters.organizationRole": "Função da organização",
     "coreDocs.add": "Adicionar documento principal",
     "coreDocs.none": "Nenhum documento principal foi adicionado.",
-    "section.coreDocsAndAmendments": "Documentos principais e alterações",
     "section.coreDocs": "Documentos principais",
     "section.amendments": "Alterações",
     "licenseAgreements.none": "Nenhum contrato atualmente vinculado a esta licença.",
@@ -56,5 +55,15 @@
     "closeEditLicense": "Fechar o painel de edição de licença",
     "create": "Criar",
     "section.internalContacts": "Contatos internos",
-    "prop.termNote": "Nota"
+    "prop.termNote": "Nota",
+    "amendments.add": "Adicionar emenda",
+    "amendments.closePane": "Fechar painel de edição de emenda",
+    "amendments.create": "Criar emenda",
+    "amendments.amendmentInfo": "Informação da emenda",
+    "amendments.delete": "Excluir emenda",
+    "amendments.edit": "Editar emenda",
+    "amendments.update": "Atualizar emenda",
+    "placeholder.amendmentName": "Digite o nome da emenda",
+    "placeholder.amendmentDescription": "Digite uma descrição da emenda",
+    "section.amendmentInformation": "Informação da emenda"
 }
