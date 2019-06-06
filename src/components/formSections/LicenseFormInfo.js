@@ -50,7 +50,7 @@ class LicenseFormInfo extends React.Component {
   }
 
   validateEndDate = (value, allValues) => {
-    if (value && allValues.startDate) {
+    if (value && allValues.startDate && (allValues.openEnded !== true)) {
       const startDate = new Date(allValues.startDate);
       const endDate = new Date(allValues.endDate);
 
