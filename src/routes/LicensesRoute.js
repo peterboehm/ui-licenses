@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { get } from 'lodash';
 
-import { stripesConnect, withStripes } from '@folio/stripes/core';
+import { stripesConnect } from '@folio/stripes/core';
 import { StripesConnectedSource } from '@folio/stripes/smart-components';
 import { getSASParams } from '@folio/stripes-erm-components';
 
@@ -180,4 +180,4 @@ class LicensesRoute extends React.Component {
   }
 }
 
-export default withStripes(stripesConnect(LicensesRoute));
+export default stripesConnect(LicensesRoute);

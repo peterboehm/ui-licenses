@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { get } from 'lodash';
+import compose from 'compose-function';
 
 import { stripesConnect } from '@folio/stripes/core';
 
+import withFileHandlers from './components/withFileHandlers';
 import View from '../components/Amendment';
-
-import { handleDownloadFile } from './handlers/file';
 
 class ViewAmendmentsRoute extends React.Component {
   static manifest = Object.freeze({
@@ -22,6 +22,7 @@ class ViewAmendmentsRoute extends React.Component {
   });
 
   static propTypes = {
+    handlers: PropTypes.object,
     history: PropTypes.shape({
       push: PropTypes.func.isRequired,
     }).isRequired,
@@ -48,6 +49,10 @@ class ViewAmendmentsRoute extends React.Component {
       okapi: PropTypes.object.isRequired,
     }).isRequired,
   };
+
+  static defaultProps = {
+    handlers: {},
+  }
 
   getAmendment = () => {
     const { match, resources } = this.props;
@@ -78,10 +83,6 @@ class ViewAmendmentsRoute extends React.Component {
       .then(this.handleClose);
   }
 
-  handleDownloadFile = (file) => {
-    handleDownloadFile(file, this.props.stripes.okapi);
-  }
-
   fetchIsPending = () => {
     return Object.values(this.props.resources)
       .filter(r => r && r.resource !== 'licenses')
@@ -93,7 +94,7 @@ class ViewAmendmentsRoute extends React.Component {
   }
 
   render() {
-    const { resources } = this.props;
+    const { handlers, resources } = this.props;
 
     return (
       <View
@@ -103,9 +104,9 @@ class ViewAmendmentsRoute extends React.Component {
           terms: get(resources, 'terms.records', []),
         }}
         handlers={{
+          ...handlers,
           onClose: this.handleClose,
           onDelete: this.props.stripes.hasPerm('ui-licenses.licenses.edit') && this.handleDelete,
-          onDownloadFile: this.handleDownloadFile,
         }}
         isLoading={get(resources, 'license.isPending')}
         urls={this.urls}
@@ -114,4 +115,7 @@ class ViewAmendmentsRoute extends React.Component {
   }
 }
 
-export default stripesConnect(ViewAmendmentsRoute);
+export default compose(
+  withFileHandlers,
+  stripesConnect
+)(ViewAmendmentsRoute);

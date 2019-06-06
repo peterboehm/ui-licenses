@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { get, difference } from 'lodash';
+import compose from 'compose-function';
 
 import { stripesConnect } from '@folio/stripes/core';
 
+import withFileHandlers from './components/withFileHandlers';
 import View from '../components/License';
-
-import { handleDownloadFile } from './handlers/file';
 
 class ViewLicenseRoute extends React.Component {
   static manifest = Object.freeze({
@@ -38,6 +38,7 @@ class ViewLicenseRoute extends React.Component {
   });
 
   static propTypes = {
+    handlers: PropTypes.object,
     history: PropTypes.shape({
       push: PropTypes.func.isRequired,
     }).isRequired,
@@ -61,6 +62,10 @@ class ViewLicenseRoute extends React.Component {
       okapi: PropTypes.object.isRequired,
     }).isRequired,
   };
+
+  static defaultProps = {
+    handlers: {},
+  }
 
   componentDidMount() {
     const contacts = get(this.props.resources, 'license.records[0].contacts', []);
@@ -94,10 +99,6 @@ class ViewLicenseRoute extends React.Component {
     }));
   }
 
-  handleDownloadFile = (file) => {
-    handleDownloadFile(file, this.props.stripes.okapi);
-  }
-
   handleClose = () => {
     this.props.history.push(`/licenses${this.props.location.search}`);
   }
@@ -117,7 +118,7 @@ class ViewLicenseRoute extends React.Component {
   }
 
   render() {
-    const { resources } = this.props;
+    const { handlers, resources } = this.props;
 
     return (
       <View
@@ -130,7 +131,7 @@ class ViewLicenseRoute extends React.Component {
           terms: get(resources, 'terms.records', []),
         }}
         handlers={{
-          onDownloadFile: this.handleDownloadFile,
+          ...handlers,
           onClose: this.handleClose,
           onToggleHelper: this.handleTogglerHelper,
         }}
@@ -141,4 +142,7 @@ class ViewLicenseRoute extends React.Component {
   }
 }
 
-export default stripesConnect(ViewLicenseRoute);
+export default compose(
+  withFileHandlers,
+  stripesConnect
+)(ViewLicenseRoute);

@@ -1,15 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { get } from 'lodash';
+import compose from 'compose-function';
 
 import { stripesConnect } from '@folio/stripes/core';
 
-import {
-  handleDeleteFile,
-  handleDownloadFile,
-  handleUploadFile,
-} from './handlers/file';
-
+import withFileHandlers from './components/withFileHandlers';
 import Form from '../components/AmendmentForm';
 
 class CreateAmendmentRoute extends React.Component {
@@ -37,6 +33,7 @@ class CreateAmendmentRoute extends React.Component {
   });
 
   static propTypes = {
+    handlers: PropTypes.object,
     history: PropTypes.shape({
       push: PropTypes.func.isRequired,
     }).isRequired,
@@ -64,6 +61,10 @@ class CreateAmendmentRoute extends React.Component {
       okapi: PropTypes.object.isRequired,
     }).isRequired,
   };
+
+  static defaultProps = {
+    handlers: {},
+  }
 
   getInitialValues = () => {
     const { resources } = this.props;
@@ -97,18 +98,6 @@ class CreateAmendmentRoute extends React.Component {
       .then(this.handleClose);
   }
 
-  handleDeleteFile = (file) => {
-    return handleDeleteFile(file, this.props.stripes.okapi);
-  }
-
-  handleDownloadFile = (file) => {
-    handleDownloadFile(file, this.props.stripes.okapi);
-  }
-
-  handleUploadFile = (file) => {
-    return handleUploadFile(file, this.props.stripes.okapi);
-  }
-
   fetchIsPending = () => {
     return Object.values(this.props.resources)
       .filter(r => r && r.resource !== 'licenses')
@@ -116,7 +105,7 @@ class CreateAmendmentRoute extends React.Component {
   }
 
   render() {
-    const { resources } = this.props;
+    const { handlers, resources } = this.props;
 
     return (
       <Form
@@ -127,10 +116,8 @@ class CreateAmendmentRoute extends React.Component {
           terms: get(resources, 'terms.records', []),
         }}
         handlers={{
+          ...handlers,
           onClose: this.handleClose,
-          onDeleteFile: this.handleDeleteFile,
-          onDownloadFile: this.handleDownloadFile,
-          onUploadFile: this.handleUploadFile,
         }}
         initialValues={this.getInitialValues()}
         isLoading={this.fetchIsPending()}
@@ -140,4 +127,7 @@ class CreateAmendmentRoute extends React.Component {
   }
 }
 
-export default stripesConnect(CreateAmendmentRoute);
+export default compose(
+  withFileHandlers,
+  stripesConnect
+)(CreateAmendmentRoute);

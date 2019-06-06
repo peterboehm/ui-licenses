@@ -1,17 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { cloneDeep, difference, get } from 'lodash';
+import compose from 'compose-function';
 
 import { stripesConnect } from '@folio/stripes/core';
 
+import withFileHandlers from './components/withFileHandlers';
 import Form from '../components/LicenseForm';
 import NoPermissions from '../components/NoPermissions';
-
-import {
-  handleDeleteFile,
-  handleDownloadFile,
-  handleUploadFile,
-} from './handlers/file';
 
 class EditLicenseRoute extends React.Component {
   static manifest = Object.freeze({
@@ -60,6 +56,7 @@ class EditLicenseRoute extends React.Component {
   });
 
   static propTypes = {
+    handlers: PropTypes.object,
     history: PropTypes.shape({
       push: PropTypes.func.isRequired,
     }).isRequired,
@@ -88,6 +85,10 @@ class EditLicenseRoute extends React.Component {
       okapi: PropTypes.object.isRequired,
     }).isRequired,
   };
+
+  static defaultProps = {
+    handlers: {},
+  }
 
   constructor(props) {
     super(props);
@@ -160,18 +161,6 @@ class EditLicenseRoute extends React.Component {
       .then(this.handleClose);
   }
 
-  handleDeleteFile = (file) => {
-    return handleDeleteFile(file, this.props.stripes.okapi);
-  }
-
-  handleDownloadFile = (file) => {
-    handleDownloadFile(file, this.props.stripes.okapi);
-  }
-
-  handleUploadFile = (file) => {
-    return handleUploadFile(file, this.props.stripes.okapi);
-  }
-
   fetchIsPending = () => {
     return Object.values(this.props.resources)
       .filter(resource => resource)
@@ -179,7 +168,7 @@ class EditLicenseRoute extends React.Component {
   }
 
   render() {
-    const { resources } = this.props;
+    const { handlers, resources } = this.props;
 
     if (!this.state.hasPerms) return <NoPermissions />;
 
@@ -195,10 +184,8 @@ class EditLicenseRoute extends React.Component {
           users: get(resources, 'users.records', []),
         }}
         handlers={{
+          ...handlers,
           onClose: this.handleClose,
-          onDeleteFile: this.handleDeleteFile,
-          onDownloadFile: this.handleDownloadFile,
-          onUploadFile: this.handleUploadFile,
         }}
         initialValues={this.getInitialValues()}
         isLoading={this.fetchIsPending()}
@@ -208,4 +195,7 @@ class EditLicenseRoute extends React.Component {
   }
 }
 
-export default stripesConnect(EditLicenseRoute);
+export default compose(
+  withFileHandlers,
+  stripesConnect
+)(EditLicenseRoute);
