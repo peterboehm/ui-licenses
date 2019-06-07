@@ -124,7 +124,6 @@ class LicenseFormInfo extends React.Component {
                 label={<FormattedMessage id="ui-licenses.prop.startDate" />}
                 component={Datepicker}
                 dateFormat="YYYY-MM-DD"
-                backendDateStandard="YYYY-MM-DD"
               />
             </Col>
             <Col xs={10} md={5}>
@@ -134,7 +133,6 @@ class LicenseFormInfo extends React.Component {
                 label={<FormattedMessage id="ui-licenses.prop.endDate" />}
                 component={Datepicker}
                 dateFormat="YYYY-MM-DD"
-                backendDateStandard="YYYY-MM-DD"
                 disabled={this.state.openEnded}
                 validate={this.validateEndDate}
                 warn={this.warnEndDate}
