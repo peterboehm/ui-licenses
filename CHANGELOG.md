@@ -2,6 +2,7 @@
 
 ## 3.2.0
 * Added ability to attach files to documents.
+* Added ability to manage amendments for licenses.
 
 ## 2.3.0
 * Added ability to view agreements linked to a license.
