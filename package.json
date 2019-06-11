@@ -1,6 +1,6 @@
 {
   "name": "@folio/licenses",
-  "version": "3.2.0",
+  "version": "3.2.1",
   "description": "ERM License functionality for Stripes",
   "main": "src/index.js",
   "repository": "",
@@ -30,7 +30,7 @@
     "eslint": "^5.5.0"
   },
   "dependencies": {
-    "@folio/stripes-erm-components": "^1.3.6",
+    "@folio/stripes-erm-components": "^1.4.0",
     "compose-function": "^3.0.3",
     "lodash": "^4.17.11",
     "prop-types": "^15.6.0",

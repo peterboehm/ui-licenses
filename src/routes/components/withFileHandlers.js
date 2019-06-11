@@ -77,7 +77,6 @@ export default function withFileHandlers(WrappedComponent) {
         <WrappedComponent
           handlers={{
             ...handlers,
-            onDeleteFile: this.handleDeleteFile,
             onDownloadFile: this.handleDownloadFile,
             onUploadFile: this.handleUploadFile,
           }}

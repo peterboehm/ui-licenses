@@ -10,7 +10,6 @@ import { DocumentsFieldArray } from '@folio/stripes-erm-components';
 export default class FormCoreDocs extends React.Component {
   static propTypes = {
     handlers: PropTypes.shape({
-      onDeleteFile: PropTypes.func.isRequired,
       onDownloadFile: PropTypes.func.isRequired,
       onUploadFile: PropTypes.func.isRequired,
     }),
@@ -32,7 +31,6 @@ export default class FormCoreDocs extends React.Component {
         <FieldArray
           addDocBtnLabel={<FormattedMessage id="ui-licenses.coreDocs.add" />}
           component={DocumentsFieldArray}
-          onDeleteFile={handlers.onDeleteFile}
           onDownloadFile={handlers.onDownloadFile}
           onUploadFile={handlers.onUploadFile}
           isEmptyMessage={<FormattedMessage id="ui-licenses.coreDocs.none" />}

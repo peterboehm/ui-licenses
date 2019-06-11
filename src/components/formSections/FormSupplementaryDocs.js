@@ -12,7 +12,6 @@ export default class FormSupplementaryDocs extends React.Component {
         documentCategories: PropTypes.array,
       }).isRequired,
       handlers: PropTypes.shape({
-        onDeleteFile: PropTypes.func.isRequired,
         onDownloadFile: PropTypes.func.isRequired,
         onUploadFile: PropTypes.func.isRequired,
       }).isRequired,
@@ -37,7 +36,6 @@ export default class FormSupplementaryDocs extends React.Component {
             documentCategories={data.documentCategories}
             isEmptyMessage={<FormattedMessage id="ui-licenses.supplementaryDocs.none" />}
             name="supplementaryDocs"
-            onDeleteFile={handlers.onDeleteFile}
             onDownloadFile={handlers.onDownloadFile}
             onUploadFile={handlers.onUploadFile}
           />
