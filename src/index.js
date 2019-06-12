@@ -12,6 +12,10 @@ import ViewAmendmentRoute from './routes/ViewAmendmentRoute';
 import CreateAmendmentRoute from './routes/CreateAmendmentRoute';
 import EditAmendmentRoute from './routes/EditAmendmentRoute';
 
+import NoteCreateRoute from './routes/NoteCreateRoute';
+import NoteViewRoute from './routes/NoteViewRoute';
+import NoteEditRoute from './routes/NoteEditRoute';
+
 import Settings from './settings';
 
 class App extends React.Component {
@@ -37,6 +41,9 @@ class App extends React.Component {
           <Route path={`${path}/:id/amendments/create`} exact component={CreateAmendmentRoute} />
           <Route path={`${path}/:id/amendments/:amendmentId`} exact component={ViewAmendmentRoute} />
           <Route path={`${path}/:id/amendments/:amendmentId/edit`} exact component={EditAmendmentRoute} />
+          <Route path={`${path}/notes/new`} exact component={NoteCreateRoute} />
+          <Route path={`${path}/notes/:noteId`} exact component={NoteViewRoute} />
+          <Route path={`${path}/notes/:id/edit`} exact component={NoteEditRoute} />
         </Switch>
       </Route>
     );
