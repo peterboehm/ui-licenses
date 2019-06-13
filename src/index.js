@@ -33,19 +33,21 @@ class App extends React.Component {
     const { match: { path } } = this.props;
 
     return (
-      <Route path={path} component={LicensesRoute}>
-        <Switch>
-          <Route path={`${path}/create`} exact component={CreateLicenseRoute} />
-          <Route path={`${path}/:id`} exact component={ViewLicenseRoute} />
-          <Route path={`${path}/:id/edit`} exact component={EditLicenseRoute} />
-          <Route path={`${path}/:id/amendments/create`} exact component={CreateAmendmentRoute} />
-          <Route path={`${path}/:id/amendments/:amendmentId`} exact component={ViewAmendmentRoute} />
-          <Route path={`${path}/:id/amendments/:amendmentId/edit`} exact component={EditAmendmentRoute} />
-          <Route path={`${path}/notes/new`} exact component={NoteCreateRoute} />
-          <Route path={`${path}/notes/:noteId`} exact component={NoteViewRoute} />
-          <Route path={`${path}/notes/:id/edit`} exact component={NoteEditRoute} />
-        </Switch>
-      </Route>
+      <Switch>
+        <Route path={`${path}/notes/new`} exact component={NoteCreateRoute} />
+        <Route path={`${path}/notes/:noteId`} exact component={NoteViewRoute} />
+        <Route path={`${path}/notes/:id/edit`} exact component={NoteEditRoute} />
+        <Route path={path} component={LicensesRoute}>
+          <Switch>
+            <Route path={`${path}/create`} exact component={CreateLicenseRoute} />
+            <Route path={`${path}/:id`} exact component={ViewLicenseRoute} />
+            <Route path={`${path}/:id/edit`} exact component={EditLicenseRoute} />
+            <Route path={`${path}/:id/amendments/create`} exact component={CreateAmendmentRoute} />
+            <Route path={`${path}/:id/amendments/:amendmentId`} exact component={ViewAmendmentRoute} />
+            <Route path={`${path}/:id/amendments/:amendmentId/edit`} exact component={EditAmendmentRoute} />
+          </Switch>
+        </Route>
+      </Switch>
     );
   }
 }

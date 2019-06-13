@@ -178,8 +178,8 @@ class License extends React.Component {
               id="licenseNotes"
               onToggle={this.handleSectionToggle}
               open={this.state.sections.licenseNotes}
-              pathToNoteCreate="/licenses/notes/new"
-              pathToNoteDetails="/licenses/notes"
+              pathToNoteCreate="notes/new"
+              pathToNoteDetails="notes"
             />
           </AccordionSet>
         </TitleManager>
