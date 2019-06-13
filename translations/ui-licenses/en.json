@@ -34,6 +34,9 @@
   "header.licensor": "Licensor",
 
   "licenseAgreements.none": "No agreements currently linked to this license.",
+   
+  "notes.entityType.license": "License",
+  "notes.entityType.licensepluralized": "{count} {count, plural, one {license} other {licences}}",
 
   "organizations.add": "Add organization",
   "organizations.licenseHasNone": "No organizations have been added.",

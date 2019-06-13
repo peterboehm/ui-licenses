@@ -127,7 +127,7 @@ class License extends React.Component {
   renderLoadingPane = () => {
     return (
       <Pane
-        defaultWidth="45%"
+        // defaultWidth="45%"
         dismissible
         id="pane-view-license"
         onClose={this.props.handlers.onClose}
@@ -149,7 +149,7 @@ class License extends React.Component {
       <Pane
         actionMenu={this.getActionMenu}
         appIcon={<AppIcon app="licenses" />}
-        defaultWidth="45%"
+        // defaultWidth="45%"
         dismissible
         id="pane-view-license"
         lastMenu={this.renderEditLicensePaneMenu()}
@@ -178,8 +178,8 @@ class License extends React.Component {
               id="licenseNotes"
               onToggle={this.handleSectionToggle}
               open={this.state.sections.licenseNotes}
-              pathToNoteCreate="/license/notes/new"
-              pathToNoteDetails="/license/notes"
+              pathToNoteCreate="/licenses/notes/new"
+              pathToNoteDetails="/licenses/notes"
             />
           </AccordionSet>
         </TitleManager>

@@ -37,6 +37,6 @@ export default class NoteCreateRoute extends Component {
 
     return location.state
       ? this.renderCreatePage()
-      : <Redirect to="/erm" />;
+      : <Redirect to="/licenses" />;
   }
 }
