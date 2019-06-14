@@ -25,7 +25,7 @@ class NoteViewRoute extends Component {
     } = this.props;
 
     history.replace({
-      pathname: `/erm/notes/${match.params.noteId}/edit/`,
+      pathname: `/licenses/notes/${match.params.noteId}/edit/`,
       state: location.state,
     });
   };
@@ -40,7 +40,7 @@ class NoteViewRoute extends Component {
       history.goBack();
     } else {
       history.push({
-        pathname: '/erm',
+        pathname: '/licenses',
       });
     }
   };

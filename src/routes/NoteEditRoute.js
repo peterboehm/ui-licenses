@@ -25,7 +25,7 @@ export default class NoteEditRoute extends Component {
     } = this.props;
 
     const { id } = match.params;
-    const noteViewUrl = `/erm/notes/${id}`;
+    const noteViewUrl = `/licenses/notes/${id}`;
 
     history.replace({
       pathname: noteViewUrl,

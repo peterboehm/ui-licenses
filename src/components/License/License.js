@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { NotesSmartAccordion } from '@folio/stripes/smart-components';
+import { get } from 'lodash';
 
 import {
   AccordionSet,
@@ -145,6 +146,7 @@ class License extends React.Component {
 
     if (isLoading) return this.renderLoadingPane();
 
+    const licenseId = get(data, ['license', 'id']);
     return (
       <Pane
         actionMenu={this.getActionMenu}
@@ -170,17 +172,20 @@ class License extends React.Component {
             <LicenseAmendments {...this.getSectionProps('licenseAmendments')} />
             <SupplementaryDocs {...this.getSectionProps('licenseSupplement')} />
             <LicenseAgreements {...this.getSectionProps('licenseAgreements')} />
-            <NotesSmartAccordion
-              domainName="licenses"
-              entityName={data.license.name}
-              entityType="license"
-              entityId={data.license.id}
-              id="licenseNotes"
-              onToggle={this.handleSectionToggle}
-              open={this.state.sections.licenseNotes}
-              pathToNoteCreate="notes/new"
-              pathToNoteDetails="notes"
-            />
+            {
+              licenseId &&
+              <NotesSmartAccordion
+                domainName="licenses"
+                entityName={data.license.name}
+                entityType="license"
+                entityId={data.license.id}
+                id="licenseNotes"
+                onToggle={this.handleSectionToggle}
+                open={this.state.sections.licenseNotes}
+                pathToNoteCreate="notes/new"
+                pathToNoteDetails="notes"
+              />
+            }
           </AccordionSet>
         </TitleManager>
       </Pane>
