@@ -127,7 +127,7 @@ class License extends React.Component {
   renderLoadingPane = () => {
     return (
       <Pane
-        // defaultWidth="45%"
+        defaultWidth="45%"
         dismissible
         id="pane-view-license"
         onClose={this.props.handlers.onClose}
@@ -149,7 +149,7 @@ class License extends React.Component {
       <Pane
         actionMenu={this.getActionMenu}
         appIcon={<AppIcon app="licenses" />}
-        // defaultWidth="45%"
+        defaultWidth="45%"
         dismissible
         id="pane-view-license"
         lastMenu={this.renderEditLicensePaneMenu()}
