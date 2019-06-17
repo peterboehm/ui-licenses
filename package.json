@@ -20,6 +20,7 @@
     "test-more-docs": "stripes test nightmare --run more-docs",
     "test-contacts": "stripes test nightmare --run contacts",
     "test-amendments": "stripes test nightmare --run amendments",
+    "test-notes-crud": "stripes test nightmare --run notes-crud",
     "lint": "eslint src"
   },
   "devDependencies": {
