@@ -34,6 +34,7 @@ class AmendmentForm extends React.Component {
     handlers: PropTypes.shape({
       onClose: PropTypes.func.isRequired,
     }),
+    isLoading: PropTypes.bool,
     initialValues: PropTypes.object,
     handleSubmit: PropTypes.func.isRequired,
     onSubmit: PropTypes.func.isRequired,

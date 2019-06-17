@@ -36,6 +36,7 @@ class LicenseForm extends React.Component {
     }),
     initialValues: PropTypes.object,
     handleSubmit: PropTypes.func.isRequired,
+    isLoading: PropTypes.bool,
     onSubmit: PropTypes.func.isRequired,
     pristine: PropTypes.bool,
     submitting: PropTypes.bool,

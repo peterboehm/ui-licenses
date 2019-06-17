@@ -36,6 +36,7 @@ class License extends React.Component {
     handlers: PropTypes.shape({
       onClose: PropTypes.func.isRequired,
     }).isRequired,
+    isLoading: PropTypes.bool,
     urls: PropTypes.shape({
       edit: PropTypes.func,
     }).isRequired,
