@@ -5,6 +5,7 @@ import { Redirect } from 'react-router-dom';
 
 import { NoteCreatePage } from '@folio/stripes/smart-components';
 import formatNoteReferrerEntityData from '../components/utils/formatNoteReferrer';
+import urls from '../components/utils';
 
 export default class NoteCreateRoute extends Component {
   static propTypes = {
@@ -37,6 +38,6 @@ export default class NoteCreateRoute extends Component {
 
     return location.state
       ? this.renderCreatePage()
-      : <Redirect to="/licenses" />;
+      : <Redirect to={urls.licenses} />;
   }
 }
