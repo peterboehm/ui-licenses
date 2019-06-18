@@ -30,6 +30,7 @@ import css from './Licenses.css';
 
 export default class Licenses extends React.Component {
   static propTypes = {
+    children: PropTypes.node,
     contentRef: PropTypes.object,
     data: PropTypes.object,
     disableRecordCreation: PropTypes.bool,

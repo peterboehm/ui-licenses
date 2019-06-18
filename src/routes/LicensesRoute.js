@@ -80,17 +80,6 @@ class LicensesRoute extends React.Component {
 
     this.state = {
       hasPerms: props.stripes.hasPerm('ui-licenses.licenses.view'),
-      hideView: true,
-    };
-  }
-
-  static getDerivedStateFromProps(props) {
-    const { location: { pathname } } = props;
-    // Hide the view if we're on a create, edit, or amendments route.
-    const hideView = /\/create|\/edit/.test(pathname);
-
-    return {
-      hideView,
     };
   }
 
@@ -106,7 +95,7 @@ class LicensesRoute extends React.Component {
     const newCount = this.source.totalCount();
     const newRecords = this.source.records();
 
-    if (newCount === 1 && this.state.hideView === false) {
+    if (newCount === 1) {
       const { history, location } = this.props;
 
       const prevSource = new StripesConnectedSource(prevProps, this.logger, 'licenses');
@@ -155,10 +144,6 @@ class LicensesRoute extends React.Component {
     }
 
     if (!this.state.hasPerms) return <NoPermissions />;
-
-    if (this.state.hideView) {
-      return children;
-    }
 
     return (
       <View
