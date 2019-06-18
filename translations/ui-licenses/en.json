@@ -5,6 +5,9 @@
 
   "searchInputLabel": "Search Licenses",
 
+  "license": "License",
+  "licensePlural": "{count} {count, plural, one {license} other {licenses}}",
+
   "closeEditLicense": "Close edit license pane",
   "createLicense": "Create license",
   "create": "Create",

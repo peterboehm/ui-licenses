@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
+import { NotesSmartAccordion } from '@folio/stripes/smart-components';
 
 import {
   AccordionSet,
@@ -51,6 +52,7 @@ class License extends React.Component {
       licenseTerms: false,
       licenseSupplement: false,
       licenseAgreements: false,
+      licenseNotes: false,
     }
   }
 
@@ -169,6 +171,15 @@ class License extends React.Component {
             <LicenseAmendments {...this.getSectionProps('licenseAmendments')} />
             <SupplementaryDocs {...this.getSectionProps('licenseSupplement')} />
             <LicenseAgreements {...this.getSectionProps('licenseAgreements')} />
+            <NotesSmartAccordion
+              {...this.getSectionProps('licenseNotes')}
+              domainName="licenses"
+              entityName={data.license.name}
+              entityType="license"
+              entityId={data.license.id}
+              pathToNoteCreate="notes/create"
+              pathToNoteDetails="notes"
+            />
           </AccordionSet>
         </TitleManager>
       </Pane>

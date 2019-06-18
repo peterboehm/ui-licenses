@@ -20,6 +20,7 @@
     "test-more-docs": "stripes test nightmare --run more-docs",
     "test-contacts": "stripes test nightmare --run contacts",
     "test-amendments": "stripes test nightmare --run amendments",
+    "test-notes-crud": "stripes test nightmare --run notes-crud",
     "lint": "eslint src"
   },
   "devDependencies": {
@@ -36,6 +37,7 @@
     "prop-types": "^15.6.0",
     "react-intl": "^2.4.0",
     "react-router-dom": "^4.1.1",
+    "react-router-prop-types": "^1.0.4",
     "redux-form": "^7.0.3"
   },
   "peerDependencies": {

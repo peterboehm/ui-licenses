@@ -135,7 +135,7 @@ class ViewLicenseRoute extends React.Component {
           onClose: this.handleClose,
           onToggleHelper: this.handleTogglerHelper,
         }}
-        isLoading={get(resources, 'license.isPending')}
+        isLoading={get(resources, 'license.isPending', true)}
         urls={this.urls}
       />
     );
