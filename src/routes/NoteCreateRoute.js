@@ -17,14 +17,10 @@ export default class NoteCreateRoute extends Component {
   renderCreatePage() {
     const { history } = this.props;
 
-    const entityTypeTranslationKeys = {
-      license: 'ui-licenses.notes.entityType.license',
-    };
-
     return (
       <NoteCreatePage
         referredEntityData={formatNoteReferrer(this.props.location.state)}
-        entityTypeTranslationKeys={entityTypeTranslationKeys}
+        entityTypeTranslationKeys={{ license: 'ui-licenses.license' }}
         paneHeaderAppIcon="licenses"
         domain="licenses"
         navigateBack={history.goBack}
@@ -37,6 +33,6 @@ export default class NoteCreateRoute extends Component {
 
     return location.state
       ? this.renderCreatePage()
-      : <Redirect to={urls.licenses} />;
+      : <Redirect to={urls.licenses()} />;
   }
 }

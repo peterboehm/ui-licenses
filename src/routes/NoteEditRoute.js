@@ -18,47 +18,26 @@ export default class NoteEditRoute extends Component {
   };
 
   goToNoteView = () => {
-    const {
-      match,
-      history,
-      location,
-    } = this.props;
-
-    const { noteId } = match.params;
+    const { history, location, match } = this.props;
 
     history.replace({
-      pathname: urls.noteView(noteId),
+      pathname: urls.noteView(match.params.noteId),
       state: location.state,
     });
   }
 
   render() {
-    const {
-      location,
-      match,
-    } = this.props;
-
-    const entityTypeTranslationKeys = {
-      license: 'ui-licenses.notes.entityType.license',
-    };
-
-    const entityTypePluralizedTranslationKeys = {
-      license: 'ui-licenses.notes.entityType.license.pluralized',
-    };
-
-    const { noteId } = match.params;
-
-    const referredEntityData = formatNoteReferrer(location.state);
+    const { location, match } = this.props;
 
     return (
       <NoteEditPage
-        referredEntityData={referredEntityData}
-        entityTypeTranslationKeys={entityTypeTranslationKeys}
-        entityTypePluralizedTranslationKeys={entityTypePluralizedTranslationKeys}
+        referredEntityData={formatNoteReferrer(location.state)}
+        entityTypeTranslationKeys={{ license: 'ui-licenses.license' }}
+        entityTypePluralizedTranslationKeys={{ license: 'ui-licenses.licensePlural' }}
         paneHeaderAppIcon="license"
         domain="licenses"
         navigateBack={this.goToNoteView}
-        noteId={noteId}
+        noteId={match.params.noteId}
       />
     );
   }

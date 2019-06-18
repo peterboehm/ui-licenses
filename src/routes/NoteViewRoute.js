@@ -18,62 +18,38 @@ class NoteViewRoute extends Component {
   };
 
   onEdit = () => {
-    const {
-      history,
-      location,
-      match,
-    } = this.props;
-
-    const { noteId } = match.params;
+    const { history, location, match } = this.props;
 
     history.replace({
-      pathname: urls.noteEdit(noteId),
+      pathname: urls.noteEdit(match.params.noteId),
       state: location.state,
     });
   };
 
   navigateBack = () => {
-    const {
-      history,
-      location,
-    } = this.props;
+    const { history, location } = this.props;
 
     if (location.state) {
       history.goBack();
     } else {
       history.push({
-        pathname: urls.licenses,
+        pathname: urls.licenses(),
       });
     }
   };
 
   render() {
-    const {
-      match,
-      location,
-    } = this.props;
-
-    const entityTypeTranslationKeys = {
-      license: 'ui-licenses.notes.entityType.license',
-    };
-
-    const entityTypePluralizedTranslationKeys = {
-      license: 'ui-licenses.notes.entityType.license.pluralized',
-    };
-
-    const { noteId } = match.params;
-
-    const referredEntityData = formatNoteReferrer(location.state);
+    const { location, match } = this.props;
 
     return (
       <NoteViewPage
-        entityTypeTranslationKeys={entityTypeTranslationKeys}
-        entityTypePluralizedTranslationKeys={entityTypePluralizedTranslationKeys}
+        entityTypeTranslationKeys={{ license: 'ui-licenses.license' }}
+        entityTypePluralizedTranslationKeys={{ license: 'ui-licenses.licensePlural' }}
         navigateBack={this.navigateBack}
         onEdit={this.onEdit}
         paneHeaderAppIcon="license"
-        referredEntityData={referredEntityData}
-        noteId={noteId}
+        referredEntityData={formatNoteReferrer(location.state)}
+        noteId={match.params.noteId}
       />
     );
   }

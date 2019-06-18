@@ -5,6 +5,9 @@
 
   "searchInputLabel": "Search Licenses",
 
+  "license": "License",
+  "licensePlural": "{count} {count, plural, one {license} other {licenses}}",
+
   "closeEditLicense": "Close edit license pane",
   "createLicense": "Create license",
   "create": "Create",
@@ -34,9 +37,6 @@
   "header.licensor": "Licensor",
 
   "licenseAgreements.none": "No agreements currently linked to this license.",
-   
-  "notes.entityType.license": "License",
-  "notes.entityType.license.pluralized": "{count} {count, plural, one {license} other {licences}}",
 
   "organizations.add": "Add organization",
   "organizations.licenseHasNone": "No organizations have been added.",
