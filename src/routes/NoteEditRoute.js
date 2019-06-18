@@ -4,8 +4,7 @@ import PropTypes from 'prop-types';
 
 import { NoteEditPage } from '@folio/stripes/smart-components';
 
-import formatNoteReferrerEntityData from '../components/utils/formatNoteReferrer';
-import urls from '../components/utils';
+import { formatNoteReferrer, urls } from '../components/utils';
 
 export default class NoteEditRoute extends Component {
   static propTypes = {
@@ -26,7 +25,6 @@ export default class NoteEditRoute extends Component {
     } = this.props;
 
     const { noteId } = match.params;
-    // const noteViewUrl = `/licenses/notes/${noteId}`;
 
     history.replace({
       pathname: urls.noteView(noteId),
@@ -50,7 +48,7 @@ export default class NoteEditRoute extends Component {
 
     const { noteId } = match.params;
 
-    const referredEntityData = formatNoteReferrerEntityData(location.state);
+    const referredEntityData = formatNoteReferrer(location.state);
 
     return (
       <NoteEditPage

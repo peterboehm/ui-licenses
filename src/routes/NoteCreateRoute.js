@@ -4,8 +4,7 @@ import ReactRouterPropTypes from 'react-router-prop-types';
 import { Redirect } from 'react-router-dom';
 
 import { NoteCreatePage } from '@folio/stripes/smart-components';
-import formatNoteReferrerEntityData from '../components/utils/formatNoteReferrer';
-import urls from '../components/utils';
+import { formatNoteReferrer, urls } from '../components/utils';
 
 export default class NoteCreateRoute extends Component {
   static propTypes = {
@@ -24,7 +23,7 @@ export default class NoteCreateRoute extends Component {
 
     return (
       <NoteCreatePage
-        referredEntityData={formatNoteReferrerEntityData(this.props.location.state)}
+        referredEntityData={formatNoteReferrer(this.props.location.state)}
         entityTypeTranslationKeys={entityTypeTranslationKeys}
         paneHeaderAppIcon="licenses"
         domain="licenses"
