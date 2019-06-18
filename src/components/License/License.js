@@ -69,6 +69,13 @@ class License extends React.Component {
       record: data.license,
       terms: data.terms,
       users: data.users,
+      pathToNoteCreate: 'notes/create',
+      pathToNoteDetails: 'notes',
+      domainName: 'licenses',
+      entityName: data.license.name,
+      entityType: 'license',
+      entityId: data.license.id,
+
     };
   }
 
@@ -174,17 +181,7 @@ class License extends React.Component {
             <LicenseAgreements {...this.getSectionProps('licenseAgreements')} />
             {
               licenseId &&
-              <NotesSmartAccordion
-                domainName="licenses"
-                entityName={data.license.name}
-                entityType="license"
-                entityId={data.license.id}
-                id="licenseNotes"
-                onToggle={this.handleSectionToggle}
-                open={this.state.sections.licenseNotes}
-                pathToNoteCreate="notes/new"
-                pathToNoteDetails="notes"
-              />
+              <NotesSmartAccordion {...this.getSectionProps('licenseNotes')} />
             }
           </AccordionSet>
         </TitleManager>

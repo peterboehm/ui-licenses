@@ -4,7 +4,7 @@ import ReactRouterPropTypes from 'react-router-prop-types';
 
 import { NoteViewPage } from '@folio/stripes/smart-components';
 
-import formatNoteReferrerEntityData from '../components/utilities';
+import formatNoteReferrerEntityData from '../components/utils/formatNoteReferrer';
 
 class NoteViewRoute extends Component {
   static propTypes = {
@@ -25,7 +25,7 @@ class NoteViewRoute extends Component {
     } = this.props;
 
     history.replace({
-      pathname: `/licenses/notes/${match.params.noteId}/edit/`,
+      pathname: `/licenses/notes/${match.params.noteId}/edit`,
       state: location.state,
     });
   };

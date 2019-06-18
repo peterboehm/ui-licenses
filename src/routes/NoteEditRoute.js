@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 import { NoteEditPage } from '@folio/stripes/smart-components';
 
-import formatNoteReferrerEntityData from '../components/utilities';
+import formatNoteReferrerEntityData from '../components/utils/formatNoteReferrer';
 
 export default class NoteEditRoute extends Component {
   static propTypes = {
@@ -12,7 +12,7 @@ export default class NoteEditRoute extends Component {
     location: ReactRouterPropTypes.location.isRequired,
     match: PropTypes.shape({
       params: PropTypes.shape({
-        id: PropTypes.string.isRequired,
+        noteId: PropTypes.string.isRequired,
       }).isRequired,
     }).isRequired,
   };
@@ -24,8 +24,8 @@ export default class NoteEditRoute extends Component {
       location,
     } = this.props;
 
-    const { id } = match.params;
-    const noteViewUrl = `/licenses/notes/${id}`;
+    const { noteId } = match.params;
+    const noteViewUrl = `/licenses/notes/${noteId}`;
 
     history.replace({
       pathname: noteViewUrl,
@@ -47,7 +47,7 @@ export default class NoteEditRoute extends Component {
       license: 'ui-licenses.notes.entityType.license.pluralized',
     };
 
-    const { id } = match.params;
+    const { noteId } = match.params;
 
     const referredEntityData = formatNoteReferrerEntityData(location.state);
 
@@ -59,7 +59,7 @@ export default class NoteEditRoute extends Component {
         paneHeaderAppIcon="license"
         domain="licenses"
         navigateBack={this.goToNoteView}
-        noteId={id}
+        noteId={noteId}
       />
     );
   }

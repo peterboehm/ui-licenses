@@ -4,7 +4,7 @@ import ReactRouterPropTypes from 'react-router-prop-types';
 import { Redirect } from 'react-router-dom';
 
 import { NoteCreatePage } from '@folio/stripes/smart-components';
-import formatNoteReferrerEntityData from '../components/utilities';
+import formatNoteReferrerEntityData from '../components/utils/formatNoteReferrer';
 
 export default class NoteCreateRoute extends Component {
   static propTypes = {

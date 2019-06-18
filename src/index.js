@@ -34,9 +34,9 @@ class App extends React.Component {
 
     return (
       <Switch>
-        <Route path={`${path}/notes/new`} exact component={NoteCreateRoute} />
+        <Route path={`${path}/notes/create`} exact component={NoteCreateRoute} />
         <Route path={`${path}/notes/:noteId`} exact component={NoteViewRoute} />
-        <Route path={`${path}/notes/:id/edit`} exact component={NoteEditRoute} />
+        <Route path={`${path}/notes/:noteId/edit`} exact component={NoteEditRoute} />
         <Route path={path} component={LicensesRoute}>
           <Switch>
             <Route path={`${path}/create`} exact component={CreateLicenseRoute} />
