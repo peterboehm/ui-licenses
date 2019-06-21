@@ -56,7 +56,7 @@ class LicenseForm extends React.Component {
   }
 
   getSectionProps(id) {
-    const { data, handlers } = this.props;
+    const { data, handlers, stripes } = this.props;
 
     return {
       data,
@@ -64,6 +64,7 @@ class LicenseForm extends React.Component {
       id,
       onToggle: this.handleSectionToggle,
       open: this.state.sections[id],
+      stripes,
     };
   }
 

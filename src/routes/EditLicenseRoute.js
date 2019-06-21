@@ -168,7 +168,7 @@ class EditLicenseRoute extends React.Component {
   }
 
   render() {
-    const { handlers, resources } = this.props;
+    const { handlers, resources, stripes } = this.props;
 
     if (!this.state.hasPerms) return <NoPermissions />;
 
@@ -190,6 +190,7 @@ class EditLicenseRoute extends React.Component {
         initialValues={this.getInitialValues()}
         isLoading={this.fetchIsPending()}
         onSubmit={this.handleSubmit}
+        stripes={stripes}
       />
     );
   }

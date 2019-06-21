@@ -1,8 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
-import { get } from 'lodash';
+import { get, isEmpty } from 'lodash';
 import { Field } from 'redux-form';
+import { stopSubmit, setSubmitFailed, SubmissionError } from 'redux-form';
+
 
 import {
   Accordion,
@@ -27,6 +29,23 @@ class FormTerms extends React.Component {
   state = {
     terms: [],
   }
+
+
+ validation = (value) => {
+    let error;
+    if (!isEmpty(value)) {
+      Object.keys(value).forEach(key => {
+        let val = value[key];
+        if (val != '') {
+          const { note, value } = val[0];
+          if (note && !value) {
+            error = true;
+          }
+        }
+      });
+    } 
+    return error;
+  };
 
   static getDerivedStateFromProps(props, state) {
     const { terms } = props.data;
@@ -56,9 +75,9 @@ class FormTerms extends React.Component {
     return null;
   }
 
+ 
   render() {
-    const { id, onToggle, open } = this.props;
-
+    const { id, onToggle, open, stripes } = this.props;
     return (
       <Accordion
         id={id}
@@ -85,6 +104,8 @@ class FormTerms extends React.Component {
           name="customProperties"
           component={TermsListField}
           availableTerms={this.state.terms}
+          stripes={stripes}
+          validate={this.validation}
         />
       </Accordion>
     );

@@ -120,8 +120,16 @@ export default class TermsListField extends React.Component {
     );
   }
 
+  validateNoteField = (values, termValue) => {
+    const val = values ? values[termValue] : [];
+    const { note, value } = val ? val[0] : {};
+    if(note && !value) return <FormattedMessage id="ui-licenses.terms.setValue" />
+    else return undefined;
+  }
+
+
   renderTermValue = (term, i) => {
-    const { input: { onChange, value } } = this.props;
+    const { input: { onChange, value, name } } = this.props;
     const currentValue = value[term.value] ? value[term.value][0] : {};
 
     // Initialise to just the value (for text/number values)
@@ -155,12 +163,14 @@ export default class TermsListField extends React.Component {
       });
     };
 
+    const err = this.validateNoteField(value, term.value);  
     return (
       <FieldComponent
         data-test-term-value
         id={`edit-term-${i}-value`}
         onChange={handleChange}
         value={controlledFieldValue}
+        error={err}
         {...fieldProps}
       />
     );
@@ -247,6 +257,7 @@ export default class TermsListField extends React.Component {
   }
 
   render() {
+    
     return (
       <div>
         { this.state.terms.map((term, i) => (
