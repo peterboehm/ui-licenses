@@ -3,9 +3,6 @@ import PropTypes from 'prop-types';
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import { get, isEmpty } from 'lodash';
 import { Field } from 'redux-form';
-import { stopSubmit, setSubmitFailed, SubmissionError } from 'redux-form';
-
-
 import {
   Accordion,
   Col,
@@ -24,28 +21,12 @@ class FormTerms extends React.Component {
     data: PropTypes.shape({
       terms: PropTypes.array,
     }),
+    stripes: PropTypes.object,
   };
 
   state = {
     terms: [],
   }
-
-
- validation = (value) => {
-    let error;
-    if (!isEmpty(value)) {
-      Object.keys(value).forEach(key => {
-        let val = value[key];
-        if (val != '') {
-          const { note, value } = val[0];
-          if (note && !value) {
-            error = true;
-          }
-        }
-      });
-    } 
-    return error;
-  };
 
   static getDerivedStateFromProps(props, state) {
     const { terms } = props.data;
@@ -75,7 +56,22 @@ class FormTerms extends React.Component {
     return null;
   }
 
- 
+  validate = (values) => {
+    let error;
+    if (!isEmpty(values)) {
+      Object.keys(values).forEach(key => {
+        const val = values[key];
+        if (val !== '') {
+          const { note, value } = val[0];
+          if (note && !value) {
+            error = true;
+          }
+        }
+      });
+    }
+    return error;
+  };
+
   render() {
     const { id, onToggle, open, stripes } = this.props;
     return (
@@ -105,7 +101,7 @@ class FormTerms extends React.Component {
           component={TermsListField}
           availableTerms={this.state.terms}
           stripes={stripes}
-          validate={this.validation}
+          validate={this.validate}
         />
       </Accordion>
     );
