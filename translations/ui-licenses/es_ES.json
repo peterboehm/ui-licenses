@@ -65,5 +65,7 @@
     "amendments.update": "Actualizar enmienda",
     "placeholder.amendmentName": "Introduzca el nombre de la enmienda",
     "placeholder.amendmentDescription": "Introduzca una descripción de la enmienda",
-    "section.amendmentInformation": "Información sobre la enmienda"
+    "section.amendmentInformation": "Información sobre la enmienda",
+    "license": "License",
+    "licensePlural": "{count} {count, plural, one {license} other {licenses}}"
 }
