@@ -65,5 +65,7 @@
     "amendments.update": "Atualizar emenda",
     "placeholder.amendmentName": "Digite o nome da emenda",
     "placeholder.amendmentDescription": "Digite uma descrição da emenda",
-    "section.amendmentInformation": "Informação da emenda"
+    "section.amendmentInformation": "Informação da emenda",
+    "license": "Licença",
+    "licensePlural": "{count} {count, plural, one {licença} other {licenças}}"
 }
