@@ -123,7 +123,7 @@ export default class TermsListField extends React.Component {
   validateNoteField = (values, termValue) => {
     const val = values ? values[termValue] : [];
     const { note, value } = val ? val[0] : {};
-    if (note && !value) return <FormattedMessage id="ui-licenses.terms.setValue" />;
+    if (note && !value) return <FormattedMessage id="ui-licenses.errors.termNoteWithoutValue" />;
     else return undefined;
   }
 

@@ -39,7 +39,6 @@ class LicenseForm extends React.Component {
     isLoading: PropTypes.bool,
     onSubmit: PropTypes.func.isRequired,
     pristine: PropTypes.bool,
-    stripes: PropTypes.object,
     submitting: PropTypes.bool,
   }
 
@@ -57,7 +56,7 @@ class LicenseForm extends React.Component {
   }
 
   getSectionProps(id) {
-    const { data, handlers, stripes } = this.props;
+    const { data, handlers } = this.props;
 
     return {
       data,
@@ -65,7 +64,6 @@ class LicenseForm extends React.Component {
       id,
       onToggle: this.handleSectionToggle,
       open: this.state.sections[id],
-      stripes,
     };
   }
 
