@@ -56,19 +56,21 @@ class FormTerms extends React.Component {
   }
 
   validate = (values) => {
-    let error;
+    const errors = {};
     if (!isEmpty(values)) {
+      errors.customProperties = {};
       Object.keys(values).forEach(key => {
         const val = values[key];
         if (val !== '') {
           const { note, value } = val[0];
           if (note && !value) {
-            error = true;
+            const error = { [key]: [{ 'value': { err: <FormattedMessage id="ui-licenses.errors.termNoteWithoutValue" /> } }] };
+            errors.customProperties = { ...errors.customProperties, ...error };
           }
         }
       });
     }
-    return error;
+    return (isEmpty(errors) || isEmpty(errors.customProperties)) ? undefined : errors;
   };
 
   render() {

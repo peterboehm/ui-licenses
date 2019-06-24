@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
+import { isEmpty } from 'lodash';
 
 import {
   Button,
@@ -120,17 +121,21 @@ export default class TermsListField extends React.Component {
     );
   }
 
-  validateNoteField = (values, termValue) => {
-    const val = values ? values[termValue] : [];
-    const { note, value } = val ? val[0] : {};
-    if (note && !value) return <FormattedMessage id="ui-licenses.errors.termNoteWithoutValue" />;
-    else return undefined;
-  }
-
-
   renderTermValue = (term, i) => {
     const { input: { onChange, value } } = this.props;
     const currentValue = value[term.value] ? value[term.value][0] : {};
+    const { meta: { error } } = this.props;
+    const termValue = term.value;
+    let errorMsg;
+
+    if (error && !isEmpty(currentValue)) {
+      const errorKeysArray = Object.keys(error.customProperties);
+      if (errorKeysArray.includes(termValue)) {
+        const errorObj = error.customProperties[termValue][0];
+        const { value: { err } } = errorObj;
+        errorMsg = err;
+      }
+    }
 
     // Initialise to just the value (for text/number values)
     // and then check if it's an object (for Select/refdata values).
@@ -163,14 +168,13 @@ export default class TermsListField extends React.Component {
       });
     };
 
-    const err = this.validateNoteField(value, term.value);
     return (
       <FieldComponent
         data-test-term-value
         id={`edit-term-${i}-value`}
         onChange={handleChange}
         value={controlledFieldValue}
-        error={err}
+        error={errorMsg}
         {...fieldProps}
       />
     );
