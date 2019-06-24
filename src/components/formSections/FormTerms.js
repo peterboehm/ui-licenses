@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
-import { get, isEmpty } from 'lodash';
+import { get } from 'lodash';
 import { Field } from 'redux-form';
 import {
   Accordion,
@@ -23,8 +23,12 @@ class FormTerms extends React.Component {
     }),
   };
 
-  state = {
-    terms: [],
+  constructor(props) {
+    super(props);
+    this.state = {
+      isCustomPropertiesError: false,
+      terms: [],
+    };
   }
 
   static getDerivedStateFromProps(props, state) {
@@ -55,22 +59,12 @@ class FormTerms extends React.Component {
     return null;
   }
 
-  validate = (values) => {
-    const errors = {};
-    if (!isEmpty(values)) {
-      errors.customProperties = {};
-      Object.keys(values).forEach(key => {
-        const val = values[key];
-        if (val !== '') {
-          const { note, value } = val[0];
-          if (note && !value) {
-            const error = { [key]: [{ 'value': { err: <FormattedMessage id="ui-licenses.errors.termNoteWithoutValue" /> } }] };
-            errors.customProperties = { ...errors.customProperties, ...error };
-          }
-        }
-      });
-    }
-    return (isEmpty(errors) || isEmpty(errors.customProperties)) ? undefined : errors;
+  handleError = () => {
+    this.setState(prevState => ({ isCustomPropertiesError: !prevState.isCustomPropertiesError }));
+  }
+
+  validate = () => {
+    return this.state.isCustomPropertiesError;
   };
 
   render() {
@@ -102,6 +96,7 @@ class FormTerms extends React.Component {
           component={TermsListField}
           availableTerms={this.state.terms}
           validate={this.validate}
+          onError={this.handleError}
         />
       </Accordion>
     );

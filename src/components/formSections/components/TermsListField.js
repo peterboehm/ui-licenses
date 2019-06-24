@@ -1,8 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { isEmpty } from 'lodash';
-
 import {
   Button,
   Col,
@@ -13,7 +11,6 @@ import {
   TextArea,
   TextField,
 } from '@folio/stripes/components';
-
 
 const TERM_TYPE_TEXT = 'com.k_int.web.toolkit.custprops.types.CustomPropertyText'; // eslint-disable-line no-unused-vars
 const TERM_TYPE_NUMBER = 'com.k_int.web.toolkit.custprops.types.CustomPropertyInteger';
@@ -34,6 +31,7 @@ export default class TermsListField extends React.Component {
       type: PropTypes.string.isRequired,
       value: PropTypes.string.isRequired,
     })).isRequired,
+    onError: PropTypes.func(),
   };
 
   state = {
@@ -121,20 +119,28 @@ export default class TermsListField extends React.Component {
     );
   }
 
+  validateNoteField = (values, termValue) => {
+    const val = values ? values[termValue] : [];
+    const { note, value } = val ? val[0] : {};
+    if (note && !value) {
+      return {
+        customProperties: {
+          [termValue]: [{ 'value': <FormattedMessage id="ui-licenses.terms.termNoteWithoutValue" /> }]
+        }
+      };
+    } else {
+      return undefined;
+    }
+  }
+
   renderTermValue = (term, i) => {
     const { input: { onChange, value } } = this.props;
     const currentValue = value[term.value] ? value[term.value][0] : {};
-    const { meta: { error } } = this.props;
-    const termValue = term.value;
-    let errorMsg;
-
-    if (error && !isEmpty(currentValue)) {
-      const errorKeysArray = Object.keys(error.customProperties);
-      if (errorKeysArray.includes(termValue)) {
-        const errorObj = error.customProperties[termValue][0];
-        const { value: { err } } = errorObj;
-        errorMsg = err;
-      }
+    let errorMessage;
+    const err = this.validateNoteField(value, term.value);
+    if (err) {
+      this.props.onError(err);
+      errorMessage = <FormattedMessage id="ui-licenses.terms.termNoteWithoutValue" />;
     }
 
     // Initialise to just the value (for text/number values)
@@ -174,7 +180,7 @@ export default class TermsListField extends React.Component {
         id={`edit-term-${i}-value`}
         onChange={handleChange}
         value={controlledFieldValue}
-        error={errorMsg}
+        error={errorMessage}
         {...fieldProps}
       />
     );
