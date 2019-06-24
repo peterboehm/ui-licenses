@@ -65,5 +65,7 @@
     "amendments.update": "تحديث التعديل",
     "placeholder.amendmentName": "قم بإدخال اسم التعديل",
     "placeholder.amendmentDescription": "إدخال وصف للتعديل",
-    "section.amendmentInformation": "معلومات التعديل"
+    "section.amendmentInformation": "معلومات التعديل",
+    "license": "الرخصة",
+    "licensePlural": "{count} {count, plural, one {رخصة} other {رخصة}}"
 }
