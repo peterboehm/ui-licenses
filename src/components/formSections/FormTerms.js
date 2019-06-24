@@ -21,7 +21,6 @@ class FormTerms extends React.Component {
     data: PropTypes.shape({
       terms: PropTypes.array,
     }),
-    stripes: PropTypes.object,
   };
 
   state = {
@@ -73,7 +72,7 @@ class FormTerms extends React.Component {
   };
 
   render() {
-    const { id, onToggle, open, stripes } = this.props;
+    const { id, onToggle, open } = this.props;
     return (
       <Accordion
         id={id}
@@ -100,7 +99,6 @@ class FormTerms extends React.Component {
           name="customProperties"
           component={TermsListField}
           availableTerms={this.state.terms}
-          stripes={stripes}
           validate={this.validate}
         />
       </Accordion>
