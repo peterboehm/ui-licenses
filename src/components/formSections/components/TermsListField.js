@@ -31,7 +31,7 @@ export default class TermsListField extends React.Component {
       type: PropTypes.string.isRequired,
       value: PropTypes.string.isRequired,
     })).isRequired,
-    onError: PropTypes.func(),
+    onError: PropTypes.func,
   };
 
   state = {
