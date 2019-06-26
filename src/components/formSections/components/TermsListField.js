@@ -252,13 +252,16 @@ export default class TermsListField extends React.Component {
     );
   }
 
-  renderTermsField = () => {
-    let termNoteError = false;
-    const { terms } = this.state;
+  renderTermsList = () => {
     const { input: { value, name }, onError, meta: { form } } = this.props;
-    const termsFieldMap = terms.map((term, i) => {
+    const { terms } = this.state;
+
+    let termNoteError = false;
+
+    const termsList = terms.map((term, i) => {
       const errorMessage = this.validateNoteField(value, term.value);
       termNoteError = errorMessage ? true : termNoteError;
+
       return (
         <React.Fragment key={term.value}>
           <Row>
@@ -280,14 +283,16 @@ export default class TermsListField extends React.Component {
         </React.Fragment>
       );
     });
+
     onError(termNoteError, name, form);
-    return termsFieldMap;
+
+    return termsList;
   }
 
   render() {
     return (
       <div>
-        {this.renderTermsField()}
+        {this.renderTermsList()}
         {this.renderAddTerm()}
       </div>
     );

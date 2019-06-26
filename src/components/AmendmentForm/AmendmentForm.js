@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
+import { setSubmitFailed, stopSubmit } from 'redux-form';
 
 import {
   AccordionSet,
@@ -59,11 +60,23 @@ class AmendmentForm extends React.Component {
 
     return {
       data,
-      handlers,
+      handlers: {
+        ...handlers,
+        onError: this.handleError,
+      },
       id,
       onToggle: this.handleSectionToggle,
       open: this.state.sections[id],
     };
+  }
+
+  handleError = (error, fieldName, formName) => {
+    const { dispatch } = this.props;
+    // stopSubmit reports the error to redux-form and sets invalid flag to true which helps us in disabling the submit button
+    if (error) {
+      dispatch(stopSubmit(formName, { [fieldName]: error }));
+      dispatch(setSubmitFailed(formName, fieldName));
+    }
   }
 
   handleSectionToggle = ({ id }) => {
@@ -115,7 +128,13 @@ class AmendmentForm extends React.Component {
   }
 
   renderLastMenu() {
-    const { initialValues } = this.props;
+    const {
+      handleSubmit,
+      initialValues,
+      pristine,
+      submitting,
+      invalid
+    } = this.props;
 
     let id;
     let label;
@@ -132,8 +151,8 @@ class AmendmentForm extends React.Component {
         <Button
           id={id}
           type="submit"
-          disabled={this.props.pristine || this.props.submitting}
-          onClick={this.props.handleSubmit}
+          disabled={pristine || submitting || invalid}
+          onClick={handleSubmit}
           buttonStyle="primary paneHeaderNewButton"
           marginBottom0
         >
