@@ -2,7 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import { get } from 'lodash';
-import { Field } from 'redux-form';
+import { stripesConnect } from '@folio/stripes/core';
+import compose from 'compose-function';
+
+import {
+  Field,
+  setSubmitFailed,
+  stopSubmit,
+} from 'redux-form';
 import {
   Accordion,
   Col,
@@ -14,21 +21,18 @@ import { TermsListField } from './components';
 
 class FormTerms extends React.Component {
   static propTypes = {
+    data: PropTypes.shape({
+      terms: PropTypes.array,
+    }),
     id: PropTypes.string,
     intl: intlShape.isRequired,
     onToggle: PropTypes.func,
     open: PropTypes.bool,
-    data: PropTypes.shape({
-      terms: PropTypes.array,
-    }),
+    stripes: PropTypes.object,
   };
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      isCustomPropertiesError: false,
-      terms: [],
-    };
+  state = {
+    terms: [],
   }
 
   static getDerivedStateFromProps(props, state) {
@@ -59,13 +63,14 @@ class FormTerms extends React.Component {
     return null;
   }
 
-  handleError = () => {
-    this.setState(prevState => ({ isCustomPropertiesError: !prevState.isCustomPropertiesError }));
+  handleError = (error) => {
+    const { stripes: { store } } = this.props;
+    // stopSubmit reports the error to redux-form and sets invalid flag to true which helps us in disabling the submit button
+    if (error) {
+      store.dispatch(stopSubmit('EditLicense', { 'customProperties': error }));
+      store.dispatch(setSubmitFailed('EditLicense', 'customProperties'));
+    }
   }
-
-  validate = () => {
-    return this.state.isCustomPropertiesError;
-  };
 
   render() {
     const { id, onToggle, open } = this.props;
@@ -95,7 +100,6 @@ class FormTerms extends React.Component {
           name="customProperties"
           component={TermsListField}
           availableTerms={this.state.terms}
-          validate={this.validate}
           onError={this.handleError}
         />
       </Accordion>
@@ -103,4 +107,7 @@ class FormTerms extends React.Component {
   }
 }
 
-export default injectIntl(FormTerms);
+export default compose(
+  injectIntl,
+  stripesConnect
+)(FormTerms);

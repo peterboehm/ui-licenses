@@ -122,26 +122,12 @@ export default class TermsListField extends React.Component {
   validateNoteField = (values, termValue) => {
     const val = values ? values[termValue] : [];
     const { note, value } = val ? val[0] : {};
-    if (note && !value) {
-      return {
-        customProperties: {
-          [termValue]: [{ 'value': <FormattedMessage id="ui-licenses.terms.termNoteWithoutValue" /> }]
-        }
-      };
-    } else {
-      return undefined;
-    }
+    return (note && !value) ? true : undefined;
   }
 
-  renderTermValue = (term, i) => {
+  renderTermValue = (term, i, errorMessage) => {
     const { input: { onChange, value } } = this.props;
     const currentValue = value[term.value] ? value[term.value][0] : {};
-    let errorMessage;
-    const err = this.validateNoteField(value, term.value);
-    if (err) {
-      this.props.onError(err);
-      errorMessage = <FormattedMessage id="ui-licenses.terms.termNoteWithoutValue" />;
-    }
 
     // Initialise to just the value (for text/number values)
     // and then check if it's an object (for Select/refdata values).
@@ -266,29 +252,49 @@ export default class TermsListField extends React.Component {
     );
   }
 
+  renderTermsField = () => {
+    let termNoteError = false;
+    const { terms } = this.state;
+    return terms.map((term, i) => {
+      const { input: { value } } = this.props;
+      const err = this.validateNoteField(value, term.value);
+      let errorMessage;
+      if (err) {
+        errorMessage = <FormattedMessage id="ui-licenses.terms.termNoteWithoutValue" />;
+        termNoteError = true;
+      }
+      // At this point the all the terms in the state would have completed one loop
+      if (i === terms.length - 1) {
+        this.props.onError(termNoteError);
+      }
+
+      return (
+        <React.Fragment key={term.value}>
+          <Row>
+            <Col xs={5}>
+              {this.renderTermName(term, i)}
+            </Col>
+            <Col xs={6}>
+              {this.renderTermValue(term, i, errorMessage)}
+            </Col>
+            <Col xs={1}>
+              {this.renderTermDelete(term, i)}
+            </Col>
+          </Row>
+          <Row>
+            <Col xs={6} xsOffset={5}>
+              {this.renderTermNote(term, i)}
+            </Col>
+          </Row>
+        </React.Fragment>
+      );
+    });
+  }
+
   render() {
     return (
       <div>
-        { this.state.terms.map((term, i) => (
-          <React.Fragment key={term.value}>
-            <Row>
-              <Col xs={5}>
-                {this.renderTermName(term, i)}
-              </Col>
-              <Col xs={6}>
-                { this.renderTermValue(term, i) }
-              </Col>
-              <Col xs={1}>
-                {this.renderTermDelete(term, i)}
-              </Col>
-            </Row>
-            <Row>
-              <Col xs={6} xsOffset={5}>
-                {this.renderTermNote(term, i)}
-              </Col>
-            </Row>
-          </React.Fragment>
-        ))}
+        {this.renderTermsField()}
         {this.renderAddTerm()}
       </div>
     );

@@ -40,6 +40,7 @@ class LicenseForm extends React.Component {
     onSubmit: PropTypes.func.isRequired,
     pristine: PropTypes.bool,
     submitting: PropTypes.bool,
+    invalid: PropTypes.bool,
   }
 
   static defaultProps = {
@@ -133,7 +134,7 @@ class LicenseForm extends React.Component {
         <Button
           id={id}
           type="submit"
-          disabled={this.props.pristine || this.props.submitting}
+          disabled={this.props.pristine || this.props.submitting || this.props.invalid}
           onClick={this.props.handleSubmit}
           buttonStyle="primary paneHeaderNewButton"
           marginBottom0
