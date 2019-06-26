@@ -40,6 +40,7 @@ class LicenseForm extends React.Component {
     onSubmit: PropTypes.func.isRequired,
     pristine: PropTypes.bool,
     submitting: PropTypes.bool,
+    invalid: PropTypes.bool,
   }
 
   static defaultProps = {
@@ -116,8 +117,7 @@ class LicenseForm extends React.Component {
   }
 
   renderLastMenu() {
-    const { initialValues } = this.props;
-
+    const { initialValues, pristine, submitting, invalid } = this.props;
     let id;
     let label;
     if (initialValues && initialValues.id) {
@@ -133,7 +133,7 @@ class LicenseForm extends React.Component {
         <Button
           id={id}
           type="submit"
-          disabled={this.props.pristine || this.props.submitting}
+          disabled={pristine || submitting || invalid}
           onClick={this.props.handleSubmit}
           buttonStyle="primary paneHeaderNewButton"
           marginBottom0

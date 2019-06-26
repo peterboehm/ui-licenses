@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-
 import {
   Button,
   Col,
@@ -12,7 +11,6 @@ import {
   TextArea,
   TextField,
 } from '@folio/stripes/components';
-
 
 const TERM_TYPE_TEXT = 'com.k_int.web.toolkit.custprops.types.CustomPropertyText'; // eslint-disable-line no-unused-vars
 const TERM_TYPE_NUMBER = 'com.k_int.web.toolkit.custprops.types.CustomPropertyInteger';
@@ -33,6 +31,7 @@ export default class TermsListField extends React.Component {
       type: PropTypes.string.isRequired,
       value: PropTypes.string.isRequired,
     })).isRequired,
+    onError: PropTypes.func,
   };
 
   state = {
@@ -120,7 +119,13 @@ export default class TermsListField extends React.Component {
     );
   }
 
-  renderTermValue = (term, i) => {
+  validateNoteField = (values, termValue) => {
+    const val = values ? values[termValue] : [];
+    const { note, value } = val ? val[0] : {};
+    return (note && !value) ? <FormattedMessage id="ui-licenses.terms.termNoteWithoutValue" /> : undefined;
+  }
+
+  renderTermValue = (term, i, errorMessage) => {
     const { input: { onChange, value } } = this.props;
     const currentValue = value[term.value] ? value[term.value][0] : {};
 
@@ -161,6 +166,7 @@ export default class TermsListField extends React.Component {
         id={`edit-term-${i}-value`}
         onChange={handleChange}
         value={controlledFieldValue}
+        error={errorMessage}
         {...fieldProps}
       />
     );
@@ -246,29 +252,42 @@ export default class TermsListField extends React.Component {
     );
   }
 
+  renderTermsField = () => {
+    let termNoteError = false;
+    const { terms } = this.state;
+    const { input: { value, name }, onError, meta: { form } } = this.props;
+    const termsFieldMap = terms.map((term, i) => {
+      const errorMessage = this.validateNoteField(value, term.value);
+      termNoteError = errorMessage ? true : termNoteError;
+      return (
+        <React.Fragment key={term.value}>
+          <Row>
+            <Col xs={5}>
+              {this.renderTermName(term, i)}
+            </Col>
+            <Col xs={6}>
+              {this.renderTermValue(term, i, errorMessage)}
+            </Col>
+            <Col xs={1}>
+              {this.renderTermDelete(term, i)}
+            </Col>
+          </Row>
+          <Row>
+            <Col xs={6} xsOffset={5}>
+              {this.renderTermNote(term, i)}
+            </Col>
+          </Row>
+        </React.Fragment>
+      );
+    });
+    onError(termNoteError, name, form);
+    return termsFieldMap;
+  }
+
   render() {
     return (
       <div>
-        { this.state.terms.map((term, i) => (
-          <React.Fragment key={term.value}>
-            <Row>
-              <Col xs={5}>
-                {this.renderTermName(term, i)}
-              </Col>
-              <Col xs={6}>
-                { this.renderTermValue(term, i) }
-              </Col>
-              <Col xs={1}>
-                {this.renderTermDelete(term, i)}
-              </Col>
-            </Row>
-            <Row>
-              <Col xs={6} xsOffset={5}>
-                {this.renderTermNote(term, i)}
-              </Col>
-            </Row>
-          </React.Fragment>
-        ))}
+        {this.renderTermsField()}
         {this.renderAddTerm()}
       </div>
     );

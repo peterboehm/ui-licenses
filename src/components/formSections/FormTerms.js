@@ -2,8 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import { get } from 'lodash';
-import { Field } from 'redux-form';
+import { withStripes } from '@folio/stripes/core';
+import compose from 'compose-function';
 
+import {
+  Field,
+  setSubmitFailed,
+  stopSubmit,
+} from 'redux-form';
 import {
   Accordion,
   Col,
@@ -15,13 +21,14 @@ import { TermsListField } from './components';
 
 class FormTerms extends React.Component {
   static propTypes = {
+    data: PropTypes.shape({
+      terms: PropTypes.array,
+    }),
     id: PropTypes.string,
     intl: intlShape.isRequired,
     onToggle: PropTypes.func,
     open: PropTypes.bool,
-    data: PropTypes.shape({
-      terms: PropTypes.array,
-    }),
+    stripes: PropTypes.object,
   };
 
   state = {
@@ -56,9 +63,17 @@ class FormTerms extends React.Component {
     return null;
   }
 
+  handleError = (error, fieldName, formName) => {
+    const { stripes: { store } } = this.props;
+    // stopSubmit reports the error to redux-form and sets invalid flag to true which helps us in disabling the submit button
+    if (error) {
+      store.dispatch(stopSubmit(formName, { [fieldName]: error }));
+      store.dispatch(setSubmitFailed(formName, fieldName));
+    }
+  }
+
   render() {
     const { id, onToggle, open } = this.props;
-
     return (
       <Accordion
         id={id}
@@ -85,10 +100,14 @@ class FormTerms extends React.Component {
           name="customProperties"
           component={TermsListField}
           availableTerms={this.state.terms}
+          onError={this.handleError}
         />
       </Accordion>
     );
   }
 }
 
-export default injectIntl(FormTerms);
+export default compose(
+  injectIntl,
+  withStripes
+)(FormTerms);

@@ -30,6 +30,7 @@
 
   "errors.endDateGreaterThanStartDate": "End date must be after the start date.",
   "errors.multipleLicensors": "Only one Licensor per license is allowed.",
+  "errors.termNoteWithoutValue": "A value must be set for this term in order to save a note",
 
   "filters.organization": "Organizations",
   "filters.organizationRole": "Organization role",
