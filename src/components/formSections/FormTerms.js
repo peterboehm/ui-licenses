@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import { get } from 'lodash';
-import { stripesConnect } from '@folio/stripes/core';
+import { withStripes } from '@folio/stripes/core';
 import compose from 'compose-function';
 
 import {
@@ -63,12 +63,12 @@ class FormTerms extends React.Component {
     return null;
   }
 
-  handleError = (error) => {
+  handleError = (error, fieldName, formName) => {
     const { stripes: { store } } = this.props;
     // stopSubmit reports the error to redux-form and sets invalid flag to true which helps us in disabling the submit button
     if (error) {
-      store.dispatch(stopSubmit('EditLicense', { 'customProperties': error }));
-      store.dispatch(setSubmitFailed('EditLicense', 'customProperties'));
+      store.dispatch(stopSubmit(formName, { [fieldName]: error }));
+      store.dispatch(setSubmitFailed(formName, fieldName));
     }
   }
 
@@ -109,5 +109,5 @@ class FormTerms extends React.Component {
 
 export default compose(
   injectIntl,
-  stripesConnect
+  withStripes
 )(FormTerms);

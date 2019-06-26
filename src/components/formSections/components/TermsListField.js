@@ -122,7 +122,7 @@ export default class TermsListField extends React.Component {
   validateNoteField = (values, termValue) => {
     const val = values ? values[termValue] : [];
     const { note, value } = val ? val[0] : {};
-    return (note && !value) ? true : undefined;
+    return (note && !value) ? <FormattedMessage id="ui-licenses.terms.termNoteWithoutValue" /> : undefined;
   }
 
   renderTermValue = (term, i, errorMessage) => {
@@ -255,19 +255,10 @@ export default class TermsListField extends React.Component {
   renderTermsField = () => {
     let termNoteError = false;
     const { terms } = this.state;
-    return terms.map((term, i) => {
-      const { input: { value } } = this.props;
-      const err = this.validateNoteField(value, term.value);
-      let errorMessage;
-      if (err) {
-        errorMessage = <FormattedMessage id="ui-licenses.terms.termNoteWithoutValue" />;
-        termNoteError = true;
-      }
-      // At this point the all the terms in the state would have completed one loop
-      if (i === terms.length - 1) {
-        this.props.onError(termNoteError);
-      }
-
+    const { input: { value, name }, onError, meta: { form } } = this.props;
+    const termsFieldMap = terms.map((term, i) => {
+      const errorMessage = this.validateNoteField(value, term.value);
+      termNoteError = errorMessage ? true : termNoteError;
       return (
         <React.Fragment key={term.value}>
           <Row>
@@ -289,6 +280,8 @@ export default class TermsListField extends React.Component {
         </React.Fragment>
       );
     });
+    onError(termNoteError, name, form);
+    return termsFieldMap;
   }
 
   render() {
