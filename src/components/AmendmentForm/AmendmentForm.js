@@ -32,6 +32,7 @@ import css from './AmendmentForm.css';
 class AmendmentForm extends React.Component {
   static propTypes = {
     data: PropTypes.object,
+    dispatch: PropTypes.func,
     handlers: PropTypes.shape({
       onClose: PropTypes.func.isRequired,
     }),
@@ -41,6 +42,7 @@ class AmendmentForm extends React.Component {
     onSubmit: PropTypes.func.isRequired,
     pristine: PropTypes.bool,
     submitting: PropTypes.bool,
+    invalid: PropTypes.bool,
   }
 
   static defaultProps = {
