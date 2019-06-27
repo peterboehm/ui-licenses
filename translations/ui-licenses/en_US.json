@@ -67,5 +67,6 @@
     "placeholder.amendmentDescription": "Enter a description of the amendment",
     "section.amendmentInformation": "Amendment information",
     "license": "License",
-    "licensePlural": "{count} {count, plural, one {license} other {licenses}}"
+    "licensePlural": "{count} {count, plural, one {license} other {licenses}}",
+    "errors.termNoteWithoutValue": "A value must be set for this term in order to save a note."
 }
