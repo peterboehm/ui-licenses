@@ -29,7 +29,7 @@ class ViewLicenseRoute extends React.Component {
     },
     users: {
       type: 'okapi',
-      path: '/users',
+      path: 'users',
       fetch: false,
       accumulate: true,
       shouldRefresh: () => false,
