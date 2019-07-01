@@ -67,5 +67,6 @@
     "placeholder.amendmentDescription": "Introduzca una descripción de la enmienda",
     "section.amendmentInformation": "Información sobre la enmienda",
     "license": "License",
-    "licensePlural": "{count} {count, plural, one {license} other {licenses}}"
+    "licensePlural": "{count} {count, plural, one {license} other {licenses}}",
+    "errors.termNoteWithoutValue": "A value must be set for this term in order to save a note"
 }

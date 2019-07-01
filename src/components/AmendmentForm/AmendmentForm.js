@@ -43,6 +43,7 @@ class AmendmentForm extends React.Component {
     onSubmit: PropTypes.func.isRequired,
     pristine: PropTypes.bool,
     submitting: PropTypes.bool,
+    invalid: PropTypes.bool,
   }
 
   static defaultProps = {
