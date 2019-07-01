@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { get, difference } from 'lodash';
+import { get, difference, flatten } from 'lodash';
 import compose from 'compose-function';
 
 import { stripesConnect } from '@folio/stripes/core';
@@ -10,6 +10,13 @@ import View from '../components/License';
 
 class ViewLicenseRoute extends React.Component {
   static manifest = Object.freeze({
+    interfaces: {
+      type: 'okapi',
+      path: 'organizations-storage/interfaces',
+      records: 'interfaces',
+      accumulate: true,
+      fetch: false,
+    },
     license: {
       type: 'okapi',
       path: 'licenses/licenses/:{id}',
@@ -50,8 +57,12 @@ class ViewLicenseRoute extends React.Component {
       query: PropTypes.shape({
         update: PropTypes.func.isRequired,
       }).isRequired,
+      interfaces: PropTypes.shape({
+        GET: PropTypes.func.isRequired,
+      }),
     }).isRequired,
     resources: PropTypes.shape({
+      interfaces: PropTypes.object,
       linkedAgreements: PropTypes.object,
       license: PropTypes.object,
       terms: PropTypes.object,
@@ -68,6 +79,7 @@ class ViewLicenseRoute extends React.Component {
   }
 
   componentDidMount() {
+    this.fetchInterfaces();
     const contacts = get(this.props.resources, 'license.records[0].contacts', []);
     if (contacts.length) {
       this.fetchUsers(contacts);
@@ -83,11 +95,40 @@ class ViewLicenseRoute extends React.Component {
     if (prevLicense.id !== currLicense.id || newContacts.length) {
       this.fetchUsers(newContacts);
     }
+
+    const prevOrgs = get(prevProps.resources, 'license.records[0].orgs', []);
+    const currOrgs = get(this.props.resources, 'license.records[0].orgs', []);
+    const newOrgs = difference(currOrgs, prevOrgs);
+    if (newOrgs.length) {
+      this.fetchInterfaces(newOrgs);
+    }
+  }
+
+  fetchInterfaces = (newOrgs) => {
+    const orgs = newOrgs || get(this.props.resources, 'license.records[0].orgs', []);
+    const interfaces = flatten(orgs.map(o => get(o, 'org.orgsUuid_object.interfaces', [])));
+    const query = [
+      ...new Set(interfaces.map(i => `id==${i}`))
+    ].join(' or ');
+
+    if (!query) return;
+    this.props.mutator.interfaces.GET({ params: { query } });
   }
 
   fetchUsers = (newContacts) => {
     const { mutator } = this.props;
     newContacts.forEach(contact => mutator.users.GET({ path: `users/${contact.user}` }));
+  }
+
+  getOrgs = () => {
+    const { resources } = this.props;
+    const orgs = get(resources, 'license.records[0].orgs', []);
+
+    return orgs.map(o => ({
+      ...o,
+      interfaces: get(o, 'org.orgsUuid_object.interfaces', [])
+        .map(id => this.getRecord(id, 'interfaces') || id)
+    }));
   }
 
   getLicenseContacts = () => {
@@ -97,6 +138,11 @@ class ViewLicenseRoute extends React.Component {
       ...contact,
       user: get(resources, 'users.records', []).find(u => u.id === contact.user) || { personal: {} },
     }));
+  }
+
+  getRecord = (id, resourceType) => {
+    return get(this.props.resources, `${resourceType}.records`, [])
+      .find(i => i.id === id);
   }
 
   handleClose = () => {
@@ -127,6 +173,7 @@ class ViewLicenseRoute extends React.Component {
             ...get(resources, 'license.records[0]', {}),
             contacts: this.getLicenseContacts(),
             linkedAgreements: get(resources, 'linkedAgreements.records', []),
+            orgs: this.getOrgs(),
           },
           terms: get(resources, 'terms.records', []),
         }}

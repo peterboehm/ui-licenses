@@ -3,7 +3,9 @@ import PropTypes from 'prop-types';
 import { get } from 'lodash';
 import { FormattedMessage } from 'react-intl';
 import { Link } from 'react-router-dom';
+import { OrganizationCard } from '@folio/stripes-erm-components';
 import { Accordion, Badge, Icon, Layout } from '@folio/stripes/components';
+import { AppIcon } from '@folio/stripes/core';
 
 export default class LicenseOrganizations extends React.Component {
   static propTypes = {
@@ -24,24 +26,32 @@ export default class LicenseOrganizations extends React.Component {
   };
 
   renderOrgList = (orgs) => {
-    return (
-      <React.Fragment>
-        {orgs.map(o => (
-          o.org ?
-            <Layout
-              className="marginTopHalf"
-              data-test-license-org
-              key={`${o.org.id}-${o.role.value}`}
-            >
-              {o.org.orgsUuid ?
-                <Link to={`/organizations/view/${o.org.orgsUuid}`}>{o.org.name}</Link> :
-                o.org.name
-              }
-              {o.role && `, ${o.role.label}`}
-            </Layout> : null
-        ))}
-      </React.Fragment>
-    );
+    return orgs.map(o => {
+      const { interfaces, org, role } = o;
+      if (!org || !role) return null;
+
+      return (
+        <OrganizationCard
+          data-test-license-org
+          key={`${org.orgsUuid}-${role.value}`}
+          cardStyle="positive"
+          headerStart={
+            <span>
+              <AppIcon
+                app="licenses"
+                size="small"
+              />
+              &nbsp;
+              <Link to={`/organizations/view/${org.orgsUuid}`}>
+                {org.name}
+              </Link>
+              {` · ${role.label}`}
+            </span>
+          }
+          interfaces={interfaces}
+        />
+      );
+    });
   }
 
   renderOrganizations = () => {

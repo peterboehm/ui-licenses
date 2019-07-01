@@ -32,11 +32,13 @@ import css from './AmendmentForm.css';
 class AmendmentForm extends React.Component {
   static propTypes = {
     data: PropTypes.object,
+    dispatch: PropTypes.func,
     handlers: PropTypes.shape({
       onClose: PropTypes.func.isRequired,
     }),
     isLoading: PropTypes.bool,
     initialValues: PropTypes.object,
+    invalid: PropTypes.bool,
     handleSubmit: PropTypes.func.isRequired,
     onSubmit: PropTypes.func.isRequired,
     pristine: PropTypes.bool,

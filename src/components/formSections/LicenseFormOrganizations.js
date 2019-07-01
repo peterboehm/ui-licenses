@@ -19,6 +19,7 @@ class LicenseFormOrganizations extends React.Component {
   };
 
   render() {
+    const addOrganizationBtnLabel = <FormattedMessage id="ui-licenses.organizations.addOrganizationToAgreement" />;
     return (
       <div style={{ marginLeft: '2rem' }}>
         <Accordion
@@ -30,6 +31,7 @@ class LicenseFormOrganizations extends React.Component {
             <Col xs={12}>
               <FieldArray
                 name="orgs"
+                addOrganizationBtnLabel={addOrganizationBtnLabel}
                 component={OrganizationsFieldArray}
                 roles={this.props.data.orgRoleValues}
               />

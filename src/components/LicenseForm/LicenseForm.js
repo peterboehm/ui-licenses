@@ -32,6 +32,7 @@ import css from './LicenseForm.css';
 class LicenseForm extends React.Component {
   static propTypes = {
     data: PropTypes.object,
+    dispatch: PropTypes.func,
     handlers: PropTypes.PropTypes.shape({
       onClose: PropTypes.func.isRequired,
     }),

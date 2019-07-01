@@ -87,7 +87,7 @@ module.exports.test = (uiTestCtx) => {
             .waitUntilNetworkIdle(2000)
             .evaluate((r, _orgs) => {
               const orgElement = document.querySelector(`#orgs-nameOrg-${r}`);
-              const name = orgElement.value;
+              const name = orgElement.textContent;
               if (!name) {
                 throw Error('Org field has no value!');
               }
@@ -130,7 +130,7 @@ module.exports.test = (uiTestCtx) => {
         it(`should find "${org.name}" in Organizations list with role ${org.role}`, done => {
           nightmare
             .evaluate(o => {
-              const rows = [...document.querySelectorAll('[data-test-license-org]')].map(e => e.textContent);
+              const rows = [...document.querySelectorAll('[data-test-organization-card]')].map(e => e.textContent);
               const row = rows.find(r => r.indexOf(o.name) >= 0);
               if (!row) {
                 throw Error(`Could not find row with an org named ${o.name}`);
@@ -173,8 +173,8 @@ module.exports.test = (uiTestCtx) => {
         it(`should find correctly loaded values for org ${i}`, done => {
           nightmare
             .evaluate(o => {
-              const orgElements = [...document.querySelectorAll('input[id^=orgs-nameOrg-]')];
-              const orgElement = orgElements.find(e => e.value === o.name);
+              const orgElements = [...document.querySelectorAll('[id^=orgs-nameOrg-]')];
+              const orgElement = orgElements.find(e => e.textContent === o.name);
               if (!orgElement) {
                 throw Error(`Failed to find org name picker with loaded org of ${o.name}`);
               }
@@ -195,8 +195,8 @@ module.exports.test = (uiTestCtx) => {
         it('should edit license', done => {
           nightmare
             .evaluate(o => {
-              const nameElements = [...document.querySelectorAll('input[id^=orgs-nameOrg-]')];
-              const index = nameElements.findIndex(e => e.value === o.name);
+              const nameElements = [...document.querySelectorAll('[id^=orgs-nameOrg-]')];
+              const index = nameElements.findIndex(e => e.textContent === o.name);
               if (index === -1) {
                 throw Error(`Failed to find org picker with loaded value of ${o.name}`);
               }
@@ -204,18 +204,21 @@ module.exports.test = (uiTestCtx) => {
             }, orgToEdit)
             .then(row => {
               return nightmare
+                .wait(`#orgs-unlink-${row}`)
+                .click(`#orgs-unlink-${row}`)
+                .wait(`#orgs-nameOrg-${row}-search-button`)
                 .click(`#orgs-nameOrg-${row}-search-button`)
                 .wait('#clickable-filter-status-active')
                 .click('#clickable-filter-status-active')
-                .wait('#list-plugin-find-organization [aria-rowindex="6"] > a')
-                .click('#list-plugin-find-organization [aria-rowindex="6"] > a')
+                .wait('#list-plugin-find-organization [aria-rowindex="12"] > a')
+                .click('#list-plugin-find-organization [aria-rowindex="12"] > a')
                 .waitUntilNetworkIdle(2000)
                 .wait(`#orgs-role-${row}`)
                 .click(`#orgs-role-${row}`)
                 .type(`#orgs-role-${row}`, orgToEdit.editedRole)
                 .evaluate((r, _orgs) => {
                   const orgElement = document.querySelector(`#orgs-nameOrg-${r}`);
-                  const name = orgElement.value;
+                  const name = orgElement.textContent;
                   if (!name) {
                     throw Error('Org name field has no value!');
                   }
@@ -234,8 +237,8 @@ module.exports.test = (uiTestCtx) => {
         it('should delete org', done => {
           nightmare
             .evaluate(o => {
-              const nameElements = [...document.querySelectorAll('input[id^=orgs-nameOrg-]')];
-              const index = nameElements.findIndex(e => e.value === o.name);
+              const nameElements = [...document.querySelectorAll('[id^=orgs-nameOrg-]')];
+              const index = nameElements.findIndex(e => e.textContent === o.name);
               if (index === -1) {
                 throw Error(`Failed to find org picker with loaded user of ${o.name}`);
               }
@@ -261,7 +264,7 @@ module.exports.test = (uiTestCtx) => {
         it(`should find org in Organizations list with role ${orgToEdit.editedRole}`, done => {
           nightmare
             .evaluate(o => {
-              const rows = [...document.querySelectorAll('[data-test-license-org]')].map(e => e.textContent);
+              const rows = [...document.querySelectorAll('[data-test-organization-card]')].map(e => e.textContent);
               const row = rows.find(r => r.indexOf(o.editedName) >= 0);
               if (!row) {
                 throw Error(`Could not find row with an org named ${o.editedName}`);
@@ -279,7 +282,7 @@ module.exports.test = (uiTestCtx) => {
         it(`should NOT find org in organizations list with role ${orgToDelete.role}`, done => {
           nightmare
             .evaluate(o => {
-              const rows = [...document.querySelectorAll('[data-test-license-org]')].map(e => e.textContent);
+              const rows = [...document.querySelectorAll('[data-test-organization-card]')].map(e => e.textContent);
               const row = rows.find(r => r.indexOf(o.name) >= 0);
               if (row) {
                 throw Error(`Found a row with a org named ${o.name} when it should have been deleted.`);
