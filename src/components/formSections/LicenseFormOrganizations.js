@@ -19,7 +19,7 @@ class LicenseFormOrganizations extends React.Component {
   };
 
   render() {
-    const addOrganizationBtnLabel = <FormattedMessage id="ui-licenses.organizations.addOrganizationToAgreement" />;
+    const addOrganizationBtnLabel = <FormattedMessage id="ui-licenses.organizations.addOrganizationToLicense" />;
     return (
       <div style={{ marginLeft: '2rem' }}>
         <Accordion
