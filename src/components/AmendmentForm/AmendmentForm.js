@@ -38,11 +38,11 @@ class AmendmentForm extends React.Component {
     }),
     isLoading: PropTypes.bool,
     initialValues: PropTypes.object,
+    invalid: PropTypes.bool,
     handleSubmit: PropTypes.func.isRequired,
     onSubmit: PropTypes.func.isRequired,
     pristine: PropTypes.bool,
     submitting: PropTypes.bool,
-    invalid: PropTypes.bool,
   }
 
   static defaultProps = {
