@@ -68,5 +68,6 @@
     "section.amendmentInformation": "معلومات التعديل",
     "license": "الرخصة",
     "licensePlural": "{count} {count, plural, one {رخصة} other {رخصة}}",
-    "errors.termNoteWithoutValue": "يجب تعيين قيمة لهذا المصطلح من أجل حفظ الملاحظة"
+    "errors.termNoteWithoutValue": "يجب تعيين قيمة لهذا المصطلح من أجل حفظ الملاحظة",
+    "organizations.addOrganizationToLicense": "إضافة مؤسسة إلى رخصة"
 }

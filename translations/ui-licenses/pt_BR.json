@@ -68,5 +68,6 @@
     "section.amendmentInformation": "Informação da emenda",
     "license": "Licença",
     "licensePlural": "{count} {count, plural, one {licença} other {licenças}}",
-    "errors.termNoteWithoutValue": "Um valor deve ser definido para este termo para salvar uma anotação"
+    "errors.termNoteWithoutValue": "Um valor deve ser definido para este termo para salvar uma anotação",
+    "organizations.addOrganizationToLicense": "Adicionar organização à licença"
 }
