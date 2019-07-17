@@ -22,6 +22,8 @@ import { Spinner } from '@folio/stripes-erm-components';
 
 import {
   LicenseFormInfo,
+  LicenseFormInternalContacts,
+  LicenseFormOrganizations,
   FormCoreDocs,
   FormSupplementaryDocs,
   FormTerms,
@@ -51,10 +53,11 @@ class LicenseForm extends React.Component {
 
   state = {
     sections: {
-      licenseFormInfo: true,
-      licenseFormDocs: false,
-      licenseFormTerms: false,
-      licenseFormSupplementaryDocs: false
+      licenseFormInternalContacts: true,
+      licenseFormOrganizations: true,
+      licenseFormDocs: true,
+      licenseFormTerms: true,
+      licenseFormSupplementaryDocs: true
     }
   }
 
@@ -190,11 +193,14 @@ class LicenseForm extends React.Component {
                         <Col xs>
                           <ExpandAllButton
                             accordionStatus={this.state.sections}
+                            id="clickable-expand-all"
                             onToggle={this.handleAllSectionsToggle}
                           />
                         </Col>
                       </Row>
                       <LicenseFormInfo {...this.getSectionProps('licenseFormInfo')} />
+                      <LicenseFormInternalContacts {...this.getSectionProps('licenseFormInternalContacts')} />
+                      <LicenseFormOrganizations {...this.getSectionProps('licenseFormOrganizations')} />
                       <FormCoreDocs {...this.getSectionProps('licenseFormDocs')} />
                       <FormTerms {...this.getSectionProps('licenseFormTerms')} />
                       <FormSupplementaryDocs {...this.getSectionProps('licenseFormSupplementaryDocs')} />

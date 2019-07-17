@@ -8,6 +8,9 @@ import { InternalContactsFieldArray } from '@folio/stripes-erm-components';
 
 export default class LicenseFormInternalContacts extends React.Component {
   static propTypes = {
+    id: PropTypes.string,
+    onToggle: PropTypes.func,
+    open: PropTypes.bool,
     data: PropTypes.shape({
       contactRoleValues: PropTypes.array,
       users: PropTypes.array,
@@ -15,21 +18,22 @@ export default class LicenseFormInternalContacts extends React.Component {
   };
 
   render() {
+    const { data, id, onToggle, open } = this.props;
+
     return (
-      <div style={{ marginLeft: '2rem' }}>
-        <Accordion
-          closedByDefault
-          id="licenseFormContacts"
-          label={<FormattedMessage id="ui-licenses.section.internalContacts" />}
-        >
-          <FieldArray
-            name="contacts"
-            component={InternalContactsFieldArray}
-            contactRoles={this.props.data.contactRoleValues}
-            users={this.props.data.users}
-          />
-        </Accordion>
-      </div>
+      <Accordion
+        id={id}
+        label={<FormattedMessage id="ui-licenses.section.internalContacts" />}
+        onToggle={onToggle}
+        open={open}
+      >
+        <FieldArray
+          name="contacts"
+          component={InternalContactsFieldArray}
+          contactRoles={data.contactRoleValues}
+          users={data.users}
+        />
+      </Accordion>
     );
   }
 }

@@ -8,10 +8,6 @@ module.exports.test = (uiTestCtx,
   }) => {
   describe(`ui-licenses: set docs: "${docs.map(d => d.name).join(', ')}"`, function test() {
     const { config, helpers } = uiTestCtx;
-    let formName = 'licenseFormDocs';
-    if (docsFieldName === 'supplementaryDocs') {
-      formName = 'licenseFormSupplementaryDocs';
-    }
     const nightmare = new Nightmare(config.nightmare);
 
     this.timeout(Number(config.test_timeout));
@@ -42,7 +38,6 @@ module.exports.test = (uiTestCtx,
           .waitUntilNetworkIdle(2000) // Wait for the default values to be fetched and set.
 
           .insert('#edit-license-name', name)
-          .click(`#accordion-toggle-button-${formName}`)
           .then(done)
           .catch(done);
       });
@@ -130,7 +125,6 @@ module.exports.test = (uiTestCtx,
           .wait('#clickable-edit-license')
           .click('#clickable-edit-license')
           .wait('#licenseFormInfo')
-          .click(`#accordion-toggle-button-${formName}`)
           .waitUntilNetworkIdle(2000)
           .then(done)
           .catch(done);

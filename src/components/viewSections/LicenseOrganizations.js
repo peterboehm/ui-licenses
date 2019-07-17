@@ -9,6 +9,7 @@ import { AppIcon } from '@folio/stripes/core';
 
 export default class LicenseOrganizations extends React.Component {
   static propTypes = {
+    id: PropTypes.string.isRequired,
     license: PropTypes.shape({
       orgs: PropTypes.arrayOf(
         PropTypes.shape({
@@ -23,6 +24,8 @@ export default class LicenseOrganizations extends React.Component {
         }),
       ),
     }).isRequired,
+    onToggle: PropTypes.func.isRequired,
+    open: PropTypes.bool.isRequired,
   };
 
   renderOrgList = (orgs) => {
@@ -67,13 +70,16 @@ export default class LicenseOrganizations extends React.Component {
   }
 
   render() {
+    const { id, onToggle, open } = this.props;
+
     return (
       <Accordion
-        closedByDefault
         displayWhenClosed={this.renderBadge()}
         displayWhenOpen={this.renderBadge()}
-        id="license-orgs"
+        id={id}
         label={<FormattedMessage id="ui-licenses.section.organizations" />}
+        onToggle={onToggle}
+        open={open}
       >
         <Layout className="padding-bottom-gutter">
           {this.renderOrganizations()}

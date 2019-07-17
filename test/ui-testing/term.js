@@ -44,7 +44,6 @@ module.exports.test = (uiTestCtx, term = TERM) => {
           .waitUntilNetworkIdle(2000) // Wait for the default values to be fetched and set.
 
           .insert('#edit-license-name', name)
-          .click('#accordion-toggle-button-licenseFormTerms')
 
           .then(done)
           .catch(done);
@@ -124,7 +123,6 @@ module.exports.test = (uiTestCtx, term = TERM) => {
           .click('#clickable-edit-license')
           .wait('#licenseFormInfo')
           .waitUntilNetworkIdle(2000)
-          .click('#accordion-toggle-button-licenseFormTerms')
           .evaluate((expectedTerm, row) => {
             const nameElement = document.querySelector(`#edit-term-${row}-name`);
             const valueElement = document.querySelector(`#edit-term-${row}-value`);
@@ -194,7 +192,6 @@ module.exports.test = (uiTestCtx, term = TERM) => {
           .click('#clickable-edit-license')
           .wait('#licenseFormInfo')
           .waitUntilNetworkIdle(2000)
-          .click('#accordion-toggle-button-licenseFormTerms')
           .evaluate((expectedTerm, row) => {
             const nameElement = document.querySelector(`#edit-term-${row}-name`);
             const valueElement = document.querySelector(`#edit-term-${row}-value`);

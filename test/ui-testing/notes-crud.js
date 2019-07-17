@@ -70,7 +70,6 @@ module.exports.test = (uiTestCtx) => {
           .waitUntilNetworkIdle(2000) // Wait for the default values to be fetched and set.
 
           .insert('#edit-license-name', license.name)
-          .click('#accordion-toggle-button-licenseFormTerms')
 
           .then(done)
           .catch(done);

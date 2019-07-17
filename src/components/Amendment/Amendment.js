@@ -182,7 +182,11 @@ export default class Amendment extends React.Component {
           <AccordionSet>
             <Row end="xs">
               <Col xs>
-                <ExpandAllButton accordionStatus={this.state.sections} onToggle={this.handleAllSectionsToggle} />
+                <ExpandAllButton
+                  accordionStatus={this.state.sections}
+                  id="clickable-expand-all"
+                  onToggle={this.handleAllSectionsToggle}
+                />
               </Col>
             </Row>
             <CoreDocs {...this.getSectionProps('amendmentCoreDocs')} />
