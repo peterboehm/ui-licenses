@@ -42,12 +42,12 @@ export default class LicenseOrganizations extends React.Component {
               <AppIcon
                 app="licenses"
                 size="small"
-              />
-              &nbsp;
-              <Link to={`/organizations/view/${org.orgsUuid}`}>
-                {org.name}
-              </Link>
-              {` · ${role.label}`}
+              >
+                <Link to={`/organizations/view/${org.orgsUuid}`}>
+                  {org.name}
+                </Link>
+                {` · ${role.label}`}
+              </AppIcon>
             </span>
           }
           interfaces={interfaces}
