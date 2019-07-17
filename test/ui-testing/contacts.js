@@ -44,8 +44,6 @@ module.exports.test = (uiTestCtx) => {
           .wait('#clickable-new-license')
           .click('#clickable-new-license')
 
-          .wait('#accordion-toggle-button-licenseFormContacts')
-          .click('#accordion-toggle-button-licenseFormContacts')
           .waitUntilNetworkIdle(1000)
           .insert('#edit-license-name', name)
 
@@ -138,8 +136,6 @@ module.exports.test = (uiTestCtx) => {
         nightmare
           .wait('#clickable-edit-license')
           .click('#clickable-edit-license')
-          .wait('#accordion-toggle-button-licenseFormContacts')
-          .click('#accordion-toggle-button-licenseFormContacts')
           .waitUntilNetworkIdle(1000)
           .then(done)
           .catch(done);

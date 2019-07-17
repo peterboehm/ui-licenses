@@ -13,32 +13,35 @@ import { OrganizationsFieldArray } from '@folio/stripes-erm-components';
 
 class LicenseFormOrganizations extends React.Component {
   static propTypes = {
+    id: PropTypes.string,
+    onToggle: PropTypes.func,
+    open: PropTypes.bool,
     data: PropTypes.shape({
       orgRoleValues: PropTypes.array,
     }),
   };
 
   render() {
-    const addOrganizationBtnLabel = <FormattedMessage id="ui-licenses.organizations.addOrganizationToLicense" />;
+    const { data, id, onToggle, open } = this.props;
+
     return (
-      <div style={{ marginLeft: '2rem' }}>
-        <Accordion
-          closedByDefault
-          id="licenseFormOrgs"
-          label={<FormattedMessage id="ui-licenses.section.organizations" />}
-        >
-          <Row>
-            <Col xs={12}>
-              <FieldArray
-                name="orgs"
-                addOrganizationBtnLabel={addOrganizationBtnLabel}
-                component={OrganizationsFieldArray}
-                roles={this.props.data.orgRoleValues}
-              />
-            </Col>
-          </Row>
-        </Accordion>
-      </div>
+      <Accordion
+        id={id}
+        label={<FormattedMessage id="ui-licenses.section.organizations" />}
+        onToggle={onToggle}
+        open={open}
+      >
+        <Row>
+          <Col xs={12}>
+            <FieldArray
+              name="orgs"
+              addOrganizationBtnLabel={<FormattedMessage id="ui-licenses.organizations.addOrganizationToLicense" />}
+              component={OrganizationsFieldArray}
+              roles={data.orgRoleValues}
+            />
+          </Col>
+        </Row>
+      </Accordion>
     );
   }
 }

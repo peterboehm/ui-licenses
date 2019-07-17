@@ -51,9 +51,9 @@ class AmendmentForm extends React.Component {
 
   state = {
     sections: {
-      amendmentFormCoreDocs: false,
-      amendmentFormSupplementaryDocs: false,
-      amendmentFormTerms: false,
+      amendmentFormCoreDocs: true,
+      amendmentFormSupplementaryDocs: true,
+      amendmentFormTerms: true,
     }
   }
 
@@ -189,6 +189,7 @@ class AmendmentForm extends React.Component {
                         <Col xs>
                           <ExpandAllButton
                             accordionStatus={this.state.sections}
+                            id="clickable-expand-all"
                             onToggle={this.handleAllSectionsToggle}
                           />
                         </Col>

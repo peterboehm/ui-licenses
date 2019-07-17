@@ -9,6 +9,7 @@ import { Spinner } from '@folio/stripes-erm-components';
 
 export default class LicenseInternalContacts extends React.Component {
   static propTypes = {
+    id: PropTypes.string.isRequired,
     license: PropTypes.shape({
       contacts: PropTypes.arrayOf(
         PropTypes.shape({
@@ -24,6 +25,8 @@ export default class LicenseInternalContacts extends React.Component {
         })
       ),
     }).isRequired,
+    onToggle: PropTypes.func.isRequired,
+    open: PropTypes.bool.isRequired,
   };
 
   renderBadge = () => {
@@ -63,12 +66,16 @@ export default class LicenseInternalContacts extends React.Component {
   }
 
   render() {
+    const { id, onToggle, open } = this.props;
+
     return (
       <Accordion
-        closedByDefault
         displayWhenClosed={this.renderBadge()}
         displayWhenOpen={this.renderBadge()}
+        id={id}
         label={<FormattedMessage id="ui-agreements.agreements.internalContacts" />}
+        onToggle={onToggle}
+        open={open}
       >
         { this.renderContacts() }
       </Accordion>

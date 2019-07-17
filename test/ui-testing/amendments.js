@@ -91,7 +91,7 @@ module.exports.test = (uiTestCtx) => {
 
         if (amendment.terms) {
           it('should fill out amendment terms', done => {
-            let chain = nightmare.click('#accordion-toggle-button-amendmentFormTerms');
+            let chain = nightmare;
 
             amendment.terms.forEach(term => {
               chain = chain
@@ -110,7 +110,7 @@ module.exports.test = (uiTestCtx) => {
 
         if (amendment.coreDocs) {
           it('should fill out amendment core docs', done => {
-            let chain = nightmare.click('#accordion-toggle-button-amendmentFormCoreDocs');
+            let chain = nightmare;
 
             amendment.coreDocs.forEach((doc, i) => {
               chain = chain
@@ -125,7 +125,7 @@ module.exports.test = (uiTestCtx) => {
 
         if (amendment.supplementaryDocs) {
           it('should fill out amendment supplementary docs', done => {
-            let chain = nightmare.click('#accordion-toggle-button-amendmentFormSupplementaryDocs');
+            let chain = nightmare;
 
             amendment.supplementaryDocs.forEach((doc, i) => {
               chain = chain

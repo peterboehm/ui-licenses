@@ -22,6 +22,8 @@ import {
   LicenseAmendments,
   LicenseHeader,
   LicenseInfo,
+  LicenseInternalContacts,
+  LicenseOrganizations,
   CoreDocs,
   SupplementaryDocs,
   Terms,
@@ -47,6 +49,8 @@ class License extends React.Component {
   state = {
     sections: {
       licenseInfo: true,
+      licenseInternalContacts: false,
+      licenseOrganizations: false,
       licenseCoreDocs: false,
       licenseAmendments: false,
       licenseTerms: false,
@@ -162,10 +166,16 @@ class License extends React.Component {
           <AccordionSet>
             <Row end="xs">
               <Col xs>
-                <ExpandAllButton accordionStatus={this.state.sections} onToggle={this.handleAllSectionsToggle} />
+                <ExpandAllButton
+                  accordionStatus={this.state.sections}
+                  id="clickable-expand-all"
+                  onToggle={this.handleAllSectionsToggle}
+                />
               </Col>
             </Row>
             <LicenseInfo {...this.getSectionProps('licenseInfo')} />
+            <LicenseInternalContacts {...this.getSectionProps('licenseInternalContacts')} />
+            <LicenseOrganizations {...this.getSectionProps('licenseOrganizations')} />
             <CoreDocs {...this.getSectionProps('licenseCoreDocs')} />
             <Terms {...this.getSectionProps('licenseTerms')} />
             <LicenseAmendments {...this.getSectionProps('licenseAmendments')} />
