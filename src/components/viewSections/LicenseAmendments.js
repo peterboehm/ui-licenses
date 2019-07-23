@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { get } from 'lodash';
-import { FormattedDate, FormattedMessage } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import Link from 'react-router-dom/Link';
 import {
   Accordion,
@@ -11,6 +11,8 @@ import {
 } from '@folio/stripes/components';
 
 import { LicenseEndDate } from '@folio/stripes-erm-components';
+
+import FormattedUTCDate from '../FormattedUTCDate';
 
 export default class LicenseAmendments extends React.Component {
   static propTypes = {
@@ -71,7 +73,7 @@ export default class LicenseAmendments extends React.Component {
           formatter={{
             name: a => <Link to={urls.viewAmendment(a.id)}>{a.name}</Link>,
             status: a => get(a, ['status', 'label'], '-'),
-            startDate: a => (a.startDate ? <FormattedDate value={a.startDate} /> : '-'),
+            startDate: a => (a.startDate ? <FormattedUTCDate value={a.startDate} /> : '-'),
             endDate: a => <LicenseEndDate license={a} />,
           }}
           id="amendments-table"

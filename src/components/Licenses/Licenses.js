@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Link from 'react-router-dom/Link';
 import { noop } from 'lodash';
-import { FormattedDate, FormattedMessage } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 
 import {
   MultiColumnList,
@@ -24,6 +24,7 @@ import {
 
 import { LicenseEndDate } from '@folio/stripes-erm-components';
 
+import FormattedUTCDate from '../FormattedUTCDate';
 import LicenseFilters from '../LicenseFilters';
 
 import css from './Licenses.css';
@@ -74,7 +75,7 @@ export default class Licenses extends React.Component {
   formatter = {
     type: ({ type }) => type && type.label,
     status: ({ status }) => status && status.label,
-    startDate: ({ startDate }) => (startDate ? <FormattedDate value={startDate} /> : ''),
+    startDate: ({ startDate }) => (startDate ? <FormattedUTCDate value={startDate} /> : ''),
     endDate: license => <LicenseEndDate license={license} />,
   }
 
