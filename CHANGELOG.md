@@ -1,6 +1,14 @@
 # Change history for ui-licenses
 
-## 3.2.0
+## 3.3.0 2019-07-24
+* Attach Notes to licenses. ERM-269
+* Use updated `Card` UI for organizations. ERM-230 280 281 282
+* Block form submission when term note is set without a value. ERM-268
+* Accordion UI cleanup. ERM-341 342
+* Use dates instead of datetimes. ERM-294
+* Only allow one organization to be a Licensor. ERM-344
+
+## 3.2.0 2019-06-10
 * Added ability to attach files to documents. ERM-257
 * Added ability to manage amendments for licenses. ERM-147
 
