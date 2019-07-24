@@ -106,6 +106,7 @@ export default class LicenseFormInfo extends React.Component {
         <Row>
           <Col xs={12} md={5}>
             <Field
+              backendDateStandard="YYYY-MM-DD"
               id="edit-license-start-date"
               name="startDate"
               label={<FormattedMessage id="ui-licenses.prop.startDate" />}
@@ -115,6 +116,7 @@ export default class LicenseFormInfo extends React.Component {
           </Col>
           <Col xs={10} md={5}>
             <Field
+              backendDateStandard="YYYY-MM-DD"
               id="edit-license-end-date"
               name="endDate"
               label={<FormattedMessage id="ui-licenses.prop.endDate" />}
