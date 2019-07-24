@@ -1,9 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { get } from 'lodash';
-import { FormattedDate, FormattedMessage } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import { Col, KeyValue, Row } from '@folio/stripes/components';
 import { LicenseEndDate } from '@folio/stripes-erm-components';
+
+import FormattedUTCDate from '../FormattedUTCDate';
 
 class LicenseInfo extends React.Component {
   static propTypes = {
@@ -43,7 +45,7 @@ class LicenseInfo extends React.Component {
           <Col xs={6} md={3}>
             <KeyValue label={<FormattedMessage id="ui-licenses.prop.startDate" />}>
               <div data-test-license-start-date>
-                {license.startDate ? <FormattedDate value={license.startDate} /> : '-'}
+                {license.startDate ? <FormattedUTCDate value={license.startDate} /> : '-'}
               </div>
             </KeyValue>
           </Col>

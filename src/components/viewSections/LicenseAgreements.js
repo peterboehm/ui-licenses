@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { get } from 'lodash';
-import { FormattedDate, FormattedMessage } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import Link from 'react-router-dom/Link';
 import { IfInterface } from '@folio/stripes/core';
 import {
@@ -12,6 +12,8 @@ import {
   MultiColumnList,
 } from '@folio/stripes/components';
 import { Spinner } from '@folio/stripes-erm-components';
+
+import FormattedUTCDate from '../FormattedUTCDate';
 
 export default class LicenseAgreements extends React.Component {
   static propTypes = {
@@ -85,8 +87,8 @@ export default class LicenseAgreements extends React.Component {
         formatter={{
           linkNote: link => (link.note ? <InfoPopover content={link.note} /> : ''),
           name: ({ owner:agreement = {} }) => <Link to={`/erm/agreements/view/${agreement.id}`}>{agreement.name}</Link>,
-          startDate: ({ owner:agreement = {} }) => (agreement.startDate ? <FormattedDate value={agreement.startDate} /> : '-'),
-          endDate: ({ owner:agreement = {} }) => (agreement.endDate ? <FormattedDate value={agreement.endDate} /> : '-'),
+          startDate: ({ owner:agreement = {} }) => (agreement.startDate ? <FormattedUTCDate value={agreement.startDate} /> : '-'),
+          endDate: ({ owner:agreement = {} }) => (agreement.endDate ? <FormattedUTCDate value={agreement.endDate} /> : '-'),
           agreementStatus: ({ owner:agreement = {} }) => get(agreement, ['agreementStatus', 'label'], '-'),
           linkStatus: link => (link.status ? link.status.label : '-'),
         }}
