@@ -98,6 +98,7 @@ class AmendmentFormInfo extends React.Component {
         <Row>
           <Col xs={12} md={5}>
             <Field
+              backendDateStandard="YYYY-MM-DD"
               id="edit-amendment-start-date"
               name="startDate"
               label={<FormattedMessage id="ui-licenses.prop.startDate" />}
@@ -107,6 +108,7 @@ class AmendmentFormInfo extends React.Component {
           </Col>
           <Col xs={10} md={5}>
             <Field
+              backendDateStandard="YYYY-MM-DD"
               id="edit-amendment-end-date"
               name="endDate"
               label={<FormattedMessage id="ui-licenses.prop.endDate" />}
