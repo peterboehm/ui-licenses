@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, injectIntl } from 'react-intl';
 import {
   Button,
   Card,
@@ -17,7 +17,7 @@ const TERM_TYPE_TEXT = 'com.k_int.web.toolkit.custprops.types.CustomPropertyText
 const TERM_TYPE_NUMBER = 'com.k_int.web.toolkit.custprops.types.CustomPropertyInteger';
 const TERM_TYPE_SELECT = 'com.k_int.web.toolkit.custprops.types.CustomPropertyRefdata';
 
-export default class TermsListField extends React.Component {
+class TermsListField extends React.Component {
   static propTypes = {
     input: PropTypes.shape({
       name: PropTypes.string,
@@ -202,11 +202,12 @@ export default class TermsListField extends React.Component {
     fieldProps.dataOptions = term.options; */
 
     const dataOptions = [
-      { value: true, label: <FormattedMessage id="ui-licenses.term.internalTrue" /> },
-      { value: false, label: <FormattedMessage id="ui-licenses.term.internalFalse" /> }
+      { value: true, label: this.props.intl.formatMessage({ id: "ui-licenses.term.internalTrue" }) },
+      { value: false, label: this.props.intl.formatMessage({ id: "ui-licenses.term.internalFalse" }) }
     ];
 
     const handleChange = e => {
+      console.log(typeof(e.target.value),'value');
       onChange({
         ...value,
         [term.value]: [{
@@ -418,3 +419,5 @@ export default class TermsListField extends React.Component {
     );
   }
 }
+
+export default injectIntl(TermsListField);
