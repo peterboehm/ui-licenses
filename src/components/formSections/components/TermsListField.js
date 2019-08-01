@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage, injectIntl } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
+import { IntlConsumer } from '@folio/stripes/core';
 import {
   Button,
   Card,
@@ -16,7 +17,7 @@ const TERM_TYPE_TEXT = 'com.k_int.web.toolkit.custprops.types.CustomPropertyText
 const TERM_TYPE_NUMBER = 'com.k_int.web.toolkit.custprops.types.CustomPropertyInteger';
 const TERM_TYPE_SELECT = 'com.k_int.web.toolkit.custprops.types.CustomPropertyRefdata';
 
-class TermsListField extends React.Component {
+export default class TermsListField extends React.Component {
   static propTypes = {
     input: PropTypes.shape({
       name: PropTypes.string,
@@ -123,7 +124,8 @@ class TermsListField extends React.Component {
   validateNoteField = (values, termValue) => {
     const val = values ? values[termValue] : [];
     const { note, value } = val ? val[0] : {};
-    return (note && !value) ? <FormattedMessage id="ui-licenses.errors.termNoteWithoutValue" /> : undefined;
+    const { publicNote, pubValue } = val ? val[0] : {};
+    return ((note && !value) || (publicNote && !pubValue)) ? <FormattedMessage id="ui-licenses.errors.termNoteWithoutValue" /> : undefined;
   }
 
   renderTermValue = (term, i, errorMessage) => {
@@ -179,10 +181,12 @@ class TermsListField extends React.Component {
     const termObject = value[term.value] ? value[term.value][0] : {};
     const { internal } = termObject;
 
-    const dataOptions = [
-      { value: true, label: this.props.intl.formatMessage({ id: 'ui-licenses.term.internalTrue' }) },
-      { value: false, label: this.props.intl.formatMessage({ id: 'ui-licenses.term.internalFalse' }) }
-    ];
+    const dataOptions = (intl) => {
+      return [
+        { value: true, label: intl.formatMessage({ id: 'ui-licenses.term.internalTrue' }) },
+        { value: false, label: intl.formatMessage({ id: 'ui-licenses.term.internalFalse' }) }
+      ];
+    };
 
     const handleChange = e => {
       onChange({
@@ -195,15 +199,20 @@ class TermsListField extends React.Component {
     };
 
     return (
-      <Select
-        data-test-term-visibility
-        id={`edit-term-${i}-visibility`}
-        dataOptions={dataOptions}
-        label={<FormattedMessage id="ui-licenses.prop.termVisibility" />}
-        onChange={handleChange}
-        value={internal}
-        required
-      />
+      /* TODO: Refactor this component to use `injectIntl` when Folio starts using react-intl 3.0 */
+      <IntlConsumer>
+        {intl => (
+          <Select
+            data-test-term-visibility
+            id={`data-test-term-${i}-visibility`}
+            dataOptions={dataOptions(intl)}
+            label={<FormattedMessage id="ui-licenses.prop.termVisibility" />}
+            onChange={handleChange}
+            value={internal}
+            required
+          />
+        )}
+      </IntlConsumer>
     );
   }
 
@@ -256,7 +265,6 @@ class TermsListField extends React.Component {
     return (
       <TextArea
         data-test-term-note
-        // fullWidth
         id={`edit-term-${i}-internal-note`}
         label={<FormattedMessage id="ui-licenses.term.internalNote" />}
         onChange={handleChange}
@@ -283,7 +291,6 @@ class TermsListField extends React.Component {
     return (
       <TextArea
         data-test-term-public-note
-        // fullWidth
         id={`edit-term-${i}-public-note`}
         onChange={handleChange}
         label={<FormattedMessage id="ui-licenses.term.publicNote" />}
@@ -374,5 +381,3 @@ class TermsListField extends React.Component {
     );
   }
 }
-
-export default injectIntl(TermsListField);
