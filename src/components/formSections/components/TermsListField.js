@@ -121,10 +121,17 @@ export default class TermsListField extends React.Component {
     );
   }
 
-  validateNoteField = (values, termValue) => {
+  validateFields = (values, termValue) => {
     const val = values ? values[termValue] : [];
-    const { note, value } = val ? val[0] : {};
-    return (note && !value) ? <FormattedMessage id="ui-licenses.errors.termNoteWithoutValue" /> : undefined;
+    const { note, publicNote, value } = val ? val[0] : {};
+
+    if ((note && !value) || (publicNote && !value)) {
+      return <FormattedMessage id="ui-licenses.errors.termNoteWithoutValue" />;
+    }
+    /* if (internal && !value) {
+      return <FormattedMessage id="ui-licenses.errors.termVisibilityWithoutValue" />;
+    } */
+    return undefined;
   }
 
   renderTermValue = (term, i, errorMessage) => {
@@ -203,7 +210,7 @@ export default class TermsListField extends React.Component {
         {intl => (
           <Select
             data-test-term-visibility
-            id={`data-test-term-${i}-visibility`}
+            id={`edit-term-${i}-visibility`}
             dataOptions={dataOptions(intl)}
             label={<FormattedMessage id="ui-licenses.prop.termVisibility" />}
             onChange={handleChange}
@@ -323,7 +330,7 @@ export default class TermsListField extends React.Component {
     let termNoteError = false;
 
     const termsList = terms.map((term, i) => {
-      const errorMessage = this.validateNoteField(value, term.value);
+      const errorMessage = this.validateFields(value, term.value);
       termNoteError = errorMessage ? true : termNoteError;
 
       return (

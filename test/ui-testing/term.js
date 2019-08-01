@@ -193,6 +193,7 @@ module.exports.test = (uiTestCtx, term = TERM) => {
         nightmare
           .insert(`#edit-term-${NUMBER_OF_TERMS - 1}-value`, '')
           .type(`#edit-term-${NUMBER_OF_TERMS - 1}-value`, term.editedValue)
+          .wait(`#edit-term-${NUMBER_OF_TERMS - 1}-visibility`)
           .type(`#edit-term-${NUMBER_OF_TERMS - 1}-visibility`, term.internal.text)
           .then(done)
           .catch(done);
