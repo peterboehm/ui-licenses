@@ -8,6 +8,12 @@ module.exports.test = (uiTestCtx) => {
       label: 'Other restrictions',
       value: 'A Few',
       editedValue: 'A Lot',
+      note: 'Internal note',
+      publicnote: 'Public note',
+      internal: {
+        text: 'Internal',
+        value: 'true',
+      }
     },
   );
 };

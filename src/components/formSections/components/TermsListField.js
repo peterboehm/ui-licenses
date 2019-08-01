@@ -197,7 +197,7 @@ class TermsListField extends React.Component {
     return (
       <Select
         data-test-term-visibility
-        id={`data-test-term-${i}-visibility`}
+        id={`edit-term-${i}-visibility`}
         dataOptions={dataOptions}
         label={<FormattedMessage id="ui-licenses.prop.termVisibility" />}
         onChange={handleChange}
@@ -255,8 +255,8 @@ class TermsListField extends React.Component {
 
     return (
       <TextArea
-        data-test-term-internal-note
-        fullWidth
+        data-test-term-note
+        // fullWidth
         id={`edit-term-${i}-internal-note`}
         label={<FormattedMessage id="ui-licenses.term.internalNote" />}
         onChange={handleChange}
@@ -283,7 +283,7 @@ class TermsListField extends React.Component {
     return (
       <TextArea
         data-test-term-public-note
-        fullWidth
+        // fullWidth
         id={`edit-term-${i}-public-note`}
         onChange={handleChange}
         label={<FormattedMessage id="ui-licenses.term.publicNote" />}

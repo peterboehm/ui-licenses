@@ -7,6 +7,8 @@ const TERM = {
   label: 'Other restrictions',
   value: 'A Few',
   editedValue: 'A Lot',
+  note: 'Internal note',
+  publicnote: 'Public note'
 };
 
 const generateNumber = () => Math.round(Math.random() * 100000);
@@ -79,6 +81,8 @@ module.exports.test = (uiTestCtx, term = TERM) => {
         nightmare
           .type(`#edit-term-${NUMBER_OF_TERMS - 1}-name`, term.label)
           .type(`#edit-term-${NUMBER_OF_TERMS - 1}-value`, term.value)
+          .type(`#edit-term-${NUMBER_OF_TERMS - 1}-internal-note`, term.note)
+          .type(`#edit-term-${NUMBER_OF_TERMS - 1}-public-note`, term.publicnote)
           .then(done)
           .catch(done);
       });
@@ -96,6 +100,9 @@ module.exports.test = (uiTestCtx, term = TERM) => {
           .evaluate((expectedTerm) => {
             const nameElement = document.querySelector(`[data-test-term-label=${expectedTerm.name}]`);
             const valueElement = document.querySelector(`[data-test-term-value=${expectedTerm.name}]`);
+            const noteElement = document.querySelector(`[data-test-term-note=${expectedTerm.name}]`);
+            const pubNoteElement = document.querySelector(`[data-test-term-public-note=${expectedTerm.name}]`);
+            const visibilityElement = document.querySelector(`[data-test-term-visibility=${expectedTerm.name}]`);
 
             if (!nameElement) {
               throw Error(`Expected to find ${expectedTerm.name} label`);
@@ -112,6 +119,30 @@ module.exports.test = (uiTestCtx, term = TERM) => {
             if (valueElement.textContent !== expectedTerm.value) {
               throw Error(`Expected to find ${expectedTerm.value}`);
             }
+
+            if (!noteElement) {
+              throw Error(`Expected to find ${expectedTerm.note} note`);
+            }
+
+            if (noteElement.textContent !== expectedTerm.note) {
+              throw Error(`Expected to find ${expectedTerm.note}`);
+            }
+
+            if (!pubNoteElement) {
+              throw Error(`Expected to find ${expectedTerm.publicnote} public note`);
+            }
+
+            if (pubNoteElement.textContent !== expectedTerm.publicnote) {
+              throw Error(`Expected to find ${expectedTerm.publicnote}`);
+            }
+
+            if (!visibilityElement) {
+              throw Error('Expected to find visibility');
+            }
+
+            if (visibilityElement.textContent !== 'Internal') {
+              throw Error('Expected to find visibility \'Internal\'');
+            }
           }, term)
           .then(done)
           .catch(done);
@@ -126,6 +157,8 @@ module.exports.test = (uiTestCtx, term = TERM) => {
           .evaluate((expectedTerm, row) => {
             const nameElement = document.querySelector(`#edit-term-${row}-name`);
             const valueElement = document.querySelector(`#edit-term-${row}-value`);
+            const noteElement = document.querySelector(`#edit-term-${row}-internal-note`);
+            const pubNoteElement = document.querySelector(`#edit-term-${row}-public-note`);
 
             if (nameElement.selectedOptions[0].textContent !== expectedTerm.label) {
               throw Error(`Expected #edit-term-${row}-name to have label ${expectedTerm.label}`);
@@ -139,15 +172,28 @@ module.exports.test = (uiTestCtx, term = TERM) => {
             if (value !== expectedTerm.value) {
               throw Error(`Expected #edit-term-${row}-value to be ${expectedTerm.value}. It is ${value}`);
             }
+
+            const note = noteElement.value;
+
+            if (note !== expectedTerm.note) {
+              throw Error(`Expected #edit-term-${row}-internal-note to be ${expectedTerm.note}. It is ${note}`);
+            }
+
+            const publicnote = pubNoteElement.value;
+
+            if (publicnote !== expectedTerm.publicnote) {
+              throw Error(`Expected #edit-term-${row}-public-note to be ${expectedTerm.publicnote}. It is ${publicnote}`);
+            }
           }, term, NUMBER_OF_TERMS - 1)
           .then(done)
           .catch(done);
       });
 
-      it(`should edit term value to: ${term.editedValue}`, done => {
+      it(`should edit term value to: ${term.editedValue} and set visibility to ${term.internal.text}`, done => {
         nightmare
           .insert(`#edit-term-${NUMBER_OF_TERMS - 1}-value`, '')
           .type(`#edit-term-${NUMBER_OF_TERMS - 1}-value`, term.editedValue)
+          .type(`#edit-term-${NUMBER_OF_TERMS - 1}-visibility`, term.internal.text)
           .then(done)
           .catch(done);
       });
@@ -165,6 +211,7 @@ module.exports.test = (uiTestCtx, term = TERM) => {
           .evaluate((expectedTerm) => {
             const nameElement = document.querySelector(`[data-test-term-label=${expectedTerm.name}]`);
             const valueElement = document.querySelector(`[data-test-term-value=${expectedTerm.name}]`);
+            const visibilityElement = document.querySelector(`[data-test-term-visibility=${expectedTerm.name}]`);
 
             if (!nameElement) {
               throw Error(`Expected to find ${expectedTerm.name} label`);
@@ -181,6 +228,14 @@ module.exports.test = (uiTestCtx, term = TERM) => {
             if (valueElement.textContent !== expectedTerm.editedValue) {
               throw Error(`Expected to find term value ${expectedTerm.editedValue}`);
             }
+
+            if (!visibilityElement) {
+              throw Error(`Expected to find ${expectedTerm.name} visibility`);
+            }
+
+            if (visibilityElement.textContent !== expectedTerm.internal.text) {
+              throw Error(`Expected to find term visibility ${expectedTerm.internal.text}`);
+            }
           }, term)
           .then(done)
           .catch(done);
@@ -195,6 +250,7 @@ module.exports.test = (uiTestCtx, term = TERM) => {
           .evaluate((expectedTerm, row) => {
             const nameElement = document.querySelector(`#edit-term-${row}-name`);
             const valueElement = document.querySelector(`#edit-term-${row}-value`);
+            const visibilityElement = document.querySelector(`#edit-term-${row}-visibility`);
 
             if (expectedTerm.label !== nameElement.selectedOptions[0].textContent) {
               throw Error(`Expected #edit-term-${row}-name to have label ${expectedTerm.label}`);
@@ -208,6 +264,12 @@ module.exports.test = (uiTestCtx, term = TERM) => {
 
             if (value !== expectedTerm.editedValue) {
               throw Error(`Expected #edit-term-${row}-value to be ${expectedTerm.editedValue}. It is ${value}`);
+            }
+
+            const visibility = visibilityElement.value;
+
+            if (visibility !== expectedTerm.internal.value) {
+              throw Error(`Expected #edit-term-${row}-visibility to be ${expectedTerm.internal.value}. It is ${visibility}`);
             }
           }, term, NUMBER_OF_TERMS - 1)
           .then(done)

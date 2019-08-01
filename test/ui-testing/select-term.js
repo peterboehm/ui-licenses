@@ -8,6 +8,12 @@ module.exports.test = (uiTestCtx) => {
       label: 'IP authentication supported?',
       value: 'No',
       editedValue: 'Yes',
+      note: 'Internal note',
+      publicnote: 'Public note',
+      internal: {
+        text: 'Public',
+        value: 'false',
+      }
     },
   );
 };
