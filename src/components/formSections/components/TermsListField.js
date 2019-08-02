@@ -31,6 +31,7 @@ export default class TermsListField extends React.Component {
       options: PropTypes.array,
       type: PropTypes.string.isRequired,
       value: PropTypes.string.isRequired,
+      defaultInternal: PropTypes.bool,
     })).isRequired,
     onError: PropTypes.func,
   };
@@ -214,7 +215,7 @@ export default class TermsListField extends React.Component {
             dataOptions={dataOptions(intl)}
             label={<FormattedMessage id="ui-licenses.prop.termVisibility" />}
             onChange={handleChange}
-            value={internal}
+            value={internal === undefined ? term.defaultInternal : internal}
             required
           />
         )}

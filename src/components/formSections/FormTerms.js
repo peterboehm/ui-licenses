@@ -46,6 +46,7 @@ class FormTerms extends React.Component {
             type: term.type,
             options,
             value: term.name,
+            defaultInternal: term.defaultInternal,
           };
         }),
       };
