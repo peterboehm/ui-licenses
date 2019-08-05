@@ -13,6 +13,8 @@ import {
   TextField,
 } from '@folio/stripes/components';
 
+import EditCard from '@folio/stripes-erm-components/lib/EditCard';
+
 const TERM_TYPE_TEXT = 'com.k_int.web.toolkit.custprops.types.CustomPropertyText'; // eslint-disable-line no-unused-vars
 const TERM_TYPE_NUMBER = 'com.k_int.web.toolkit.custprops.types.CustomPropertyInteger';
 const TERM_TYPE_SELECT = 'com.k_int.web.toolkit.custprops.types.CustomPropertyRefdata';
@@ -33,6 +35,7 @@ export default class TermsListField extends React.Component {
       value: PropTypes.string.isRequired,
       defaultInternal: PropTypes.bool,
     })).isRequired,
+    onDeleteField: PropTypes.func.isRequired,
     onError: PropTypes.func,
   };
 
@@ -325,7 +328,7 @@ export default class TermsListField extends React.Component {
   }
 
   renderTermsList = () => {
-    const { input: { value, name }, onError, meta: { form } } = this.props;
+    const { input: { value, name }, meta: { form }, onDeleteField, onError } = this.props;
     const { terms } = this.state;
 
     let termNoteError = false;
@@ -335,20 +338,28 @@ export default class TermsListField extends React.Component {
       termNoteError = errorMessage ? true : termNoteError;
 
       return (
-        <Card
+        <EditCard
+          data-test-term
+          deleteBtnProps={{
+            'id': `edit-term-${i}-delete`,
+            'data-test-term-delete-btn': true
+          }}
+          header={<FormattedMessage id="ui-licenses.term" values={{ number: i + 1 }} />}
+          key={i}
+          onDelete={() => onDeleteField(i, term.name)}
+        >
+          {/* <Card
           data-test-term
           headerStart={
             <strong data-test-header={term.name}>
-              <FormattedMessage id="ui-licenses.term" />
-              &nbsp;
-              {i + 1}
+              <FormattedMessage id="ui-licenses.term" values={{ number: i + 1 }} />
             </strong>
           }
           headerEnd={
             this.renderTermDelete(term, i)
           }
           key={i}
-        >
+        > */}
           <Row>
             <Col xs={12}>
               {this.renderTermName(term, i)}
@@ -370,7 +381,8 @@ export default class TermsListField extends React.Component {
               {this.renderTermNotePublic(term, i)}
             </Col>
           </Row>
-        </Card>
+          {/* </Card> */}
+        </EditCard>
       );
     });
 
