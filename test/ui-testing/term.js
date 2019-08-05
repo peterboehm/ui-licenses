@@ -8,7 +8,7 @@ const TERM = {
   value: 'A Few',
   editedValue: 'A Lot',
   note: 'Internal note',
-  publicnote: 'Public note'
+  publicNote: 'Public note'
 };
 
 const generateNumber = () => Math.round(Math.random() * 100000);
@@ -82,7 +82,7 @@ module.exports.test = (uiTestCtx, term = TERM) => {
           .type(`#edit-term-${NUMBER_OF_TERMS - 1}-name`, term.label)
           .type(`#edit-term-${NUMBER_OF_TERMS - 1}-value`, term.value)
           .type(`#edit-term-${NUMBER_OF_TERMS - 1}-internal-note`, term.note)
-          .type(`#edit-term-${NUMBER_OF_TERMS - 1}-public-note`, term.publicnote)
+          .type(`#edit-term-${NUMBER_OF_TERMS - 1}-public-note`, term.publicNote)
           .then(done)
           .catch(done);
       });
@@ -129,11 +129,11 @@ module.exports.test = (uiTestCtx, term = TERM) => {
             }
 
             if (!pubNoteElement) {
-              throw Error(`Expected to find ${expectedTerm.publicnote} public note`);
+              throw Error(`Expected to find ${expectedTerm.publicNote} public note`);
             }
 
-            if (pubNoteElement.textContent !== expectedTerm.publicnote) {
-              throw Error(`Expected to find ${expectedTerm.publicnote}`);
+            if (pubNoteElement.textContent !== expectedTerm.publicNote) {
+              throw Error(`Expected to find ${expectedTerm.publicNote}`);
             }
 
             if (!visibilityElement) {
@@ -160,7 +160,7 @@ module.exports.test = (uiTestCtx, term = TERM) => {
             const noteElement = document.querySelector(`#edit-term-${row}-internal-note`);
             const pubNoteElement = document.querySelector(`#edit-term-${row}-public-note`);
             const note = noteElement.value;
-            const publicnote = pubNoteElement.value;
+            const publicNote = pubNoteElement.value;
 
 
             if (nameElement.selectedOptions[0].textContent !== expectedTerm.label) {
@@ -180,8 +180,8 @@ module.exports.test = (uiTestCtx, term = TERM) => {
               throw Error(`Expected #edit-term-${row}-internal-note to be ${expectedTerm.note}. It is ${note}`);
             }
 
-            if (publicnote !== expectedTerm.publicnote) {
-              throw Error(`Expected #edit-term-${row}-public-note to be ${expectedTerm.publicnote}. It is ${publicnote}`);
+            if (publicNote !== expectedTerm.publicNote) {
+              throw Error(`Expected #edit-term-${row}-public-note to be ${expectedTerm.publicNote}. It is ${publicNote}`);
             }
           }, term, NUMBER_OF_TERMS - 1)
           .then(done)

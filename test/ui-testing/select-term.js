@@ -9,7 +9,7 @@ module.exports.test = (uiTestCtx) => {
       value: 'No',
       editedValue: 'Yes',
       note: 'Internal note',
-      publicnote: 'Public note',
+      publicNote: 'Public note',
       internal: {
         text: 'Public',
         value: 'false',
