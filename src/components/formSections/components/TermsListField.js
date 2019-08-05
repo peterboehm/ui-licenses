@@ -129,9 +129,6 @@ export default class TermsListField extends React.Component {
     if ((note && !value) || (publicNote && !value)) {
       return <FormattedMessage id="ui-licenses.errors.termNoteWithoutValue" />;
     }
-    /* if (internal && !value) {
-      return <FormattedMessage id="ui-licenses.errors.termVisibilityWithoutValue" />;
-    } */
     return undefined;
   }
 

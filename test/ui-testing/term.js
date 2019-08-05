@@ -159,6 +159,9 @@ module.exports.test = (uiTestCtx, term = TERM) => {
             const valueElement = document.querySelector(`#edit-term-${row}-value`);
             const noteElement = document.querySelector(`#edit-term-${row}-internal-note`);
             const pubNoteElement = document.querySelector(`#edit-term-${row}-public-note`);
+            const note = noteElement.value;
+            const publicnote = pubNoteElement.value;
+
 
             if (nameElement.selectedOptions[0].textContent !== expectedTerm.label) {
               throw Error(`Expected #edit-term-${row}-name to have label ${expectedTerm.label}`);
@@ -173,13 +176,9 @@ module.exports.test = (uiTestCtx, term = TERM) => {
               throw Error(`Expected #edit-term-${row}-value to be ${expectedTerm.value}. It is ${value}`);
             }
 
-            const note = noteElement.value;
-
             if (note !== expectedTerm.note) {
               throw Error(`Expected #edit-term-${row}-internal-note to be ${expectedTerm.note}. It is ${note}`);
             }
-
-            const publicnote = pubNoteElement.value;
 
             if (publicnote !== expectedTerm.publicnote) {
               throw Error(`Expected #edit-term-${row}-public-note to be ${expectedTerm.publicnote}. It is ${publicnote}`);
