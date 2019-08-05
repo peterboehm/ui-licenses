@@ -89,7 +89,7 @@
   "supplementaryDocs.none": "No supplementary documents have been added",
 
   "terms.add": "Add term",
-  "term": "Term",
+  "term.title": "Term {number}",
   "term.internalTrue": "Internal",
   "term.internalFalse": "Public",
   "term.internalNote": "Internal note",
