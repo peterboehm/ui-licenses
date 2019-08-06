@@ -4,16 +4,14 @@ import { FormattedMessage } from 'react-intl';
 import { IntlConsumer } from '@folio/stripes/core';
 import {
   Button,
-  Card,
   Col,
-  IconButton,
   Row,
   Select,
   TextArea,
   TextField,
 } from '@folio/stripes/components';
 
-import EditCard from '@folio/stripes-erm-components/lib/EditCard';
+import { EditCard } from '@folio/stripes-erm-components';
 
 const TERM_TYPE_TEXT = 'com.k_int.web.toolkit.custprops.types.CustomPropertyText'; // eslint-disable-line no-unused-vars
 const TERM_TYPE_NUMBER = 'com.k_int.web.toolkit.custprops.types.CustomPropertyInteger';
@@ -35,7 +33,6 @@ export default class TermsListField extends React.Component {
       value: PropTypes.string.isRequired,
       defaultInternal: PropTypes.bool,
     })).isRequired,
-    onDeleteField: PropTypes.func.isRequired,
     onError: PropTypes.func,
   };
 
@@ -223,35 +220,15 @@ export default class TermsListField extends React.Component {
     );
   }
 
-  renderTermDelete = (term, i) => {
-    const { input: { onChange, value } } = this.props;
-    const currentValue = value[term.value] ? value[term.value][0] : {};
-
-    return (
-      <IconButton
-        data-test-term-delete-btn
-        icon="trash"
-        id={`edit-term-${i}-delete`}
-        onClick={() => {
-          this.setState(prevState => {
-            const newTerms = [...prevState.terms];
-            newTerms.splice(i, 1);
-            return {
-              dirtying: true,
-              terms: newTerms
-            };
-          });
-
-          onChange({
-            ...value,
-            [term.value]: [{
-              ...currentValue,
-              _delete: true,
-            }],
-          });
-        }}
-      />
-    );
+  handleDeleteTerm = (i) => {
+    this.setState(prevState => {
+      const newTerms = [...prevState.terms];
+      newTerms.splice(i, 1);
+      return {
+        dirtying: true,
+        terms: newTerms
+      };
+    });
   }
 
   renderTermNoteInternal = (term, i) => {
@@ -325,7 +302,7 @@ export default class TermsListField extends React.Component {
   }
 
   renderTermsList = () => {
-    const { input: { value, name }, meta: { form }, onDeleteField, onError } = this.props;
+    const { input: { value, name }, meta: { form }, onError } = this.props;
     const { terms } = this.state;
 
     let termNoteError = false;
@@ -343,42 +320,29 @@ export default class TermsListField extends React.Component {
           }}
           header={<FormattedMessage id="ui-licenses.term.title" values={{ number: i + 1 }} />}
           key={i}
-          onDelete={() => onDeleteField(i, term)}
+          onDelete={() => this.handleDeleteTerm(i)}
         >
-          {/* <Card
-          data-test-term
-          headerStart={
-            <strong data-test-header={term.name}>
-              <FormattedMessage id="ui-licenses.term" values={{ number: i + 1 }} />
-            </strong>
-          }
-          headerEnd={
-            this.renderTermDelete(term, i)
-          }
-          key={i}
-        > */}
           <Row>
             <Col xs={12}>
               {this.renderTermName(term, i)}
             </Col>
           </Row>
           <Row>
-            <Col xs={6}>
+            <Col xs={12} md={6}>
               {this.renderTermValue(term, i, errorMessage)}
             </Col>
-            <Col xs={6}>
+            <Col xs={12} md={6}>
               {this.renderTermNoteInternal(term, i)}
             </Col>
           </Row>
           <Row>
-            <Col xs={6}>
+            <Col xs={12} md={6}>
               {this.renderTermVisibility(term, i)}
             </Col>
-            <Col xs={6}>
+            <Col xs={12} md={6}>
               {this.renderTermNotePublic(term, i)}
             </Col>
           </Row>
-          {/* </Card> */}
         </EditCard>
       );
     });
