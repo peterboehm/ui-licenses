@@ -1,16 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
+import { IntlConsumer } from '@folio/stripes/core';
 import {
   Button,
   Col,
-  IconButton,
-  Label,
   Row,
   Select,
   TextArea,
   TextField,
 } from '@folio/stripes/components';
+
+import { EditCard } from '@folio/stripes-erm-components';
 
 const TERM_TYPE_TEXT = 'com.k_int.web.toolkit.custprops.types.CustomPropertyText'; // eslint-disable-line no-unused-vars
 const TERM_TYPE_NUMBER = 'com.k_int.web.toolkit.custprops.types.CustomPropertyInteger';
@@ -30,6 +31,7 @@ export default class TermsListField extends React.Component {
       options: PropTypes.array,
       type: PropTypes.string.isRequired,
       value: PropTypes.string.isRequired,
+      defaultInternal: PropTypes.bool,
     })).isRequired,
     onError: PropTypes.func,
   };
@@ -88,6 +90,7 @@ export default class TermsListField extends React.Component {
         data-test-term-name
         dataOptions={[term, ...unsetTerms]} // The selected term, and the available unset terms
         id={`edit-term-${i}-name`}
+        label={<FormattedMessage id="ui-licenses.prop.termName" />}
         onChange={e => {
           const newValue = e.target.value;
 
@@ -119,10 +122,14 @@ export default class TermsListField extends React.Component {
     );
   }
 
-  validateNoteField = (values, termValue) => {
+  validateFields = (values, termValue) => {
     const val = values ? values[termValue] : [];
-    const { note, value } = val ? val[0] : {};
-    return (note && !value) ? <FormattedMessage id="ui-licenses.errors.termNoteWithoutValue" /> : undefined;
+    const { note, publicNote, value } = val ? val[0] : {};
+
+    if ((note && !value) || (publicNote && !value)) {
+      return <FormattedMessage id="ui-licenses.errors.termNoteWithoutValue" />;
+    }
+    return undefined;
   }
 
   renderTermValue = (term, i, errorMessage) => {
@@ -164,6 +171,7 @@ export default class TermsListField extends React.Component {
       <FieldComponent
         data-test-term-value
         id={`edit-term-${i}-value`}
+        label={<FormattedMessage id="ui-licenses.prop.termValue" />}
         onChange={handleChange}
         value={controlledFieldValue}
         error={errorMessage}
@@ -172,38 +180,69 @@ export default class TermsListField extends React.Component {
     );
   }
 
-  renderTermDelete = (term, i) => {
+  renderTermVisibility = (term, i) => {
     const { input: { onChange, value } } = this.props;
-    const currentValue = value[term.value] ? value[term.value][0] : {};
+    const termObject = value[term.value] ? value[term.value][0] : {};
+    const { internal } = termObject;
+
+    const dataOptions = (intl) => {
+      return [
+        { value: true, label: intl.formatMessage({ id: 'ui-licenses.term.internalTrue' }) },
+        { value: false, label: intl.formatMessage({ id: 'ui-licenses.term.internalFalse' }) }
+      ];
+    };
+
+    const handleChange = e => {
+      onChange({
+        ...value,
+        [term.value]: [{
+          ...termObject,
+          internal: e.target.value
+        }],
+      });
+    };
 
     return (
-      <IconButton
-        data-test-term-delete-btn
-        icon="trash"
-        id={`edit-term-${i}-delete`}
-        onClick={() => {
-          this.setState(prevState => {
-            const newTerms = [...prevState.terms];
-            newTerms.splice(i, 1);
-            return {
-              dirtying: true,
-              terms: newTerms
-            };
-          });
-
-          onChange({
-            ...value,
-            [term.value]: [{
-              ...currentValue,
-              _delete: true,
-            }],
-          });
-        }}
-      />
+      /* TODO: Refactor this component to use `injectIntl` when Folio starts using react-intl 3.0 */
+      <IntlConsumer>
+        {intl => (
+          <Select
+            data-test-term-visibility
+            id={`edit-term-${i}-visibility`}
+            dataOptions={dataOptions(intl)}
+            label={<FormattedMessage id="ui-licenses.prop.termVisibility" />}
+            onChange={handleChange}
+            value={internal === undefined ? term.defaultInternal : internal}
+            required
+          />
+        )}
+      </IntlConsumer>
     );
   }
 
-  renderTermNote = (term, i) => {
+  handleDeleteTerm = (term, i) => {
+    const { input: { onChange, value } } = this.props;
+    const currentValue = value[term.value] ? value[term.value][0] : {};
+
+    this.setState(prevState => {
+      const newTerms = [...prevState.terms];
+      newTerms.splice(i, 1);
+      return {
+        dirtying: true,
+        terms: newTerms
+      };
+    });
+
+    onChange({
+      ...value,
+      [term.value]: [{
+        ...currentValue,
+        _delete: true,
+      }],
+    });
+  }
+
+  renderTermNoteInternal = (term, i) => {
     const { input: { onChange, value } } = this.props;
     const termObject = value[term.value] ? value[term.value][0] : {};
     const { note } = termObject;
@@ -219,18 +258,39 @@ export default class TermsListField extends React.Component {
     };
 
     return (
-      <div>
-        <Label htmlFor={`edit-term-${i}-note`}>
-          <FormattedMessage id="ui-licenses.prop.termNote" />
-        </Label>
-        <TextArea
-          data-test-term-note
-          fullWidth
-          id={`edit-term-${i}-note`}
-          onChange={handleChange}
-          value={note}
-        />
-      </div>
+      <TextArea
+        data-test-term-note
+        id={`edit-term-${i}-internal-note`}
+        label={<FormattedMessage id="ui-licenses.term.internalNote" />}
+        onChange={handleChange}
+        value={note}
+      />
+    );
+  }
+
+  renderTermNotePublic = (term, i) => {
+    const { input: { onChange, value } } = this.props;
+    const termObject = value[term.value] ? value[term.value][0] : {};
+    const { publicNote } = termObject;
+
+    const handleChange = e => {
+      onChange({
+        ...value,
+        [term.value]: [{
+          ...termObject,
+          publicNote: e.target.value
+        }],
+      });
+    };
+
+    return (
+      <TextArea
+        data-test-term-public-note
+        id={`edit-term-${i}-public-note`}
+        onChange={handleChange}
+        label={<FormattedMessage id="ui-licenses.term.publicNote" />}
+        value={publicNote}
+      />
     );
   }
 
@@ -253,34 +313,48 @@ export default class TermsListField extends React.Component {
   }
 
   renderTermsList = () => {
-    const { input: { value, name }, onError, meta: { form } } = this.props;
+    const { input: { value, name }, meta: { form }, onError } = this.props;
     const { terms } = this.state;
 
     let termNoteError = false;
 
     const termsList = terms.map((term, i) => {
-      const errorMessage = this.validateNoteField(value, term.value);
+      const errorMessage = this.validateFields(value, term.value);
       termNoteError = errorMessage ? true : termNoteError;
 
       return (
-        <React.Fragment key={term.value}>
+        <EditCard
+          data-test-term
+          deleteBtnProps={{
+            'id': `edit-term-${i}-delete`,
+            'data-test-term-delete-btn': true
+          }}
+          header={<FormattedMessage id="ui-licenses.term.title" values={{ number: i + 1 }} />}
+          key={term.value}
+          onDelete={() => this.handleDeleteTerm(term, i)}
+        >
           <Row>
-            <Col xs={5}>
+            <Col xs={12}>
               {this.renderTermName(term, i)}
             </Col>
-            <Col xs={6}>
+          </Row>
+          <Row>
+            <Col xs={12} md={6}>
               {this.renderTermValue(term, i, errorMessage)}
             </Col>
-            <Col xs={1}>
-              {this.renderTermDelete(term, i)}
+            <Col xs={12} md={6}>
+              {this.renderTermNoteInternal(term, i)}
             </Col>
           </Row>
           <Row>
-            <Col xs={6} xsOffset={5}>
-              {this.renderTermNote(term, i)}
+            <Col xs={12} md={6}>
+              {this.renderTermVisibility(term, i)}
+            </Col>
+            <Col xs={12} md={6}>
+              {this.renderTermNotePublic(term, i)}
             </Col>
           </Row>
-        </React.Fragment>
+        </EditCard>
       );
     });
 

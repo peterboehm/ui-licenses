@@ -4,12 +4,7 @@ import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import { get } from 'lodash';
 
 import { Field } from 'redux-form';
-import {
-  Accordion,
-  Col,
-  Label,
-  Row,
-} from '@folio/stripes/components';
+import { Accordion } from '@folio/stripes/components';
 
 import { TermsListField } from './components';
 
@@ -51,6 +46,7 @@ class FormTerms extends React.Component {
             type: term.type,
             options,
             value: term.name,
+            defaultInternal: term.defaultInternal,
           };
         }),
       };
@@ -68,21 +64,6 @@ class FormTerms extends React.Component {
         open={open}
         onToggle={onToggle}
       >
-        <Row>
-          <Col xs={5}>
-            <Label tagName="span">
-              <FormattedMessage id="ui-licenses.prop.termName" />
-            </Label>
-          </Col>
-          <Col xs={6}>
-            <Label tagName="span">
-              <FormattedMessage id="ui-licenses.prop.termValue" />
-            </Label>
-          </Col>
-          <Col xs={1}>
-            <FormattedMessage id="stripes-core.button.delete" />
-          </Col>
-        </Row>
         <Field
           name="customProperties"
           component={TermsListField}
