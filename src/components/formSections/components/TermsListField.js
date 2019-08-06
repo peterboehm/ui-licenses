@@ -220,7 +220,10 @@ export default class TermsListField extends React.Component {
     );
   }
 
-  handleDeleteTerm = (i) => {
+  handleDeleteTerm = (term, i) => {
+    const { input: { onChange, value } } = this.props;
+    const currentValue = value[term.value] ? value[term.value][0] : {};
+
     this.setState(prevState => {
       const newTerms = [...prevState.terms];
       newTerms.splice(i, 1);
@@ -229,7 +232,45 @@ export default class TermsListField extends React.Component {
         terms: newTerms
       };
     });
+    onChange({
+      ...value,
+      [term.value]: [{
+        ...currentValue,
+        _delete: true,
+      }],
+    });
   }
+
+  /* renderTermDelete = (term, i) => {
+    const { input: { onChange, value } } = this.props;
+    const currentValue = value[term.value] ? value[term.value][0] : {};
+
+    return (
+      <IconButton
+        data-test-term-delete-btn
+        icon="trash"
+        id={`edit-term-${i}-delete`}
+        onClick={() => {
+          this.setState(prevState => {
+            const newTerms = [...prevState.terms];
+            newTerms.splice(i, 1);
+            return {
+              dirtying: true,
+              terms: newTerms
+            };
+          });
+
+          onChange({
+            ...value,
+            [term.value]: [{
+              ...currentValue,
+              _delete: true,
+            }],
+          });
+        }}
+      />
+    );
+  } */
 
   renderTermNoteInternal = (term, i) => {
     const { input: { onChange, value } } = this.props;
