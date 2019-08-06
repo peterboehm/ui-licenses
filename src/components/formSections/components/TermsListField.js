@@ -361,7 +361,7 @@ export default class TermsListField extends React.Component {
           }}
           header={<FormattedMessage id="ui-licenses.term.title" values={{ number: i + 1 }} />}
           key={i}
-          onDelete={() => this.handleDeleteTerm(i)}
+          onDelete={() => this.handleDeleteTerm(term, i)}
         >
           <Row>
             <Col xs={12}>
