@@ -232,6 +232,7 @@ export default class TermsListField extends React.Component {
         terms: newTerms
       };
     });
+
     onChange({
       ...value,
       [term.value]: [{
@@ -240,37 +241,6 @@ export default class TermsListField extends React.Component {
       }],
     });
   }
-
-  /* renderTermDelete = (term, i) => {
-    const { input: { onChange, value } } = this.props;
-    const currentValue = value[term.value] ? value[term.value][0] : {};
-
-    return (
-      <IconButton
-        data-test-term-delete-btn
-        icon="trash"
-        id={`edit-term-${i}-delete`}
-        onClick={() => {
-          this.setState(prevState => {
-            const newTerms = [...prevState.terms];
-            newTerms.splice(i, 1);
-            return {
-              dirtying: true,
-              terms: newTerms
-            };
-          });
-
-          onChange({
-            ...value,
-            [term.value]: [{
-              ...currentValue,
-              _delete: true,
-            }],
-          });
-        }}
-      />
-    );
-  } */
 
   renderTermNoteInternal = (term, i) => {
     const { input: { onChange, value } } = this.props;
@@ -360,7 +330,7 @@ export default class TermsListField extends React.Component {
             'data-test-term-delete-btn': true
           }}
           header={<FormattedMessage id="ui-licenses.term.title" values={{ number: i + 1 }} />}
-          key={i}
+          key={term.value}
           onDelete={() => this.handleDeleteTerm(term, i)}
         >
           <Row>
