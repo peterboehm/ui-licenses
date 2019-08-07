@@ -69,5 +69,12 @@
     "license": "许可证",
     "licensePlural": "{count} {count, plural, one { license } other { licenses }}",
     "errors.termNoteWithoutValue": "必须为此项设置一个值才能保存附注",
-    "organizations.addOrganizationToLicense": "添加组织到许可证"
+    "organizations.addOrganizationToLicense": "添加组织到许可证",
+    "errors.termVisibilityWithoutValue": "A value must be set for this term in order to change visibility",
+    "prop.termVisibility": "Visibility",
+    "term.title": "Term {number}",
+    "term.internalTrue": "Internal",
+    "term.internalFalse": "Public",
+    "term.internalNote": "Internal note",
+    "term.publicNote": "Public note"
 }
