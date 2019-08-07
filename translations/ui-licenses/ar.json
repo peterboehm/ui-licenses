@@ -69,5 +69,12 @@
     "license": "الرخصة",
     "licensePlural": "{count} {count, plural, one {رخصة} other {رخصة}}",
     "errors.termNoteWithoutValue": "يجب تعيين قيمة لهذا المصطلح من أجل حفظ الملاحظة",
-    "organizations.addOrganizationToLicense": "إضافة مؤسسة إلى رخصة"
+    "organizations.addOrganizationToLicense": "إضافة مؤسسة إلى رخصة",
+    "errors.termVisibilityWithoutValue": "يجب تعيين قيمة لهذا المصطلح من أجل تغيير إمكانية الرؤية",
+    "prop.termVisibility": "الرؤية",
+    "term.title": "المصطلح {number}",
+    "term.internalTrue": "داخلية",
+    "term.internalFalse": "عامة",
+    "term.internalNote": "ملاحظة داخلية",
+    "term.publicNote": "ملاحظة عامة"
 }
