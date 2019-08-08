@@ -86,7 +86,7 @@ export default class LicenseAgreements extends React.Component {
         contentData={this.state.groupedLinkedAgreements}
         formatter={{
           linkNote: link => (link.note ? <InfoPopover content={link.note} /> : ''),
-          name: ({ owner:agreement = {} }) => <Link to={`/erm/agreements/view/${agreement.id}`}>{agreement.name}</Link>,
+          name: ({ owner:agreement = {} }) => <Link to={`/erm/agreements/${agreement.id}`}>{agreement.name}</Link>,
           startDate: ({ owner:agreement = {} }) => (agreement.startDate ? <FormattedUTCDate value={agreement.startDate} /> : '-'),
           endDate: ({ owner:agreement = {} }) => (agreement.endDate ? <FormattedUTCDate value={agreement.endDate} /> : '-'),
           agreementStatus: ({ owner:agreement = {} }) => get(agreement, ['agreementStatus', 'label'], '-'),
