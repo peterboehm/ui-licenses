@@ -5,6 +5,9 @@ import { Settings } from '@folio/stripes/smart-components';
 import {
   TermsSettingsRoute,
 } from './routes';
+//  import GeneralSettings from './general-settings';
+import PickListSettings from './PickListSettings';
+import PickListValueSettings from './PickListValueSettings';
 
 export default class LicenseSettings extends React.Component {
 
