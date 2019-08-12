@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Pane } from '@folio/stripes/components';
 import { FormattedMessage } from 'react-intl';
 
-export default class FeatureSettings extends React.Component {
+export default class PickListValueSettings extends React.Component {
   static propTypes = {
     label: PropTypes.string.isRequired,
   };
