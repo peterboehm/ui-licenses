@@ -1,8 +1,9 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { Settings } from '@folio/stripes/smart-components';
-import GeneralSettings from './general-settings';
-import SomeFeatureSettings from './some-feature-settings';
+//  import GeneralSettings from './general-settings';
+import PickListSettings from './pick-list-settings';
+import PickListValueSettings from './pick-list-value-settings';
 
 /*
   STRIPES-NEW-APP
@@ -10,23 +11,38 @@ import SomeFeatureSettings from './some-feature-settings';
   The pages "general" and "some feature" are examples. Name them however you like.
 */
 
-export default class ErmSettings extends React.Component {
-  pages = [
-    {
-      route: 'general',
-      label: <FormattedMessage id="ui-erm.settings.general" />,
-      component: GeneralSettings,
-    },
-    {
-      route: 'somefeature',
-      label: <FormattedMessage id="ui-erm.settings.some-feature" />,
-      component: SomeFeatureSettings,
-    },
-  ];
+export default class LicensesSettings extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.sections = [
+      {
+        label: <FormattedMessage id="ui-licenses.settings.pickListSetup" />,
+        pages: [
+          {
+            route: 'PickLists',
+            label: <FormattedMessage id="ui-licenses.settings.pickLists" />,
+            component: PickListSettings,
+            //  perm
+          },
+          {
+            route: 'PickListValues',
+            label: <FormattedMessage id="ui-licenses.settings.pickListValues" />,
+            component: PickListValueSettings,
+            //  perm:
+          },
+        ]
+      }
+    ];
+  }
 
   render() {
     return (
-      <Settings {...this.props} pages={this.pages} paneTitle="ui-licenses" />
+      <Settings
+        {...this.props}
+        sections={this.sections}
+        paneTitle={<FormattedMessage id="ui-licenses.licenses.label" />}
+      />
     );
   }
 }

@@ -84,6 +84,10 @@
   "settings.general.message": "These are your general app settings.",
   "settings.some-feature": "Some Feature",
   "settings.some-feature.message": "These are your settings for some app feature.",
+  "settings.pickListSetup": "License term pick list setup",
+  "settings.pickLists": "Pick lists",
+  "settings.pickListValues": "Pick list values",
+  "licenses.label": "Licenses",
 
   "supplementaryDocs.add": "Add supplementary document",
   "supplementaryDocs.none": "No supplementary documents have been added",
