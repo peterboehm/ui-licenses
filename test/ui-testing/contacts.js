@@ -54,7 +54,7 @@ module.exports.test = (uiTestCtx) => {
       CONTACTS.forEach((contact, row) => {
         it('should add contact', done => {
           nightmare
-            .click('#add-license-contacts-btn')
+            .click('#add-contacts-btn')
             .evaluate((r) => {
               if (!document.querySelector(`#contacts-user-${r}-search-button`)) {
                 throw Error('Expected user picker button to exist.');
