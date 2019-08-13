@@ -14,13 +14,13 @@ export default class LicensesSettings extends React.Component {
         label: <FormattedMessage id="ui-licenses.settings.pickListSetup" />,
         pages: [
           {
-            route: 'PickLists',
+            route: 'pick-lists',
             label: <FormattedMessage id="ui-licenses.settings.pickLists" />,
             component: PickListSettings,
             //  perm
           },
           {
-            route: 'PickListValues',
+            route: 'pick-list-values',
             label: <FormattedMessage id="ui-licenses.settings.pickListValues" />,
             component: PickListValueSettings,
             //  perm:
