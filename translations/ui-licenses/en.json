@@ -81,9 +81,7 @@
   "section.terms": "Terms",
 
   "settings.general": "General",
-  "settings.general.message": "These are your general app settings.",
-  "settings.some-feature": "Some Feature",
-  "settings.some-feature.message": "These are your settings for some app feature.",
+  "settings.termPickList": "License term pick list setup",
 
   "supplementaryDocs.add": "Add supplementary document",
   "supplementaryDocs.none": "No supplementary documents have been added",

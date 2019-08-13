@@ -1,32 +1,38 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { Settings } from '@folio/stripes/smart-components';
-import GeneralSettings from './general-settings';
-import SomeFeatureSettings from './some-feature-settings';
 
-/*
-  STRIPES-NEW-APP
-  Your app's settings pages are defined here.
-  The pages "general" and "some feature" are examples. Name them however you like.
-*/
+import {
+  TermsSettings,
+} from './pages';
 
-export default class ErmSettings extends React.Component {
-  pages = [
+export default class LicenseSettings extends React.Component {
+
+  sections = [
     {
-      route: 'general',
-      label: <FormattedMessage id="ui-erm.settings.general" />,
-      component: GeneralSettings,
+      label: <FormattedMessage id="ui-licenses.settings.general" />,
+      pages: [
+        {
+          component: TermsSettings,
+          label: <FormattedMessage id="ui-licenses.section.terms" />,
+          perm: 'settings.licenses.enabled',
+          route: 'terms',
+        }
+      ]
     },
     {
-      route: 'somefeature',
-      label: <FormattedMessage id="ui-erm.settings.some-feature" />,
-      component: SomeFeatureSettings,
-    },
-  ];
+      label: <FormattedMessage id="ui-licenses.settings.termPickList" />,
+      pages: []
+    }
+  ]
 
   render() {
     return (
-      <Settings {...this.props} pages={this.pages} paneTitle="ui-licenses" />
+      <Settings
+        {...this.props}
+        paneTitle={<FormattedMessage id="ui-licenses.meta.title" />}
+        sections={this.sections}
+      />
     );
   }
 }
