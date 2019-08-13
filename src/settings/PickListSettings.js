@@ -23,7 +23,6 @@ export default class PickListSettings extends React.Component {
       <IntlConsumer>
         {intl => (
           <this.connectedControlledVocab
-            actuatorType="refdata"
             baseUrl="licenses/refdata"
             columnMapping={{
               desc: intl.formatMessage({ id: 'ui-licenses.pickList' }),
@@ -31,7 +30,7 @@ export default class PickListSettings extends React.Component {
             }}
             formatter={{ numberOfObjects: (item) => { return item.values ? item.values.length : '-'; } }}
             id="pick-lists"
-            label={intl.formatMessage({ id: 'ui-licenses.pickLists' })}
+            label={intl.formatMessage({ id: 'ui-licenses.settings.pickLists' })}
             labelSingular={intl.formatMessage({ id: 'ui-licenses.pickList' })}
             limitParam="perPage"
             nameKey="desc"

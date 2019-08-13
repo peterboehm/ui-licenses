@@ -90,9 +90,10 @@
   "settings.pickListValues": "Pick list values",
   "licenses.label": "Licenses",
   "pickList": "Pick list",
-  "pickLists": "Pick lists",
+  "pickListSelect": "Select pick list",
   "actions": "Actions",
   "values": "values",
+  "headings.value": "Value",
 
   "supplementaryDocs.add": "Add supplementary document",
   "supplementaryDocs.none": "No supplementary documents have been added",
