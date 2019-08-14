@@ -3,8 +3,8 @@ import { FormattedMessage } from 'react-intl';
 import { Settings } from '@folio/stripes/smart-components';
 
 import {
-  TermsSettings,
-} from './pages';
+  TermsSettingsRoute,
+} from './routes';
 
 export default class LicenseSettings extends React.Component {
 
@@ -13,7 +13,7 @@ export default class LicenseSettings extends React.Component {
       label: <FormattedMessage id="ui-licenses.settings.general" />,
       pages: [
         {
-          component: TermsSettings,
+          component: TermsSettingsRoute,
           label: <FormattedMessage id="ui-licenses.section.terms" />,
           perm: 'settings.licenses.enabled',
           route: 'terms',
