@@ -9,11 +9,9 @@ export default class PickListValueSettings extends React.Component {
   static manifest = {
     categories: {
       type: 'okapi',
-      //    records: 'categories',
       path: 'licenses/refdata',
       accumulate: true,
     },
-    accumulate: true,
   };
 
   static propTypes = {
@@ -61,13 +59,6 @@ export default class PickListValueSettings extends React.Component {
     });
   }
 
-  /* numberOfObjectsFormatter = (item) => {
-    const records = (this.props.resources.locationsPerCampus || {}).records || [];
-    return records.reduce((count, loc) => {
-      return loc.campusId === item.id ? count + 1 : count;
-    }, 0);
-  } */
-
   onChangeCategory = (e) => {
     this.setState({ categoryId: e.target.value });
   }
@@ -102,15 +93,13 @@ export default class PickListValueSettings extends React.Component {
       </Select>
     );
 
-    console.log(this.props.values);
     return (
       <IntlConsumer>
         {intl => (
           <this.connectedControlledVocab
             {...this.props}
             actuatorType="refdata"
-            //  baseUrl={`licenses/refdata/${this.state.categoryId}`}
-            baseUrl="licenses/refdata"
+            baseUrl={`licenses/refdata/${this.state.categoryId}`}
             columnMapping={{
               label: intl.formatMessage({ id: 'ui-licenses.headings.value' }),
               actions: intl.formatMessage({ id: 'ui-licenses.actions' }),
