@@ -1,5 +1,8 @@
 # Change history for ui-licenses
 
+## 3.4.0 IN PROGRESS
+* Render Internal Contacts as cards. ERM-309
+
 ## 3.3.0 2019-07-24
 * Attach Notes to licenses. ERM-269
 * Use updated `Card` UI for organizations. ERM-230 280 281 282
