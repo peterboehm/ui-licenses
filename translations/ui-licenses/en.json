@@ -82,6 +82,7 @@
 
   "settings.general": "General",
   "settings.termPickList": "License term pick list setup",
+  "settings.terms.termCount": "{count} terms",
 
   "supplementaryDocs.add": "Add supplementary document",
   "supplementaryDocs.none": "No supplementary documents have been added",
