@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
 import { ControlledVocab } from '@folio/stripes/smart-components';
 import { Select } from '@folio/stripes/components';
 import { IntlConsumer } from '@folio/stripes/core';
@@ -63,13 +62,15 @@ export default class PickListValueSettings extends React.Component {
     this.setState({ categoryId: e.target.value });
   }
 
-  render() {
+  renderCategories(intl) {
     const categories = [];
+    categories.push(
+      { value: 'empty', label: intl.formatMessage({ id: 'ui-licenses.pickListSelect' }) }
+    );
+
     (((this.props.resources.categories || {}).records || []).forEach(i => {
       categories.push(
-        <option value={i.id} key={i.id}>
-          {i.desc}
-        </option>
+        { value: i.id, label: i.desc }
       );
     }));
 
@@ -77,22 +78,22 @@ export default class PickListValueSettings extends React.Component {
       return <div />;
     }
 
-    const rowFilter = (
+    return categories;
+  }
+
+  renderRowFilter(intl) {
+    return (
       <Select
-        label={<FormattedMessage id="ui-licenses.pickList" />}
+        dataOptions={this.renderCategories(intl)}
         id="categorySelect"
+        label={intl.formatMessage({ id: 'ui-licenses.pickList' })}
         name="categorySelect"
         onChange={this.onChangeCategory}
-      >
-        <FormattedMessage id="ui-licenses.pickListSelect">
-          {selectText => (
-            <option>{selectText}</option>
-          )}
-        </FormattedMessage>
-        {categories}
-      </Select>
+      />
     );
+  }
 
+  render() {
     return (
       <IntlConsumer>
         {intl => (
@@ -107,16 +108,13 @@ export default class PickListValueSettings extends React.Component {
         // We have to unset the dataKey to prevent the props.resources in
         // <ControlledVocab> from being overwritten by the props.resources here.
             dataKey={undefined}
-            hiddenFields={['numberOfObjects']}
+            hiddenFields={['lastUpdated', 'numberOfObjects']}
             id="pick-list-values"
             label={intl.formatMessage({ id: 'ui-licenses.settings.pickListValues' })}
-            //  listSuppressor={() => !this.state.categoryId}
-            //  listSuppressorText={<FormattedMessage id="ui-licenses.settings.location.campuses.missingSelection" />}
             nameKey="label"
             preCreateHook={(item) => Object.assign({}, item, { id: this.state.categoryId })}
-            //  records={this.values}
-            rowFilter={rowFilter}
-            rowFilterFunction={(row) => row.id === this.state.categoryId}
+            records="values"
+            rowFilter={this.renderRowFilter(intl)}
             sortby="label"
             stripes={this.props.stripes}
             visibleFields={['label']}
