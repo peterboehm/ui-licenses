@@ -111,6 +111,7 @@ export default class PickListValueSettings extends React.Component {
             hiddenFields={['lastUpdated', 'numberOfObjects']}
             id="pick-list-values"
             label={intl.formatMessage({ id: 'ui-licenses.settings.pickListValues' })}
+            listSuppressor={() => !this.state.categoryId}
             nameKey="label"
             preCreateHook={(item) => Object.assign({}, item, { id: this.state.categoryId })}
             records="values"
