@@ -29,13 +29,14 @@ export default class PickListSettings extends React.Component {
               actions: intl.formatMessage({ id: 'ui-licenses.actions' }),
             }}
             formatter={{ numberOfObjects: (item) => { return item.values ? item.values.length : '-'; } }}
+            hiddenFields={['lastUpdated']}
             id="pick-lists"
             label={intl.formatMessage({ id: 'ui-licenses.settings.pickLists' })}
             labelSingular={intl.formatMessage({ id: 'ui-licenses.pickList' })}
             limitParam="perPage"
             nameKey="desc"
             objectLabel={intl.formatMessage({ id: 'ui-licenses.values' })}
-            sortby="lastUpdated"
+            sortby="desc"
             stripes={stripes}
             visibleFields={['desc']}
           />
