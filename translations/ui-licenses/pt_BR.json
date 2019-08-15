@@ -1,8 +1,5 @@
 {
     "settings.general": "Geral",
-    "settings.general.message": "Estas são as suas configurações gerais de aplicativos.",
-    "settings.some-feature": "Algum recurso",
-    "settings.some-feature.message": "Estas são suas configurações para alguns recursos do aplicativo.",
     "meta.title": "Licenças",
     "prop.status": "Status",
     "createLicense": "Criar licença",
@@ -76,5 +73,6 @@
     "term.internalTrue": "Interno",
     "term.internalFalse": "Público",
     "term.internalNote": "Nota interna",
-    "term.publicNote": "Nota pública"
+    "term.publicNote": "Nota pública",
+    "settings.termPickList": "Configuração da lista de seleção de termos de licença"
 }

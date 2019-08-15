@@ -1,8 +1,5 @@
 {
     "settings.general": "General",
-    "settings.general.message": "These are your general app settings.",
-    "settings.some-feature": "Some Feature",
-    "settings.some-feature.message": "These are your settings for some app feature.",
     "meta.title": "Licenses",
     "prop.status": "Status",
     "createLicense": "Create license",
@@ -76,5 +73,6 @@
     "term.internalTrue": "Internal",
     "term.internalFalse": "Public",
     "term.internalNote": "Internal note",
-    "term.publicNote": "Public note"
+    "term.publicNote": "Public note",
+    "settings.termPickList": "License term pick list setup"
 }

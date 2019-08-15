@@ -1,8 +1,5 @@
 {
     "settings.general": "عام",
-    "settings.general.message": "هذه هي إعداداتك العامة للتطبيق",
-    "settings.some-feature": "بعض الخصائص",
-    "settings.some-feature.message": "هذه هي إعداداتك لبعض خصائص التطبيق.",
     "meta.title": "تراخيص",
     "prop.status": "الحالة",
     "createLicense": "إنشاء رخصة",
@@ -76,5 +73,6 @@
     "term.internalTrue": "داخلية",
     "term.internalFalse": "عامة",
     "term.internalNote": "ملاحظة داخلية",
-    "term.publicNote": "ملاحظة عامة"
+    "term.publicNote": "ملاحظة عامة",
+    "settings.termPickList": "إعداد قائمة اختيار شروط الترخيص"
 }
