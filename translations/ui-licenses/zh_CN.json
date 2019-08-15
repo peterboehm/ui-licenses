@@ -1,8 +1,5 @@
 {
     "settings.general": "通用",
-    "settings.general.message": "这是您的常规应用设置。",
-    "settings.some-feature": "某些功能",
-    "settings.some-feature.message": "这些是您的某些应用功能设置。",
     "meta.title": "许可证",
     "prop.status": "状态",
     "createLicense": "创建许可证",
@@ -76,5 +73,6 @@
     "term.internalTrue": "Internal",
     "term.internalFalse": "Public",
     "term.internalNote": "Internal note",
-    "term.publicNote": "Public note"
+    "term.publicNote": "Public note",
+    "settings.termPickList": "License term pick list setup"
 }
