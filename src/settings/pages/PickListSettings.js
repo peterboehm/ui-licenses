@@ -31,6 +31,7 @@ export default class PickListSettings extends React.Component {
             formatter={{ numberOfObjects: (item) => { return item.values ? item.values.length : '-'; } }}
             hiddenFields={['lastUpdated']}
             id="pick-lists"
+            itemTemplate={{ desc: this.desc, values: [] }}
             label={intl.formatMessage({ id: 'ui-licenses.settings.pickLists' })}
             labelSingular={intl.formatMessage({ id: 'ui-licenses.pickList' })}
             limitParam="perPage"

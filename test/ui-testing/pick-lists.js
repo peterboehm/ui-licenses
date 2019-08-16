@@ -221,7 +221,6 @@ module.exports.test = (uiTestCtx) => {
           .wait('#clickable-delete-controlled-vocab-entry-confirmation-confirm')
           .click('#clickable-delete-controlled-vocab-entry-confirmation-confirm')
           .waitUntilNetworkIdle(1000)
-          .wait('#editList-pick-list-values')
           .evaluate(value => {
             const row = document.evaluate(
               `//*[@id="editList-pick-list-values"]//div[.="${value}"]`,
@@ -244,14 +243,12 @@ module.exports.test = (uiTestCtx) => {
           .wait('a[href="/settings/licenses/pick-lists"]')
           .click('a[href="/settings/licenses/pick-lists"]')
           .waitUntilNetworkIdle(1000)
-          .wait('#editList-pick-lists')
           .wait('#clickable-delete-pick-lists-0')
           .click('#clickable-delete-pick-lists-0')
           .waitUntilNetworkIdle(1000)
           .wait('#clickable-delete-controlled-vocab-entry-confirmation-confirm')
           .click('#clickable-delete-controlled-vocab-entry-confirmation-confirm')
           .waitUntilNetworkIdle(1000)
-          .wait('#editList-pick-lists')
           .evaluate(list => {
             const row = document.evaluate(
               `//*[@id="editList-pick-lists"]//div[.="${list}"]`,
