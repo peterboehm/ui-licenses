@@ -7,6 +7,7 @@ import { FieldArray } from 'react-final-form-arrays';
 import { Button, Pane, PaneFooter } from '@folio/stripes/components';
 import stripesFinalForm from '@folio/stripes/final-form';
 import TermsSettingsList from './TermsSettingsList';
+import ConfigTermsList from './ConfigTermsList';
 
 class TermsSettingsForm extends React.Component {
   static propTypes = {
@@ -34,6 +35,7 @@ class TermsSettingsForm extends React.Component {
 
   render() {
     const count = get(this.props, 'initialValues.terms.length', 0);
+
     return (
       <Pane
         defaultWidth="fill"

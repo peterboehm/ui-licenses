@@ -14,13 +14,23 @@ export default class TermsSettingsList extends React.Component {
     }).isRequired,
   }
 
+  defaultTermValue = {
+    weight: 0,
+    primary: false,
+    defaultInternal: true,
+  }
+
   render() {
     const { fields } = this.props;
 
     return (
       <div>
         <Layout end="sm">
-          <Button onClick={() => fields.unshift({})}>New</Button>
+          <Button
+            onClick={() => fields.unshift(this.defaultTermValue)}
+          >
+            New
+          </Button>
           {
             fields.value.map((term, i) => (
               !term._delete &&

@@ -30,6 +30,7 @@ export default class LicenseSettings extends React.Component {
     return (
       <Settings
         {...this.props}
+        navPaneWidth="20%"
         paneTitle={<FormattedMessage id="ui-licenses.meta.title" />}
         sections={this.sections}
       />
