@@ -9,7 +9,6 @@ import {
 } from './pages';
 
 export default class LicenseSettings extends React.Component {
-
   sections = [
     {
       label: <FormattedMessage id="ui-licenses.settings.general" />,
