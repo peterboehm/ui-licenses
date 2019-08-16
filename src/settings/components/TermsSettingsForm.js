@@ -7,7 +7,6 @@ import { FieldArray } from 'react-final-form-arrays';
 import { Button, Pane, PaneFooter } from '@folio/stripes/components';
 import stripesFinalForm from '@folio/stripes/final-form';
 import TermsSettingsList from './TermsSettingsList';
-import ConfigTermsList from './ConfigTermsList';
 
 class TermsSettingsForm extends React.Component {
   static propTypes = {

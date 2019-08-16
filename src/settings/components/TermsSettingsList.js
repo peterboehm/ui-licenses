@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { isEqual } from 'lodash';
 import { Field } from 'react-final-form';
 
-import { Button, Row } from '@folio/stripes/components';
+import { Button, Col, Row } from '@folio/stripes/components';
 
 import TermField from './TermField';
 
@@ -50,9 +50,11 @@ export default class TermsSettingsList extends React.Component {
     return (
       <div>
         <Row end="sm">
-          <Button onClick={this.handleNew}>
-            New
-          </Button>
+          <Col>
+            <Button onClick={this.handleNew}>
+              New
+            </Button>
+          </Col>
         </Row>
         {
           fields.value.map((term, i) => (

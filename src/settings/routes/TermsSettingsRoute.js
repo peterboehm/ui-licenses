@@ -45,7 +45,6 @@ class TermsSettingsRoute extends React.Component {
         terms: resource.records.map(term => ({
           ...term,
           category: term.category ? term.category.id : undefined,
-          type: term.type.split('com.k_int.web.toolkit.custprops.types.CustomProperty')[1],
         })),
       };
     }

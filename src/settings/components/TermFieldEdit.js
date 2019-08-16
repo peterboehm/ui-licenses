@@ -104,40 +104,45 @@ export default class TermField extends React.Component {
               validate={required}
             />
           </Col>
-          <Col xs={6}>
-            <Field
-              component={Select}
-              dataOptions={[
-                { label: '', value: '' },
-                { label: 'Decimal', value: 'Decimal' },
-                { label: 'Integer', value: 'Integer' },
-                { label: 'Pick list', value: 'Refdata' },
-                { label: 'Text', value: 'Text' },
-              ]}
-              label="Type"
-              name={`${name}.type`}
-              required
-              validate={required}
-            />
-          </Col>
-          <Col xs={6}>
-            { value.type === 'com.k_int.web.toolkit.custprops.types.CustomPropertyRefdata' &&
+        </Row>
+        { /* Users can only configure the type of a term when creating it, not when editing it */ }
+        { value.id === undefined &&
+          <Row>
+            <Col xs={6}>
               <Field
                 component={Select}
                 dataOptions={[
                   { label: '', value: '' },
-                  { label: 'Yes/No/Other', value: '1883e41b6c61e626016c61ed2be70000' },
-                  { label: 'Permitted/Prohibited', value: '1883e41b6c61e626016c61ed2c700008' },
+                  { label: 'Decimal', value: 'Decimal' },
+                  { label: 'Integer', value: 'Integer' },
+                  { label: 'Pick list', value: 'Refdata' },
+                  { label: 'Text', value: 'Text' },
                 ]}
-                disabled={value.type !== 'com.k_int.web.toolkit.custprops.types.CustomPropertyRefdata'}
-                label="Pick list"
-                name={`${name}.category`}
+                label="Type"
+                name={`${name}.type`}
                 required
                 validate={required}
               />
-            }
-          </Col>
-        </Row>
+            </Col>
+            <Col xs={6}>
+              { value.type === 'com.k_int.web.toolkit.custprops.types.CustomPropertyRefdata' &&
+                <Field
+                  component={Select}
+                  dataOptions={[
+                    { label: '', value: '' },
+                    { label: 'Yes/No/Other', value: '1883e41b6c61e626016c61ed2be70000' },
+                    { label: 'Permitted/Prohibited', value: '1883e41b6c61e626016c61ed2c700008' },
+                  ]}
+                  disabled={value.type !== 'com.k_int.web.toolkit.custprops.types.CustomPropertyRefdata'}
+                  label="Pick list"
+                  name={`${name}.category`}
+                  required
+                  validate={required}
+                />
+              }
+            </Col>
+          </Row>
+        }
       </Card>
     );
   }
