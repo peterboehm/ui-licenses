@@ -15,8 +15,6 @@ class TermsSettingsForm extends React.Component {
     initialValues: PropTypes.shape({
       terms: PropTypes.arrayOf(PropTypes.object),
     }),
-    onDelete: PropTypes.func.isRequired,
-    onSave: PropTypes.func.isRequired,
     pristine: PropTypes.bool,
     submitting: PropTypes.bool,
   }
@@ -33,19 +31,11 @@ class TermsSettingsForm extends React.Component {
         paneTitle={<FormattedMessage id="ui-licenses.section.terms" />}
         paneSub={<FormattedMessage id="ui-licenses.settings.terms.termCount" values={{ count }} />}
       >
-        <form>
-          <FieldArray
-            component={TermsSettingsList}
-            name="terms"
-            onDelete={onDelete}
-            onSave={onSave}
-          />
-        </form>
-        {/* <ConfigTermsList
+        <ConfigTermsList
           onDelete={onDelete}
           onSave={onSave}
           terms={terms}
-        /> */}
+        />
       </Pane>
     );
   }

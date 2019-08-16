@@ -11,6 +11,10 @@ class TermsSettingsRoute extends React.Component {
     terms: {
       type: 'okapi',
       path: 'licenses/custprops',
+      clientGeneratePk: false,
+      params: {
+        sort: 'id;desc'
+      }
     }
   });
 
@@ -28,16 +32,17 @@ class TermsSettingsRoute extends React.Component {
   }
 
   state = {
+    // loadedAt is used in gDSFP to determine whether to reinit form values
+    loadedAt: new Date(), // eslint-disable-line react/no-unused-state
     terms: [],
   }
 
   static getDerivedStateFromProps(props, state) {
-    const newTerms = get(props, 'resources.terms.records', []);
-    const oldTerms = state.terms;
-
-    if (newTerms.length !== oldTerms.length) {
+    const resource = get(props, 'resources.terms'); // can't use default value bc of `null`
+    if (resource && resource.hasLoaded && resource.loadedAt > state.loadedAt) {
       return {
-        terms: newTerms.map(term => ({
+        loadedAt: resource.loadedAt,
+        terms: resource.records.map(term => ({
           ...term,
           category: term.category ? term.category.id : undefined,
         })),
@@ -55,13 +60,15 @@ class TermsSettingsRoute extends React.Component {
   }
 
   handleSave = (term) => {
-    const { id } = term;
-    const mutator = id ? this.props.mutator.terms.PUT : this.props.mutator.terms.POST;
+    const mutator = this.props.mutator.terms;
 
-    mutator(term, { pk: term.id })
-      .then(response => {
-        console.log(response);
-      });
+    const promise = term.id ?
+      mutator.PUT(term, { pk: term.id }) :
+      mutator.POST(term);
+
+    promise.then(response => {
+      console.log(response);
+    });
   }
 
   handleSubmit = ({ terms }) => {
@@ -74,9 +81,9 @@ class TermsSettingsRoute extends React.Component {
     return (
       <TermsSettingsForm
         initialValues={{ terms }}
-        onSubmit={this.handleSubmit}
         onDelete={this.handleDelete}
         onSave={this.handleSave}
+        onSubmit={this.handleSave}
         terms={terms}
       />
     );

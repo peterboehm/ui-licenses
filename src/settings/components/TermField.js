@@ -3,31 +3,68 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Field } from 'react-final-form';
 
-import { Col, Row, Select, TextArea, TextField } from '@folio/stripes/components';
-import { EditCard } from '@folio/stripes-erm-components';
+import { Card, Col, Row, Select, TextArea, TextField, Button } from '@folio/stripes/components';
 
 import { required } from '../../util/validators';
 
 export default class TermField extends React.Component {
   static propTypes = {
-    name: PropTypes.string.isRequired,
     onDelete: PropTypes.func.isRequired,
-    term: PropTypes.shape({
-      id: PropTypes.string,
+    onSave: PropTypes.func.isRequired,
+    input: PropTypes.shape({
+      name: PropTypes.string.isRequired,
+      value: PropTypes.shape({
+        id: PropTypes.string,
+      }).isRequired,
     }).isRequired,
+    meta: PropTypes.shape({
+      invalid: PropTypes.bool,
+      pristine: PropTypes.bool,
+      submitting: PropTypes.bool,
+    })
   }
 
   booleanToString = booleanValue => booleanValue.toString()
 
   stringToBoolean = stringValue => stringValue === 'true'
 
-  render() {
-    const { name, onDelete, term } = this.props;
+  renderActionButtons = () => {
+    const {
+      input: { value },
+      meta,
+      onDelete,
+      onSave
+    } = this.props;
 
     return (
-      <EditCard
-        header={term.id ? 'Edit license term' : 'New license term'}
-        onDelete={term.primary ? undefined : onDelete} // Disallow deleting primary terms
+      <span>
+        <Button
+          buttonStyle="danger"
+          disabled={value.primary}
+          marginBottom0
+          onClick={onDelete}
+        >
+          Delete
+        </Button>
+        <Button
+          disabled={meta.invalid || meta.pristine || meta.submitting}
+          marginBottom0
+          onClick={onSave}
+        >
+          Save
+        </Button>
+      </span>
+    );
+  }
+
+  render() {
+    const { input: { name, value } } = this.props;
+
+    return (
+      <Card
+        headerStart={<strong>{value.id ? 'Edit license term' : 'New license term'}</strong>}
+        headerEnd={this.renderActionButtons()}
+        // onDelete={value.primary ? undefined : onDelete} // Disallow deleting primary terms
       >
         <Row>
           <Col xs={6}>
@@ -109,27 +146,29 @@ export default class TermField extends React.Component {
               ]}
               label="Type"
               name={`${name}.type`}
-              placeholder=""
               required
               validate={required}
             />
           </Col>
           <Col xs={6}>
-            { term.type === 'com.k_int.web.toolkit.custprops.types.CustomPropertyRefdata' &&
+            { value.type === 'com.k_int.web.toolkit.custprops.types.CustomPropertyRefdata' &&
               <Field
                 component={Select}
                 dataOptions={[
+                  { label: '', value: '' },
                   { label: 'Yes/No/Other', value: '1883e41b6c61e626016c61ed2be70000' },
                   { label: 'Permitted/Prohibited', value: '1883e41b6c61e626016c61ed2c700008' },
                 ]}
-                disabled={term.type !== 'com.k_int.web.toolkit.custprops.types.CustomPropertyRefdata'}
+                disabled={value.type !== 'com.k_int.web.toolkit.custprops.types.CustomPropertyRefdata'}
                 label="Pick list"
                 name={`${name}.category`}
-              />
+                required
+                validate={required}
+                />
             }
           </Col>
         </Row>
-      </EditCard>
+      </Card>
     );
   }
 }

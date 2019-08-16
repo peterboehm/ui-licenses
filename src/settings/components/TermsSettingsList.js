@@ -1,5 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { isEqual } from 'lodash';
+import { Field } from 'react-final-form';
 
 import { Button, Layout } from '@folio/stripes/components';
 
@@ -9,9 +11,10 @@ export default class TermsSettingsList extends React.Component {
   static propTypes = {
     fields: PropTypes.shape({
       unshift: PropTypes.func.isRequired,
-      update: PropTypes.func.isRequired,
       value: PropTypes.array.isRequired,
     }).isRequired,
+    onDelete: PropTypes.func.isRequired,
+    onSave: PropTypes.func.isRequired,
   }
 
   defaultTermValue = {
@@ -20,29 +23,48 @@ export default class TermsSettingsList extends React.Component {
     defaultInternal: true,
   }
 
+  handleDelete = (index) => {
+    const { fields, onDelete } = this.props;
+    const term = fields.value[index];
+    const promise = term.id ? onDelete(term) : Promise.resolve();
+
+    promise.then(() => {
+      fields.remove(index);
+    });
+  }
+
+  handleNew = () => {
+    this.props.fields.unshift(this.defaultTermValue);
+  }
+
+  handleSave = (index) => {
+    const term = this.props.fields.value[index];
+
+    this.props.onSave(term);
+  }
+
   render() {
     const { fields } = this.props;
 
     return (
       <div>
         <Layout end="sm">
-          <Button
-            onClick={() => fields.unshift(this.defaultTermValue)}
-          >
+          <Button onClick={this.handleNew}>
             New
           </Button>
-          {
-            fields.value.map((term, i) => (
-              !term._delete &&
-                <TermField
-                  key={i}
-                  name={`terms[${i}]`}
-                  onDelete={() => fields.update(i, { id: term.id, _delete: true })}
-                  term={term}
-                />
-            ))
-          }
         </Layout>
+        {
+          fields.map((name, i) => (
+            <Field
+              component={TermField}
+              isEqual={isEqual}
+              key={name}
+              name={name}
+              onDelete={() => this.handleDelete(i)}
+              onSave={() => this.handleSave(i)}
+            />
+          ))
+        }
       </div>
     );
   }
