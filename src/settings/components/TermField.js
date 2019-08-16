@@ -5,6 +5,9 @@ import { Field } from 'react-final-form';
 
 import { Card, Col, Row, Select, TextArea, TextField, Button } from '@folio/stripes/components';
 
+import TermFieldEdit from './TermFieldEdit';
+import TermFieldView from './TermFieldView';
+
 import { required } from '../../util/validators';
 
 export default class TermField extends React.Component {
@@ -24,9 +27,41 @@ export default class TermField extends React.Component {
     })
   }
 
-  booleanToString = booleanValue => booleanValue.toString()
+  constructor(props) {
+    super(props);
 
-  stringToBoolean = stringValue => stringValue === 'true'
+    const { value } = props.input;
+
+    this.state = {
+      editing: !(value && value.id),
+      initialValue: value,
+    };
+  }
+
+  handleEdit = () => {
+    this.props.mutators.resetTermState(this.props.input.name);
+
+    this.setState({
+      initialValue: this.props.input.value,
+      editing: true,
+    });
+  }
+
+  handleCancelEdit = () => {
+    this.props.mutators.setTermValue(this.props.input.name, this.state.initialValue);
+
+    this.setState({
+      editing: false,
+    });
+  }
+
+  handleSave = (term) => {
+    this.setState({
+      editing: false,
+    });
+
+    this.props.onSave(term);
+  }
 
   renderActionButtons = () => {
     const {
@@ -36,139 +71,58 @@ export default class TermField extends React.Component {
       onSave
     } = this.props;
 
-    return (
-      <span>
-        <Button
-          buttonStyle="danger"
-          disabled={value.primary}
-          marginBottom0
-          onClick={onDelete}
-        >
-          Delete
-        </Button>
-        <Button
-          disabled={meta.invalid || meta.pristine || meta.submitting}
-          marginBottom0
-          onClick={onSave}
-        >
-          Save
-        </Button>
-      </span>
-    );
+    const { editing } = this.state;
+
+    if (editing) {
+      return (
+        <span>
+          <Button
+            buttonStyle="danger"
+            disabled={value.primary}
+            marginBottom0
+            onClick={onDelete}
+          >
+            Delete
+          </Button>
+          <Button
+            disabled={value.id === undefined}
+            marginBottom0
+            onClick={this.handleCancelEdit}
+          >
+            Cancel
+          </Button>
+          <Button
+            disabled={meta.invalid || meta.pristine || meta.submitting}
+            marginBottom0
+            onClick={onSave}
+          >
+            Save
+          </Button>
+        </span>
+      );
+    } else {
+      return (
+        <span>
+          <Button
+            marginBottom0
+            onClick={this.handleEdit}
+          >
+            Edit
+          </Button>
+        </span>
+      );
+    }
   }
 
   render() {
-    const { input: { name, value } } = this.props;
+    const { input: { name, value }, mutators } = this.props;
+    const TermComponent = this.state.editing ? TermFieldEdit : TermFieldView;
 
     return (
-      <Card
-        headerStart={<strong>{value.id ? 'Edit license term' : 'New license term'}</strong>}
-        headerEnd={this.renderActionButtons()}
-        // onDelete={value.primary ? undefined : onDelete} // Disallow deleting primary terms
-      >
-        <Row>
-          <Col xs={6}>
-            <Field
-              component={TextField}
-              label="Name"
-              name={`${name}.name`}
-              required
-              validate={required}
-            />
-          </Col>
-          <Col xs={6}>
-            <Field
-              component={TextField}
-              label="Label"
-              name={`${name}.label`}
-              required
-              validate={required}
-            />
-          </Col>
-        </Row>
-        <Field
-          component={TextArea}
-          label="Description"
-          name={`${name}.description`}
-          required
-          validate={required}
-        />
-        <Row>
-          <Col xs={4}>
-            <Field
-              component={TextField}
-              label="Order weight"
-              name={`${name}.weight`}
-              required
-              validate={required}
-              type="number"
-            />
-          </Col>
-          <Col xs={4}>
-            <Field
-              component={Select}
-              dataOptions={[
-                { label: 'Yes', value: 'true' },
-                { label: 'No', value: 'false' },
-              ]}
-              format={this.booleanToString}
-              label="Primary term"
-              name={`${name}.primary`}
-              parse={this.stringToBoolean}
-              required
-              validate={required}
-            />
-          </Col>
-          <Col xs={4}>
-            <Field
-              component={Select}
-              dataOptions={[
-                { label: 'Internal', value: 'true' },
-                { label: 'Public', value: 'false' },
-              ]}
-              format={this.booleanToString}
-              label="Default visibility"
-              name={`${name}.defaultInternal`}
-              parse={this.stringToBoolean}
-              required
-              validate={required}
-            />
-          </Col>
-          <Col xs={6}>
-            <Field
-              component={Select}
-              dataOptions={[
-                { label: '', value: '' },
-                { label: 'Decimal', value: 'Decimal' },
-                { label: 'Integer', value: 'Integer' },
-                { label: 'Pick list', value: 'Refdata' },
-                { label: 'Text', value: 'Text' },
-              ]}
-              label="Type"
-              name={`${name}.type`}
-              required
-              validate={required}
-            />
-          </Col>
-          <Col xs={6}>
-            { value.type === 'com.k_int.web.toolkit.custprops.types.CustomPropertyRefdata' &&
-              <Field
-                component={Select}
-                dataOptions={[
-                  { label: '', value: '' },
-                  { label: 'Yes/No/Other', value: '1883e41b6c61e626016c61ed2be70000' },
-                  { label: 'Permitted/Prohibited', value: '1883e41b6c61e626016c61ed2c700008' },
-                ]}
-                disabled={value.type !== 'com.k_int.web.toolkit.custprops.types.CustomPropertyRefdata'}
-                label="Pick list"
-                name={`${name}.category`}
-                required
-                validate={required}
-              />
-            }
-          </Col>
-        </Row>
-      </Card>
+      <TermComponent
+        {...this.props}
+        actionButtons={this.renderActionButtons()}
+      />
     );
   }
 }

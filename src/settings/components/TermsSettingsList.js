@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { isEqual } from 'lodash';
 import { Field } from 'react-final-form';
 
-import { Button, Layout } from '@folio/stripes/components';
+import { Button, Row } from '@folio/stripes/components';
 
 import TermField from './TermField';
 
@@ -45,22 +45,23 @@ export default class TermsSettingsList extends React.Component {
   }
 
   render() {
-    const { fields } = this.props;
+    const { fields, mutators } = this.props;
 
     return (
       <div>
-        <Layout end="sm">
+        <Row end="sm">
           <Button onClick={this.handleNew}>
             New
           </Button>
-        </Layout>
+        </Row>
         {
-          fields.map((name, i) => (
+          fields.value.map((term, i) => (
             <Field
               component={TermField}
               isEqual={isEqual}
-              key={name}
-              name={name}
+              key={term.id || i}
+              mutators={mutators}
+              name={`${fields.name}[${i}]`}
               onDelete={() => this.handleDelete(i)}
               onSave={() => this.handleSave(i)}
             />

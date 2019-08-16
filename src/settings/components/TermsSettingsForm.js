@@ -22,7 +22,7 @@ class TermsSettingsForm extends React.Component {
   }
 
   render() {
-    const { onDelete, onSave, terms } = this.props;
+    const { form: { mutators }, onDelete, onSave, terms } = this.props;
 
     const count = get(this.props, 'initialValues.terms.length', 0);
 
@@ -36,6 +36,7 @@ class TermsSettingsForm extends React.Component {
         <form>
           <FieldArray
             component={TermsSettingsList}
+            mutators={mutators}
             name="terms"
             onDelete={onDelete}
             onSave={onSave}
@@ -54,6 +55,14 @@ class TermsSettingsForm extends React.Component {
 export default stripesFinalForm({
   enableReinitialize: true,
   keepDirtyOnReinitialize: true,
+  mutators: {
+    resetTermState: (args, state, tools) => {
+      tools.resetFieldState(args[0]);
+    },
+    setTermValue: (args, state, tools) => {
+      tools.changeValue(state, args[0], () => args[1]);
+    },
+  },
   navigationCheck: true,
   validateOnBlur: true,
 })(TermsSettingsForm);
