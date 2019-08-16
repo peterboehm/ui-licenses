@@ -10,7 +10,6 @@ import PickListSettings from './PickListSettings';
 import PickListValueSettings from './PickListValueSettings';
 
 export default class LicenseSettings extends React.Component {
-
   sections = [
     {
       label: <FormattedMessage id="ui-licenses.settings.general" />,
