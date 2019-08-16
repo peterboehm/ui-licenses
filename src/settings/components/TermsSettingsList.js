@@ -26,11 +26,12 @@ export default class TermsSettingsList extends React.Component {
   handleDelete = (index) => {
     const { fields, onDelete } = this.props;
     const term = fields.value[index];
-    const promise = term.id ? onDelete(term) : Promise.resolve();
 
-    promise.then(() => {
+    if (term.id) {
+      onDelete(term);
+    } else {
       fields.remove(index);
-    });
+    }
   }
 
   handleNew = () => {

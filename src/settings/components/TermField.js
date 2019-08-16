@@ -139,10 +139,10 @@ export default class TermField extends React.Component {
               component={Select}
               dataOptions={[
                 { label: '', value: '' },
-                { label: 'Decimal', value: 'com.k_int.web.toolkit.custprops.types.CustomPropertyDecimal' },
-                { label: 'Integer', value: 'com.k_int.web.toolkit.custprops.types.CustomPropertyInteger' },
-                { label: 'Pick list', value: 'com.k_int.web.toolkit.custprops.types.CustomPropertyRefdata' },
-                { label: 'Text', value: 'com.k_int.web.toolkit.custprops.types.CustomPropertyText' },
+                { label: 'Decimal', value: 'Decimal' },
+                { label: 'Integer', value: 'Integer' },
+                { label: 'Pick list', value: 'Refdata' },
+                { label: 'Text', value: 'Text' },
               ]}
               label="Type"
               name={`${name}.type`}
@@ -164,7 +164,7 @@ export default class TermField extends React.Component {
                 name={`${name}.category`}
                 required
                 validate={required}
-                />
+              />
             }
           </Col>
         </Row>
