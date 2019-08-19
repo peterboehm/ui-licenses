@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import { FormattedMessage } from 'react-intl';
 import { ControlledVocab } from '@folio/stripes/smart-components';
 import { IntlConsumer } from '@folio/stripes/core';
 
@@ -25,18 +26,18 @@ export default class PickListSettings extends React.Component {
           <this.connectedControlledVocab
             baseUrl="licenses/refdata"
             columnMapping={{
-              desc: intl.formatMessage({ id: 'ui-licenses.pickList' }),
-              actions: intl.formatMessage({ id: 'ui-licenses.actions' }),
+              desc: intl.formatMessage({ id: 'ui-licenses.settings.pickList' }),
+              actions: intl.formatMessage({ id: 'ui-licenses.settings.actions' }),
             }}
             formatter={{ numberOfObjects: (item) => { return item.values ? item.values.length : '-'; } }}
             hiddenFields={['lastUpdated']}
             id="pick-lists"
             itemTemplate={{ desc: this.desc, values: [] }}
-            label={intl.formatMessage({ id: 'ui-licenses.settings.pickLists' })}
-            labelSingular={intl.formatMessage({ id: 'ui-licenses.pickList' })}
+            label={<FormattedMessage id="ui-licenses.settings.pickLists" />}
+            labelSingular={<FormattedMessage id="ui-licenses.settings.pickList" />}
             limitParam="perPage"
             nameKey="desc"
-            objectLabel={intl.formatMessage({ id: 'ui-licenses.values' })}
+            objectLabel={<FormattedMessage id="ui-licenses.settings.values" />}
             sortby="desc"
             stripes={stripes}
             visibleFields={['desc']}

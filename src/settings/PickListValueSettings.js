@@ -1,5 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { get } from 'lodash';
+import { FormattedMessage } from 'react-intl';
 import { ControlledVocab } from '@folio/stripes/smart-components';
 import { Select } from '@folio/stripes/components';
 import { IntlConsumer } from '@folio/stripes/core';
@@ -52,10 +54,8 @@ export default class PickListValueSettings extends React.Component {
    * will be stale if they change between unmounting/remounting.
    */
   componentDidMount() {
-    ['categories'].forEach(i => {
-      this.props.mutator[i].reset();
-      this.props.mutator[i].GET();
-    });
+    this.props.mutator.categories.reset();
+    this.props.mutator.categories.GET();
   }
 
   onChangeCategory = (e) => {
@@ -63,22 +63,10 @@ export default class PickListValueSettings extends React.Component {
   }
 
   renderCategories(intl) {
-    const categories = [];
-    categories.push(
-      { value: 'empty', label: intl.formatMessage({ id: 'ui-licenses.pickListSelect' }) }
-    );
-
-    (((this.props.resources.categories || {}).records || []).forEach(i => {
-      categories.push(
-        { value: i.id, label: i.desc }
-      );
-    }));
-
-    if (!categories.length) {
-      return <div />;
-    }
-
-    return categories;
+    return [
+      { value: 'empty', label: intl.formatMessage({ id: 'ui-licenses.settings.pickListSelect' }) },
+      ...get(this.props, 'resources.categories.records', []).map(c => ({ value: c.id, label: c.desc })),
+    ];
   }
 
   renderRowFilter(intl) {
@@ -86,7 +74,7 @@ export default class PickListValueSettings extends React.Component {
       <Select
         dataOptions={this.renderCategories(intl)}
         id="categorySelect"
-        label={intl.formatMessage({ id: 'ui-licenses.pickList' })}
+        label={<FormattedMessage id="ui-licenses.settings.pickList" />}
         name="categorySelect"
         onChange={this.onChangeCategory}
       />
@@ -102,18 +90,17 @@ export default class PickListValueSettings extends React.Component {
             actuatorType="refdata"
             baseUrl={`licenses/refdata/${this.state.categoryId}`}
             columnMapping={{
-              label: intl.formatMessage({ id: 'ui-licenses.headings.value' }),
-              actions: intl.formatMessage({ id: 'ui-licenses.actions' }),
+              label: intl.formatMessage({ id: 'ui-licenses.settings.value' }),
+              actions: intl.formatMessage({ id: 'ui-licenses.settings.actions' }),
             }}
         // We have to unset the dataKey to prevent the props.resources in
         // <ControlledVocab> from being overwritten by the props.resources here.
             dataKey={undefined}
             hiddenFields={['lastUpdated', 'numberOfObjects']}
             id="pick-list-values"
-            label={intl.formatMessage({ id: 'ui-licenses.settings.pickListValues' })}
+            label={<FormattedMessage id="ui-licenses.settings.pickListValues" />}
             listSuppressor={() => !this.state.categoryId}
             nameKey="label"
-            preCreateHook={(item) => Object.assign({}, item, { id: this.state.categoryId })}
             records="values"
             rowFilter={this.renderRowFilter(intl)}
             sortby="label"
