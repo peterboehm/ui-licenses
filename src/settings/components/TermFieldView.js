@@ -35,14 +35,14 @@ export default class TermField extends React.Component {
         <Row>
           <Col xs={6}>
             <KeyValue
-              label="Name"
-              value={value.name}
+              label="Label"
+              value={value.label}
             />
           </Col>
           <Col xs={6}>
             <KeyValue
-              label="Label"
-              value={value.label}
+              label="Name"
+              value={value.name}
             />
           </Col>
         </Row>

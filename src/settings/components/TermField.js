@@ -47,20 +47,30 @@ export default class TermField extends React.Component {
     });
   }
 
-  handleCancelEdit = () => {
-    this.props.mutators.setTermValue(this.props.input.name, this.state.initialValue);
+  handleCancel = () => {
+    const {
+      input: { name, value },
+      onDelete,
+    } = this.props;
+
+    if (value.id) {
+      this.props.mutators.setTermValue(name, this.state.initialValue);
+    } else {
+      onDelete();
+    }
+
 
     this.setState({
       editing: false,
     });
   }
 
-  handleSave = (term) => {
+  handleSave = () => {
     this.setState({
       editing: false,
     });
 
-    this.props.onSave(term);
+    this.props.onSave();
   }
 
   renderActionButtons = () => {
@@ -68,7 +78,6 @@ export default class TermField extends React.Component {
       input: { value },
       meta,
       onDelete,
-      onSave
     } = this.props;
 
     const { editing } = this.state;
@@ -77,24 +86,16 @@ export default class TermField extends React.Component {
       return (
         <span>
           <Button
-            buttonStyle="danger"
-            disabled={value.primary}
             marginBottom0
-            onClick={onDelete}
-          >
-            Delete
-          </Button>
-          <Button
-            disabled={value.id === undefined}
-            marginBottom0
-            onClick={this.handleCancelEdit}
+            onClick={this.handleCancel}
           >
             Cancel
           </Button>
           <Button
+            buttonStyle="primary"
             disabled={meta.invalid || meta.pristine || meta.submitting}
             marginBottom0
-            onClick={onSave}
+            onClick={this.handleSave}
           >
             Save
           </Button>
@@ -103,6 +104,13 @@ export default class TermField extends React.Component {
     } else {
       return (
         <span>
+          <Button
+            buttonStyle="danger"
+            marginBottom0
+            onClick={onDelete}
+          >
+            Delete
+          </Button>
           <Button
             marginBottom0
             onClick={this.handleEdit}

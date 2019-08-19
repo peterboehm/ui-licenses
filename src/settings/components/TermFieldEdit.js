@@ -40,8 +40,8 @@ export default class TermField extends React.Component {
           <Col xs={6}>
             <Field
               component={TextField}
-              label="Name"
-              name={`${name}.name`}
+              label="Label"
+              name={`${name}.label`}
               required
               validate={required}
             />
@@ -49,8 +49,8 @@ export default class TermField extends React.Component {
           <Col xs={6}>
             <Field
               component={TextField}
-              label="Label"
-              name={`${name}.label`}
+              label="Name"
+              name={`${name}.name`}
               required
               validate={required}
             />
