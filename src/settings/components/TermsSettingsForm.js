@@ -63,5 +63,4 @@ export default stripesFinalForm({
     },
   },
   navigationCheck: true,
-  validateOnBlur: true,
 })(TermsSettingsForm);
