@@ -3,7 +3,7 @@ import { FormattedMessage } from 'react-intl';
 import { Settings } from '@folio/stripes/smart-components';
 
 import {
-  TermsSettings,
+  TermsSettingsRoute,
   PickListSettings,
   PickListValueSettings,
 } from './routes';
@@ -23,7 +23,20 @@ export default class LicenseSettings extends React.Component {
     },
     {
       label: <FormattedMessage id="ui-licenses.settings.termPickList" />,
-      pages: []
+      pages: [
+        {
+          component: PickListSettings,
+          label: <FormattedMessage id="ui-licenses.settings.pickLists" />,
+          perm: 'settings.licenses.enabled',
+          route: 'pick-lists',
+        },
+        {
+          component: PickListValueSettings,
+          label: <FormattedMessage id="ui-licenses.settings.pickListValues" />,
+          perm: 'settings.licenses.enabled',
+          route: 'pick-list-values',
+        },
+      ]
     }
   ]
 
