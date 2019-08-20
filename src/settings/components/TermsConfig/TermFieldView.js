@@ -6,6 +6,7 @@ import { FormattedMessage } from 'react-intl';
 import { Card, Col, Row, KeyValue } from '@folio/stripes/components';
 
 const TYPE_CLASS_PREFIX = 'com.k_int.web.toolkit.custprops.types.CustomProperty';
+const REFDATA_CLASS_NAME = 'com.k_int.web.toolkit.custprops.types.CustomPropertyRefdata';
 
 export default class TermFieldView extends React.Component {
   static propTypes = {
@@ -14,13 +15,27 @@ export default class TermFieldView extends React.Component {
       name: PropTypes.string.isRequired,
       value: PropTypes.shape({
         id: PropTypes.string,
+        type: PropTypes.string,
       }).isRequired,
     }).isRequired,
     meta: PropTypes.shape({
       invalid: PropTypes.bool,
       pristine: PropTypes.bool,
       submitting: PropTypes.bool,
-    })
+    }),
+    pickLists: PropTypes.arrayOf(PropTypes.object),
+  }
+
+  renderType = () => {
+    const type = this.props.input.value.type.split(TYPE_CLASS_PREFIX)[1].toLowerCase();
+    const translationKey = `ui-licenses.settings.terms.type.${type}`;
+    return <FormattedMessage id={translationKey} />;
+  }
+
+  renderPickList = () => {
+    const pickList = this.props.pickLists.find(p => p.value === get(this.props, 'input.value.category'));
+
+    return pickList ? pickList.label : '-';
   }
 
   render() {
@@ -72,15 +87,15 @@ export default class TermFieldView extends React.Component {
             { value.type && value.type.indexOf(TYPE_CLASS_PREFIX) === 0 &&
               <KeyValue
                 label={<FormattedMessage id="ui-licenses.settings.terms.term.type" />}
-                value={value.type.split(TYPE_CLASS_PREFIX)[1]}
+                value={this.renderType()}
               />
             }
           </Col>
           <Col xs={6}>
-            { value.type === `${TYPE_CLASS_PREFIX}Refdata` &&
+            { value.type === REFDATA_CLASS_NAME &&
               <KeyValue
                 label={<FormattedMessage id="ui-licenses.settings.terms.term.pickList" />}
-                value={get(value, 'category.desc', '-')}
+                value={this.renderPickList()}
               />
             }
           </Col>

@@ -4,7 +4,7 @@ import { get } from 'lodash';
 import { FormattedMessage } from 'react-intl';
 import { FieldArray } from 'react-final-form-arrays';
 
-import { Pane } from '@folio/stripes/components';
+import { Callout, Pane } from '@folio/stripes/components';
 import stripesFinalForm from '@folio/stripes/final-form';
 import TermsListFieldArray from './TermsListFieldArray';
 
@@ -21,11 +21,28 @@ class TermsConfigForm extends React.Component {
     pickLists: PropTypes.arrayOf(PropTypes.object),
   }
 
+  sendCallout = (operation, outcome) => {
+    this.callout.sendCallout({
+      type: outcome,
+      message: <FormattedMessage id={`ui-licenses.settings.terms.callout.${operation}.${outcome}`} />
+    });
+  }
+
+  handleDelete = (...rest) => {
+    this.props.onDelete(...rest)
+      .then(() => this.sendCallout('delete', 'success'))
+      .catch(() => this.sendCallout('delete', 'error'));
+  }
+
+  handleSave = (...rest) => {
+    this.props.onSave(...rest)
+      .then(() => this.sendCallout('save', 'success'))
+      .catch(() => this.sendCallout('save', 'error'));
+  }
+
   render() {
     const {
       form: { mutators },
-      onDelete,
-      onSave,
       pickLists,
     } = this.props;
 
@@ -43,11 +60,12 @@ class TermsConfigForm extends React.Component {
             component={TermsListFieldArray}
             mutators={mutators}
             name="terms"
-            onDelete={onDelete}
-            onSave={onSave}
+            onDelete={this.handleDelete}
+            onSave={this.handleSave}
             pickLists={pickLists}
           />
         </form>
+        <Callout ref={ref => { this.callout = ref; }} />
       </Pane>
     );
   }
@@ -55,7 +73,7 @@ class TermsConfigForm extends React.Component {
 
 export default stripesFinalForm({
   enableReinitialize: true,
-  keepDirtyOnReinitialize: true,
+  keepDirtyOnReinitialize: false,
   mutators: {
     setTermValue: (args, state, tools) => {
       tools.changeValue(state, args[0], () => args[1]);
