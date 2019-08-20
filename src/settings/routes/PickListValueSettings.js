@@ -20,7 +20,7 @@ export default class PickListValueSettings extends React.Component {
       connect: PropTypes.func.isRequired,
     }).isRequired,
     resources: PropTypes.shape({
-      categories: PropTypes.arrayOf({
+      categories: PropTypes.arrayOf(PropTypes.shape({
         id: PropTypes.string,
         desc: PropTypes.string,
         values: PropTypes.arrayOf({
@@ -28,7 +28,7 @@ export default class PickListValueSettings extends React.Component {
           value: PropTypes.string,
           label: PropTypes.string,
         }),
-      }),
+      })),
     }),
     mutator: PropTypes.shape({
       categories: PropTypes.shape({
@@ -99,8 +99,10 @@ export default class PickListValueSettings extends React.Component {
             hiddenFields={['lastUpdated', 'numberOfObjects']}
             id="pick-list-values"
             label={<FormattedMessage id="ui-licenses.settings.pickListValues" />}
+            labelSingular={intl.formatMessage({ id: 'ui-licenses.settings.value' })}
             listSuppressor={() => !this.state.categoryId}
             nameKey="label"
+            objectLabel={<FormattedMessage id="ui-licenses.settings.values" />}
             records="values"
             rowFilter={this.renderRowFilter(intl)}
             sortby="label"

@@ -41,7 +41,7 @@ module.exports.test = (uiTestCtx) => {
           .type('input[name="items[0].desc"]', pickList)
           .wait('#clickable-save-pick-lists-0')
           .click('#clickable-save-pick-lists-0')
-          .wait(222)
+          .waitUntilNetworkIdle(1000)
           .then(done)
           .catch(done);
       });
@@ -54,10 +54,10 @@ module.exports.test = (uiTestCtx) => {
           .click('a[href="/settings/licenses/pick-lists"]')
           .wait('#editList-pick-lists')
           .evaluate(list => {
-            const listRows = [...document.querySelectorAll('#editList-pick-lists')].map(e => e.textContent);
+            const listRows = [...document.querySelectorAll('#editList-pick-lists [role="row"]')].map(e => e.textContent);
             const listElement = listRows.find(r => r.indexOf(list) >= 0);
             if (!listElement) {
-              throw Error(`Could not find row with the list ${list} but found ${listElement}`);
+              throw Error(`Could not find row with the list ${list}`);
             }
           }, pickList)
           .then(done)
@@ -74,12 +74,10 @@ module.exports.test = (uiTestCtx) => {
           .wait('#clickable-edit-pick-lists-0')
           .click('#clickable-edit-pick-lists-0')
           .wait('input[name="items[0].desc"]')
-          .insert('input[name="items[0].desc"]', '')
-          .insert('input[name="items[0].desc"]', editedPickList)
-          //  .type('input[name="items[0].desc"]', editText)
+          .type('input[name="items[0].desc"]', editText)
           .wait('#clickable-save-pick-lists-0')
           .click('#clickable-save-pick-lists-0')
-          .wait(222)
+          .waitUntilNetworkIdle(1000)
           .then(done)
           .catch(done);
       });
@@ -92,10 +90,10 @@ module.exports.test = (uiTestCtx) => {
           .click('a[href="/settings/licenses/pick-lists"]')
           .wait('#editList-pick-lists')
           .evaluate(list => {
-            const listRows = [...document.querySelectorAll('#editList-pick-lists')].map(e => e.textContent);
+            const listRows = [...document.querySelectorAll('#editList-pick-lists [role="row"]')].map(e => e.textContent);
             const listElement = listRows.find(r => r.indexOf(list) >= 0);
             if (!listElement) {
-              throw Error(`Could not find row with the edited list ${list} but found ${listElement}`);
+              throw Error(`Could not find row with the edited list ${list}`);
             }
           }, editedPickList)
           .then(done)
@@ -140,7 +138,7 @@ module.exports.test = (uiTestCtx) => {
           .type('input[name="items[0].label"]', pickListValue)
           .wait('#clickable-save-pick-list-values-0')
           .click('#clickable-save-pick-list-values-0')
-          .wait(222)
+          .waitUntilNetworkIdle(1000)
           .then(done)
           .catch(done);
       });
@@ -149,10 +147,10 @@ module.exports.test = (uiTestCtx) => {
         nightmare
           .wait('#editList-pick-list-values')
           .evaluate(value => {
-            const valueRows = [...document.querySelectorAll('#editList-pick-list-values')].map(e => e.textContent);
+            const valueRows = [...document.querySelectorAll('#editList-pick-list-values [role="row"]')].map(e => e.textContent);
             const valueElement = valueRows.find(r => r.indexOf(value) >= 0);
             if (!valueElement) {
-              throw Error(`Could not find row with the edited value ${value} but found ${valueElement}`);
+              throw Error(`Could not find row with the edited value ${value}`);
             }
           }, pickListValue)
           .then(done)
@@ -174,7 +172,7 @@ module.exports.test = (uiTestCtx) => {
           .type('input[name="items[0].label"]', editText)
           .wait('#clickable-save-pick-list-values-0')
           .click('#clickable-save-pick-list-values-0')
-          .wait(222)
+          .waitUntilNetworkIdle(1000)
           .then(done)
           .catch(done);
       });
@@ -183,10 +181,10 @@ module.exports.test = (uiTestCtx) => {
         nightmare
           .wait('#editList-pick-list-values')
           .evaluate(value => {
-            const valueRows = [...document.querySelectorAll('#editList-pick-list-values')].map(e => e.textContent);
+            const valueRows = [...document.querySelectorAll('#editList-pick-list-values [role="row"]')].map(e => e.textContent);
             const valueElement = valueRows.find(r => r.indexOf(value) >= 0);
             if (!valueElement) {
-              throw Error(`Could not find row with the edited value ${value} but found ${valueElement}`);
+              throw Error(`Could not find row with the edited value ${value}`);
             }
           }, editedPickListValue)
           .then(done)

@@ -34,7 +34,7 @@ export default class PickListSettings extends React.Component {
             id="pick-lists"
             itemTemplate={{ desc: this.desc, values: [] }}
             label={<FormattedMessage id="ui-licenses.settings.pickLists" />}
-            labelSingular={<FormattedMessage id="ui-licenses.settings.pickList" />}
+            labelSingular={intl.formatMessage({ id: 'ui-licenses.settings.pickList' })}
             limitParam="perPage"
             nameKey="desc"
             objectLabel={<FormattedMessage id="ui-licenses.settings.values" />}
