@@ -1,8 +1,10 @@
 {
   "meta.title": "Licenses",
 
-  "loading": "Loading...",
+  "no": "No",
+  "yes": "Yes",
 
+  "loading": "Loading...",
   "searchInputLabel": "Search Licenses",
 
   "license": "License",
@@ -82,12 +84,28 @@
 
   "settings.general": "General",
   "settings.termPickList": "License term pick list setup",
-  "settings.terms.termCount": "{count} terms",
+  "settings.terms.termCount": "{count} saved terms",
+
+  "settings.terms.editLicenseTerm": "Edit license term",
+  "settings.terms.newLicenseTerm": "New license term",
+  "settings.terms.term.label": "Label",
+  "settings.terms.term.name": "Name",
+  "settings.terms.term.description": "Description",
+  "settings.terms.term.orderWeight": "Order weight",
+  "settings.terms.term.primaryTerm": "Primary term",
+  "settings.terms.term.defaultVisibility": "Default visibility",
+  "settings.terms.term.type": "Type",
+  "settings.terms.term.pickList": "Pick list",
+  "settings.terms.type.decimal": "Decimal",
+  "settings.terms.type.integer": "Integer",
+  "settings.terms.type.pickList": "Pick list",
+  "settings.terms.type.Text": "Text",
 
   "supplementaryDocs.add": "Add supplementary document",
   "supplementaryDocs.none": "No supplementary documents have been added",
 
   "terms.add": "Add term",
+  "terms.term": "Term",
   "term.title": "Term {number}",
   "term.internalTrue": "Internal",
   "term.internalFalse": "Public",

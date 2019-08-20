@@ -1,20 +1,23 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { isEqual } from 'lodash';
+import { FormattedMessage } from 'react-intl';
 import { Field } from 'react-final-form';
 
 import { Button, Col, Row } from '@folio/stripes/components';
 
 import TermField from './TermField';
 
-export default class TermsSettingsList extends React.Component {
+export default class TermsListFieldArray extends React.Component {
   static propTypes = {
     fields: PropTypes.shape({
       unshift: PropTypes.func.isRequired,
       value: PropTypes.array.isRequired,
     }).isRequired,
+    mutators: PropTypes.object,
     onDelete: PropTypes.func.isRequired,
     onSave: PropTypes.func.isRequired,
+    pickLists: PropTypes.arrayOf(PropTypes.object),
   }
 
   defaultTermValue = {
@@ -45,14 +48,14 @@ export default class TermsSettingsList extends React.Component {
   }
 
   render() {
-    const { fields, mutators } = this.props;
+    const { fields, mutators, pickLists } = this.props;
 
     return (
       <div>
         <Row end="sm">
           <Col>
             <Button onClick={this.handleNew}>
-              New
+              <FormattedMessage id="stripes-components.button.new" />
             </Button>
           </Col>
         </Row>
@@ -66,6 +69,7 @@ export default class TermsSettingsList extends React.Component {
               name={`${fields.name}[${i}]`}
               onDelete={() => this.handleDelete(i)}
               onSave={() => this.handleSave(i)}
+              pickLists={pickLists}
             />
           ))
         }

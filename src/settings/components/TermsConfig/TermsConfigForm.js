@@ -4,24 +4,30 @@ import { get } from 'lodash';
 import { FormattedMessage } from 'react-intl';
 import { FieldArray } from 'react-final-form-arrays';
 
-import { Button, Pane, PaneFooter } from '@folio/stripes/components';
+import { Pane } from '@folio/stripes/components';
 import stripesFinalForm from '@folio/stripes/final-form';
-import TermsSettingsList from './TermsSettingsList';
+import TermsListFieldArray from './TermsListFieldArray';
 
-class TermsSettingsForm extends React.Component {
+class TermsConfigForm extends React.Component {
   static propTypes = {
-    handleSubmit: PropTypes.func.isRequired,
     initialValues: PropTypes.shape({
       terms: PropTypes.arrayOf(PropTypes.object),
     }),
+    form: PropTypes.shape({
+      mutators: PropTypes.object.isRequired,
+    }).isRequired,
     onDelete: PropTypes.func.isRequired,
     onSave: PropTypes.func.isRequired,
-    pristine: PropTypes.bool,
-    submitting: PropTypes.bool,
+    pickLists: PropTypes.arrayOf(PropTypes.object),
   }
 
   render() {
-    const { form: { mutators }, onDelete, onSave, terms } = this.props;
+    const {
+      form: { mutators },
+      onDelete,
+      onSave,
+      pickLists,
+    } = this.props;
 
     const count = get(this.props, 'initialValues.terms.length', 0);
 
@@ -34,18 +40,14 @@ class TermsSettingsForm extends React.Component {
       >
         <form>
           <FieldArray
-            component={TermsSettingsList}
+            component={TermsListFieldArray}
             mutators={mutators}
             name="terms"
             onDelete={onDelete}
             onSave={onSave}
+            pickLists={pickLists}
           />
         </form>
-        {/* <ConfigTermsList
-          onDelete={onDelete}
-          onSave={onSave}
-          terms={terms}
-        /> */}
       </Pane>
     );
   }
@@ -55,12 +57,9 @@ export default stripesFinalForm({
   enableReinitialize: true,
   keepDirtyOnReinitialize: true,
   mutators: {
-    resetTermState: (args, state, tools) => {
-      tools.resetFieldState(args[0]);
-    },
     setTermValue: (args, state, tools) => {
       tools.changeValue(state, args[0], () => args[1]);
     },
   },
   navigationCheck: true,
-})(TermsSettingsForm);
+})(TermsConfigForm);

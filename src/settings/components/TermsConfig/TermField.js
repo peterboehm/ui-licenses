@@ -1,14 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { Field } from 'react-final-form';
 
-import { Card, Col, Row, Select, TextArea, TextField, Button } from '@folio/stripes/components';
+import { Button } from '@folio/stripes/components';
 
 import TermFieldEdit from './TermFieldEdit';
 import TermFieldView from './TermFieldView';
-
-import { required } from '../../util/validators';
 
 export default class TermField extends React.Component {
   static propTypes = {
@@ -24,7 +21,10 @@ export default class TermField extends React.Component {
       invalid: PropTypes.bool,
       pristine: PropTypes.bool,
       submitting: PropTypes.bool,
-    })
+    }),
+    mutators: PropTypes.shape({
+      setTermValue: PropTypes.func.isRequired,
+    }).isRequired,
   }
 
   constructor(props) {
@@ -39,8 +39,6 @@ export default class TermField extends React.Component {
   }
 
   handleEdit = () => {
-    this.props.mutators.resetTermState(this.props.input.name);
-
     this.setState({
       initialValue: this.props.input.value,
       editing: true,
@@ -75,7 +73,6 @@ export default class TermField extends React.Component {
 
   renderActionButtons = () => {
     const {
-      input: { value },
       meta,
       onDelete,
     } = this.props;
@@ -89,7 +86,7 @@ export default class TermField extends React.Component {
             marginBottom0
             onClick={this.handleCancel}
           >
-            Cancel
+            <FormattedMessage id="stripes-core.button.cancel" />
           </Button>
           <Button
             buttonStyle="primary"
@@ -97,7 +94,7 @@ export default class TermField extends React.Component {
             marginBottom0
             onClick={this.handleSave}
           >
-            Save
+            <FormattedMessage id="stripes-core.button.save" />
           </Button>
         </span>
       );
@@ -109,13 +106,13 @@ export default class TermField extends React.Component {
             marginBottom0
             onClick={onDelete}
           >
-            Delete
+            <FormattedMessage id="stripes-core.button.delete" />
           </Button>
           <Button
             marginBottom0
             onClick={this.handleEdit}
           >
-            Edit
+            <FormattedMessage id="stripes-core.button.edit" />
           </Button>
         </span>
       );
@@ -123,7 +120,6 @@ export default class TermField extends React.Component {
   }
 
   render() {
-    const { input: { name, value }, mutators } = this.props;
     const TermComponent = this.state.editing ? TermFieldEdit : TermFieldView;
 
     return (

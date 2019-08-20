@@ -4,9 +4,9 @@ import { get } from 'lodash';
 
 import { stripesConnect } from '@folio/stripes/core';
 
-import TermsSettingsForm from '../components/TermsSettingsForm';
+import TermsConfigForm from '../components/TermsConfig/TermsConfigForm';
 
-class TermsSettingsRoute extends React.Component {
+class TermsConfigRoute extends React.Component {
   static manifest = Object.freeze({
     terms: {
       type: 'okapi',
@@ -14,6 +14,14 @@ class TermsSettingsRoute extends React.Component {
       clientGeneratePk: false,
       params: {
         sort: 'id;desc'
+      }
+    },
+    pickLists: {
+      type: 'okapi',
+      path: 'licenses/refdata',
+      params: {
+        perPage: '100',
+        sort: 'desc;asc',
       }
     }
   });
@@ -34,26 +42,35 @@ class TermsSettingsRoute extends React.Component {
   state = {
     // loadedAt is used in gDSFP to determine whether to reinit form values
     loadedAt: new Date(), // eslint-disable-line react/no-unused-state
+    pickLists: [],
     terms: [],
   }
 
   static getDerivedStateFromProps(props, state) {
-    const resource = get(props, 'resources.terms'); // can't use default value bc of `null`
-    if (resource && resource.hasLoaded && resource.loadedAt > state.loadedAt) {
-      return {
-        loadedAt: resource.loadedAt,
-        terms: resource.records.map(term => ({
-          ...term,
-          category: term.category ? term.category.id : undefined,
-        })),
-      };
+    const newState = {};
+
+    const terms = get(props, 'resources.terms'); // can't use default value bc of `null`
+    if (terms && terms.hasLoaded && terms.loadedAt > state.loadedAt) {
+      newState.loadedAt = terms.loadedAt;
+      newState.terms = terms.records.map(term => ({
+        ...term,
+        category: term.category ? term.category.id : undefined,
+      }));
     }
 
-    return null;
+    const pickLists = get(props, 'resources.pickLists', []);
+    if (pickLists.length !== state.pickLists.length) {
+      newState.pickLists = pickLists.map(p => ({
+        label: p.desc,
+        value: p.id,
+      }));
+    }
+
+    return Object.keys(newState).length ? newState : null;
   }
 
   handleDelete = (term) => {
-    this.props.mutator.terms.DELETE(term)
+    return this.props.mutator.terms.DELETE(term)
       .then(response => {
         console.log(response);
       });
@@ -66,28 +83,24 @@ class TermsSettingsRoute extends React.Component {
       mutator.PUT(term, { pk: term.id }) :
       mutator.POST(term);
 
-    promise.then(response => {
+    return promise.then(response => {
       console.log(response);
     });
   }
 
-  handleSubmit = ({ terms }) => {
-    console.log(terms);
-  }
-
   render() {
-    const { terms } = this.state;
+    const { pickLists, terms } = this.state;
 
     return (
-      <TermsSettingsForm
+      <TermsConfigForm
         initialValues={{ terms }}
+        pickLists={pickLists}
         onDelete={this.handleDelete}
         onSave={this.handleSave}
         onSubmit={this.handleSave}
-        terms={terms}
       />
     );
   }
 }
 
-export default stripesConnect(TermsSettingsRoute);
+export default stripesConnect(TermsConfigRoute);
