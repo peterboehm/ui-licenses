@@ -125,10 +125,10 @@ export default class TermFieldEdit extends React.Component {
                     component={Select}
                     dataOptions={[
                       { label: '', value: '' },
-                      { label: intl.formatMessage({ id: 'ui-licenses.terms.type.decimal' }), value: 'Decimal' },
-                      { label: intl.formatMessage({ id: 'ui-licenses.terms.type.integer' }), value: 'Integer' },
-                      { label: intl.formatMessage({ id: 'ui-licenses.terms.type.pickList' }), value: 'Refdata' },
-                      { label: intl.formatMessage({ id: 'ui-licenses.terms.type.text' }), value: 'Text' },
+                      { label: intl.formatMessage({ id: 'ui-licenses.settings.terms.type.decimal' }), value: 'Decimal' },
+                      { label: intl.formatMessage({ id: 'ui-licenses.settings.terms.type.integer' }), value: 'Integer' },
+                      { label: intl.formatMessage({ id: 'ui-licenses.settings.terms.type.pickList' }), value: 'Refdata' },
+                      { label: intl.formatMessage({ id: 'ui-licenses.settings.terms.type.text' }), value: 'Text' },
                     ]}
                     label={<FormattedMessage id="ui-licenses.settings.terms.term.type" />}
                     name={`${name}.type`}

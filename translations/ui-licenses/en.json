@@ -99,7 +99,7 @@
   "settings.terms.type.decimal": "Decimal",
   "settings.terms.type.integer": "Integer",
   "settings.terms.type.pickList": "Pick list",
-  "settings.terms.type.Text": "Text",
+  "settings.terms.type.text": "Text",
 
   "supplementaryDocs.add": "Add supplementary document",
   "supplementaryDocs.none": "No supplementary documents have been added",

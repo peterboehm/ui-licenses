@@ -69,7 +69,7 @@ export default class TermFieldView extends React.Component {
             />
           </Col>
           <Col xs={6}>
-            { value.type.indexOf(TYPE_CLASS_PREFIX) === 0 &&
+            { value.type && value.type.indexOf(TYPE_CLASS_PREFIX) === 0 &&
               <KeyValue
                 label={<FormattedMessage id="ui-licenses.settings.terms.term.type" />}
                 value={value.type.split(TYPE_CLASS_PREFIX)[1]}
@@ -79,7 +79,7 @@ export default class TermFieldView extends React.Component {
           <Col xs={6}>
             { value.type === `${TYPE_CLASS_PREFIX}Refdata` &&
               <KeyValue
-                label={<FormattedMessage id="ui-licenses.settings.terms.term.pick list" />}
+                label={<FormattedMessage id="ui-licenses.settings.terms.term.pickList" />}
                 value={get(value, 'category.desc', '-')}
               />
             }

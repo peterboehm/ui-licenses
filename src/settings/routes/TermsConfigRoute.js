@@ -58,7 +58,7 @@ class TermsConfigRoute extends React.Component {
       }));
     }
 
-    const pickLists = get(props, 'resources.pickLists', []);
+    const pickLists = get(props, 'resources.pickLists.records', []);
     if (pickLists.length !== state.pickLists.length) {
       newState.pickLists = pickLists.map(p => ({
         label: p.desc,
