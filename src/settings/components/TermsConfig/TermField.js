@@ -64,11 +64,8 @@ export default class TermField extends React.Component {
   }
 
   handleSave = () => {
-    this.setState({
-      editing: false,
-    });
-
-    this.props.onSave();
+    this.props.onSave()
+      .then(() => this.setState({ editing: false }));
   }
 
   renderActionButtons = () => {

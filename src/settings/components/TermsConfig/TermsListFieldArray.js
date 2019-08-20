@@ -44,7 +44,7 @@ export default class TermsListFieldArray extends React.Component {
   handleSave = (index) => {
     const term = this.props.fields.value[index];
 
-    this.props.onSave(term);
+    return this.props.onSave(term);
   }
 
   render() {
