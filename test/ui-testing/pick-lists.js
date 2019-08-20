@@ -3,9 +3,9 @@
 module.exports.test = (uiTestCtx) => {
   const number = Math.round(Math.random() * 100000);
   const editText = '-edited';
-  const pickList = `${number}pickList`;
+  const pickList = `pickList${number}`;
   const editedPickList = `${pickList}${editText}`;
-  const pickListValue = `${number}pickListValue`;
+  const pickListValue = `pickListValue${number}`;
   const editedPickListValue = `${pickListValue}${editText}`;
 
   describe('Pick list crud', function test() {
@@ -34,14 +34,14 @@ module.exports.test = (uiTestCtx) => {
           .click('a[href="/settings/licenses"]')
           .wait('a[href="/settings/licenses/pick-lists"]')
           .click('a[href="/settings/licenses/pick-lists"]')
-          .waitUntilNetworkIdle(1000)
+          .waitUntilNetworkIdle(2000)
           .wait('#clickable-add-pick-lists')
           .click('#clickable-add-pick-lists')
           .wait('input[name="items[0].desc"]')
           .type('input[name="items[0].desc"]', pickList)
           .wait('#clickable-save-pick-lists-0')
           .click('#clickable-save-pick-lists-0')
-          .waitUntilNetworkIdle(1000)
+          .waitUntilNetworkIdle(2000)
           .then(done)
           .catch(done);
       });
@@ -70,15 +70,23 @@ module.exports.test = (uiTestCtx) => {
           .click('a[href="/settings/licenses"]')
           .wait('a[href="/settings/licenses/pick-lists"]')
           .click('a[href="/settings/licenses/pick-lists"]')
-          .waitUntilNetworkIdle(1000)
-          .wait('#clickable-edit-pick-lists-0')
-          .click('#clickable-edit-pick-lists-0')
-          .wait('input[name="items[0].desc"]')
-          .type('input[name="items[0].desc"]', editText)
-          .wait('#clickable-save-pick-lists-0')
-          .click('#clickable-save-pick-lists-0')
-          .waitUntilNetworkIdle(1000)
-          .then(done)
+          .waitUntilNetworkIdle(2000)
+          .evaluate(_pickList => {
+            const rowNumber = [...document.querySelectorAll('#editList-pick-lists [role="row"]')].map(e => e.textContent).findIndex(i => i.indexOf(_pickList) >= 0) - 1; // figure out the row number
+            return rowNumber;
+          }, pickList)
+          .then(rowNumber => {
+            nightmare
+              .wait(`#clickable-edit-pick-lists-${rowNumber}`)
+              .click(`#clickable-edit-pick-lists-${rowNumber}`)
+              .wait(`input[name="items[${rowNumber}].desc"]`)
+              .type(`input[name="items[${rowNumber}].desc"]`, editText)
+              .wait(`#clickable-save-pick-lists-${rowNumber}`)
+              .click(`#clickable-save-pick-lists-${rowNumber}`)
+              .waitUntilNetworkIdle(2000)
+              .then(done)
+              .catch(done);
+          })
           .catch(done);
       });
 
@@ -122,14 +130,13 @@ module.exports.test = (uiTestCtx) => {
           .catch(done);
       });
 
-
       it(`should create pick list value ${pickListValue} in settings`, done => {
         nightmare
           .wait('a[href="/settings/licenses"]')
           .click('a[href="/settings/licenses"]')
           .wait('a[href="/settings/licenses/pick-list-values"]')
           .click('a[href="/settings/licenses/pick-list-values"]')
-          .waitUntilNetworkIdle(1000)
+          .waitUntilNetworkIdle(2000)
           .wait('#categorySelect')
           .type('#categorySelect', editedPickList)
           .wait('#clickable-add-pick-list-values')
@@ -138,7 +145,7 @@ module.exports.test = (uiTestCtx) => {
           .type('input[name="items[0].label"]', pickListValue)
           .wait('#clickable-save-pick-list-values-0')
           .click('#clickable-save-pick-list-values-0')
-          .waitUntilNetworkIdle(1000)
+          .waitUntilNetworkIdle(2000)
           .then(done)
           .catch(done);
       });
@@ -163,7 +170,7 @@ module.exports.test = (uiTestCtx) => {
           .click('a[href="/settings/licenses"]')
           .wait('a[href="/settings/licenses/pick-list-values"]')
           .click('a[href="/settings/licenses/pick-list-values"]')
-          .waitUntilNetworkIdle(1000)
+          .waitUntilNetworkIdle(2000)
           .wait('#categorySelect')
           .type('#categorySelect', editedPickList)
           .wait('#clickable-edit-pick-list-values-0')
@@ -172,7 +179,7 @@ module.exports.test = (uiTestCtx) => {
           .type('input[name="items[0].label"]', editText)
           .wait('#clickable-save-pick-list-values-0')
           .click('#clickable-save-pick-list-values-0')
-          .waitUntilNetworkIdle(1000)
+          .waitUntilNetworkIdle(2000)
           .then(done)
           .catch(done);
       });
@@ -211,14 +218,14 @@ module.exports.test = (uiTestCtx) => {
 
       it(`should delete pick list value ${editedPickListValue}`, done => {
         nightmare
-          .waitUntilNetworkIdle(1000)
+          .waitUntilNetworkIdle(2000)
           .wait('#editList-pick-list-values')
           .wait('#clickable-delete-pick-list-values-0')
           .click('#clickable-delete-pick-list-values-0')
-          .waitUntilNetworkIdle(1000)
+          .waitUntilNetworkIdle(2000)
           .wait('#clickable-delete-controlled-vocab-entry-confirmation-confirm')
           .click('#clickable-delete-controlled-vocab-entry-confirmation-confirm')
-          .waitUntilNetworkIdle(1000)
+          .waitUntilNetworkIdle(2000)
           .evaluate(value => {
             const row = document.evaluate(
               `//*[@id="editList-pick-list-values"]//div[.="${value}"]`,
@@ -240,25 +247,33 @@ module.exports.test = (uiTestCtx) => {
           .click('a[href="/settings/licenses"]')
           .wait('a[href="/settings/licenses/pick-lists"]')
           .click('a[href="/settings/licenses/pick-lists"]')
-          .waitUntilNetworkIdle(1000)
-          .wait('#clickable-delete-pick-lists-0')
-          .click('#clickable-delete-pick-lists-0')
-          .waitUntilNetworkIdle(1000)
-          .wait('#clickable-delete-controlled-vocab-entry-confirmation-confirm')
-          .click('#clickable-delete-controlled-vocab-entry-confirmation-confirm')
-          .waitUntilNetworkIdle(1000)
-          .evaluate(list => {
-            const row = document.evaluate(
-              `//*[@id="editList-pick-lists"]//div[.="${list}"]`,
-              document,
-              null,
-              XPathResult.FIRST_ORDERED_NODE_TYPE
-            ).singleNodeValue;
-            if (row != null) {
-              throw Error(`Should not find row with list ${list}`);
-            }
+          .waitUntilNetworkIdle(2000)
+          .evaluate(_pickList => {
+            const rowNumber = [...document.querySelectorAll('#editList-pick-lists [role="row"]')].map(e => e.textContent).findIndex(i => i.indexOf(_pickList) >= 0) - 1;
+            return rowNumber;
           }, editedPickList)
-          .then(done)
+          .then(rowNumber => {
+            nightmare
+              .wait(`#clickable-delete-pick-lists-${rowNumber}`)
+              .click(`#clickable-delete-pick-lists-${rowNumber}`)
+              .waitUntilNetworkIdle(2000)
+              .wait('#clickable-delete-controlled-vocab-entry-confirmation-confirm')
+              .click('#clickable-delete-controlled-vocab-entry-confirmation-confirm')
+              .waitUntilNetworkIdle(2000)
+              .evaluate(list => {
+                const row = document.evaluate(
+                  `//*[@id="editList-pick-lists"]//div[.="${list}"]`,
+                  document,
+                  null,
+                  XPathResult.FIRST_ORDERED_NODE_TYPE
+                ).singleNodeValue;
+                if (row != null) {
+                  throw Error(`Should not find row with list ${list}`);
+                }
+              }, editedPickList)
+              .then(done)
+              .catch(done);
+          })
           .catch(done);
       });
     });
