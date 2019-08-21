@@ -11,10 +11,11 @@ class TermsConfigRoute extends React.Component {
     terms: {
       type: 'okapi',
       path: 'licenses/custprops',
-      clientGeneratePk: false,
       params: {
         sort: 'id;desc'
-      }
+      },
+      clientGeneratePk: false,
+      throwErrors: false,
     },
     pickLists: {
       type: 'okapi',
@@ -70,10 +71,7 @@ class TermsConfigRoute extends React.Component {
   }
 
   handleDelete = (term) => {
-    return this.props.mutator.terms.DELETE(term)
-      .then(response => {
-        console.log(response);
-      });
+    return this.props.mutator.terms.DELETE(term);
   }
 
   handleSave = (term) => {
@@ -83,9 +81,7 @@ class TermsConfigRoute extends React.Component {
       mutator.PUT(term, { pk: term.id }) :
       mutator.POST(term);
 
-    return promise.then(response => {
-      console.log(response);
-    });
+    return promise;
   }
 
   render() {

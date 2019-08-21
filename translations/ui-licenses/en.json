@@ -89,9 +89,9 @@
 
   "settings.terms.editLicenseTerm": "Edit license term",
   "settings.terms.newLicenseTerm": "New license term",
-  "settings.terms.callout.delete.error": "There was an error deleting the term.",
+  "settings.terms.callout.delete.error": "There was an error deleting the term. {error}",
   "settings.terms.callout.delete.success": "Term successfully deleted.",
-  "settings.terms.callout.save.error": "There was an error saving the term.",
+  "settings.terms.callout.save.error": "There was an error saving the term. {error}",
   "settings.terms.callout.save.success": "Term successfully saved.",
   "settings.terms.help.label": "A license term 'label' is used when displaying the term to users within Folio and in any other systems that display license terms to users. It should be a short text string that clearly communicates what information is recorded in the term. The Description should be used where further explanation of the term is required for display to users.",
   "settings.terms.help.name": "A license term 'name' is used when outputting the term data in a machine readable format. It is not intended to be displayed to users (staff or patrons). It should be a short Latin alphabet string that can be used by any external systems or programs that access the license term data. Use of camelCase is suggested but not required. Changes to the license term name would affect any external systems using license term data and changes should not be made without consulting those responsible for relevant external systems and software.",

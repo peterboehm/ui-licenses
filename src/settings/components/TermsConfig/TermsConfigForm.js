@@ -21,23 +21,42 @@ class TermsConfigForm extends React.Component {
     pickLists: PropTypes.arrayOf(PropTypes.object),
   }
 
-  sendCallout = (operation, outcome) => {
+  sendCallout = (operation, outcome, error = '') => {
     this.callout.sendCallout({
       type: outcome,
-      message: <FormattedMessage id={`ui-licenses.settings.terms.callout.${operation}.${outcome}`} />
+      message: <FormattedMessage id={`ui-licenses.settings.terms.callout.${operation}.${outcome}`} values={{ error }} />,
+      timeout: error ? 0 : undefined, // Don't autohide callouts with a specified error message.
     });
   }
 
   handleDelete = (...rest) => {
-    this.props.onDelete(...rest)
+    return this.props.onDelete(...rest)
       .then(() => this.sendCallout('delete', 'success'))
-      .catch(() => this.sendCallout('delete', 'error'));
+      .catch(response => {
+        // Attempt to show an error message if we got JSON back with a message.
+        // If json()ification fails, show the generic error callout.
+        response.json()
+          .then(error => this.sendCallout('delete', 'error', error.message))
+          .catch(() => this.sendCallout('delete', 'error'));
+
+        // Return a rejected promise to break any downstream Promise chains.
+        return Promise.reject();
+      });
   }
 
   handleSave = (...rest) => {
-    this.props.onSave(...rest)
+    return this.props.onSave(...rest)
       .then(() => this.sendCallout('save', 'success'))
-      .catch(() => this.sendCallout('save', 'error'));
+      .catch(response => {
+        // Attempt to show an error message if we got JSON back with a message.
+        // If json()ification fails, show the generic error callout.
+        response.json()
+          .then(error => this.sendCallout('save', 'error', error.message))
+          .catch(() => this.sendCallout('save', 'error'));
+
+        // Return a rejected promise to break any downstream Promise chains.
+        return Promise.reject();
+      });
   }
 
   render() {
