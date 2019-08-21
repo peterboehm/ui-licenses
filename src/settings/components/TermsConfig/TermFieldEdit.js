@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Field } from 'react-final-form';
 
-import { Card, Col, Row, Select, TextArea, TextField } from '@folio/stripes/components';
+import { Card, Col, InfoPopover, Row, Select, TextArea, TextField } from '@folio/stripes/components';
 import { IntlConsumer } from '@folio/stripes/core';
 
 import { required } from '../../../util/validators';
@@ -55,6 +55,7 @@ export default class TermFieldEdit extends React.Component {
                   label={<FormattedMessage id="ui-licenses.settings.terms.term.label" />}
                   name={`${name}.label`}
                   required
+                  startControl={<InfoPopover content={<FormattedMessage id="ui-licenses.settings.terms.help.label" />} />}
                   validate={required}
                 />
               </Col>
@@ -64,7 +65,15 @@ export default class TermFieldEdit extends React.Component {
                   label={<FormattedMessage id="ui-licenses.settings.terms.term.name" />}
                   name={`${name}.name`}
                   required
-                  validate={required}
+                  startControl={<InfoPopover content={<FormattedMessage id="ui-licenses.settings.terms.help.name" />} />}
+                  validate={v => {
+                    if (v && v.length) {
+                      return /^[a-z][a-z0-9]*$/i.test(v) ?
+                        undefined : <FormattedMessage id="ui-licenses.errors.termNameHasNonAlpha" />;
+                    }
+
+                    return required(v);
+                  }}
                 />
               </Col>
             </Row>
