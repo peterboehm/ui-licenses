@@ -25,9 +25,6 @@ const AMENDMENTS = [{
   delete: true,
 }];
 
-const EDIT_AMENDMENT = AMENDMENTS.find(a => a.editedName);
-const DELETE_AMENDMENT = AMENDMENTS.find(a => a.delete);
-
 module.exports.test = (uiTestCtx) => {
   describe('ui-licenses: manage amendments', function test() {
     const { config, helpers } = uiTestCtx;
@@ -116,7 +113,7 @@ module.exports.test = (uiTestCtx) => {
               chain = chain
                 .click('#add-docs-btn')
                 .insert(`#docs-name-${i}`, doc)
-                .insert(`#docs-location-${i}`, 'Filing Cabinet')
+                .insert(`#docs-location-${i}`, 'Filing Cabinet');
             });
 
             chain.then(done).catch(done);
@@ -131,7 +128,7 @@ module.exports.test = (uiTestCtx) => {
               chain = chain
                 .click('#add-supplementaryDocs-btn')
                 .insert(`#supplementaryDocs-name-${i}`, doc)
-                .insert(`#supplementaryDocs-location-${i}`, 'Filing Cabinet')
+                .insert(`#supplementaryDocs-location-${i}`, 'Filing Cabinet');
             });
 
             chain.then(done).catch(done);

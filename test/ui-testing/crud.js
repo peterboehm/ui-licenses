@@ -18,7 +18,7 @@ const generateLicenseValues = () => {
   };
 };
 
-const createLicense = (nightmare, done, defaultValues, resourceId) => {
+const createLicense = (nightmare, done, defaultValues) => {
   const values = defaultValues || generateLicenseValues();
 
   nightmare

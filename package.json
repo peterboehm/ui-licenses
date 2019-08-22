@@ -1,6 +1,6 @@
 {
   "name": "@folio/licenses",
-  "version": "3.4.0",
+  "version": "3.5.0",
   "description": "ERM License functionality for Stripes",
   "main": "src/index.js",
   "repository": "",
@@ -11,7 +11,7 @@
   "scripts": {
     "start": "stripes serve",
     "build": "stripes build --output ./output",
-    "test": "stripes test nightmare --run crud/text-term/select-term/orgs/core-docs/more-docs/contacts/amendments/pick-lists",
+    "test": "stripes test nightmare --run crud/text-term/select-term/orgs/core-docs/more-docs/contacts/amendments/pick-lists/term-config",
     "test-crud": "stripes test nightmare --run crud",
     "test-text-term": "stripes test nightmare --run text-term",
     "test-select-term": "stripes test nightmare --run select-term",
@@ -22,11 +22,12 @@
     "test-amendments": "stripes test nightmare --run amendments",
     "test-notes-crud": "stripes test nightmare --run notes-crud",
     "test-pick-lists": "stripes test nightmare --run pick-lists",
-    "lint": "eslint src"
+    "test-term-config": "stripes test nightmare --run term-config",
+    "lint": "eslint src test"
   },
   "devDependencies": {
     "@folio/eslint-config-stripes": "^4.2.0",
-    "@folio/stripes": "^2.0.0",
+    "@folio/stripes": "^2.9.0",
     "@folio/stripes-cli": "^1.8.0",
     "babel-eslint": "^9.0.0",
     "eslint": "^5.5.0"
@@ -36,13 +37,17 @@
     "compose-function": "^3.0.3",
     "lodash": "^4.17.11",
     "prop-types": "^15.6.0",
+    "final-form": "^4.18.4",
+    "final-form-arrays": "^3.0.1",
+    "react-final-form": "^6.3.0",
+    "react-final-form-arrays": "^3.1.0",
     "react-intl": "^2.4.0",
     "react-router-dom": "^4.1.1",
     "react-router-prop-types": "^1.0.4",
     "redux-form": "^7.0.3"
   },
   "peerDependencies": {
-    "@folio/stripes": "^2.0.0",
+    "@folio/stripes": "^2.9.0",
     "react": "*"
   },
   "stripes": {
