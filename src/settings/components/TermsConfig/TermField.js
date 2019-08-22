@@ -9,8 +9,6 @@ import TermFieldView from './TermFieldView';
 
 export default class TermField extends React.Component {
   static propTypes = {
-    onDelete: PropTypes.func.isRequired,
-    onSave: PropTypes.func.isRequired,
     input: PropTypes.shape({
       name: PropTypes.string.isRequired,
       value: PropTypes.oneOfType([
@@ -26,6 +24,8 @@ export default class TermField extends React.Component {
     mutators: PropTypes.shape({
       setTermValue: PropTypes.func.isRequired,
     }).isRequired,
+    onDelete: PropTypes.func.isRequired,
+    onSave: PropTypes.func.isRequired,
   }
 
   constructor(props) {
@@ -57,7 +57,6 @@ export default class TermField extends React.Component {
     } else {
       onDelete();
     }
-
 
     this.setState({
       editing: false,
