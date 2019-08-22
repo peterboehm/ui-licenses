@@ -78,8 +78,6 @@ module.exports.test = (uiTestCtx) => {
         it('should select org', done => {
           nightmare
             .click(`#orgs-nameOrg-${row}-search-button`)
-            .wait('#clickable-filter-status-active')
-            .click('#clickable-filter-status-active')
             .wait(`#list-plugin-find-organization [aria-rowindex="${row + 3}"] > a`)
             .click(`#list-plugin-find-organization [aria-rowindex="${row + 3}"] > a`)
             .waitUntilNetworkIdle(2000)
@@ -204,8 +202,6 @@ module.exports.test = (uiTestCtx) => {
                 .click(`#orgs-unlink-${row}`)
                 .wait(`#orgs-nameOrg-${row}-search-button`)
                 .click(`#orgs-nameOrg-${row}-search-button`)
-                .wait('#clickable-filter-status-active')
-                .click('#clickable-filter-status-active')
                 .wait('#list-plugin-find-organization [aria-rowindex="12"] > a')
                 .click('#list-plugin-find-organization [aria-rowindex="12"] > a')
                 .waitUntilNetworkIdle(2000)
