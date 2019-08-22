@@ -1,6 +1,6 @@
 {
   "name": "@folio/licenses",
-  "version": "3.4.0",
+  "version": "3.5.0",
   "description": "ERM License functionality for Stripes",
   "main": "src/index.js",
   "repository": "",
@@ -27,7 +27,7 @@
   },
   "devDependencies": {
     "@folio/eslint-config-stripes": "^4.2.0",
-    "@folio/stripes": "^2.0.0",
+    "@folio/stripes": "^2.9.0",
     "@folio/stripes-cli": "^1.8.0",
     "babel-eslint": "^9.0.0",
     "eslint": "^5.5.0"
