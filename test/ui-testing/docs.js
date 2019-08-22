@@ -25,7 +25,7 @@ module.exports.test = (uiTestCtx,
         helpers.clickApp(nightmare, done, 'licenses');
       });
 
-      it('should navigate to create license page and expand docs section', done => {
+      it('should navigate to create license page', done => {
         const name = `Docs License #${generateNumber()}`;
 
         console.log(`\tCreating ${name}`);
@@ -65,6 +65,7 @@ module.exports.test = (uiTestCtx,
         nightmare
           .click('#clickable-create-license')
           .waitUntilNetworkIdle(2000) // Wait for record to be fetched
+          .click('#clickable-expand-all')
           .then(done)
           .catch(done);
       });
@@ -77,7 +78,7 @@ module.exports.test = (uiTestCtx,
               if (!docCard) {
                 throw Error(`Could not find doc card with a doc named ${d.name}`);
               }
-              const name = docCard.querySelector('[data-test-doc-name]').innerText;
+              const name = docCard.querySelector('[data-test-doc-name]').innerText.trim();
               if (name !== d.name) {
                 throw Error(`Expected name to be ${d.name} and found ${name}.`);
               }
@@ -235,6 +236,7 @@ module.exports.test = (uiTestCtx,
         nightmare
           .click('#clickable-update-license')
           .waitUntilNetworkIdle(2000) // Wait for record to be fetched
+          .click('#clickable-expand-all')
           .then(done)
           .catch(done);
       });
@@ -247,7 +249,7 @@ module.exports.test = (uiTestCtx,
               if (!docCard) {
                 throw Error(`Could not find doc card with a doc named ${d.name}`);
               }
-              const name = docCard.querySelector('[data-test-doc-name]').innerText;
+              const name = docCard.querySelector('[data-test-doc-name]').innerText.trim();
               if (name !== d.name) {
                 throw Error(`Expected name to be ${d.name} and found ${name}.`);
               }
