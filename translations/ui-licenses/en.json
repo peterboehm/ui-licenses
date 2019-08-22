@@ -81,7 +81,14 @@
   "section.terms": "Terms",
 
   "settings.general": "General",
+  "settings.pickList": "Pick list",
+  "settings.pickLists": "Pick lists",
+  "settings.pickListSelect": "Select pick list",
+  "settings.pickListValues": "Pick list values",
   "settings.termPickList": "License term pick list setup",
+  "settings.actions": "Actions",
+  "settings.values": "values",
+  "settings.value": "Value",
 
   "supplementaryDocs.add": "Add supplementary document",
   "supplementaryDocs.none": "No supplementary documents have been added",
