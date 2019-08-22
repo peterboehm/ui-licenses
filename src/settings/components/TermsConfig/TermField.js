@@ -13,9 +13,10 @@ export default class TermField extends React.Component {
     onSave: PropTypes.func.isRequired,
     input: PropTypes.shape({
       name: PropTypes.string.isRequired,
-      value: PropTypes.shape({
-        id: PropTypes.string,
-      }).isRequired,
+      value: PropTypes.oneOfType([
+        PropTypes.shape({ id: PropTypes.string }),
+        PropTypes.string,
+      ]).isRequired,
     }).isRequired,
     meta: PropTypes.shape({
       invalid: PropTypes.bool,

@@ -71,21 +71,21 @@ export default class TermFieldView extends React.Component {
         <Row>
           <Col xs={4}>
             <KeyValue
-              data-test-term-orderWeight
+              data-test-term-weight
               label={<FormattedMessage id="ui-licenses.settings.terms.term.orderWeight" />}
               value={value.weight}
             />
           </Col>
           <Col xs={4}>
             <KeyValue
-              data-test-term-primaryTerm
+              data-test-term-primary
               label={<FormattedMessage id="ui-licenses.settings.terms.term.primaryTerm" />}
               value={<FormattedMessage id={value.primary ? 'ui-licenses.yes' : 'ui-licenses.no'} />}
             />
           </Col>
           <Col xs={4}>
             <KeyValue
-              data-test-term-defaultVisibility
+              data-test-term-defaultinternal
               label={<FormattedMessage id="ui-licenses.settings.terms.term.defaultVisibility" />}
               value={<FormattedMessage id={value.defaultInternal ? 'ui-licenses.term.internalTrue' : 'ui-licenses.term.internalFalse'} />}
             />
@@ -102,7 +102,7 @@ export default class TermFieldView extends React.Component {
           <Col xs={6}>
             { value.type === REFDATA_CLASS_NAME &&
               <KeyValue
-                data-test-term-pickList
+                data-test-term-picklist
                 label={<FormattedMessage id="ui-licenses.settings.terms.term.pickList" />}
                 value={this.renderPickList()}
               />
