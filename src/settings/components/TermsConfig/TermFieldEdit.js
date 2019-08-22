@@ -39,6 +39,7 @@ export default class TermFieldEdit extends React.Component {
       <IntlConsumer>
         {intl => (
           <Card
+            data-test-term-name={name}
             headerStart={(
               <strong>
                 {value.id ?

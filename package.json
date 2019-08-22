@@ -11,7 +11,7 @@
   "scripts": {
     "start": "stripes serve",
     "build": "stripes build --output ./output",
-    "test": "stripes test nightmare --run crud/text-term/select-term/orgs/core-docs/more-docs/contacts/amendments",
+    "test": "stripes test nightmare --run crud/text-term/select-term/orgs/core-docs/more-docs/contacts/amendments/term-config",
     "test-crud": "stripes test nightmare --run crud",
     "test-text-term": "stripes test nightmare --run text-term",
     "test-select-term": "stripes test nightmare --run select-term",
@@ -21,6 +21,7 @@
     "test-contacts": "stripes test nightmare --run contacts",
     "test-amendments": "stripes test nightmare --run amendments",
     "test-notes-crud": "stripes test nightmare --run notes-crud",
+    "test-term-config": "stripes test nightmare --run term-config",
     "lint": "eslint src"
   },
   "devDependencies": {

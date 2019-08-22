@@ -39,46 +39,53 @@ export default class TermFieldView extends React.Component {
   }
 
   render() {
-    const { input: { value } } = this.props;
+    const { input: { name, value } } = this.props;
 
     return (
       <Card
+        data-test-term-name={name}
         headerStart={<strong><FormattedMessage id="ui-licenses.terms.term" /></strong>}
         headerEnd={this.props.actionButtons}
       >
         <Row>
           <Col xs={6}>
             <KeyValue
+              data-test-term-label
               label={<FormattedMessage id="ui-licenses.settings.terms.term.label" />}
               value={value.label}
             />
           </Col>
           <Col xs={6}>
             <KeyValue
+              data-test-term-name
               label={<FormattedMessage id="ui-licenses.settings.terms.term.name" />}
               value={value.name}
             />
           </Col>
         </Row>
         <KeyValue
+          data-test-term-description
           label={<FormattedMessage id="ui-licenses.settings.terms.term.description" />}
           value={value.description}
         />
         <Row>
           <Col xs={4}>
             <KeyValue
+              data-test-term-orderWeight
               label={<FormattedMessage id="ui-licenses.settings.terms.term.orderWeight" />}
               value={value.weight}
             />
           </Col>
           <Col xs={4}>
             <KeyValue
+              data-test-term-primaryTerm
               label={<FormattedMessage id="ui-licenses.settings.terms.term.primaryTerm" />}
               value={<FormattedMessage id={value.primary ? 'ui-licenses.yes' : 'ui-licenses.no'} />}
             />
           </Col>
           <Col xs={4}>
             <KeyValue
+              data-test-term-defaultVisibility
               label={<FormattedMessage id="ui-licenses.settings.terms.term.defaultVisibility" />}
               value={<FormattedMessage id={value.defaultInternal ? 'ui-licenses.term.internalTrue' : 'ui-licenses.term.internalFalse'} />}
             />
@@ -86,7 +93,8 @@ export default class TermFieldView extends React.Component {
           <Col xs={6}>
             { value.type && value.type.indexOf(TYPE_CLASS_PREFIX) === 0 &&
               <KeyValue
-                label={<FormattedMessage id="ui-licenses.settings.terms.term.type" />}
+              data-test-term-type
+              label={<FormattedMessage id="ui-licenses.settings.terms.term.type" />}
                 value={this.renderType()}
               />
             }
@@ -94,7 +102,8 @@ export default class TermFieldView extends React.Component {
           <Col xs={6}>
             { value.type === REFDATA_CLASS_NAME &&
               <KeyValue
-                label={<FormattedMessage id="ui-licenses.settings.terms.term.pickList" />}
+              data-test-term-pickList
+              label={<FormattedMessage id="ui-licenses.settings.terms.term.pickList" />}
                 value={this.renderPickList()}
               />
             }

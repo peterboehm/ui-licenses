@@ -80,6 +80,7 @@ export default class TermField extends React.Component {
       return (
         <span>
           <Button
+            data-test-term-cancel-btn
             marginBottom0
             onClick={this.handleCancel}
           >
@@ -87,6 +88,7 @@ export default class TermField extends React.Component {
           </Button>
           <Button
             buttonStyle="primary"
+            data-test-term-save-btn
             disabled={meta.invalid || meta.pristine || meta.submitting}
             marginBottom0
             onClick={this.handleSave}
@@ -100,6 +102,7 @@ export default class TermField extends React.Component {
         <span>
           <Button
             buttonStyle="danger"
+            data-test-term-delete-btn
             marginBottom0
             onClick={onDelete}
           >
@@ -107,6 +110,7 @@ export default class TermField extends React.Component {
           </Button>
           <Button
             marginBottom0
+            data-test-term-edit-btn
             onClick={this.handleEdit}
           >
             <FormattedMessage id="stripes-core.button.edit" />

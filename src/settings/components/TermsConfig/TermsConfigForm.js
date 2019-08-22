@@ -6,7 +6,7 @@ import { FieldArray } from 'react-final-form-arrays';
 
 import { Callout, Pane } from '@folio/stripes/components';
 import stripesFinalForm from '@folio/stripes/final-form';
-import TermsListFieldArray from './TermsListFieldArray';
+import TermsConfigListFieldArray from './TermsConfigListFieldArray';
 
 class TermsConfigForm extends React.Component {
   static propTypes = {
@@ -76,7 +76,7 @@ class TermsConfigForm extends React.Component {
       >
         <form>
           <FieldArray
-            component={TermsListFieldArray}
+            component={TermsConfigListFieldArray}
             mutators={mutators}
             name="terms"
             onDelete={this.handleDelete}

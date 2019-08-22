@@ -8,7 +8,7 @@ import { Button, Col, Row } from '@folio/stripes/components';
 
 import TermField from './TermField';
 
-export default class TermsListFieldArray extends React.Component {
+export default class TermsConfigListFieldArray extends React.Component {
   static propTypes = {
     fields: PropTypes.shape({
       unshift: PropTypes.func.isRequired,
@@ -54,7 +54,7 @@ export default class TermsListFieldArray extends React.Component {
       <div>
         <Row end="sm">
           <Col>
-            <Button onClick={this.handleNew}>
+            <Button id="clickable-new-term" onClick={this.handleNew}>
               <FormattedMessage id="stripes-components.button.new" />
             </Button>
           </Col>
