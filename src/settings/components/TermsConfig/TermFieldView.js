@@ -93,8 +93,8 @@ export default class TermFieldView extends React.Component {
           <Col xs={6}>
             { value.type && value.type.indexOf(TYPE_CLASS_PREFIX) === 0 &&
               <KeyValue
-              data-test-term-type
-              label={<FormattedMessage id="ui-licenses.settings.terms.term.type" />}
+                data-test-term-type
+                label={<FormattedMessage id="ui-licenses.settings.terms.term.type" />}
                 value={this.renderType()}
               />
             }
@@ -102,8 +102,8 @@ export default class TermFieldView extends React.Component {
           <Col xs={6}>
             { value.type === REFDATA_CLASS_NAME &&
               <KeyValue
-              data-test-term-pickList
-              label={<FormattedMessage id="ui-licenses.settings.terms.term.pickList" />}
+                data-test-term-pickList
+                label={<FormattedMessage id="ui-licenses.settings.terms.term.pickList" />}
                 value={this.renderPickList()}
               />
             }

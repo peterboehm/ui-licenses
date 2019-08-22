@@ -23,7 +23,7 @@
     "test-notes-crud": "stripes test nightmare --run notes-crud",
     "test-pick-lists": "stripes test nightmare --run pick-lists",
     "test-term-config": "stripes test nightmare --run term-config",
-    "lint": "eslint src"
+    "lint": "eslint src test"
   },
   "devDependencies": {
     "@folio/eslint-config-stripes": "^4.2.0",
