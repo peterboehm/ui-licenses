@@ -72,7 +72,9 @@ module.exports.test = (uiTestCtx) => {
           .click('a[href="/settings/licenses/pick-lists"]')
           .waitUntilNetworkIdle(2000)
           .evaluate(_pickList => {
-            const rowNumber = [...document.querySelectorAll('#editList-pick-lists [role="row"]')].map(e => e.textContent).findIndex(i => i.indexOf(_pickList) >= 0) - 1; // figure out the row number
+            const rowNumber = [...document.querySelectorAll('#editList-pick-lists [role="row"]')]
+              .map(e => e.textContent)
+              .findIndex(i => i.indexOf(_pickList) >= 0) - 1;   // to account for the row header
             return rowNumber;
           }, pickList)
           .then(rowNumber => {
@@ -249,7 +251,9 @@ module.exports.test = (uiTestCtx) => {
           .click('a[href="/settings/licenses/pick-lists"]')
           .waitUntilNetworkIdle(2000)
           .evaluate(_pickList => {
-            const rowNumber = [...document.querySelectorAll('#editList-pick-lists [role="row"]')].map(e => e.textContent).findIndex(i => i.indexOf(_pickList) >= 0) - 1;
+            const rowNumber = [...document.querySelectorAll('#editList-pick-lists [role="row"]')]
+              .map(e => e.textContent)
+              .findIndex(i => i.indexOf(_pickList) >= 0) - 1;   // to account for the row header
             return rowNumber;
           }, editedPickList)
           .then(rowNumber => {
