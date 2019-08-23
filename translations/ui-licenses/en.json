@@ -89,7 +89,7 @@
   "settings.pickListSelect": "Select pick list",
   "settings.pickListValues": "Pick list values",
   "settings.termPickList": "License term pick list setup",
-  "settings.terms.termCount": "{count} saved terms",
+  "settings.terms.termCount": "{count, number} saved {count, plural, one {term} other {terms}}",
 
   "settings.terms.editLicenseTerm": "Edit license term",
   "settings.terms.newLicenseTerm": "New license term",
