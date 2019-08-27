@@ -3,6 +3,7 @@
 ## 3.5.0 IN PROGRESS
 * Added settings page for License Terms. ERM-391
 * Added settings page for Pick Lists. ERM-389 390
+* Fixed bug where resetting query term wouldn't execute a search. ERM-426
 
 ## 3.4.0 2019-08-20
 * Render Internal Contacts as cards. ERM-309

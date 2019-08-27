@@ -39,13 +39,16 @@ export default class TermFieldView extends React.Component {
   }
 
   render() {
-    const { input: { name, value } } = this.props;
+    const {
+      actionButtons,
+      input: { name, value },
+    } = this.props;
 
     return (
       <Card
         data-test-term-name={name}
         headerStart={<strong><FormattedMessage id="ui-licenses.terms.term" /></strong>}
-        headerEnd={this.props.actionButtons}
+        headerEnd={actionButtons}
       >
         <Row>
           <Col xs={6}>

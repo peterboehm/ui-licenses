@@ -31,6 +31,7 @@ export default class TermFieldEdit extends React.Component {
 
   render() {
     const {
+      actionButtons,
       input: { name, value },
       pickLists,
     } = this.props;
@@ -47,7 +48,7 @@ export default class TermFieldEdit extends React.Component {
                   <FormattedMessage id="ui-licenses.settings.terms.newLicenseTerm" />}
               </strong>
             )}
-            headerEnd={this.props.actionButtons}
+            headerEnd={actionButtons}
           >
             <Row>
               <Col xs={6}>

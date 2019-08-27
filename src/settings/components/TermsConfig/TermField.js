@@ -49,11 +49,12 @@ export default class TermField extends React.Component {
   handleCancel = () => {
     const {
       input: { name, value },
+      mutators,
       onDelete,
     } = this.props;
 
     if (value.id) {
-      this.props.mutators.setTermValue(name, this.state.initialValue);
+      mutators.setTermValue(name, this.state.initialValue);
     } else {
       onDelete();
     }
