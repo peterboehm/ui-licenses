@@ -261,11 +261,7 @@ export default class Licenses extends React.Component {
                                 marginBottom0
                                 name="query"
                                 onChange={getSearchHandlers().query}
-                                onClear={() => {
-                                  getSearchHandlers().clear();
-                                  // TODO: Add way to trigger search automatically
-                                  // onSubmitSearch();
-                                }}
+                                onClear={getSearchHandlers().reset}
                                 value={searchValue.query}
                               />
                             )}
