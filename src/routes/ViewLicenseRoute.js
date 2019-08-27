@@ -27,6 +27,9 @@ class ViewLicenseRoute extends React.Component {
       params: {
         sort: 'owner.startDate;desc'
       },
+      limitParam: 'perPage',
+      perRequest: 100,
+      recordsRequired: '1000',
       throwErrors: false,
     },
     terms: {
