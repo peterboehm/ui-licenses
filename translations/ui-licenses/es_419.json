@@ -85,7 +85,7 @@
     "no": "No",
     "yes": "Yes",
     "errors.termNameHasNonAlpha": "The term name can only contain Latin alphabetical characters (a-z) and non-leading numeric characters.",
-    "settings.terms.termCount": "{count} saved terms",
+    "settings.terms.termCount": "{count, number} saved {count, plural, one {term} other {terms}}",
     "settings.terms.editLicenseTerm": "Edit license term",
     "settings.terms.newLicenseTerm": "New license term",
     "settings.terms.callout.delete.error": "There was an error deleting the term. {error}",
