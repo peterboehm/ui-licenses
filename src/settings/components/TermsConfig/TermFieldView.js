@@ -3,26 +3,21 @@ import PropTypes from 'prop-types';
 import { get } from 'lodash';
 import { FormattedMessage } from 'react-intl';
 
-import { Card, Col, Row, KeyValue } from '@folio/stripes/components';
+import { Button, Card, Col, Row, KeyValue } from '@folio/stripes/components';
 
 const TYPE_CLASS_PREFIX = 'com.k_int.web.toolkit.custprops.types.CustomProperty';
 const REFDATA_CLASS_NAME = 'com.k_int.web.toolkit.custprops.types.CustomPropertyRefdata';
 
 export default class TermFieldView extends React.Component {
   static propTypes = {
-    actionButtons: PropTypes.node.isRequired,
     input: PropTypes.shape({
       name: PropTypes.string.isRequired,
       value: PropTypes.shape({
-        id: PropTypes.string,
         type: PropTypes.string,
       }).isRequired,
     }).isRequired,
-    meta: PropTypes.shape({
-      invalid: PropTypes.bool,
-      pristine: PropTypes.bool,
-      submitting: PropTypes.bool,
-    }),
+    onDelete: PropTypes.func.isRequired,
+    onEdit: PropTypes.func.isRequired,
     pickLists: PropTypes.arrayOf(PropTypes.object),
   }
 
@@ -40,15 +35,34 @@ export default class TermFieldView extends React.Component {
 
   render() {
     const {
-      actionButtons,
       input: { name, value },
+      onDelete,
+      onEdit,
     } = this.props;
 
     return (
       <Card
         data-test-term-name={name}
         headerStart={<strong><FormattedMessage id="ui-licenses.terms.term" /></strong>}
-        headerEnd={actionButtons}
+        headerEnd={(
+          <span>
+            <Button
+              buttonStyle="danger"
+              data-test-term-delete-btn
+              marginBottom0
+              onClick={onDelete}
+            >
+              <FormattedMessage id="stripes-core.button.delete" />
+            </Button>
+            <Button
+              marginBottom0
+              data-test-term-edit-btn
+              onClick={onEdit}
+            >
+              <FormattedMessage id="stripes-core.button.edit" />
+            </Button>
+          </span>
+        )}
       >
         <Row>
           <Col xs={6}>

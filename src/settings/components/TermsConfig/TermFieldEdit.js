@@ -3,14 +3,13 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Field } from 'react-final-form';
 
-import { Card, Col, InfoPopover, Row, Select, TextArea, TextField } from '@folio/stripes/components';
+import { Button, Card, Col, InfoPopover, Row, Select, TextArea, TextField } from '@folio/stripes/components';
 import { IntlConsumer } from '@folio/stripes/core';
 
 import { required } from '../../../util/validators';
 
 export default class TermFieldEdit extends React.Component {
   static propTypes = {
-    actionButtons: PropTypes.node.isRequired,
     input: PropTypes.shape({
       name: PropTypes.string.isRequired,
       value: PropTypes.shape({
@@ -22,6 +21,8 @@ export default class TermFieldEdit extends React.Component {
       pristine: PropTypes.bool,
       submitting: PropTypes.bool,
     }),
+    onCancel: PropTypes.func.isRequired,
+    onSave: PropTypes.func.isRequired,
     pickLists: PropTypes.arrayOf(PropTypes.object),
   }
 
@@ -31,8 +32,10 @@ export default class TermFieldEdit extends React.Component {
 
   render() {
     const {
-      actionButtons,
       input: { name, value },
+      meta,
+      onCancel,
+      onSave,
       pickLists,
     } = this.props;
 
@@ -48,7 +51,26 @@ export default class TermFieldEdit extends React.Component {
                   <FormattedMessage id="ui-licenses.settings.terms.newLicenseTerm" />}
               </strong>
             )}
-            headerEnd={actionButtons}
+            headerEnd={(
+              <span>
+                <Button
+                  data-test-term-cancel-btn
+                  marginBottom0
+                  onClick={onCancel}
+                >
+                  <FormattedMessage id="stripes-core.button.cancel" />
+                </Button>
+                <Button
+                  buttonStyle="primary"
+                  data-test-term-save-btn
+                  disabled={meta.invalid || meta.pristine || meta.submitting}
+                  marginBottom0
+                  onClick={onSave}
+                >
+                  <FormattedMessage id="stripes-core.button.save" />
+                </Button>
+              </span>
+            )}
           >
             <Row>
               <Col xs={6}>
