@@ -85,7 +85,7 @@
     "no": "Não",
     "yes": "Sim",
     "errors.termNameHasNonAlpha": "O nome do termo só pode conter caracteres alfabéticos latinos (a-z) e caracteres numéricos.",
-    "settings.terms.termCount": "{count} termos salvos",
+    "settings.terms.termCount": "{count, number} salvo {count, plural, one {termo} other {termos}}",
     "settings.terms.editLicenseTerm": "Editar termo de licença",
     "settings.terms.newLicenseTerm": "Novo termo de licença",
     "settings.terms.callout.delete.error": "Houve um erro ao excluir o termo. {error}",
