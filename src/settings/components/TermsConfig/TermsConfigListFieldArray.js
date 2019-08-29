@@ -50,6 +50,10 @@ export default class TermsConfigListFieldArray extends React.Component {
   handleSave = (index) => {
     const term = this.props.fields.value[index];
 
+    if (!term.id) {
+      this.setState({ disableNewButton: false });
+    }
+
     return this.props.onSave(term);
   }
 
