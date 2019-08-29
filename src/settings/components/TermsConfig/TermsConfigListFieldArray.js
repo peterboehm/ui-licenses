@@ -20,6 +20,10 @@ export default class TermsConfigListFieldArray extends React.Component {
     pickLists: PropTypes.arrayOf(PropTypes.object),
   }
 
+  state = {
+    disableNewButton: false,
+  }
+
   defaultTermValue = {
     weight: 0,
     primary: false,
@@ -34,11 +38,13 @@ export default class TermsConfigListFieldArray extends React.Component {
       onDelete(term);
     } else {
       fields.remove(index);
+      this.setState({ disableNewButton: false });
     }
   }
 
   handleNew = () => {
     this.props.fields.unshift(this.defaultTermValue);
+    this.setState({ disableNewButton: true });
   }
 
   handleSave = (index) => {
@@ -54,7 +60,12 @@ export default class TermsConfigListFieldArray extends React.Component {
       <div>
         <Row end="sm">
           <Col>
-            <Button id="clickable-new-term" onClick={this.handleNew}>
+            <Button
+              buttonStyle="primary"
+              disabled={this.state.disableNewButton}
+              id="clickable-new-term"
+              onClick={this.handleNew}
+            >
               <FormattedMessage id="stripes-components.button.new" />
             </Button>
           </Col>
@@ -64,7 +75,7 @@ export default class TermsConfigListFieldArray extends React.Component {
             <Field
               component={TermField}
               isEqual={isEqual}
-              key={term.id || i}
+              key={term.id || 'new'}
               mutators={mutators}
               name={`${fields.name}[${i}]`}
               onDelete={() => this.handleDelete(i)}
