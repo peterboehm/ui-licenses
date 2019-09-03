@@ -33,6 +33,7 @@ class LicensesRoute extends React.Component {
         filterKeys: {
           orgs: 'orgs.org',
           role: 'orgs.role',
+          tags: 'tags.value',
         },
       })
     },
@@ -50,6 +51,11 @@ class LicensesRoute extends React.Component {
       type: 'okapi',
       path: 'licenses/refdata/LicenseOrg/role',
       shouldRefresh: () => false,
+    },
+    tagsValues: {
+      type: 'okapi',
+      path: 'tags?limit=100',
+      records: 'tags',
     },
     query: { initialValue: {} },
     resultCount: { initialValue: INITIAL_RESULT_COUNT },
@@ -140,6 +146,7 @@ class LicensesRoute extends React.Component {
           statusValues: get(resources, 'statusValues.records', []),
           typeValues: get(resources, 'typeValues.records', []),
           orgRoleValues: get(resources, 'orgRoleValues.records', []),
+          tagsValues: get(resources, 'tagsValues.records', []),
         }}
         onNeedMoreData={this.handleNeedMoreData}
         queryGetter={this.queryGetter}

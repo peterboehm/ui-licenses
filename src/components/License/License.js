@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { get } from 'lodash';
 import { FormattedMessage } from 'react-intl';
 import { NotesSmartAccordion } from '@folio/stripes/smart-components';
 
@@ -9,6 +10,7 @@ import {
   Col,
   ExpandAllButton,
   Icon,
+  IconButton,
   Layout,
   Pane,
   PaneMenu,
@@ -39,6 +41,7 @@ class License extends React.Component {
     handlers: PropTypes.shape({
       onClose: PropTypes.func.isRequired,
     }).isRequired,
+    helperApp: PropTypes.node,
     isLoading: PropTypes.bool,
     urls: PropTypes.shape({
       edit: PropTypes.func,
@@ -109,25 +112,45 @@ class License extends React.Component {
     );
   }
 
-  renderEditLicensePaneMenu = () => (
-    <IfPermission perm="ui-licenses.licenses.edit">
+  renderEditLicensePaneMenu = () => {
+    const {
+      data: { license },
+      handlers
+    } = this.props;
+
+    return (
       <PaneMenu>
-        <FormattedMessage id="ui-licenses.editLicense">
+        { handlers.onToggleTags &&
+        <FormattedMessage id="ui-licenses.showTags">
           {ariaLabel => (
-            <Button
-              aria-label={ariaLabel}
-              buttonStyle="primary"
-              id="clickable-edit-license"
-              marginBottom0
-              to={this.props.urls.edit()}
-            >
-              <FormattedMessage id="stripes-components.button.edit" />
-            </Button>
+            <IconButton
+              icon="tag"
+              id="clickable-show-tags"
+              badgeCount={get(license, 'tags.length', 0)}
+              onClick={handlers.onToggleTags}
+              ariaLabel={ariaLabel}
+            />
           )}
         </FormattedMessage>
+        }
+        <IfPermission perm="ui-licenses.licenses.edit">
+          <FormattedMessage id="ui-licenses.editLicense">
+            {ariaLabel => (
+              <Button
+                aria-label={ariaLabel}
+                buttonStyle="primary"
+                id="clickable-edit-license"
+                marginBottom0
+                to={this.props.urls.edit()}
+              >
+                <FormattedMessage id="stripes-components.button.edit" />
+              </Button>
+            )}
+          </FormattedMessage>
+        </IfPermission>
       </PaneMenu>
-    </IfPermission>
-  )
+    );
+  }
 
   renderLoadingPane = () => {
     return (
@@ -146,53 +169,56 @@ class License extends React.Component {
   }
 
   render() {
-    const { data, isLoading, handlers } = this.props;
+    const { data, isLoading, handlers, helperApp } = this.props;
 
     if (isLoading) return this.renderLoadingPane();
 
     return (
-      <Pane
-        actionMenu={this.getActionMenu}
-        appIcon={<AppIcon app="licenses" />}
-        defaultWidth="45%"
-        dismissible
-        id="pane-view-license"
-        lastMenu={this.renderEditLicensePaneMenu()}
-        onClose={handlers.onClose}
-        paneTitle={data.license.name}
-      >
-        <TitleManager record={data.license.name}>
-          <LicenseHeader {...this.getSectionProps()} />
-          <AccordionSet>
-            <Row end="xs">
-              <Col xs>
-                <ExpandAllButton
-                  accordionStatus={this.state.sections}
-                  id="clickable-expand-all"
-                  onToggle={this.handleAllSectionsToggle}
-                />
-              </Col>
-            </Row>
-            <LicenseInfo {...this.getSectionProps('licenseInfo')} />
-            <LicenseInternalContacts {...this.getSectionProps('licenseInternalContacts')} />
-            <LicenseOrganizations {...this.getSectionProps('licenseOrganizations')} />
-            <CoreDocs {...this.getSectionProps('licenseCoreDocs')} />
-            <Terms {...this.getSectionProps('licenseTerms')} />
-            <LicenseAmendments {...this.getSectionProps('licenseAmendments')} />
-            <SupplementaryDocs {...this.getSectionProps('licenseSupplement')} />
-            <LicenseAgreements {...this.getSectionProps('licenseAgreements')} />
-            <NotesSmartAccordion
-              {...this.getSectionProps('licenseNotes')}
-              domainName="licenses"
-              entityName={data.license.name}
-              entityType="license"
-              entityId={data.license.id}
-              pathToNoteCreate="notes/create"
-              pathToNoteDetails="notes"
-            />
-          </AccordionSet>
-        </TitleManager>
-      </Pane>
+      <React.Fragment>
+        <Pane
+          actionMenu={this.getActionMenu}
+          appIcon={<AppIcon app="licenses" />}
+          defaultWidth="45%"
+          dismissible
+          id="pane-view-license"
+          lastMenu={this.renderEditLicensePaneMenu()}
+          onClose={handlers.onClose}
+          paneTitle={data.license.name}
+        >
+          <TitleManager record={data.license.name}>
+            <LicenseHeader {...this.getSectionProps()} />
+            <AccordionSet>
+              <Row end="xs">
+                <Col xs>
+                  <ExpandAllButton
+                    accordionStatus={this.state.sections}
+                    id="clickable-expand-all"
+                    onToggle={this.handleAllSectionsToggle}
+                  />
+                </Col>
+              </Row>
+              <LicenseInfo {...this.getSectionProps('licenseInfo')} />
+              <LicenseInternalContacts {...this.getSectionProps('licenseInternalContacts')} />
+              <LicenseOrganizations {...this.getSectionProps('licenseOrganizations')} />
+              <CoreDocs {...this.getSectionProps('licenseCoreDocs')} />
+              <Terms {...this.getSectionProps('licenseTerms')} />
+              <LicenseAmendments {...this.getSectionProps('licenseAmendments')} />
+              <SupplementaryDocs {...this.getSectionProps('licenseSupplement')} />
+              <LicenseAgreements {...this.getSectionProps('licenseAgreements')} />
+              <NotesSmartAccordion
+                {...this.getSectionProps('licenseNotes')}
+                domainName="licenses"
+                entityName={data.license.name}
+                entityType="license"
+                entityId={data.license.id}
+                pathToNoteCreate="notes/create"
+                pathToNoteDetails="notes"
+              />
+            </AccordionSet>
+          </TitleManager>
+        </Pane>
+        {helperApp}
+      </React.Fragment>
     );
   }
 }

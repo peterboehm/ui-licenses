@@ -19,6 +19,9 @@
 
   "notSet": "Not set",
 
+  "showTags": "Show Tags",
+  "tags": "Tags",
+
   "amendments.add": "Add amendment",
   "amendments.closePane": "Close edit amendment pane",
   "amendments.create": "Create amendment",

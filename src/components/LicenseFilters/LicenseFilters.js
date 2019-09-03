@@ -3,12 +3,13 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
 import { Accordion, AccordionSet, FilterAccordionHeader, Selection } from '@folio/stripes/components';
-import { CheckboxFilter } from '@folio/stripes/smart-components';
+import { CheckboxFilter, MultiSelectionFilter } from '@folio/stripes/smart-components';
 import { OrganizationSelection } from '@folio/stripes-erm-components';
 
 const FILTERS = [
   'status',
   'type',
+  'tags'
 ];
 
 export default class LicenseFilters extends React.Component {
@@ -28,6 +29,7 @@ export default class LicenseFilters extends React.Component {
   state = {
     status: [],
     type: [],
+    tags: [],
   }
 
   static getDerivedStateFromProps(props, state) {
@@ -130,6 +132,34 @@ export default class LicenseFilters extends React.Component {
     );
   }
 
+  renderTagsFilter = () => {
+    // const tags = get(this.props.data, 'tagValues.records', []);
+    // TODO: TEST USING THE VALUES GENERATED IN GDSFP
+    // const dataOptions = tags.map(({ label }) => ({ value: label, label }));
+    const { activeFilters } = this.props;
+    const tagFilters = activeFilters.tags || [];
+
+    return (
+      <Accordion
+        closedByDefault
+        id="clickable-tags-filter"
+        displayClearButton={tagFilters.length > 0}
+        header={FilterAccordionHeader}
+        label={<FormattedMessage id="ui-licenses.tags" />}
+        onClearFilter={() => { this.props.filterHandlers.clearGroup('tags'); }}
+        separator={false}
+      >
+        <MultiSelectionFilter
+          dataOptions={this.state.tags}
+          id="tags-filter"
+          name="tags"
+          onChange={e => this.props.filterHandlers.state({ ...activeFilters, tags: e.values })}
+          selectedValues={tagFilters}
+        />
+      </Accordion>
+    );
+  }
+
   render() {
     return (
       <AccordionSet>
@@ -137,6 +167,7 @@ export default class LicenseFilters extends React.Component {
         {this.renderCheckboxFilter('type')}
         {this.renderOrganizationFilter()}
         {this.renderRoleLabel()}
+        {this.renderTagsFilter()}
       </AccordionSet>
     );
   }

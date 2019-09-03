@@ -4,6 +4,8 @@ import { get, difference, flatten } from 'lodash';
 import compose from 'compose-function';
 
 import { stripesConnect } from '@folio/stripes/core';
+import { withTags } from '@folio/stripes/smart-components';
+import { Tags } from '@folio/stripes-erm-components';
 
 import withFileHandlers from './components/withFileHandlers';
 import View from '../components/License';
@@ -56,6 +58,11 @@ class ViewLicenseRoute extends React.Component {
       pathname: PropTypes.string.isRequired,
       search: PropTypes.string.isRequired,
     }).isRequired,
+    match: PropTypes.shape({
+      params: PropTypes.shape({
+        id: PropTypes.string.isRequired,
+      }).isRequired
+    }).isRequired,
     mutator: PropTypes.shape({
       query: PropTypes.shape({
         update: PropTypes.func.isRequired,
@@ -75,6 +82,7 @@ class ViewLicenseRoute extends React.Component {
       hasPerm: PropTypes.func.isRequired,
       okapi: PropTypes.object.isRequired,
     }).isRequired,
+    tagsEnabled: PropTypes.bool,
   };
 
   static defaultProps = {
@@ -134,6 +142,25 @@ class ViewLicenseRoute extends React.Component {
     }));
   }
 
+  getHelperApp = () => {
+    const { match, resources } = this.props;
+    const helper = resources.query.helper;
+    if (!helper) return null;
+
+    let HelperComponent = null;
+
+    if (helper === 'tags') HelperComponent = Tags;
+
+    if (!HelperComponent) return null;
+
+    return (
+      <HelperComponent
+        link={`licenses/license/${match.params.id}`}
+        onToggle={() => this.handleToggleHelper(helper)}
+      />
+    );
+  }
+
   getLicenseContacts = () => {
     const { resources } = this.props;
     const contacts = get(resources, 'license.records[0].contacts', []);
@@ -152,12 +179,16 @@ class ViewLicenseRoute extends React.Component {
     this.props.history.push(`/licenses${this.props.location.search}`);
   }
 
-  handleTogglerHelper = (helper) => {
+  handleToggleHelper = (helper) => {
     const { mutator, resources } = this.props;
     const currentHelper = resources.query.helper;
     const nextHelper = currentHelper !== helper ? helper : null;
 
     mutator.query.update({ helper: nextHelper });
+  }
+
+  handleToggleTags = () => {
+    this.handleToggleHelper('tags');
   }
 
   urls = {
@@ -167,7 +198,7 @@ class ViewLicenseRoute extends React.Component {
   }
 
   render() {
-    const { handlers, resources } = this.props;
+    const { handlers, resources, tagsEnabled } = this.props;
 
     return (
       <View
@@ -184,7 +215,9 @@ class ViewLicenseRoute extends React.Component {
           ...handlers,
           onClose: this.handleClose,
           onToggleHelper: this.handleTogglerHelper,
+          onToggleTags: tagsEnabled ? this.handleToggleTags : undefined,
         }}
+        helperApp={this.getHelperApp()}
         isLoading={get(resources, 'license.isPending', true)}
         urls={this.urls}
       />
@@ -194,5 +227,6 @@ class ViewLicenseRoute extends React.Component {
 
 export default compose(
   withFileHandlers,
-  stripesConnect
+  stripesConnect,
+  withTags,
 )(ViewLicenseRoute);
