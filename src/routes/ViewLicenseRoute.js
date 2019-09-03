@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { get, difference, flatten } from 'lodash';
+import { get, difference, flatten, uniqBy } from 'lodash';
 import compose from 'compose-function';
 
 import { stripesConnect } from '@folio/stripes/core';
@@ -16,6 +16,15 @@ class ViewLicenseRoute extends React.Component {
       records: 'interfaces',
       accumulate: true,
       fetch: false,
+    },
+    interfacesCredentials: {
+      clientGeneratePk: false,
+      throwErrors: false,
+      path: 'organizations-storage/interfaces/%{interfaceRecord.id}/credentials',
+      type: 'okapi',
+      pk: 'FAKE_PK',  // it's done to fool stripes-connect not to add cred id to the path's end.
+      permissionsRequired: 'organizations-storage.interfaces.credentials.item.get',
+      fetch: props => !!props.stripes.hasInterface('organizations-storage.interfaces', '1.0 2.0'),
     },
     license: {
       type: 'okapi',
@@ -44,6 +53,7 @@ class ViewLicenseRoute extends React.Component {
       accumulate: true,
       shouldRefresh: () => false,
     },
+    interfaceRecord: {},
     query: {},
   });
 
@@ -125,12 +135,17 @@ class ViewLicenseRoute extends React.Component {
 
   getOrgs = () => {
     const { resources } = this.props;
+    const interfacesCredentials = uniqBy(get(resources, 'interfacesCredentials.records', []), 'id');
+
     const orgs = get(resources, 'license.records[0].orgs', []);
 
     return orgs.map(o => ({
       ...o,
       interfaces: get(o, 'org.orgsUuid_object.interfaces', [])
-        .map(id => this.getRecord(id, 'interfaces') || id)
+        .map(id => ({
+          ...this.getRecord(id, 'interfaces') || id,
+          credentials: interfacesCredentials.find(cred => cred.interfaceId === id)
+        })),
     }));
   }
 
@@ -150,6 +165,11 @@ class ViewLicenseRoute extends React.Component {
 
   handleClose = () => {
     this.props.history.push(`/licenses${this.props.location.search}`);
+  }
+
+  handleFetchCredentials = (id) => {
+    const { mutator } = this.props;
+    mutator.interfaceRecord.replace({ id });
   }
 
   handleTogglerHelper = (helper) => {
@@ -183,6 +203,7 @@ class ViewLicenseRoute extends React.Component {
         handlers={{
           ...handlers,
           onClose: this.handleClose,
+          onFetchCredentials: this.handleFetchCredentials,
           onToggleHelper: this.handleTogglerHelper,
         }}
         isLoading={get(resources, 'license.isPending', true)}
