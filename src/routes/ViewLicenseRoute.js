@@ -155,7 +155,7 @@ class ViewLicenseRoute extends React.Component {
 
     return (
       <HelperComponent
-        link={`licenses/license/${match.params.id}`}
+        link={`licenses/licenses/${match.params.id}`}
         onToggle={() => this.handleToggleHelper(helper)}
       />
     );

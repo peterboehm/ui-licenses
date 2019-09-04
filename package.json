@@ -63,14 +63,18 @@
     "permissionSets": [
       {
         "permissionName": "module.licenses.enabled",
-        "displayName": "UI: ui-licenses module is enabled"
+        "displayName": "UI: ui-licenses module is enabled",
+        "subPermissions": [
+          "tags.collection.get"
+        ]
       },
       {
         "permissionName": "ui-licenses.licenses.view",
         "displayName": "Licenses: Can view licenses",
         "visible": true,
         "subPermissions": [
-          "module.licenses.enabled"
+          "module.licenses.enabled",
+          "tags.item.post"
         ]
       },
       {
