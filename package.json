@@ -58,7 +58,9 @@
     "hasSettings": true,
     "queryResource": "query",
     "okapiInterfaces": {
-      "licenses": "1.0"
+      "licenses": "1.0",
+      "organizations-storage.interfaces": "2.0",
+      "users": "13.0 14.0 15.0"
     },
     "permissionSets": [
       {
