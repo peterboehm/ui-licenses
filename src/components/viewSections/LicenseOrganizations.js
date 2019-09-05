@@ -9,6 +9,9 @@ import { AppIcon } from '@folio/stripes/core';
 
 export default class LicenseOrganizations extends React.Component {
   static propTypes = {
+    handlers: PropTypes.shape({
+      onFetchCredentials: PropTypes.func,
+    }),
     id: PropTypes.string.isRequired,
     license: PropTypes.shape({
       orgs: PropTypes.arrayOf(
@@ -36,6 +39,7 @@ export default class LicenseOrganizations extends React.Component {
       return (
         <ViewOrganizationCard
           data-test-license-org
+          fetchCredentials={this.props.handlers.onFetchCredentials}
           key={`${org.orgsUuid}-${role.value}`}
           headerStart={
             <span>
