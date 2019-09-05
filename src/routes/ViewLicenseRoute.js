@@ -199,7 +199,7 @@ class ViewLicenseRoute extends React.Component {
     mutator.interfaceRecord.replace({ id });
   }
 
-  handleTogglerHelper = (helper) => {
+  handleToggleHelper = (helper) => {
     const { mutator, resources } = this.props;
     const currentHelper = resources.query.helper;
     const nextHelper = currentHelper !== helper ? helper : null;
@@ -235,7 +235,7 @@ class ViewLicenseRoute extends React.Component {
           ...handlers,
           onClose: this.handleClose,
           onFetchCredentials: this.handleFetchCredentials,
-          onToggleHelper: this.handleTogglerHelper,
+          onToggleHelper: this.handleToggleHelper,
           onToggleTags: tagsEnabled ? this.handleToggleTags : undefined,
         }}
         helperApp={this.getHelperApp()}
