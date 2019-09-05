@@ -112,7 +112,7 @@ class License extends React.Component {
     );
   }
 
-  renderEditLicensePaneMenu = () => {
+  renderLastMenu = () => {
     const {
       data: { license },
       handlers
@@ -181,7 +181,7 @@ class License extends React.Component {
           defaultWidth="45%"
           dismissible
           id="pane-view-license"
-          lastMenu={this.renderEditLicensePaneMenu()}
+          lastMenu={this.renderLastMenu()}
           onClose={handlers.onClose}
           paneTitle={data.license.name}
         >
