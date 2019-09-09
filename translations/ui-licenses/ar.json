@@ -107,5 +107,7 @@
     "settings.terms.type.pickList": "قائمة الاختيار",
     "settings.terms.type.refdata": "قائمة الاختيار",
     "settings.terms.type.text": "نص",
-    "terms.term": "مصطلح"
+    "terms.term": "مصطلح",
+    "showTags": "عرض الوسوم",
+    "tags": "الوسوم"
 }
