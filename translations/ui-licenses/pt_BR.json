@@ -107,5 +107,7 @@
     "settings.terms.type.pickList": "Lista de seleção",
     "settings.terms.type.refdata": "Lista de seleção",
     "settings.terms.type.text": "Texto",
-    "terms.term": "Termo"
+    "terms.term": "Termo",
+    "showTags": "Mostrar tags",
+    "tags": "Tags"
 }
