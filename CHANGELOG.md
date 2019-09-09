@@ -1,11 +1,11 @@
 # Change history for ui-licenses
 
-## 3.5.0 IN PROGRESS
-* Show/hide interface credentials. Fixes ERM-431
+## 3.5.0 2019-09-09
 * Added support for `mod-organizations-storage` 2.0
 * Added settings page for License Terms. ERM-391
 * Added settings page for Pick Lists. ERM-389 390
 * Fixed bug where resetting query term wouldn't execute a search. ERM-426
+* Show/hide interface credentials. Fixes ERM-431
 * Added Tags functionality. ERM-424
 
 ## 3.4.0 2019-08-20
