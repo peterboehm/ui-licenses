@@ -48,7 +48,7 @@ export default class LicenseOrganizations extends React.Component {
                 size="small"
               >
                 <Link to={`/organizations/view/${org.orgsUuid}`}>
-                  {org.name}
+                  <strong>{org.name}</strong>
                 </Link>
                 {` · ${role.label}`}
               </AppIcon>
