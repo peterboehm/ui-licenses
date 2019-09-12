@@ -11,6 +11,7 @@ import {
   IconButton,
   Layout,
   Pane,
+  PaneFooter,
   PaneMenu,
   Paneset,
   Row,
@@ -116,6 +117,54 @@ class LicenseForm extends React.Component {
     );
   }
 
+  renderPaneFooter() {
+    const {
+      handleSubmit,
+      initialValues,
+      pristine,
+      submitting,
+      invalid
+    } = this.props;
+
+    let id;
+    if (initialValues && initialValues.id) {
+      id = 'clickable-update-license';
+    } else {
+      id = 'clickable-create-license';
+    }
+
+    const startButton = (
+      <Button
+        buttonStyle="default mega"
+        id="clickable-cancel"
+        marginBottom0
+        onClick={this.props.handlers.onClose}
+      >
+        <FormattedMessage id="stripes-components.cancel" />
+      </Button>
+    );
+
+    const endButton = (
+      <Button
+        buttonStyle="primary paneHeaderNewButton"
+        disabled={pristine || submitting || invalid}
+        id={id}
+        marginBottom0
+        onClick={handleSubmit}
+        type="submit"
+      >
+        <FormattedMessage id="stripes-components.saveAndClose" />
+      </Button>
+    );
+
+    return (
+      <PaneFooter
+        renderStart={startButton}
+        renderEnd={endButton}
+      />
+    );
+  }
+
   renderFirstMenu() {
     return (
       <PaneMenu>
@@ -133,41 +182,6 @@ class LicenseForm extends React.Component {
     );
   }
 
-  renderLastMenu() {
-    const {
-      handleSubmit,
-      initialValues,
-      pristine,
-      submitting,
-      invalid
-    } = this.props;
-
-    let id;
-    let label;
-    if (initialValues && initialValues.id) {
-      id = 'clickable-update-license';
-      label = <FormattedMessage id="ui-licenses.updateLicense" />;
-    } else {
-      id = 'clickable-create-license';
-      label = <FormattedMessage id="ui-licenses.createLicense" />;
-    }
-
-    return (
-      <PaneMenu>
-        <Button
-          id={id}
-          type="submit"
-          disabled={pristine || submitting || invalid}
-          onClick={handleSubmit}
-          buttonStyle="primary paneHeaderNewButton"
-          marginBottom0
-        >
-          {label}
-        </Button>
-      </PaneMenu>
-    );
-  }
-
   render() {
     const { initialValues: { id, name }, isLoading } = this.props;
 
@@ -180,9 +194,9 @@ class LicenseForm extends React.Component {
             <Pane
               appIcon={<AppIcon app="licenses" />}
               defaultWidth="100%"
-              id="pane-license-form"
+              footer={this.renderPaneFooter()}
               firstMenu={this.renderFirstMenu()}
-              lastMenu={this.renderLastMenu()}
+              id="pane-license-form"
               paneTitle={id ? name : <FormattedMessage id="ui-licenses.createLicense" />}
             >
               <TitleManager record={id ? name : create}>

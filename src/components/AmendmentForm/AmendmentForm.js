@@ -11,6 +11,7 @@ import {
   IconButton,
   Layout,
   Pane,
+  PaneFooter,
   PaneMenu,
   Paneset,
   Row,
@@ -112,6 +113,54 @@ class AmendmentForm extends React.Component {
     );
   }
 
+  renderPaneFooter() {
+    const {
+      handleSubmit,
+      initialValues,
+      pristine,
+      submitting,
+      invalid
+    } = this.props;
+
+    let id;
+    if (initialValues && initialValues.id) {
+      id = 'clickable-update-amendment';
+    } else {
+      id = 'clickable-create-amendment';
+    }
+
+    const startButton = (
+      <Button
+        buttonStyle="default mega"
+        id="clickable-cancel"
+        marginBottom0
+        onClick={this.props.handlers.onClose}
+      >
+        <FormattedMessage id="stripes-components.cancel" />
+      </Button>
+    );
+
+    const endButton = (
+      <Button
+        buttonStyle="primary paneHeaderNewButton"
+        disabled={pristine || submitting || invalid}
+        id={id}
+        marginBottom0
+        onClick={handleSubmit}
+        type="submit"
+      >
+        <FormattedMessage id="stripes-components.saveAndClose" />
+      </Button>
+    );
+
+    return (
+      <PaneFooter
+        renderStart={startButton}
+        renderEnd={endButton}
+      />
+    );
+  }
+
   renderFirstMenu() {
     return (
       <PaneMenu>
@@ -177,7 +226,7 @@ class AmendmentForm extends React.Component {
               defaultWidth="100%"
               id="pane-amendment-form"
               firstMenu={this.renderFirstMenu()}
-              lastMenu={this.renderLastMenu()}
+              footer={this.renderPaneFooter()}
               paneTitle={id ? name : <FormattedMessage id="ui-licenses.amendments.create" />}
             >
               <TitleManager record={id ? name : create}>
