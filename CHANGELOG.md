@@ -1,5 +1,8 @@
 # Change history for ui-licenses
 
+## 3.6.0 IN PROGRESS
+* Apply the new large headline design to Licenses. ERM-260.
+
 ## 3.5.0 2019-09-09
 * Added support for `mod-organizations-storage` 2.0
 * Added settings page for License Terms. ERM-391
