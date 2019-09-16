@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { get } from 'lodash';
 import { FormattedMessage } from 'react-intl';
-import { Col, KeyValue, Row } from '@folio/stripes/components';
+import { Col, Headline, KeyValue, Row } from '@folio/stripes/components';
 import { LicenseEndDate } from '@folio/stripes-erm-components';
 
 import FormattedUTCDate from '../FormattedUTCDate';
@@ -20,11 +20,14 @@ class LicenseInfo extends React.Component {
       <div id={id}>
         <Row>
           <Col xs={12}>
-            <KeyValue label={<FormattedMessage id="ui-licenses.prop.name" />}>
-              <div data-test-license-name>
+            <div data-test-license-name>
+              <Headline
+                size="xx-large"
+                tag="h2"
+              >
                 {license.name}
-              </div>
-            </KeyValue>
+              </Headline>
+            </div>
           </Col>
         </Row>
         <Row>

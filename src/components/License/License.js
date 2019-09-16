@@ -120,18 +120,18 @@ class License extends React.Component {
 
     return (
       <PaneMenu>
-        { handlers.onToggleTags &&
-        <FormattedMessage id="ui-licenses.showTags">
-          {ariaLabel => (
-            <IconButton
-              icon="tag"
-              id="clickable-show-tags"
-              badgeCount={get(license, 'tags.length', 0)}
-              onClick={handlers.onToggleTags}
-              ariaLabel={ariaLabel}
-            />
-          )}
-        </FormattedMessage>
+        {handlers.onToggleTags &&
+          <FormattedMessage id="ui-licenses.showTags">
+            {ariaLabel => (
+              <IconButton
+                icon="tag"
+                id="clickable-show-tags"
+                badgeCount={get(license, 'tags.length', 0)}
+                onClick={handlers.onToggleTags}
+                ariaLabel={ariaLabel}
+              />
+            )}
+          </FormattedMessage>
         }
         <IfPermission perm="ui-licenses.licenses.edit">
           <FormattedMessage id="ui-licenses.editLicense">
@@ -188,6 +188,7 @@ class License extends React.Component {
           <TitleManager record={data.license.name}>
             <LicenseHeader {...this.getSectionProps()} />
             <AccordionSet>
+              <LicenseInfo {...this.getSectionProps('licenseInfo')} />
               <Row end="xs">
                 <Col xs>
                   <ExpandAllButton
@@ -197,7 +198,6 @@ class License extends React.Component {
                   />
                 </Col>
               </Row>
-              <LicenseInfo {...this.getSectionProps('licenseInfo')} />
               <LicenseInternalContacts {...this.getSectionProps('licenseInternalContacts')} />
               <LicenseOrganizations {...this.getSectionProps('licenseOrganizations')} />
               <CoreDocs {...this.getSectionProps('licenseCoreDocs')} />
