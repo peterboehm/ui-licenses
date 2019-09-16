@@ -1,6 +1,7 @@
 # Change history for ui-licenses
 
 ## 3.6.0 IN PROGRESS
+* Update stripes to v2.10.1 to support PaneFooter.
 * Move the Save & close button and add a Cancel button to Pane footer. ERM-412.
 * Apply the new large headline design to Licenses. ERM-260.
 
