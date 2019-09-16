@@ -142,7 +142,7 @@ class AmendmentForm extends React.Component {
 
     const endButton = (
       <Button
-        buttonStyle="primary paneHeaderNewButton"
+        buttonStyle="primary mega"
         disabled={pristine || submitting || invalid}
         id={id}
         marginBottom0
