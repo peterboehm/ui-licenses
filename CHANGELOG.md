@@ -1,6 +1,7 @@
 # Change history for ui-licenses
 
 ## 3.6.0 IN PROGRESS
+* Move the Save & close button and add a Cancel button to Pane footer. ERM-412.
 * Apply the new large headline design to Licenses. ERM-260.
 
 ## 3.5.0 2019-09-09
