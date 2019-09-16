@@ -1,5 +1,8 @@
 # Change history for ui-licenses
 
+## 3.6.0 IN PROGRESS
+* Move the Save & close button and add a Cancel button to Pane footer. ERM-412.
+
 ## 3.5.0 2019-09-09
 * Added support for `mod-organizations-storage` 2.0
 * Added settings page for License Terms. ERM-391
