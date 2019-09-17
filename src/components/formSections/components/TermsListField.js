@@ -72,7 +72,7 @@ export default class TermsListField extends React.Component {
     return this.props.availableTerms.find(term => term.value === termValue);
   }
 
-  renderTermName = (term, i) => {
+  renderTermName = (term, i, termType) => {
     const { availableTerms, input: { onChange, value } } = this.props;
 
     const unsetTerms = availableTerms.filter(t => {
@@ -91,7 +91,7 @@ export default class TermsListField extends React.Component {
       <Select
         data-test-term-name
         dataOptions={[term, ...unsetTerms]} // The selected term, and the available unset terms
-        id={`edit-term-${i}-name`}
+        id={`edit-term-${termType}-${i}-name`}
         label={<FormattedMessage id="ui-licenses.prop.termName" />}
         onChange={e => {
           const newValue = e.target.value;
@@ -99,7 +99,7 @@ export default class TermsListField extends React.Component {
           // Update `state.terms` which controls what terms are being edited.
           this.setState(prevState => {
             const newTerms = [...prevState.optionalTerms];
-            newTerms[i - prevState.primaryTerms.length] = this.getTerm(newValue);
+            newTerms[i] = this.getTerm(newValue);
 
             return { optionalTerms: newTerms };
           });
@@ -138,7 +138,7 @@ export default class TermsListField extends React.Component {
     return undefined;
   }
 
-  renderTermValue = (term, i, errorMessage) => {
+  renderTermValue = (term, i, errorMessage, termType) => {
     const { input: { onChange, value } } = this.props;
     const currentValue = value[term.value] ? value[term.value][0] : {};
 
@@ -176,7 +176,7 @@ export default class TermsListField extends React.Component {
     return (
       <FieldComponent
         data-test-term-value
-        id={`edit-term-${i}-value`}
+        id={`edit-term-${termType}-${i}-value`}
         label={<FormattedMessage id="ui-licenses.prop.termValue" />}
         onChange={handleChange}
         value={controlledFieldValue}
@@ -187,7 +187,7 @@ export default class TermsListField extends React.Component {
     );
   }
 
-  renderTermVisibility = (term, i) => {
+  renderTermVisibility = (term, i, termType) => {
     const { input: { onChange, value } } = this.props;
     const termObject = value[term.value] ? value[term.value][0] : {};
     const { internal } = termObject;
@@ -215,7 +215,7 @@ export default class TermsListField extends React.Component {
         {intl => (
           <Select
             data-test-term-visibility
-            id={`edit-term-${i}-visibility`}
+            id={`edit-term-${termType}-${i}-visibility`}
             dataOptions={dataOptions(intl)}
             label={<FormattedMessage id="ui-licenses.prop.termVisibility" />}
             onChange={handleChange}
@@ -232,7 +232,7 @@ export default class TermsListField extends React.Component {
 
     this.setState(prevState => {
       const newTerms = [...prevState.optionalTerms];
-      newTerms.splice(i - prevState.primaryTerms.length, 1);
+      newTerms.splice(i, 1);
       return {
         dirtying: true,
         optionalTerms: newTerms
@@ -248,7 +248,7 @@ export default class TermsListField extends React.Component {
     });
   }
 
-  renderTermNoteInternal = (term, i) => {
+  renderTermNoteInternal = (term, i, termType) => {
     const { input: { onChange, value } } = this.props;
     const termObject = value[term.value] ? value[term.value][0] : {};
     const { note } = termObject;
@@ -266,7 +266,7 @@ export default class TermsListField extends React.Component {
     return (
       <TextArea
         data-test-term-note
-        id={`edit-term-${i}-internal-note`}
+        id={`edit-term-${termType}-${i}-internal-note`}
         label={<FormattedMessage id="ui-licenses.term.internalNote" />}
         onChange={handleChange}
         value={note}
@@ -274,7 +274,7 @@ export default class TermsListField extends React.Component {
     );
   }
 
-  renderTermNotePublic = (term, i) => {
+  renderTermNotePublic = (term, i, termType) => {
     const { input: { onChange, value } } = this.props;
     const termObject = value[term.value] ? value[term.value][0] : {};
     const { publicNote } = termObject;
@@ -292,7 +292,7 @@ export default class TermsListField extends React.Component {
     return (
       <TextArea
         data-test-term-public-note
-        id={`edit-term-${i}-public-note`}
+        id={`edit-term-${termType}-${i}-public-note`}
         onChange={handleChange}
         label={<FormattedMessage id="ui-licenses.term.publicNote" />}
         value={publicNote}
@@ -325,44 +325,62 @@ export default class TermsListField extends React.Component {
       <div>
         <KeyValue
           label={<FormattedMessage id="ui-licenses.terms.primaryTerms" />}
-          value={this.renderPrimaryTermsList(primaryTerms)}
+          value={this.renderTerms(primaryTerms, 'primary')}
         />
         <KeyValue
           label={<FormattedMessage id="ui-licenses.terms.optionalTerms" />}
-          value={this.renderOptionalTermsList(optionalTerms)}
+          value={this.renderTerms(optionalTerms, 'optional')}
         />
       </div>
     );
   }
 
-  renderPrimaryTermsList = (terms) => {
+  renderTerms = (terms, termType) => {
     const { input: { value, name }, meta: { form }, onError } = this.props;
     let termNoteError = false;
 
     const termsList = terms.map((term, i) => {
-      const errorMessage = this.validateFields(value, term.value);
+      const errorMessage = this.validateFields(value, term.value, termType);
       termNoteError = errorMessage ? true : termNoteError;
+      const deleteBtnProps = termType === 'optional' ? {
+        'id': `edit-term-${i}-delete`,
+        'data-test-term-delete-btn': true
+      } : null;
+
+      const header = termType === 'optional' ?
+        <FormattedMessage id="ui-licenses.term.title" values={{ number: i + 1 }} /> :
+        term.label;
 
       return (
         <EditCard
           data-test-term
-          header={term.label}
+          deleteBtnProps={deleteBtnProps}
+          header={header}
           key={term.value}
+          onDelete={termType === 'optional' ? () => this.handleDeleteTerm(term, i) : null}
         >
+          {
+            termType === 'optional' &&
+            <Row>
+              <Col xs={12}>
+                {this.renderTermName(term, i, termType)}
+              </Col>
+            </Row>
+          }
           <Row>
             <Col xs={12} md={6}>
-              {this.renderTermValue(term, i, errorMessage)}
+              {this.renderTermValue(term, i, errorMessage, termType)}
             </Col>
             <Col xs={12} md={6}>
-              {this.renderTermNoteInternal(term, i)}
+              {this.renderTermNoteInternal(term, i, termType)}
             </Col>
           </Row>
           <Row>
             <Col xs={12} md={6}>
-              {this.renderTermVisibility(term, i)}
+              {this.renderTermVisibility(term, i, termType)}
             </Col>
             <Col xs={12} md={6}>
-              {this.renderTermNotePublic(term, i)}
+              {this.renderTermNotePublic(term, i, termType)}
             </Col>
           </Row>
         </EditCard>
@@ -371,55 +389,6 @@ export default class TermsListField extends React.Component {
 
     onError(termNoteError, name, form);
 
-    return termsList;
-  }
-
-  renderOptionalTermsList = (terms) => {
-    const { input: { value, name }, meta: { form }, onError } = this.props;
-    const { primaryTerms } = this.state;
-    let termNoteError = false;
-    const termsList = terms.map((term, index) => {
-      const i = index + primaryTerms.length;
-      const errorMessage = this.validateFields(value, term.value, 'optional');
-      termNoteError = errorMessage ? true : termNoteError;
-
-      return (
-        <EditCard
-          data-test-term
-          deleteBtnProps={{
-            'id': `edit-term-${i}-delete`,
-            'data-test-term-delete-btn': true
-          }}
-          header={<FormattedMessage id="ui-licenses.term.title" values={{ number: index + 1 }} />}
-          key={term.value}
-          onDelete={() => this.handleDeleteTerm(term, i)}
-        >
-          <Row>
-            <Col xs={12}>
-              {this.renderTermName(term, i)}
-            </Col>
-          </Row>
-          <Row>
-            <Col xs={12} md={6}>
-              {this.renderTermValue(term, i, errorMessage)}
-            </Col>
-            <Col xs={12} md={6}>
-              {this.renderTermNoteInternal(term, i)}
-            </Col>
-          </Row>
-          <Row>
-            <Col xs={12} md={6}>
-              {this.renderTermVisibility(term, i)}
-            </Col>
-            <Col xs={12} md={6}>
-              {this.renderTermNotePublic(term, i)}
-            </Col>
-          </Row>
-        </EditCard>
-      );
-    });
-
-    onError(termNoteError, name, form);
     return termsList;
   }
 
