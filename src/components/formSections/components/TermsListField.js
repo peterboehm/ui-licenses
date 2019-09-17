@@ -5,12 +5,12 @@ import { IntlConsumer } from '@folio/stripes/core';
 import {
   Button,
   Col,
+  KeyValue,
   Row,
   Select,
   TextArea,
   TextField,
 } from '@folio/stripes/components';
-
 import { EditCard } from '@folio/stripes-erm-components';
 
 const TERM_TYPE_TEXT = 'com.k_int.web.toolkit.custprops.types.CustomPropertyText'; // eslint-disable-line no-unused-vars
@@ -37,7 +37,8 @@ export default class TermsListField extends React.Component {
   };
 
   state = {
-    terms: [], // This is the list of terms we're currently displaying for edit.
+    primaryTerms: [], // This is the list of primary terms
+    optionalTerms: [], // This is the list of optional terms
   }
 
   static getDerivedStateFromProps(props, state) {
@@ -59,7 +60,8 @@ export default class TermsListField extends React.Component {
     // that will result in a dirty component.
     if (pristine && !state.dirtying) {
       return {
-        terms: availableTerms.filter(term => value[term.value] !== undefined),
+        primaryTerms: availableTerms.filter(term => value[term.value] !== undefined && term.primary),
+        optionalTerms: availableTerms.filter(term => value[term.value] !== undefined && !term.primary),
       };
     }
 
@@ -96,10 +98,10 @@ export default class TermsListField extends React.Component {
 
           // Update `state.terms` which controls what terms are being edited.
           this.setState(prevState => {
-            const newTerms = [...prevState.terms];
-            newTerms[i] = this.getTerm(newValue);
+            const newTerms = [...prevState.optionalTerms];
+            newTerms[i - prevState.primaryTerms.length] = this.getTerm(newValue);
 
-            return { terms: newTerms };
+            return { optionalTerms: newTerms };
           });
 
           // Update redux-form (which tracks what the values for a given term are) because
@@ -122,9 +124,13 @@ export default class TermsListField extends React.Component {
     );
   }
 
-  validateFields = (values, termValue) => {
+  validateFields = (values, termValue, termType) => {
     const val = values ? values[termValue] : [];
     const { note, publicNote, value } = val ? val[0] : {};
+
+    if (termType === 'optional' && termValue && !value) {
+      return <FormattedMessage id="stripes-core.label.missingRequiredField" />;
+    }
 
     if ((note && !value) || (publicNote && !value)) {
       return <FormattedMessage id="ui-licenses.errors.termNoteWithoutValue" />;
@@ -176,6 +182,7 @@ export default class TermsListField extends React.Component {
         value={controlledFieldValue}
         error={errorMessage}
         {...fieldProps}
+        required={!term.primary}
       />
     );
   }
@@ -213,7 +220,6 @@ export default class TermsListField extends React.Component {
             label={<FormattedMessage id="ui-licenses.prop.termVisibility" />}
             onChange={handleChange}
             value={internal === undefined ? term.defaultInternal : internal}
-            required
           />
         )}
       </IntlConsumer>
@@ -225,11 +231,11 @@ export default class TermsListField extends React.Component {
     const currentValue = value[term.value] ? value[term.value][0] : {};
 
     this.setState(prevState => {
-      const newTerms = [...prevState.terms];
-      newTerms.splice(i, 1);
+      const newTerms = [...prevState.optionalTerms];
+      newTerms.splice(i - prevState.primaryTerms.length, 1);
       return {
         dirtying: true,
-        terms: newTerms
+        optionalTerms: newTerms
       };
     });
 
@@ -302,7 +308,7 @@ export default class TermsListField extends React.Component {
           this.setState(prevState => {
             return {
               dirtying: true,
-              terms: [...prevState.terms, {}],
+              optionalTerms: [...prevState.optionalTerms, {}],
             };
           });
         }}
@@ -313,9 +319,24 @@ export default class TermsListField extends React.Component {
   }
 
   renderTermsList = () => {
-    const { input: { value, name }, meta: { form }, onError } = this.props;
-    const { terms } = this.state;
+    const { optionalTerms, primaryTerms } = this.state;
 
+    return (
+      <div>
+        <KeyValue
+          label={<FormattedMessage id="ui-licenses.terms.primaryTerms" />}
+          value={this.renderPrimaryTermsList(primaryTerms)}
+        />
+        <KeyValue
+          label={<FormattedMessage id="ui-licenses.terms.optionalTerms" />}
+          value={this.renderOptionalTermsList(optionalTerms)}
+        />
+      </div>
+    );
+  }
+
+  renderPrimaryTermsList = (terms) => {
+    const { input: { value, name }, meta: { form }, onError } = this.props;
     let termNoteError = false;
 
     const termsList = terms.map((term, i) => {
@@ -325,11 +346,51 @@ export default class TermsListField extends React.Component {
       return (
         <EditCard
           data-test-term
+          header={term.label}
+          key={term.value}
+        >
+          <Row>
+            <Col xs={12} md={6}>
+              {this.renderTermValue(term, i, errorMessage)}
+            </Col>
+            <Col xs={12} md={6}>
+              {this.renderTermNoteInternal(term, i)}
+            </Col>
+          </Row>
+          <Row>
+            <Col xs={12} md={6}>
+              {this.renderTermVisibility(term, i)}
+            </Col>
+            <Col xs={12} md={6}>
+              {this.renderTermNotePublic(term, i)}
+            </Col>
+          </Row>
+        </EditCard>
+      );
+    });
+
+    onError(termNoteError, name, form);
+
+    return termsList;
+  }
+
+  renderOptionalTermsList = (terms) => {
+    const { input: { value, name }, meta: { form }, onError } = this.props;
+    const { primaryTerms } = this.state;
+    let termNoteError = false;
+    const termsList = terms.map((term, index) => {
+      const i = index + primaryTerms.length;
+      const errorMessage = this.validateFields(value, term.value, 'optional');
+      termNoteError = errorMessage ? true : termNoteError;
+
+      return (
+        <EditCard
+          data-test-term
           deleteBtnProps={{
             'id': `edit-term-${i}-delete`,
             'data-test-term-delete-btn': true
           }}
-          header={<FormattedMessage id="ui-licenses.term.title" values={{ number: i + 1 }} />}
+          header={<FormattedMessage id="ui-licenses.term.title" values={{ number: index + 1 }} />}
           key={term.value}
           onDelete={() => this.handleDeleteTerm(term, i)}
         >
@@ -359,7 +420,6 @@ export default class TermsListField extends React.Component {
     });
 
     onError(termNoteError, name, form);
-
     return termsList;
   }
 
