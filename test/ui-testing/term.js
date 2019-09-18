@@ -53,9 +53,24 @@ module.exports.test = (uiTestCtx, term = TERM) => {
 
       it('should count the number of terms', done => {
         nightmare
-          .evaluate(() => [...document.querySelectorAll('[data-test-term-name]')].length)
+          .evaluate(() => [...document.querySelectorAll('[data-test-term]')].length)
           .then(count => {
             NUMBER_OF_TERMS = count;
+          })
+          .then(done)
+          .catch(done);
+      });
+
+      it('should find a primary term and shouldnt have a name field and delete button', done => {
+        nightmare
+          .evaluate(() => {
+            const primaryTermsList = [...document.querySelectorAll('[data-test-term=primary]')];
+            if (primaryTermsList.length > 0) {
+              const nameField = document.querySelector('#edit-term-0-name');
+              const trashButton = document.querySelector('#edit-term-0-delete');
+              if (nameField) throw Error('Should not have an editable name field');
+              if (trashButton) throw Error('Should not have the ability to delete the term');
+            }
           })
           .then(done)
           .catch(done);
@@ -65,7 +80,7 @@ module.exports.test = (uiTestCtx, term = TERM) => {
         nightmare
           .click('#add-term-btn')
           .wait(500)
-          .evaluate(() => [...document.querySelectorAll('[data-test-term-name]')].length)
+          .evaluate(() => [...document.querySelectorAll('[data-test-term]')].length)
           .then(count => {
             if (count !== NUMBER_OF_TERMS + 1) {
               throw Error(`Expected ${NUMBER_OF_TERMS + 1} terms but found ${count}!`);
@@ -73,6 +88,34 @@ module.exports.test = (uiTestCtx, term = TERM) => {
 
             NUMBER_OF_TERMS += 1;
           })
+          .then(done)
+          .catch(done);
+      });
+
+      it('added term should be optional term', done => {
+        nightmare
+          .evaluate((totalTerms) => {
+            const addedTerm = [...document.querySelectorAll('[data-test-term]')][totalTerms - 1];
+            const optionalTerm = [...document.querySelectorAll('[data-test-term=optional]')][0];
+            return addedTerm === optionalTerm;
+          }, NUMBER_OF_TERMS)
+          .then(value => {
+            if (!value) {
+              throw Error('Expect the added term to be an optional term');
+            }
+          })
+          .then(done)
+          .catch(done);
+      });
+
+      it('added optional term should have name field and delete option', done => {
+        nightmare
+          .evaluate((totalTerms) => {
+            const optionalTermNameField = document.querySelector(`#edit-term-${totalTerms - 1}-name`);
+            const optionalTermTrashButton = document.querySelectorAll(`#edit-term-${totalTerms - 1}-delete`);
+            if (!optionalTermNameField) throw Error('Optional term should have a name field');
+            if (!optionalTermTrashButton) throw Error('Optional term should have a delete button');
+          }, NUMBER_OF_TERMS)
           .then(done)
           .catch(done);
       });
@@ -128,12 +171,8 @@ module.exports.test = (uiTestCtx, term = TERM) => {
               throw Error(`Expected to find ${expectedTerm.note}`);
             }
 
-            if (!pubNoteElement) {
-              throw Error(`Expected to find ${expectedTerm.publicNote} public note`);
-            }
-
-            if (pubNoteElement.textContent !== expectedTerm.publicNote) {
-              throw Error(`Expected to find ${expectedTerm.publicNote}`);
+            if (pubNoteElement) {
+              throw Error(`Should not find ${expectedTerm.publicNote} public note`);
             }
 
             if (!visibilityElement) {
