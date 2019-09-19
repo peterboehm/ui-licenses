@@ -95,7 +95,7 @@ module.exports.test = (uiTestCtx, term = TERM) => {
       it('added term should be optional term', done => {
         nightmare
           .evaluate(() => {
-            const addedTerm = [...document.querySelectorAll('[data-test-term=optional]')][0];
+            const addedTerm = document.querySelector('[data-test-term=optional]');
             if (!addedTerm) {
               throw Error('Expect the added term to be an optional term');
             }
