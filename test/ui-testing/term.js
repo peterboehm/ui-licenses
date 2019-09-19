@@ -94,13 +94,9 @@ module.exports.test = (uiTestCtx, term = TERM) => {
 
       it('added term should be optional term', done => {
         nightmare
-          .evaluate((totalTerms) => {
-            const addedTerm = [...document.querySelectorAll('[data-test-term]')][totalTerms - 1];
-            const optionalTerm = [...document.querySelectorAll('[data-test-term=optional]')][0];
-            return addedTerm === optionalTerm;
-          }, NUMBER_OF_TERMS)
-          .then(value => {
-            if (!value) {
+          .evaluate(() => {
+            const addedTerm = [...document.querySelectorAll('[data-test-term=optional]')][0];
+            if (!addedTerm) {
               throw Error('Expect the added term to be an optional term');
             }
           })
@@ -110,22 +106,22 @@ module.exports.test = (uiTestCtx, term = TERM) => {
 
       it('added optional term should have name field and delete option', done => {
         nightmare
-          .evaluate((totalTerms) => {
-            const optionalTermNameField = document.querySelector(`#edit-term-${totalTerms - 1}-name`);
-            const optionalTermTrashButton = document.querySelectorAll(`#edit-term-${totalTerms - 1}-delete`);
+          .evaluate(() => {
+            const optionalTermNameField = document.querySelector('[data-test-term=optional] [data-test-term-name]');
+            const optionalTermTrashButton = document.querySelectorAll('[data-test-term=optional] [data-test-term-delete-btn]');
             if (!optionalTermNameField) throw Error('Optional term should have a name field');
             if (!optionalTermTrashButton) throw Error('Optional term should have a delete button');
-          }, NUMBER_OF_TERMS)
+          })
           .then(done)
           .catch(done);
       });
 
       it(`should set term to: ${term.value}`, done => {
         nightmare
-          .type(`#edit-term-${NUMBER_OF_TERMS - 1}-name`, term.label)
-          .type(`#edit-term-${NUMBER_OF_TERMS - 1}-value`, term.value)
-          .type(`#edit-term-${NUMBER_OF_TERMS - 1}-internal-note`, term.note)
-          .type(`#edit-term-${NUMBER_OF_TERMS - 1}-public-note`, term.publicNote)
+          .type('[data-test-term=optional] [data-test-term-name]', term.label)
+          .type('[data-test-term=optional] [data-test-term-value]', term.value)
+          .type('[data-test-term=optional] [data-test-term-note]', term.note)
+          .type('[data-test-term=optional] [data-test-term-public-note]', term.publicNote)
           .then(done)
           .catch(done);
       });
@@ -193,46 +189,20 @@ module.exports.test = (uiTestCtx, term = TERM) => {
           .click('#clickable-edit-license')
           .wait('#licenseFormInfo')
           .waitUntilNetworkIdle(2000)
-          .evaluate((expectedTerm, row) => {
-            const nameElement = document.querySelector(`#edit-term-${row}-name`);
-            const valueElement = document.querySelector(`#edit-term-${row}-value`);
-            const noteElement = document.querySelector(`#edit-term-${row}-internal-note`);
-            const pubNoteElement = document.querySelector(`#edit-term-${row}-public-note`);
-            const note = noteElement.value;
-            const publicNote = pubNoteElement.value;
-
-
-            if (nameElement.selectedOptions[0].textContent !== expectedTerm.label) {
-              throw Error(`Expected #edit-term-${row}-name to have label ${expectedTerm.label}`);
-            }
-            if (nameElement.value !== expectedTerm.name) {
-              throw Error(`Expected #edit-term-${row}-name to have value ${expectedTerm.name}`);
-            }
-            const value = valueElement.selectedOptions ?
-              valueElement.selectedOptions[0].textContent : valueElement.value;
-
-            if (value !== expectedTerm.value) {
-              throw Error(`Expected #edit-term-${row}-value to be ${expectedTerm.value}. It is ${value}`);
-            }
-
-            if (note !== expectedTerm.note) {
-              throw Error(`Expected #edit-term-${row}-internal-note to be ${expectedTerm.note}. It is ${note}`);
-            }
-
-            if (publicNote !== expectedTerm.publicNote) {
-              throw Error(`Expected #edit-term-${row}-public-note to be ${expectedTerm.publicNote}. It is ${publicNote}`);
-            }
-          }, term, NUMBER_OF_TERMS - 1)
+          .evaluate(() => {
+            const optionaTerm = document.querySelector('[data-test-term=optional]');
+            if (!optionaTerm) throw Error('Should find the optional term');
+          })
           .then(done)
           .catch(done);
       });
 
       it(`should edit term value to: ${term.editedValue} and set visibility to ${term.internal.text}`, done => {
         nightmare
-          .insert(`#edit-term-${NUMBER_OF_TERMS - 1}-value`, '')
-          .type(`#edit-term-${NUMBER_OF_TERMS - 1}-value`, term.editedValue)
-          .wait(`#edit-term-${NUMBER_OF_TERMS - 1}-visibility`)
-          .type(`#edit-term-${NUMBER_OF_TERMS - 1}-visibility`, term.internal.text)
+          .insert('[data-test-term=optional] [data-test-term-value]', '')
+          .type('[data-test-term=optional] [data-test-term-value]', term.editedValue)
+          .wait('[data-test-term=optional] [data-test-term-visibility]')
+          .type('[data-test-term=optional] [data-test-term-visibility]', term.internal.text)
           .then(done)
           .catch(done);
       });
@@ -286,38 +256,38 @@ module.exports.test = (uiTestCtx, term = TERM) => {
           .click('#clickable-edit-license')
           .wait('#licenseFormInfo')
           .waitUntilNetworkIdle(2000)
-          .evaluate((expectedTerm, row) => {
-            const nameElement = document.querySelector(`#edit-term-${row}-name`);
-            const valueElement = document.querySelector(`#edit-term-${row}-value`);
-            const visibilityElement = document.querySelector(`#edit-term-${row}-visibility`);
+          .evaluate((expectedTerm) => {
+            const nameElement = document.querySelector('[data-test-term=optional] [data-test-term-name]');
+            const valueElement = document.querySelector('[data-test-term=optional] [data-test-term-value]');
+            const visibilityElement = document.querySelector('[data-test-term=optional] [data-test-term-visibility]');
 
             if (expectedTerm.label !== nameElement.selectedOptions[0].textContent) {
-              throw Error(`Expected #edit-term-${row}-name to have label ${expectedTerm.label}`);
+              throw Error(`Expected to have label ${expectedTerm.label}`);
             }
             if (expectedTerm.name !== nameElement.value) {
-              throw Error(`Expected #edit-term-${row}-name to have label ${expectedTerm.name}`);
+              throw Error(`Expected to have label ${expectedTerm.name}`);
             }
 
             const value = valueElement.selectedOptions ?
               valueElement.selectedOptions[0].textContent : valueElement.value;
 
             if (value !== expectedTerm.editedValue) {
-              throw Error(`Expected #edit-term-${row}-value to be ${expectedTerm.editedValue}. It is ${value}`);
+              throw Error(`Expected ${expectedTerm.editedValue}. It is ${value}`);
             }
 
             const visibility = visibilityElement.value;
 
             if (visibility !== expectedTerm.internal.value) {
-              throw Error(`Expected #edit-term-${row}-visibility to be ${expectedTerm.internal.value}. It is ${visibility}`);
+              throw Error(`Expected ${expectedTerm.internal.value}. It is ${visibility}`);
             }
-          }, term, NUMBER_OF_TERMS - 1)
+          }, term)
           .then(done)
           .catch(done);
       });
 
       it('should remove term from license and save', done => {
         nightmare
-          .click(`#edit-term-${NUMBER_OF_TERMS - 1}-delete`)
+          .click('[data-test-term=optional] [data-test-term-delete-btn]')
           .wait(500)
           .click('#clickable-update-license')
           .waitUntilNetworkIdle(2000) // Wait for record to be fetched
