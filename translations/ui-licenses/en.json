@@ -125,6 +125,8 @@
 
   "terms.add": "Add term",
   "terms.term": "Term",
+  "terms.primaryTerms": "Primary terms",
+  "terms.optionalTerms": "Optional terms",
   "term.title": "Term {number}",
   "term.internalTrue": "Internal",
   "term.internalFalse": "Public",

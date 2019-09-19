@@ -43,6 +43,7 @@ class FormTerms extends React.Component {
           return {
             description: term.description,
             label: term.label,
+            primary: term.primary,
             type: term.type,
             options,
             value: term.name,

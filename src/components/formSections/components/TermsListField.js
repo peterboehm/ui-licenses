@@ -5,12 +5,12 @@ import { IntlConsumer } from '@folio/stripes/core';
 import {
   Button,
   Col,
+  KeyValue,
   Row,
   Select,
   TextArea,
   TextField,
 } from '@folio/stripes/components';
-
 import { EditCard } from '@folio/stripes-erm-components';
 
 const TERM_TYPE_TEXT = 'com.k_int.web.toolkit.custprops.types.CustomPropertyText'; // eslint-disable-line no-unused-vars
@@ -122,9 +122,13 @@ export default class TermsListField extends React.Component {
     );
   }
 
-  validateFields = (values, termValue) => {
+  validateFields = (values, termValue, termType) => {
     const val = values ? values[termValue] : [];
     const { note, publicNote, value } = val ? val[0] : {};
+
+    if (termType === 'optional' && termValue && !value) {
+      return <FormattedMessage id="stripes-core.label.missingRequiredField" />;
+    }
 
     if ((note && !value) || (publicNote && !value)) {
       return <FormattedMessage id="ui-licenses.errors.termNoteWithoutValue" />;
@@ -176,6 +180,7 @@ export default class TermsListField extends React.Component {
         value={controlledFieldValue}
         error={errorMessage}
         {...fieldProps}
+        required={!term.primary}
       />
     );
   }
@@ -213,7 +218,6 @@ export default class TermsListField extends React.Component {
             label={<FormattedMessage id="ui-licenses.prop.termVisibility" />}
             onChange={handleChange}
             value={internal === undefined ? term.defaultInternal : internal}
-            required
           />
         )}
       </IntlConsumer>
@@ -313,31 +317,58 @@ export default class TermsListField extends React.Component {
   }
 
   renderTermsList = () => {
+    return (
+      <div>
+        <KeyValue
+          label={<FormattedMessage id="ui-licenses.terms.primaryTerms" />}
+          value={this.renderTerms('primary')}
+        />
+        <KeyValue
+          label={<FormattedMessage id="ui-licenses.terms.optionalTerms" />}
+          value={this.renderTerms('optional')}
+        />
+      </div>
+    );
+  }
+
+  renderTerms = (termType) => {
     const { input: { value, name }, meta: { form }, onError } = this.props;
-    const { terms } = this.state;
-
     let termNoteError = false;
+    let optionalTermCounter = 0;
 
-    const termsList = terms.map((term, i) => {
-      const errorMessage = this.validateFields(value, term.value);
+    const termsList = this.state.terms.map((term, i) => {
+      if (termType === 'primary' && !term.primary) return undefined;
+      if (termType === 'optional' && term.primary) return undefined;
+
+      const errorMessage = this.validateFields(value, term.value, termType);
       termNoteError = errorMessage ? true : termNoteError;
+      const deleteBtnProps = termType === 'optional' ? {
+        'id': `edit-term-${i}-delete`,
+        'data-test-term-delete-btn': true
+      } : null;
+
+      const header = termType === 'optional' ?
+        <FormattedMessage id="ui-licenses.term.title" values={{ number: optionalTermCounter + 1 }} /> :
+        term.label;
+
+      optionalTermCounter += 1;
 
       return (
         <EditCard
-          data-test-term
-          deleteBtnProps={{
-            'id': `edit-term-${i}-delete`,
-            'data-test-term-delete-btn': true
-          }}
-          header={<FormattedMessage id="ui-licenses.term.title" values={{ number: i + 1 }} />}
+          data-test-term={termType}
+          deleteBtnProps={deleteBtnProps}
+          header={header}
           key={term.value}
-          onDelete={() => this.handleDeleteTerm(term, i)}
+          onDelete={termType === 'optional' ? () => this.handleDeleteTerm(term, i) : null}
         >
-          <Row>
-            <Col xs={12}>
-              {this.renderTermName(term, i)}
-            </Col>
-          </Row>
+          {
+            termType === 'optional' &&
+            <Row>
+              <Col xs={12}>
+                {this.renderTermName(term, i)}
+              </Col>
+            </Row>
+          }
           <Row>
             <Col xs={12} md={6}>
               {this.renderTermValue(term, i, errorMessage)}
@@ -356,7 +387,7 @@ export default class TermsListField extends React.Component {
           </Row>
         </EditCard>
       );
-    });
+    }).filter(term => term !== undefined);
 
     onError(termNoteError, name, form);
 
