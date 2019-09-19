@@ -108,7 +108,7 @@ module.exports.test = (uiTestCtx, term = TERM) => {
         nightmare
           .evaluate(() => {
             const optionalTermNameField = document.querySelector('[data-test-term=optional] [data-test-term-name]');
-            const optionalTermTrashButton = document.querySelectorAll('[data-test-term=optional] [data-test-term-delete-btn]');
+            const optionalTermTrashButton = document.querySelector('[data-test-term=optional] [data-test-term-delete-btn]');
             if (!optionalTermNameField) throw Error('Optional term should have a name field');
             if (!optionalTermTrashButton) throw Error('Optional term should have a delete button');
           })
