@@ -42,7 +42,7 @@ const createLicense = (nightmare, done, defaultValues) => {
     .wait('#licenseInfo')
     .waitUntilNetworkIdle(500)
     .evaluate(expectedValues => {
-      const foundName = document.querySelector('[data-test-license-name]').innerText;
+      const foundName = document.querySelector('[data-test-license-name]').innerText.trim();
       if (foundName !== expectedValues.name) {
         throw Error(`Name of license is incorrect. Expected "${expectedValues.name}" and got "${foundName}" `);
       }
@@ -108,7 +108,7 @@ module.exports.test = (uiTestCtx) => {
           .wait('#licenseInfo')
           .waitUntilNetworkIdle(1000)
           .evaluate(expectedName => {
-            const foundName = document.querySelector('[data-test-license-name]').innerText;
+            const foundName = document.querySelector('[data-test-license-name]').innerText.trim();
             if (foundName !== expectedName) {
               throw Error(`Name of license is incorrect. Expected "${expectedName}" and got "${foundName}" `);
             }
@@ -152,7 +152,7 @@ module.exports.test = (uiTestCtx) => {
             const node = document.querySelector('[data-test-license-name]');
             if (!node || !node.innerText) throw Error('No license name node found.');
 
-            const name = node.innerText;
+            const name = node.innerText.trim();
             if (name !== expectedValues.name) {
               throw Error(`Name of found license is incorrect. Expected "${expectedValues.name}" and got "${name}" `);
             }
@@ -180,7 +180,7 @@ module.exports.test = (uiTestCtx) => {
           .wait('#licenseInfo')
           .waitUntilNetworkIdle(1000)
           .evaluate(expectedValues => {
-            const name = document.querySelector('[data-test-license-name]').innerText;
+            const name = document.querySelector('[data-test-license-name]').innerText.trim();
             if (name !== expectedValues.editedName) {
               throw Error(`Name of found license is incorrect. Expected "${expectedValues.editedName}" and got "${name}" `);
             }
