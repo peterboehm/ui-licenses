@@ -39,7 +39,6 @@ class AmendmentForm extends React.Component {
     }),
     isLoading: PropTypes.bool,
     initialValues: PropTypes.object,
-    invalid: PropTypes.bool,
     handleSubmit: PropTypes.func.isRequired,
     onSubmit: PropTypes.func.isRequired,
     pristine: PropTypes.bool,
@@ -119,7 +118,6 @@ class AmendmentForm extends React.Component {
       initialValues,
       pristine,
       submitting,
-      invalid
     } = this.props;
 
     let id;
@@ -143,7 +141,7 @@ class AmendmentForm extends React.Component {
     const endButton = (
       <Button
         buttonStyle="primary mega"
-        disabled={pristine || submitting || invalid}
+        disabled={pristine || submitting}
         id={id}
         marginBottom0
         onClick={handleSubmit}
@@ -174,41 +172,6 @@ class AmendmentForm extends React.Component {
             />
           )}
         </FormattedMessage>
-      </PaneMenu>
-    );
-  }
-
-  renderLastMenu() {
-    const {
-      handleSubmit,
-      initialValues,
-      pristine,
-      submitting,
-      invalid
-    } = this.props;
-
-    let id;
-    let label;
-    if (initialValues && initialValues.id) {
-      id = 'clickable-update-amendment';
-      label = <FormattedMessage id="ui-licenses.amendments.update" />;
-    } else {
-      id = 'clickable-create-amendment';
-      label = <FormattedMessage id="ui-licenses.amendments.create" />;
-    }
-
-    return (
-      <PaneMenu>
-        <Button
-          id={id}
-          type="submit"
-          disabled={pristine || submitting || invalid}
-          onClick={handleSubmit}
-          buttonStyle="primary paneHeaderNewButton"
-          marginBottom0
-        >
-          {label}
-        </Button>
       </PaneMenu>
     );
   }
