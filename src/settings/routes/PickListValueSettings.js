@@ -11,6 +11,10 @@ export default class PickListValueSettings extends React.Component {
     categories: {
       type: 'okapi',
       path: 'licenses/refdata',
+      params: {
+        perPage: '100',
+        sort: 'desc;asc',
+      },
       accumulate: true,
     },
   };
@@ -93,8 +97,8 @@ export default class PickListValueSettings extends React.Component {
               label: intl.formatMessage({ id: 'ui-licenses.settings.value' }),
               actions: intl.formatMessage({ id: 'ui-licenses.settings.actions' }),
             }}
-        // We have to unset the dataKey to prevent the props.resources in
-        // <ControlledVocab> from being overwritten by the props.resources here.
+            // We have to unset the dataKey to prevent the props.resources in
+            // <ControlledVocab> from being overwritten by the props.resources here.
             dataKey={undefined}
             hiddenFields={['lastUpdated', 'numberOfObjects']}
             id="pick-list-values"
