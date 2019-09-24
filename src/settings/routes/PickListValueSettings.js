@@ -13,6 +13,7 @@ export default class PickListValueSettings extends React.Component {
       path: 'licenses/refdata',
       params: {
         perPage: '100',
+        sort: 'desc;asc',
       },
       accumulate: true,
     },
