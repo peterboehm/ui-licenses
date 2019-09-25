@@ -109,5 +109,7 @@
     "settings.terms.type.text": "Texto",
     "terms.term": "Termo",
     "showTags": "Mostrar tags",
-    "tags": "Tags"
+    "tags": "Tags",
+    "terms.primaryTerms": "Termos principais",
+    "terms.optionalTerms": "Termos opcionais"
 }

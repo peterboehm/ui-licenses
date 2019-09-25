@@ -109,5 +109,7 @@
     "settings.terms.type.text": "Texto",
     "terms.term": "Término",
     "showTags": "Show Tags",
-    "tags": "Tags"
+    "tags": "Tags",
+    "terms.primaryTerms": "Primary terms",
+    "terms.optionalTerms": "Optional terms"
 }
