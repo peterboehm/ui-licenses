@@ -109,5 +109,7 @@
     "settings.terms.type.text": "نص",
     "terms.term": "مصطلح",
     "showTags": "عرض الوسوم",
-    "tags": "الوسوم"
+    "tags": "الوسوم",
+    "terms.primaryTerms": "مصطلحات رئيسية",
+    "terms.optionalTerms": "مصطلحات اختيارية"
 }

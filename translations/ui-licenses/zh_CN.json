@@ -109,5 +109,7 @@
     "settings.terms.type.text": "文本",
     "terms.term": "条款",
     "showTags": "显示标签",
-    "tags": "标签"
+    "tags": "标签",
+    "terms.primaryTerms": "Primary terms",
+    "terms.optionalTerms": "Optional terms"
 }
