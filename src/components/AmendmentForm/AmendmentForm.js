@@ -209,6 +209,5 @@ class AmendmentForm extends React.Component {
 }
 
 export default stripesFinalForm({
-  keepDirtyOnReinitialize: true,
   navigationCheck: true,
 })(AmendmentForm);

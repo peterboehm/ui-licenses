@@ -54,7 +54,7 @@ export default class TermsListField extends React.Component {
     // _after_ we have mounted this component, we need to check if new data has come in
     // while the form is still marked as pristine.
     //
-    // redux-form unsets `pristine` after its `onChange` is called, but we also dirty
+    // final-form unsets `pristine` after its `onChange` is called, but we also dirty
     // the component when we add/remove rows. That happens _before_ `onChange` is called,
     // so internally we use `state.dirtying` to show that we just initiated an action
     // that will result in a dirty component.
@@ -103,7 +103,7 @@ export default class TermsListField extends React.Component {
             return { terms: newTerms };
           });
 
-          // Update redux-form (which tracks what the values for a given term are) because
+          // Update final-form (which tracks what the values for a given term are) because
           // in essence we're deleting a term and creating a new term.
           // We do this by 1) marking the current term for deletion and 2) initing
           // the new term to an empty object.
