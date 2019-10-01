@@ -6,7 +6,7 @@ import { Field } from 'react-final-form';
 import { Button, Card, Col, InfoPopover, Row, Select, TextArea, TextField } from '@folio/stripes/components';
 import { IntlConsumer } from '@folio/stripes/core';
 
-import { required } from '../../../util/validators';
+import { requiredValidator } from '@folio/stripes-erm-components';
 
 export default class TermFieldEdit extends React.Component {
   static propTypes = {
@@ -80,7 +80,7 @@ export default class TermFieldEdit extends React.Component {
                   name={`${name}.label`}
                   required
                   startControl={<InfoPopover content={<FormattedMessage id="ui-licenses.settings.terms.help.label" />} />}
-                  validate={required}
+                  validate={requiredValidator}
                 />
               </Col>
               <Col xs={6}>
@@ -96,7 +96,7 @@ export default class TermFieldEdit extends React.Component {
                         undefined : <FormattedMessage id="ui-licenses.errors.termNameHasNonAlpha" />;
                     }
 
-                    return required(v);
+                    return requiredValidator(v);
                   }}
                 />
               </Col>
@@ -106,7 +106,7 @@ export default class TermFieldEdit extends React.Component {
               label={<FormattedMessage id="ui-licenses.settings.terms.term.description" />}
               name={`${name}.description`}
               required
-              validate={required}
+              validate={requiredValidator}
             />
             <Row>
               <Col xs={4}>
@@ -115,7 +115,7 @@ export default class TermFieldEdit extends React.Component {
                   label={<FormattedMessage id="ui-licenses.settings.terms.term.orderWeight" />}
                   name={`${name}.weight`}
                   required
-                  validate={required}
+                  validate={requiredValidator}
                   type="number"
                 />
               </Col>
@@ -131,7 +131,7 @@ export default class TermFieldEdit extends React.Component {
                   name={`${name}.primary`}
                   parse={this.stringToBoolean}
                   required
-                  validate={required}
+                  validate={requiredValidator}
                 />
               </Col>
               <Col xs={4}>
@@ -146,12 +146,12 @@ export default class TermFieldEdit extends React.Component {
                   name={`${name}.defaultInternal`}
                   parse={this.stringToBoolean}
                   required
-                  validate={required}
+                  validate={requiredValidator}
                 />
               </Col>
             </Row>
-            { /* Users can only configure the type of a term when creating it, not when editing it */ }
-            { value.id === undefined &&
+            { /* Users can only configure the type of a term when creating it, not when editing it */}
+            {value.id === undefined &&
               <Row>
                 <Col xs={6}>
                   <Field
@@ -166,11 +166,11 @@ export default class TermFieldEdit extends React.Component {
                     label={<FormattedMessage id="ui-licenses.settings.terms.term.type" />}
                     name={`${name}.type`}
                     required
-                    validate={required}
+                    validate={requiredValidator}
                   />
                 </Col>
                 <Col xs={6}>
-                  { value.type === 'Refdata' &&
+                  {value.type === 'Refdata' &&
                     <Field
                       component={Select}
                       dataOptions={[
@@ -180,7 +180,7 @@ export default class TermFieldEdit extends React.Component {
                       label={<FormattedMessage id="ui-licenses.settings.terms.term.pickList" />}
                       name={`${name}.category`}
                       required
-                      validate={required}
+                      validate={requiredValidator}
                     />
                   }
                 </Col>

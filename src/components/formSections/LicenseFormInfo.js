@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { Field } from 'redux-form';
+import { Field } from 'react-final-form';
+import { requiredValidator } from '@folio/stripes-erm-components';
 
 import {
   Checkbox,
@@ -13,7 +14,6 @@ import {
   TextField,
 } from '@folio/stripes/components';
 
-import { required } from '../../util/validators';
 
 export default class LicenseFormInfo extends React.Component {
   static propTypes = {
@@ -75,7 +75,7 @@ export default class LicenseFormInfo extends React.Component {
                   component={TextField}
                   placeholder={placeholder}
                   required
-                  validate={required}
+                  validate={requiredValidator}
                 />
               )}
             </FormattedMessage>

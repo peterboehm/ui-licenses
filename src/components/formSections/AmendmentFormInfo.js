@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { Field } from 'redux-form';
+import { Field } from 'react-final-form';
+import { requiredValidator } from '@folio/stripes-erm-components';
 
 import {
   Checkbox,
@@ -12,8 +13,6 @@ import {
   TextArea,
   TextField,
 } from '@folio/stripes/components';
-
-import { required } from '../../util/validators';
 
 class AmendmentFormInfo extends React.Component {
   static propTypes = {
@@ -77,7 +76,7 @@ class AmendmentFormInfo extends React.Component {
                   component={TextField}
                   placeholder={placeholder}
                   required
-                  validate={required}
+                  validate={requiredValidator}
                 />
               )}
             </FormattedMessage>

@@ -1,8 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { setSubmitFailed, stopSubmit } from 'redux-form';
-
 import {
   AccordionSet,
   Button,
@@ -17,7 +15,7 @@ import {
   Row,
 } from '@folio/stripes/components';
 import { AppIcon, TitleManager } from '@folio/stripes/core';
-import stripesForm from '@folio/stripes/form';
+import stripesFinalForm from '@folio/stripes/final-form';
 
 import { Spinner } from '@folio/stripes-erm-components';
 
@@ -66,23 +64,11 @@ class LicenseForm extends React.Component {
 
     return {
       data,
-      handlers: {
-        ...handlers,
-        onError: this.handleError,
-      },
+      handlers,
       id,
       onToggle: this.handleSectionToggle,
       open: this.state.sections[id],
     };
-  }
-
-  handleError = (error, fieldName, formName) => {
-    const { dispatch } = this.props;
-    // stopSubmit reports the error to redux-form and sets invalid flag to true which helps us in disabling the submit button
-    if (error) {
-      dispatch(stopSubmit(formName, { [fieldName]: error }));
-      dispatch(setSubmitFailed(formName, fieldName));
-    }
   }
 
   handleSectionToggle = ({ id }) => {
@@ -228,9 +214,7 @@ class LicenseForm extends React.Component {
   }
 }
 
-export default stripesForm({
-  form: 'EditLicense',
-  navigationCheck: true,
-  enableReinitialize: true,
+export default stripesFinalForm({
   keepDirtyOnReinitialize: true,
+  navigationCheck: true,
 })(LicenseForm);
