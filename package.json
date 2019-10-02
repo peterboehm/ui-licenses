@@ -100,7 +100,7 @@
       },
       {
         "permissionName": "ui-licenses.licenses.delete",
-        "displayName": "Agreements: Delete licenses",
+        "displayName": "Licenses: Delete licenses",
         "visible": true,
         "subPermissions": [
           "ui-licenses.licenses.view",
