@@ -68,8 +68,10 @@
         "permissionName": "module.licenses.enabled",
         "displayName": "UI: ui-licenses module is enabled",
         "subPermissions": [
+          "configuration.entries.collection.get",
           "tags.collection.get",
-          "licenses.refdata.view"
+          "licenses.refdata.view",
+          "note.types.collection.get"
         ]
       },
       {
@@ -82,6 +84,7 @@
           "licenses.licenses.view",
           "licenses.files.view",
           "licenses.contacts.view",
+          "licenses.custprops.view",
           "licenses.orgs.view"
         ]
       },
@@ -105,6 +108,13 @@
         ]
       },
       {
+        "permissionName": "settings.licenses.enabled",
+        "displayName": "Settings (licenses): display list of settings pages",
+        "subPermissions": [
+          "settings.enabled"
+        ]
+      },
+      {
         "permissionName": "ui-licenses.picklists.manage",
         "displayName": "Licenses: Manage pick lists and values",
         "visible": true,
@@ -121,15 +131,6 @@
           "settings.licenses.enabled",
           "licenses.custprops.manage"
         ]
-      },
-      
-      {
-        "permissionName": "settings.licenses.enabled",
-        "displayName": "Settings (licenses): display list of settings pages",
-        "subPermissions": [
-          "settings.enabled"
-        ],
-        "visible": true
       }
     ],
     "icons": [
