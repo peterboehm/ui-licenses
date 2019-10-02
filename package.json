@@ -68,26 +68,61 @@
         "permissionName": "module.licenses.enabled",
         "displayName": "UI: ui-licenses module is enabled",
         "subPermissions": [
-          "tags.collection.get"
+          "tags.collection.get",
+          "licenses.refdata.view"
         ]
       },
       {
         "permissionName": "ui-licenses.licenses.view",
-        "displayName": "Licenses: Can view licenses",
+        "displayName": "Licenses: Search & view licenses",
         "visible": true,
         "subPermissions": [
           "module.licenses.enabled",
-          "tags.item.post"
+          "tags.item.post",
+          "licenses.licenses.view",
+          "licenses.files.view",
+          "licenses.contacts.view",
+          "licenses.orgs.view"
         ]
       },
       {
         "permissionName": "ui-licenses.licenses.edit",
-        "displayName": "Licenses: Can create and edit licenses",
+        "displayName": "Licenses: Edit licenses",
         "visible": true,
         "subPermissions": [
-          "ui-licenses.licenses.view"
+          "ui-licenses.licenses.view",
+          "licenses.licenses.edit",
+          "licenses.files.edit"
         ]
       },
+      {
+        "permissionName": "ui-licenses.licenses.delete",
+        "displayName": "Agreements: Delete licenses",
+        "visible": true,
+        "subPermissions": [
+          "ui-licenses.licenses.view",
+          "licenses.licenses.item.delete"
+        ]
+      },
+      {
+        "permissionName": "ui-licenses.picklists.manage",
+        "displayName": "Licenses: Manage pick lists and values",
+        "visible": true,
+        "subPermissions": [
+          "settings.licenses.enabled",
+          "licenses.refdata.manage"
+        ]
+      },
+      {
+        "permissionName": "ui-licenses.terms.manage",
+        "displayName": "Licenses: Manage license terms",
+        "visible": true,
+        "subPermissions": [
+          "settings.licenses.enabled",
+          "licenses.custprops.manage"
+        ]
+      },
+      
       {
         "permissionName": "settings.licenses.enabled",
         "displayName": "Settings (licenses): display list of settings pages",
