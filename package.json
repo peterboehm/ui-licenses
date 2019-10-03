@@ -59,7 +59,7 @@
     "hasSettings": true,
     "queryResource": "query",
     "okapiInterfaces": {
-      "licenses": "1.0",
+      "licenses": "1.0 2.0",
       "organizations-storage.interfaces": "2.0",
       "users": "13.0 14.0 15.0"
     },
@@ -68,24 +68,43 @@
         "permissionName": "module.licenses.enabled",
         "displayName": "UI: ui-licenses module is enabled",
         "subPermissions": [
-          "tags.collection.get"
+          "configuration.entries.collection.get",
+          "tags.collection.get",
+          "licenses.refdata.view",
+          "note.types.collection.get"
         ]
       },
       {
         "permissionName": "ui-licenses.licenses.view",
-        "displayName": "Licenses: Can view licenses",
+        "displayName": "Licenses: Search & view licenses",
         "visible": true,
         "subPermissions": [
           "module.licenses.enabled",
-          "tags.item.post"
+          "tags.item.post",
+          "licenses.licenses.view",
+          "licenses.files.view",
+          "licenses.contacts.view",
+          "licenses.custprops.view",
+          "licenses.orgs.view"
         ]
       },
       {
         "permissionName": "ui-licenses.licenses.edit",
-        "displayName": "Licenses: Can create and edit licenses",
+        "displayName": "Licenses: Edit licenses",
         "visible": true,
         "subPermissions": [
-          "ui-licenses.licenses.view"
+          "ui-licenses.licenses.view",
+          "licenses.licenses.edit",
+          "licenses.files.edit"
+        ]
+      },
+      {
+        "permissionName": "ui-licenses.licenses.delete",
+        "displayName": "Licenses: Delete licenses",
+        "visible": true,
+        "subPermissions": [
+          "ui-licenses.licenses.view",
+          "licenses.licenses.item.delete"
         ]
       },
       {
@@ -93,8 +112,25 @@
         "displayName": "Settings (licenses): display list of settings pages",
         "subPermissions": [
           "settings.enabled"
-        ],
-        "visible": true
+        ]
+      },
+      {
+        "permissionName": "ui-licenses.picklists.manage",
+        "displayName": "Licenses: Manage pick lists and values",
+        "visible": true,
+        "subPermissions": [
+          "settings.licenses.enabled",
+          "licenses.refdata.manage"
+        ]
+      },
+      {
+        "permissionName": "ui-licenses.terms.manage",
+        "displayName": "Licenses: Manage license terms",
+        "visible": true,
+        "subPermissions": [
+          "settings.licenses.enabled",
+          "licenses.custprops.manage"
+        ]
       }
     ],
     "icons": [
