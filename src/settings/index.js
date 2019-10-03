@@ -16,7 +16,7 @@ export default class LicenseSettings extends React.Component {
         {
           component: TermsConfigRoute,
           label: <FormattedMessage id="ui-licenses.section.terms" />,
-          perm: 'settings.licenses.enabled',
+          perm: 'ui-licenses.terms.manage',
           route: 'terms',
         }
       ]
@@ -27,13 +27,13 @@ export default class LicenseSettings extends React.Component {
         {
           component: PickListSettings,
           label: <FormattedMessage id="ui-licenses.settings.pickLists" />,
-          perm: 'settings.licenses.enabled',
+          perm: 'ui-licenses.picklists.manage',
           route: 'pick-lists',
         },
         {
           component: PickListValueSettings,
           label: <FormattedMessage id="ui-licenses.settings.pickListValues" />,
-          perm: 'settings.licenses.enabled',
+          perm: 'ui-licenses.picklists.manage',
           route: 'pick-list-values',
         },
       ]

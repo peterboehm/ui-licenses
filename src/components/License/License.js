@@ -119,21 +119,21 @@ class License extends React.Component {
     } = this.props;
 
     return (
-      <PaneMenu>
-        {handlers.onToggleTags &&
-          <FormattedMessage id="ui-licenses.showTags">
-            {ariaLabel => (
-              <IconButton
-                icon="tag"
-                id="clickable-show-tags"
-                badgeCount={get(license, 'tags.length', 0)}
-                onClick={handlers.onToggleTags}
-                ariaLabel={ariaLabel}
-              />
-            )}
-          </FormattedMessage>
-        }
-        <IfPermission perm="ui-licenses.licenses.edit">
+      <IfPermission perm="ui-licenses.licenses.edit">
+        <PaneMenu>
+          {handlers.onToggleTags &&
+            <FormattedMessage id="ui-licenses.showTags">
+              {ariaLabel => (
+                <IconButton
+                  icon="tag"
+                  id="clickable-show-tags"
+                  badgeCount={get(license, 'tags.length', 0)}
+                  onClick={handlers.onToggleTags}
+                  ariaLabel={ariaLabel}
+                />
+              )}
+            </FormattedMessage>
+          }
           <FormattedMessage id="ui-licenses.editLicense">
             {ariaLabel => (
               <Button
@@ -147,8 +147,8 @@ class License extends React.Component {
               </Button>
             )}
           </FormattedMessage>
-        </IfPermission>
-      </PaneMenu>
+        </PaneMenu>
+      </IfPermission>
     );
   }
 
