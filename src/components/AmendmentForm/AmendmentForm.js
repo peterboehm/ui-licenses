@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-
+import { isEqual } from 'lodash';
 import {
   AccordionSet,
   Button,
@@ -17,8 +17,10 @@ import {
 } from '@folio/stripes/components';
 import { TitleManager } from '@folio/stripes/core';
 import stripesFinalForm from '@folio/stripes/final-form';
+import setFieldData from 'final-form-set-field-data';
 
 import { Spinner } from '@folio/stripes-erm-components';
+import WarnEndDate from '../WarnEndDate';
 
 import {
   AmendmentFormInfo,
@@ -36,6 +38,7 @@ class AmendmentForm extends React.Component {
     handlers: PropTypes.shape({
       onClose: PropTypes.func.isRequired,
     }),
+    form: PropTypes.object,
     isLoading: PropTypes.bool,
     initialValues: PropTypes.object,
     handleSubmit: PropTypes.func.isRequired,
@@ -57,10 +60,11 @@ class AmendmentForm extends React.Component {
   }
 
   getSectionProps(id) {
-    const { data, handlers } = this.props;
+    const { data, handlers, form } = this.props;
 
     return {
       data,
+      form,
       handlers,
       id,
       onToggle: this.handleSectionToggle,
@@ -164,7 +168,7 @@ class AmendmentForm extends React.Component {
   }
 
   render() {
-    const { initialValues: { id, name }, isLoading } = this.props;
+    const { initialValues: { id, name }, isLoading, form: { mutators } } = this.props;
 
     if (isLoading) return this.renderLoadingPane();
 
@@ -198,6 +202,7 @@ class AmendmentForm extends React.Component {
                       <FormSupplementaryDocs {...this.getSectionProps('amendmentFormSupplementaryDocs')} />
                     </AccordionSet>
                   </div>
+                  <WarnEndDate mutators={mutators} />
                 </form>
               </TitleManager>
             </Pane>
@@ -209,5 +214,7 @@ class AmendmentForm extends React.Component {
 }
 
 export default stripesFinalForm({
+  initialValuesEqual: (a, b) => isEqual(a, b),
   navigationCheck: true,
+  mutators: { setFieldData }
 })(AmendmentForm);

@@ -20,25 +20,8 @@ class AmendmentFormInfo extends React.Component {
       statusValues: PropTypes.array,
       typeValues: PropTypes.array,
     }),
+    form: PropTypes.object,
   };
-
-  state = {
-    openEnded: false,
-  }
-
-  warnEndDate = (_value, allValues) => {
-    this.setState({ openEnded: allValues.openEnded });
-
-    if (allValues.openEnded && allValues.endDate) {
-      return (
-        <div data-test-warn-clear-end-date>
-          <FormattedMessage id="ui-licenses.warn.clearEndDate" />
-        </div>
-      );
-    }
-
-    return undefined;
-  }
 
   validateEndDate = (value, allValues) => {
     if (value && allValues.startDate && (allValues.openEnded !== true)) {
@@ -58,7 +41,7 @@ class AmendmentFormInfo extends React.Component {
   }
 
   render() {
-    const { data } = this.props;
+    const { data, form } = this.props;
 
     return (
       <div
@@ -106,26 +89,35 @@ class AmendmentFormInfo extends React.Component {
             />
           </Col>
           <Col xs={10} md={5}>
-            <Field
-              backendDateStandard="YYYY-MM-DD"
-              id="edit-amendment-end-date"
-              name="endDate"
-              label={<FormattedMessage id="ui-licenses.prop.endDate" />}
-              component={Datepicker}
-              dateFormat="YYYY-MM-DD"
-              disabled={this.state.openEnded}
-              validate={this.validateEndDate}
-              warn={this.warnEndDate}
-            />
+            <Field name="endDate" validate={this.validateEndDate}>
+              {(props) => {
+                const formState = form.getState();
+                const { values = {} } = formState;
+                return (<Datepicker
+                  backendDateStandard="YYYY-MM-DD"
+                  id="edit-amendment-end-date"
+                  label={<FormattedMessage id="ui-licenses.prop.endDate" />}
+                  dateFormat="YYYY-MM-DD"
+                  disabled={values.openEnded}
+                  onBlur={props.input.onBlur}
+                  input={props.input}
+                  meta={props.meta}
+                />);
+              }}
+            </Field>
           </Col>
           <Col xs={2} style={{ paddingTop: 20 }}>
-            <Field
-              id="edit-amendment-open-ended"
-              name="openEnded"
-              label={<FormattedMessage id="ui-licenses.prop.openEnded" />}
-              component={Checkbox}
-              type="checkbox"
-            />
+            <Field name="openEnded" type="checkbox">
+              {props => {
+                return (<Checkbox
+                  id="edit-amendment-open-ended"
+                  checked={props.input.value}
+                  label={<FormattedMessage id="ui-licenses.prop.openEnded" />}
+                  onChange={props.input.onChange}
+                  type="checkbox"
+                />);
+              }}
+            </Field>
           </Col>
         </Row>
         <Row>

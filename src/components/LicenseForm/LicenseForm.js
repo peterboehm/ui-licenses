@@ -16,8 +16,10 @@ import {
 } from '@folio/stripes/components';
 import { AppIcon, TitleManager } from '@folio/stripes/core';
 import stripesFinalForm from '@folio/stripes/final-form';
-
+import { isEqual } from 'lodash';
+import setFieldData from 'final-form-set-field-data';
 import { Spinner } from '@folio/stripes-erm-components';
+import WarnEndDate from '../WarnEndDate';
 
 import {
   LicenseFormInfo,
@@ -40,6 +42,7 @@ class LicenseForm extends React.Component {
     initialValues: PropTypes.object,
     handleSubmit: PropTypes.func.isRequired,
     isLoading: PropTypes.bool,
+    form: PropTypes.object,
     onSubmit: PropTypes.func.isRequired,
     pristine: PropTypes.bool,
     submitting: PropTypes.bool,
@@ -60,10 +63,11 @@ class LicenseForm extends React.Component {
   }
 
   getSectionProps(id) {
-    const { data, handlers } = this.props;
+    const { data, handlers, form } = this.props;
 
     return {
       data,
+      form,
       handlers,
       id,
       onToggle: this.handleSectionToggle,
@@ -167,8 +171,7 @@ class LicenseForm extends React.Component {
   }
 
   render() {
-    const { initialValues: { id, name }, isLoading } = this.props;
-
+    const { initialValues: { id, name }, isLoading, form: { mutators } } = this.props;
     if (isLoading) return this.renderLoadingPane();
 
     return (
@@ -204,6 +207,7 @@ class LicenseForm extends React.Component {
                       <FormSupplementaryDocs {...this.getSectionProps('licenseFormSupplementaryDocs')} />
                     </AccordionSet>
                   </div>
+                  <WarnEndDate mutators={mutators} />
                 </form>
               </TitleManager>
             </Pane>
@@ -215,5 +219,7 @@ class LicenseForm extends React.Component {
 }
 
 export default stripesFinalForm({
+  initialValuesEqual: (a, b) => isEqual(a, b),
   navigationCheck: true,
+  mutators: { setFieldData }
 })(LicenseForm);

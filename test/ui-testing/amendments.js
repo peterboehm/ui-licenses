@@ -93,7 +93,7 @@ module.exports.test = (uiTestCtx) => {
             amendment.terms.forEach(term => {
               chain = chain
                 .click('#add-term-btn')
-                .evaluate(() => [...document.querySelectorAll('[data-test-term-name]')].length - 1)
+                .evaluate(() => [...document.querySelectorAll('[data-test-term]')].length - 1)
                 .then(index => {
                   nightmare
                     .type(`#edit-term-${index}-name`, term.label)
@@ -306,7 +306,7 @@ module.exports.test = (uiTestCtx) => {
         }
 
         if (amendment.editedName) {
-          it(`should edit amendment name to ${amendment.editedName}`, done => {
+          it(`should edit amendment name to ${amendment.name}${amendment.editedName}`, done => {
             nightmare
               .click('#clickable-edit-amendment')
               .wait('#edit-amendment-name')
@@ -316,7 +316,7 @@ module.exports.test = (uiTestCtx) => {
               .wait('#amendment-info')
               .evaluate(_amendment => {
                 const amendmentName = document.querySelector('[data-test-amendment-name]').textContent;
-                if (amendmentName !== _amendment.editedName) throw Error(`Expected amendment name to be ${_amendment.editedName} and found ${amendmentName}`);
+                if (amendmentName !== _amendment.name + _amendment.editedName) throw Error(`Expected amendment name to be ${_amendment.editedName} and found ${amendmentName}`);
               }, amendment)
               .then(done)
               .catch(done);
