@@ -76,7 +76,7 @@ module.exports.test = (uiTestCtx) => {
             .click('[data-test-term-save-btn]')
             .waitUntilNetworkIdle(2000)
             .evaluate(_term => {
-              const card = document.querySelector('[data-test-term-name="terms[0]"]');
+              const card = document.querySelector(`[data-test-term=${_term.name}]`);
               Object.entries(_term).forEach(([key, expectedValue]) => {
                 const foundValue = card.querySelector(`[data-test-term-${key.toLowerCase()}] > [data-test-kv-value]`).textContent;
                 if (foundValue !== expectedValue) {
@@ -86,7 +86,7 @@ module.exports.test = (uiTestCtx) => {
             }, term)
             .then(() => {
               nightmare
-                .click('[data-test-term-name="terms[0]"] [data-test-term-delete-btn]')
+                .click(`[data-test-term=${term.name}] [data-test-term-delete-btn]`)
                 .waitUntilNetworkIdle(2000)
                 .then(done)
                 .catch(done);
@@ -111,26 +111,26 @@ module.exports.test = (uiTestCtx) => {
           .waitUntilNetworkIdle(2000);
 
         chain = chain
-          .wait('[data-test-term-name="terms[0]"] [data-test-term-edit-btn]')
-          .click('[data-test-term-name="terms[0]"] [data-test-term-edit-btn]')
-          .wait('input[name="terms[0].label"]');
+          .wait(`[data-test-term=${editableTerm.name}] [data-test-term-edit-btn]`)
+          .click(`[data-test-term=${editableTerm.name}] [data-test-term-edit-btn]`)
+          .wait(`[data-test-term=${editableTerm.name}] input[name*=label]`);
 
         // Make some changes and cancel out of them.
         const garbageText = 'This data should never be saved or shown in a view field.';
         chain = chain
-          .insert('[name="terms[0].label"]', garbageText)
+          .insert(`[data-test-term=${editableTerm.name}] input[name*=label]`, garbageText)
           .click('[data-test-term-cancel-btn]')
-          .evaluate(_garbageText => {
-            const label = document.querySelector('[data-test-term-name="terms[0]"] [data-test-term-label] > [data-test-kv-value]');
+          .evaluate((_term, _garbageText) => {
+            const label = document.querySelector(`[data-test-term=${_term.name}] [data-test-term-label] > [data-test-kv-value]`);
             if (label.textContent.indexOf(_garbageText) >= 0) {
               throw Error('Found garbage text that should not be visible when cancelling edits.');
             }
-          }, garbageText);
+          }, editableTerm, garbageText);
 
         // Start editing the term again.
         chain = chain
-          .click('[data-test-term-name="terms[0]"] [data-test-term-edit-btn]')
-          .wait('input[name="terms[0].label"]');
+          .click(`[data-test-term=${editableTerm.name}] [data-test-term-edit-btn]`)
+          .wait(`[data-test-term=${editableTerm.name}] input[name*=label]`);
 
         const newValues = {
           primary: 'No',
@@ -139,24 +139,24 @@ module.exports.test = (uiTestCtx) => {
 
         // Edit the term with the new values.
         Object.entries(newValues).forEach(([key, value]) => {
-          chain = chain.type(`[name="terms[0].${key}"]`, value);
+          chain = chain.type(`[data-test-term=${editableTerm.name}] [name*=${key}]`, value);
         });
 
         // Save the changes and confirm they were persisted.
         chain
           .click('[data-test-term-save-btn]')
           .waitUntilNetworkIdle(2000)
-          .evaluate(_term => {
-            const card = document.querySelector('[data-test-term-name="terms[0]"]');
+          .evaluate((_term, _name) => {
+            const card = document.querySelector(`[data-test-term=${_name}]`);
             Object.entries(_term).forEach(([key, expectedValue]) => {
               const foundValue = card.querySelector(`[data-test-term-${key.toLowerCase()}] > [data-test-kv-value]`).textContent;
               if (foundValue !== expectedValue) {
                 throw Error(`Expected ${key} with value ${expectedValue}. Found ${foundValue}`);
               }
             });
-          }, newValues)
+          }, newValues, editableTerm.name)
           // Delete the term.
-          .click('[data-test-term-name="terms[0]"] [data-test-term-delete-btn]')
+          .click(`[data-test-term=${editableTerm.name}] [data-test-term-delete-btn]`)
           .waitUntilNetworkIdle(2000)
           .then(done)
           .catch(done);
@@ -165,9 +165,9 @@ module.exports.test = (uiTestCtx) => {
       it('should not have any sample terms', done => {
         nightmare
           .refresh()
-          .wait('[data-test-term-name="terms[0]"]')
+          .wait('[data-test-term]')
           .evaluate(_baseTermName => {
-            const termNames = [...document.querySelectorAll('[data-test-term-name] > [data-test-kv-value]')];
+            const termNames = [...document.querySelectorAll('[data-test-term] > [data-test-kv-value]')];
             const sampleTermName = termNames.find(l => l.textContent.indexOf(_baseTermName) >= 0);
 
             if (sampleTermName) {

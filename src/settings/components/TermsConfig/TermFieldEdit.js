@@ -32,7 +32,7 @@ export default class TermFieldEdit extends React.Component {
 
   render() {
     const {
-      input: { name, value },
+      input: { name, value = {} },
       meta,
       onCancel,
       onSave,
@@ -43,7 +43,7 @@ export default class TermFieldEdit extends React.Component {
       <IntlConsumer>
         {intl => (
           <Card
-            data-test-term-name={name}
+            data-test-term={value.name}
             headerStart={(
               <strong>
                 {value.id ?
