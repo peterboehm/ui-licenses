@@ -188,7 +188,7 @@ export default class TermsListField extends React.Component {
         label={<FormattedMessage id="ui-licenses.prop.termValue" />}
         onChange={handleChange}
         value={controlledFieldValue}
-        error={!isEmpty(errors) && errors[term.value]}
+        error={!isEmpty(errors) ? errors[term.value] : undefined}
         {...fieldProps}
         required={!term.primary}
       />
