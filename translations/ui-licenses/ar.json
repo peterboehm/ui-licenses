@@ -28,7 +28,7 @@
     "errors.multipleLicensors": "يُسمح بمرخص واحد فقط لكل رخصة.",
     "header.licensor": "المرخص",
     "organizations.add": "إضافة مؤسسة إلى اتفاقية",
-    "organizations.licenseHasNone": "لا توجد مؤسسات بالاتفاقية",
+    "organizations.licenseHasNone": "لم تتم إضافة أي مؤسسات.",
     "organizations.selectRole": "اختر دورًا",
     "organizations.createNew": "إنشاء مؤسسة جديدة",
     "prop.orgName": "الاسم",
