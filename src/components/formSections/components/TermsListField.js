@@ -12,6 +12,7 @@ import {
   TextField,
 } from '@folio/stripes/components';
 import { EditCard } from '@folio/stripes-erm-components';
+import { isEmpty } from 'lodash';
 
 const TERM_TYPE_TEXT = 'com.k_int.web.toolkit.custprops.types.CustomPropertyText'; // eslint-disable-line no-unused-vars
 const TERM_TYPE_NUMBER = 'com.k_int.web.toolkit.custprops.types.CustomPropertyInteger';
@@ -33,18 +34,18 @@ export default class TermsListField extends React.Component {
       value: PropTypes.string.isRequired,
       defaultInternal: PropTypes.bool,
     })).isRequired,
-    onError: PropTypes.func,
   };
 
   state = {
     terms: [], // This is the list of terms we're currently displaying for edit.
+    errors: {},
   }
 
   static getDerivedStateFromProps(props, state) {
     const {
       input: { value },
       meta: { pristine },
-      availableTerms
+      availableTerms = [],
     } = props;
 
     // When the user loads this form, we want to init the list of terms
@@ -53,7 +54,7 @@ export default class TermsListField extends React.Component {
     // _after_ we have mounted this component, we need to check if new data has come in
     // while the form is still marked as pristine.
     //
-    // redux-form unsets `pristine` after its `onChange` is called, but we also dirty
+    // final-form unsets `pristine` after its `onChange` is called, but we also dirty
     // the component when we add/remove rows. That happens _before_ `onChange` is called,
     // so internally we use `state.dirtying` to show that we just initiated an action
     // that will result in a dirty component.
@@ -102,7 +103,7 @@ export default class TermsListField extends React.Component {
             return { terms: newTerms };
           });
 
-          // Update redux-form (which tracks what the values for a given term are) because
+          // Update final-form (which tracks what the values for a given term are) because
           // in essence we're deleting a term and creating a new term.
           // We do this by 1) marking the current term for deletion and 2) initing
           // the new term to an empty object.
@@ -122,22 +123,31 @@ export default class TermsListField extends React.Component {
     );
   }
 
-  validateFields = (values, termValue, termType) => {
-    const val = values ? values[termValue] : [];
-    const { note, publicNote, value } = val ? val[0] : {};
 
-    if (termType === 'optional' && termValue && !value) {
-      return <FormattedMessage id="stripes-core.label.missingRequiredField" />;
-    }
+  isInvalid = (values) => {
+    const errors = {};
 
-    if ((note && !value) || (publicNote && !value)) {
-      return <FormattedMessage id="ui-licenses.errors.termNoteWithoutValue" />;
-    }
-    return undefined;
+    this.state.terms.forEach((term) => {
+      const val = values ? values[term.value] : [];
+      const { note, publicNote, value } = val ? val[0] : {};
+
+      if (!term.primary && term.value && !value) {
+        errors[term.value] = <FormattedMessage id="stripes-core.label.missingRequiredField" />;
+      }
+
+      if ((note && !value) || (publicNote && !value)) {
+        errors[term.value] = <FormattedMessage id="ui-licenses.errors.termNoteWithoutValue" />;
+      }
+    });
+
+    this.setState({ errors });
+
+    return Object.keys(errors).length > 0;
   }
 
-  renderTermValue = (term, i, errorMessage) => {
+  renderTermValue = (term, i) => {
     const { input: { onChange, value } } = this.props;
+    const { errors } = this.state;
     const currentValue = value[term.value] ? value[term.value][0] : {};
 
     // Initialise to just the value (for text/number values)
@@ -178,7 +188,7 @@ export default class TermsListField extends React.Component {
         label={<FormattedMessage id="ui-licenses.prop.termValue" />}
         onChange={handleChange}
         value={controlledFieldValue}
-        error={errorMessage}
+        error={!isEmpty(errors) && errors[term.value]}
         {...fieldProps}
         required={!term.primary}
       />
@@ -332,16 +342,12 @@ export default class TermsListField extends React.Component {
   }
 
   renderTerms = (termType) => {
-    const { input: { value, name }, meta: { form }, onError } = this.props;
-    let termNoteError = false;
     let optionalTermCounter = 0;
 
     const termsList = this.state.terms.map((term, i) => {
       if (termType === 'primary' && !term.primary) return undefined;
       if (termType === 'optional' && term.primary) return undefined;
 
-      const errorMessage = this.validateFields(value, term.value, termType);
-      termNoteError = errorMessage ? true : termNoteError;
       const deleteBtnProps = termType === 'optional' ? {
         'id': `edit-term-${i}-delete`,
         'data-test-term-delete-btn': true
@@ -371,7 +377,7 @@ export default class TermsListField extends React.Component {
           }
           <Row>
             <Col xs={12} md={6}>
-              {this.renderTermValue(term, i, errorMessage)}
+              {this.renderTermValue(term, i)}
             </Col>
             <Col xs={12} md={6}>
               {this.renderTermNoteInternal(term, i)}
@@ -388,8 +394,6 @@ export default class TermsListField extends React.Component {
         </EditCard>
       );
     }).filter(term => term !== undefined);
-
-    onError(termNoteError, name, form);
 
     return termsList;
   }

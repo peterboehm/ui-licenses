@@ -1,8 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { setSubmitFailed, stopSubmit } from 'redux-form';
-
 import {
   AccordionSet,
   Button,
@@ -17,8 +15,9 @@ import {
   Row,
 } from '@folio/stripes/components';
 import { AppIcon, TitleManager } from '@folio/stripes/core';
-import stripesForm from '@folio/stripes/form';
-
+import stripesFinalForm from '@folio/stripes/final-form';
+import { isEqual } from 'lodash';
+import setFieldData from 'final-form-set-field-data';
 import { Spinner } from '@folio/stripes-erm-components';
 
 import {
@@ -42,6 +41,7 @@ class LicenseForm extends React.Component {
     initialValues: PropTypes.object,
     handleSubmit: PropTypes.func.isRequired,
     isLoading: PropTypes.bool,
+    form: PropTypes.object,
     onSubmit: PropTypes.func.isRequired,
     pristine: PropTypes.bool,
     submitting: PropTypes.bool,
@@ -62,27 +62,16 @@ class LicenseForm extends React.Component {
   }
 
   getSectionProps(id) {
-    const { data, handlers } = this.props;
+    const { data, handlers, form } = this.props;
 
     return {
       data,
-      handlers: {
-        ...handlers,
-        onError: this.handleError,
-      },
+      form,
+      handlers,
       id,
       onToggle: this.handleSectionToggle,
       open: this.state.sections[id],
     };
-  }
-
-  handleError = (error, fieldName, formName) => {
-    const { dispatch } = this.props;
-    // stopSubmit reports the error to redux-form and sets invalid flag to true which helps us in disabling the submit button
-    if (error) {
-      dispatch(stopSubmit(formName, { [fieldName]: error }));
-      dispatch(setSubmitFailed(formName, fieldName));
-    }
   }
 
   handleSectionToggle = ({ id }) => {
@@ -181,8 +170,7 @@ class LicenseForm extends React.Component {
   }
 
   render() {
-    const { initialValues: { id, name }, isLoading } = this.props;
-
+    const { initialValues: { id, name }, isLoading, form: { mutators } } = this.props;
     if (isLoading) return this.renderLoadingPane();
 
     return (
@@ -228,9 +216,8 @@ class LicenseForm extends React.Component {
   }
 }
 
-export default stripesForm({
-  form: 'EditLicense',
+export default stripesFinalForm({
+  initialValuesEqual: (a, b) => isEqual(a, b),
   navigationCheck: true,
-  enableReinitialize: true,
-  keepDirtyOnReinitialize: true,
+  mutators: { setFieldData }
 })(LicenseForm);

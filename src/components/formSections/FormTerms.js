@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import { get } from 'lodash';
 
-import { Field } from 'redux-form';
+import { Field } from 'react-final-form';
 import { Accordion } from '@folio/stripes/components';
 
 import { TermsListField } from './components';
@@ -13,17 +13,18 @@ class FormTerms extends React.Component {
     data: PropTypes.shape({
       terms: PropTypes.array,
     }),
-    handlers: PropTypes.shape({
-      onError: PropTypes.func.isRequired,
-    }).isRequired,
     id: PropTypes.string,
     intl: intlShape.isRequired,
     onToggle: PropTypes.func,
     open: PropTypes.bool,
   };
 
-  state = {
-    terms: [],
+  constructor(props) {
+    super(props);
+    this.refToTermsListField = React.createRef();
+    this.state = {
+      terms: [],
+    };
   }
 
   static getDerivedStateFromProps(props, state) {
@@ -57,7 +58,7 @@ class FormTerms extends React.Component {
   }
 
   render() {
-    const { handlers, id, onToggle, open } = this.props;
+    const { id, onToggle, open } = this.props;
     return (
       <Accordion
         id={id}
@@ -67,9 +68,16 @@ class FormTerms extends React.Component {
       >
         <Field
           name="customProperties"
-          component={TermsListField}
-          availableTerms={this.state.terms}
-          onError={handlers.onError}
+          validate={(value) => this.refToTermsListField.current && this.refToTermsListField.current.isInvalid(value)}
+          render={props => {
+            return (
+              <TermsListField
+                availableTerms={this.state.terms}
+                ref={this.refToTermsListField}
+                {...props}
+              />
+            );
+          }}
         />
       </Accordion>
     );

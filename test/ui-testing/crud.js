@@ -161,7 +161,7 @@ module.exports.test = (uiTestCtx) => {
           .catch(done);
       });
 
-      it(`should edit license to: ${values.editedName}`, done => {
+      it(`should edit license to: ${values.name}${values.editedName}`, done => {
         nightmare
           .wait('#clickable-edit-license')
           .click('#clickable-edit-license')
@@ -181,8 +181,9 @@ module.exports.test = (uiTestCtx) => {
           .waitUntilNetworkIdle(1000)
           .evaluate(expectedValues => {
             const name = document.querySelector('[data-test-license-name]').innerText.trim();
-            if (name !== expectedValues.editedName) {
-              throw Error(`Name of found license is incorrect. Expected "${expectedValues.editedName}" and got "${name}" `);
+            const expectedName = (expectedValues.name + expectedValues.editedName);
+            if (name !== expectedName) {
+              throw Error(`Name of found license is incorrect. "${expectedName}" and got "${name}"`);
             }
 
             const type = document.querySelector('[data-test-license-type]').innerText;

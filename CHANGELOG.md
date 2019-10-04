@@ -1,11 +1,13 @@
 # Change history for ui-licenses
 
 ## 3.6.0 IN PROGRESS
+* Port ui-licenses to RFF. ERM-487.
 * Update stripes to v2.10.1 to support PaneFooter.
 * Move the Save & close button and add a Cancel button to Pane footer. ERM-412.
 * Apply the new large headline design to Licenses. ERM-260.
 * Added support for interface `licenses` version `2.0`.
 * Updated permission sets. ERM-477
+* Updated forms to use React Final Form instead of Redux Form
 
 ## 3.5.0 2019-09-09
 * Added support for `mod-organizations-storage` 2.0

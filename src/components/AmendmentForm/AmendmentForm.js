@@ -1,8 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { setSubmitFailed, stopSubmit } from 'redux-form';
-
+import { isEqual } from 'lodash';
 import {
   AccordionSet,
   Button,
@@ -17,7 +16,8 @@ import {
   Row,
 } from '@folio/stripes/components';
 import { TitleManager } from '@folio/stripes/core';
-import stripesForm from '@folio/stripes/form';
+import stripesFinalForm from '@folio/stripes/final-form';
+import setFieldData from 'final-form-set-field-data';
 
 import { Spinner } from '@folio/stripes-erm-components';
 
@@ -37,6 +37,7 @@ class AmendmentForm extends React.Component {
     handlers: PropTypes.shape({
       onClose: PropTypes.func.isRequired,
     }),
+    form: PropTypes.object,
     isLoading: PropTypes.bool,
     initialValues: PropTypes.object,
     handleSubmit: PropTypes.func.isRequired,
@@ -58,27 +59,16 @@ class AmendmentForm extends React.Component {
   }
 
   getSectionProps(id) {
-    const { data, handlers } = this.props;
+    const { data, handlers, form } = this.props;
 
     return {
       data,
-      handlers: {
-        ...handlers,
-        onError: this.handleError,
-      },
+      form,
+      handlers,
       id,
       onToggle: this.handleSectionToggle,
       open: this.state.sections[id],
     };
-  }
-
-  handleError = (error, fieldName, formName) => {
-    const { dispatch } = this.props;
-    // stopSubmit reports the error to redux-form and sets invalid flag to true which helps us in disabling the submit button
-    if (error) {
-      dispatch(stopSubmit(formName, { [fieldName]: error }));
-      dispatch(setSubmitFailed(formName, fieldName));
-    }
   }
 
   handleSectionToggle = ({ id }) => {
@@ -221,9 +211,8 @@ class AmendmentForm extends React.Component {
   }
 }
 
-export default stripesForm({
-  form: 'EditAmendment',
+export default stripesFinalForm({
+  initialValuesEqual: (a, b) => isEqual(a, b),
   navigationCheck: true,
-  enableReinitialize: true,
-  keepDirtyOnReinitialize: true,
+  mutators: { setFieldData }
 })(AmendmentForm);

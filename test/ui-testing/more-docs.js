@@ -1,24 +1,22 @@
 const Docs = require('./docs');
 
 const DOCS = [{
-  name: 'Supplementary document 1',
-  category: '',
-  note: 'Signed and filed',
+  name: 'Misc Paper',
+  note: 'Signed',
   location: 'Filing Cabinet',
-  url: 'http://licenses.com/sd1'
+  url: 'http://licenses.com/final'
 }, {
-  name: 'Supplementary document 2',
-  category: 'Product data sheet',
-  url: 'http://licenses.com/sd2'
+  name: 'Folder of secrets',
+  url: 'http://agreements.com/secrets'
 }];
 
 const EDITED_DOC = {
   docToEdit: DOCS[0].name,
-  name: 'Supplementary document 1 v2',
-  category: 'Vendor terms and conditions',
-  note: 'Need to sign',
-  location: 'Printer Tray',
-  url: 'http://licenses.com/sd1_v2'
+  ...DOCS[0],
+  appendName: ' v2',
+  appendNote: ' and filed',
+  appendLocation: ' in Archives',
+  appendUrl: '2'
 };
 
 const DELETED_DOC = DOCS[1].name;

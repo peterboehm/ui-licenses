@@ -75,11 +75,11 @@ module.exports.test = (uiTestCtx) => {
             .click('#clickable-filter-active-active')
             .wait(`#list-plugin-find-user [aria-rowindex="${row + 3}"]`)
             .click(`#list-plugin-find-user [aria-rowindex="${row + 3}"]`)
-            .evaluate((r, _contacts) => {
-              const userElement = document.querySelector(`#contacts-user-${r}`);
-              const name = userElement.value;
+            .evaluate((_row, _contacts) => {
+              const card = document.querySelector(`#edit-ic-card-${_row}`);
+              const name = card.querySelector('[data-test-user-name]').innerText;
               if (!name) {
-                throw Error('User field has no value!');
+                throw Error('User name is undefined!');
               }
 
               return name;
@@ -118,10 +118,10 @@ module.exports.test = (uiTestCtx) => {
         it(`should find contact in Internal Contacts list with role ${contact.role}`, done => {
           nightmare
             .evaluate(c => {
-              const rows = [...document.querySelectorAll('[data-test-license-contact]')].map(e => e.textContent);
+              const rows = [...document.querySelectorAll('[data-test-contact-card]')].map(e => e.textContent);
               const row = rows.find(r => r.indexOf(c.name) >= 0);
               if (!row) {
-                throw Error(`Could not find row with an contact named ${c.name}`);
+                throw Error(`Could not find row with a contact named ${c.name}`);
               }
               if (row.indexOf(c.role) < 0) {
                 throw Error(`Expected row for "${c.name}" to contain role ${c.role}.`);
@@ -144,18 +144,18 @@ module.exports.test = (uiTestCtx) => {
       CONTACTS.forEach((contact, i) => {
         it(`should find correctly loaded values for contact ${i}`, done => {
           nightmare
-            .evaluate(c => {
-              const userElements = [...document.querySelectorAll('input[id^=contacts-user-]')];
-              const userElement = userElements.find(e => e.value === c.name);
-              if (!userElement) {
-                throw Error(`Failed to find user picker with loaded user of ${c.name}`);
+            .evaluate(_contact => {
+              const cards = [...document.querySelectorAll('[data-test-internal-contact]')];
+              const card = cards.find(c => c.innerText.indexOf(_contact.name) >= 0);
+              if (!card) {
+                throw Error(`Failed to find user picker with loaded user of ${_contact.name}`);
               }
 
-              const roleElementId = userElement.id.replace('user', 'role');
+              const roleElementId = card.id.replace('edit-ic-card', 'contacts-role');
               const roleElement = document.getElementById(roleElementId);
               const roleValue = roleElement.selectedOptions[0].textContent;
-              if (roleValue !== c.role) {
-                throw Error(`Expected ${c.name}'s role to be ${c.role}. It is ${roleValue}.`);
+              if (roleValue !== _contact.role) {
+                throw Error(`Expected ${_contact.name}'s role to be ${_contact.role}. It is ${roleValue}.`);
               }
             }, contact)
             .then(done)
@@ -166,32 +166,36 @@ module.exports.test = (uiTestCtx) => {
       if (EDIT_CONTACT) {
         it('should edit contact', done => {
           nightmare
-            .evaluate(c => {
-              const nameElements = [...document.querySelectorAll('input[id^=contacts-user-]')];
-              const index = nameElements.findIndex(e => e.value === c.name);
+            .evaluate(_contact => {
+              const cards = [...document.querySelectorAll('[data-test-internal-contact]')];
+              const index = cards.findIndex(c => c.innerText.indexOf(_contact.name) >= 0);
               if (index === -1) {
-                throw Error(`Failed to find user picker with loaded user of ${c.name}`);
+                throw Error(`Failed to find user picker with loaded user of ${_contact.name}`);
               }
 
               return index;
             }, EDIT_CONTACT)
             .then(row => {
               return nightmare
+                .click(`#contacts-user-${row}-unlink-button`)
+                .wait(`#contacts-user-${row}-search-button`)
                 .click(`#contacts-user-${row}-search-button`)
                 .wait('#clickable-filter-active-active')
                 .click('#clickable-filter-active-active')
                 .wait('#list-plugin-find-user [aria-rowindex="10"]')
                 .click('#list-plugin-find-user [aria-rowindex="10"]')
+                .wait(`#contacts-user-${row}-unlink-button`)
+                .wait(1000)
                 .type(`#contacts-role-${row}`, EDIT_CONTACT.editedRole)
-                .evaluate((r, _contacts) => {
-                  const userElement = document.querySelector(`#contacts-user-${r}`);
-                  const name = userElement.value;
+                .evaluate(_row => {
+                  const card = document.querySelector(`#edit-ic-card-${_row}`);
+                  const name = card.querySelector('[data-test-user-name]').innerText;
                   if (!name) {
-                    throw Error('User field has no value!');
+                    throw Error('User name is undefined!');
                   }
 
                   return name;
-                }, row, CONTACTS)
+                }, row)
                 .then(name => {
                   EDIT_CONTACT.editedName = name;
                 });
@@ -204,11 +208,11 @@ module.exports.test = (uiTestCtx) => {
       if (DELETE_CONTACT) {
         it('should delete contact', done => {
           nightmare
-            .evaluate(c => {
-              const nameElements = [...document.querySelectorAll('input[id^=contacts-user-]')];
-              const index = nameElements.findIndex(e => e.value === c.name);
+            .evaluate(_contact => {
+              const cards = [...document.querySelectorAll('[data-test-internal-contact]')];
+              const index = cards.findIndex(c => c.innerText.indexOf(_contact.name) >= 0);
               if (index === -1) {
-                throw Error(`Failed to find user picker with loaded user of ${c.name}`);
+                throw Error(`Failed to find user picker with loaded user of ${_contact.name}`);
               }
 
               return index;
@@ -231,7 +235,7 @@ module.exports.test = (uiTestCtx) => {
         it(`should find contact in Internal Contacts list with role ${EDIT_CONTACT.editedRole}`, done => {
           nightmare
             .evaluate(c => {
-              const rows = [...document.querySelectorAll('[data-test-license-contact]')].map(e => e.textContent);
+              const rows = [...document.querySelectorAll('[data-test-contact-card]')].map(e => e.textContent);
               const row = rows.find(r => r.indexOf(c.editedName) >= 0);
               if (!row) {
                 throw Error(`Could not find row with a contact named ${c.editedName}`);
