@@ -14,6 +14,8 @@ import {
   TextField,
 } from '@folio/stripes/components';
 
+import WarnEndDate from '../WarnEndDate';
+
 export default class LicenseFormInfo extends React.Component {
   static propTypes = {
     id: PropTypes.string,
@@ -142,6 +144,7 @@ export default class LicenseFormInfo extends React.Component {
             </FormattedMessage>
           </Col>
         </Row>
+        <WarnEndDate mutators={form.mutators} />
       </div>
     );
   }

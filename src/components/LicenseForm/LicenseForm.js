@@ -19,7 +19,6 @@ import stripesFinalForm from '@folio/stripes/final-form';
 import { isEqual } from 'lodash';
 import setFieldData from 'final-form-set-field-data';
 import { Spinner } from '@folio/stripes-erm-components';
-import WarnEndDate from '../WarnEndDate';
 
 import {
   LicenseFormInfo,
@@ -207,7 +206,6 @@ class LicenseForm extends React.Component {
                       <FormSupplementaryDocs {...this.getSectionProps('licenseFormSupplementaryDocs')} />
                     </AccordionSet>
                   </div>
-                  <WarnEndDate mutators={mutators} />
                 </form>
               </TitleManager>
             </Pane>

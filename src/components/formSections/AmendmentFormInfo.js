@@ -14,6 +14,8 @@ import {
   TextField,
 } from '@folio/stripes/components';
 
+import WarnEndDate from '../WarnEndDate';
+
 class AmendmentFormInfo extends React.Component {
   static propTypes = {
     data: PropTypes.shape({
@@ -135,6 +137,7 @@ class AmendmentFormInfo extends React.Component {
             </FormattedMessage>
           </Col>
         </Row>
+        <WarnEndDate mutators={form.mutators} />
       </div>
     );
   }

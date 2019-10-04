@@ -20,7 +20,6 @@ import stripesFinalForm from '@folio/stripes/final-form';
 import setFieldData from 'final-form-set-field-data';
 
 import { Spinner } from '@folio/stripes-erm-components';
-import WarnEndDate from '../WarnEndDate';
 
 import {
   AmendmentFormInfo,
@@ -168,7 +167,7 @@ class AmendmentForm extends React.Component {
   }
 
   render() {
-    const { initialValues: { id, name }, isLoading, form: { mutators } } = this.props;
+    const { initialValues: { id, name }, isLoading } = this.props;
 
     if (isLoading) return this.renderLoadingPane();
 
@@ -202,7 +201,6 @@ class AmendmentForm extends React.Component {
                       <FormSupplementaryDocs {...this.getSectionProps('amendmentFormSupplementaryDocs')} />
                     </AccordionSet>
                   </div>
-                  <WarnEndDate mutators={mutators} />
                 </form>
               </TitleManager>
             </Pane>
