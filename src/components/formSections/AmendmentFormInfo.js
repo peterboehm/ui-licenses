@@ -22,7 +22,8 @@ class AmendmentFormInfo extends React.Component {
       statusValues: PropTypes.array,
       typeValues: PropTypes.array,
     }),
-    form: PropTypes.object,
+    mutators: PropTypes.object,
+    values: PropTypes.object
   };
 
   validateEndDate = (value, allValues) => {
@@ -43,7 +44,7 @@ class AmendmentFormInfo extends React.Component {
   }
 
   render() {
-    const { data, form } = this.props;
+    const { data, mutators, values } = this.props;
 
     return (
       <div
@@ -91,22 +92,16 @@ class AmendmentFormInfo extends React.Component {
             />
           </Col>
           <Col xs={10} md={5}>
-            <Field name="endDate" validate={this.validateEndDate}>
-              {(props) => {
-                const formState = form.getState();
-                const { values = {} } = formState;
-                return (<Datepicker
-                  backendDateStandard="YYYY-MM-DD"
-                  id="edit-amendment-end-date"
-                  label={<FormattedMessage id="ui-licenses.prop.endDate" />}
-                  dateFormat="YYYY-MM-DD"
-                  disabled={values.openEnded}
-                  onBlur={props.input.onBlur}
-                  input={props.input}
-                  meta={props.meta}
-                />);
-              }}
-            </Field>
+            <Field
+              backendDateStandard="YYYY-MM-DD"
+              component={Datepicker}
+              dateFormat="YYYY-MM-DD"
+              disabled={values.openEnded}
+              id="edit-amendment-end-date"
+              label={<FormattedMessage id="ui-licenses.prop.endDate" />}
+              name="endDate"
+              validate={this.validateEndDate}
+            />
           </Col>
           <Col xs={2} style={{ paddingTop: 20 }}>
             <Field name="openEnded" type="checkbox">
@@ -137,7 +132,7 @@ class AmendmentFormInfo extends React.Component {
             </FormattedMessage>
           </Col>
         </Row>
-        <WarnEndDate mutators={form.mutators} />
+        <WarnEndDate mutators={mutators} />
       </div>
     );
   }

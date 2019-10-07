@@ -34,16 +34,17 @@ class AmendmentForm extends React.Component {
   static propTypes = {
     data: PropTypes.object,
     dispatch: PropTypes.func,
+    form: PropTypes.object,
     handlers: PropTypes.shape({
       onClose: PropTypes.func.isRequired,
     }),
-    form: PropTypes.object,
+    handleSubmit: PropTypes.func.isRequired,
     isLoading: PropTypes.bool,
     initialValues: PropTypes.object,
-    handleSubmit: PropTypes.func.isRequired,
     onSubmit: PropTypes.func.isRequired,
     pristine: PropTypes.bool,
     submitting: PropTypes.bool,
+    values: PropTypes.object,
   }
 
   static defaultProps = {
@@ -59,15 +60,16 @@ class AmendmentForm extends React.Component {
   }
 
   getSectionProps(id) {
-    const { data, handlers, form } = this.props;
+    const { data, handlers, form: { mutators }, values = {} } = this.props;
 
     return {
       data,
-      form,
       handlers,
       id,
+      mutators,
       onToggle: this.handleSectionToggle,
       open: this.state.sections[id],
+      values,
     };
   }
 
@@ -214,5 +216,8 @@ class AmendmentForm extends React.Component {
 export default stripesFinalForm({
   initialValuesEqual: (a, b) => isEqual(a, b),
   navigationCheck: true,
-  mutators: { setFieldData }
+  mutators: { setFieldData },
+  subscription: {
+    values: true,
+  },
 })(AmendmentForm);

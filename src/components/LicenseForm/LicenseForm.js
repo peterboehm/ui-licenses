@@ -45,6 +45,7 @@ class LicenseForm extends React.Component {
     onSubmit: PropTypes.func.isRequired,
     pristine: PropTypes.bool,
     submitting: PropTypes.bool,
+    values: PropTypes.object,
   }
 
   static defaultProps = {
@@ -62,15 +63,16 @@ class LicenseForm extends React.Component {
   }
 
   getSectionProps(id) {
-    const { data, handlers, form } = this.props;
+    const { data, handlers, form: { mutators }, values = {} } = this.props;
 
     return {
       data,
-      form,
       handlers,
       id,
+      mutators,
       onToggle: this.handleSectionToggle,
       open: this.state.sections[id],
+      values,
     };
   }
 
@@ -170,7 +172,7 @@ class LicenseForm extends React.Component {
   }
 
   render() {
-    const { initialValues: { id, name }, isLoading, form: { mutators } } = this.props;
+    const { initialValues: { id, name }, isLoading } = this.props;
     if (isLoading) return this.renderLoadingPane();
 
     return (
@@ -219,5 +221,8 @@ class LicenseForm extends React.Component {
 export default stripesFinalForm({
   initialValuesEqual: (a, b) => isEqual(a, b),
   navigationCheck: true,
+  subscription: {
+    values: true,
+  },
   mutators: { setFieldData }
 })(LicenseForm);

@@ -18,12 +18,13 @@ import WarnEndDate from '../WarnEndDate';
 
 export default class LicenseFormInfo extends React.Component {
   static propTypes = {
-    id: PropTypes.string,
     data: PropTypes.shape({
       statusValues: PropTypes.array,
       typeValues: PropTypes.array,
     }),
-    form: PropTypes.object,
+    id: PropTypes.string,
+    mutators: PropTypes.object,
+    values: PropTypes.object
   };
 
   validateEndDate = (value, allValues) => {
@@ -43,7 +44,7 @@ export default class LicenseFormInfo extends React.Component {
   }
 
   render() {
-    const { data, id, form } = this.props;
+    const { data, id, mutators, values } = this.props;
 
     return (
       <div data-test-license-info id={id}>
@@ -98,22 +99,16 @@ export default class LicenseFormInfo extends React.Component {
             />
           </Col>
           <Col xs={10} md={5}>
-            <Field name="endDate" validate={this.validateEndDate}>
-              {(props) => {
-                const formState = form.getState();
-                const { values = {} } = formState;
-                return (<Datepicker
-                  backendDateStandard="YYYY-MM-DD"
-                  id="edit-license-end-date"
-                  label={<FormattedMessage id="ui-licenses.prop.endDate" />}
-                  dateFormat="YYYY-MM-DD"
-                  disabled={values.openEnded}
-                  onBlur={props.input.onBlur}
-                  input={props.input}
-                  meta={props.meta}
-                />);
-              }}
-            </Field>
+            <Field
+              name="endDate"
+              component={Datepicker}
+              validate={this.validateEndDate}
+              backendDateStandard="YYYY-MM-DD"
+              id="edit-license-end-date"
+              label={<FormattedMessage id="ui-licenses.prop.endDate" />}
+              dateFormat="YYYY-MM-DD"
+              disabled={values.openEnded}
+            />
           </Col>
           <Col xs={2} style={{ paddingTop: 20 }}>
             <Field name="openEnded" type="checkbox">
@@ -144,7 +139,7 @@ export default class LicenseFormInfo extends React.Component {
             </FormattedMessage>
           </Col>
         </Row>
-        <WarnEndDate mutators={form.mutators} />
+        <WarnEndDate mutators={mutators} />
       </div>
     );
   }
