@@ -14,8 +14,6 @@ import {
   TextField,
 } from '@folio/stripes/components';
 
-import WarnEndDate from '../WarnEndDate';
-
 class AmendmentFormInfo extends React.Component {
   static propTypes = {
     data: PropTypes.shape({
@@ -110,7 +108,17 @@ class AmendmentFormInfo extends React.Component {
                   id="edit-amendment-open-ended"
                   checked={props.input.value}
                   label={<FormattedMessage id="ui-licenses.prop.openEnded" />}
-                  onChange={props.input.onChange}
+                  onChange={e => {
+                    props.input.onChange(e);
+                    mutators.setFieldData('endDate', {
+                      warning: e.target.checked ? (
+                        <div data-test-warn-clear-end-date>
+                          <FormattedMessage id="ui-licenses.warn.clearEndDate" />
+                        </div>
+                      ) : undefined
+                    });
+                  }
+                  }
                   type="checkbox"
                 />);
               }}
@@ -132,7 +140,6 @@ class AmendmentFormInfo extends React.Component {
             </FormattedMessage>
           </Col>
         </Row>
-        <WarnEndDate mutators={mutators} />
       </div>
     );
   }
