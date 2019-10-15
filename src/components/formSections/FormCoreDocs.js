@@ -31,6 +31,7 @@ export default class FormCoreDocs extends React.Component {
         <FieldArray
           addDocBtnLabel={<FormattedMessage id="ui-licenses.coreDocs.add" />}
           component={DocumentsFieldArray}
+          deleteButtonTooltipText={<FormattedMessage id="ui-licenses.coreDocs.removeCoreDoc" />}
           onDownloadFile={handlers.onDownloadFile}
           onUploadFile={handlers.onUploadFile}
           isEmptyMessage={<FormattedMessage id="ui-licenses.coreDocs.none" />}

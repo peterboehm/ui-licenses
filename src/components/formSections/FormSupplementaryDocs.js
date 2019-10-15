@@ -33,6 +33,7 @@ export default class FormSupplementaryDocs extends React.Component {
         <FieldArray
           addDocBtnLabel={<FormattedMessage id="ui-licenses.supplementaryDocs.add" />}
           component={DocumentsFieldArray}
+          deleteButtonTooltipText={<FormattedMessage id="ui-licenses.supplementaryDocs.remove" />}
           documentCategories={data.documentCategories}
           isEmptyMessage={<FormattedMessage id="ui-licenses.supplementaryDocs.none" />}
           name="supplementaryDocs"
