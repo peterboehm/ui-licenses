@@ -363,6 +363,7 @@ export default class TermsListField extends React.Component {
         <EditCard
           data-test-term={termType}
           deleteBtnProps={deleteBtnProps}
+          deleteButtonTooltipText={<FormattedMessage id="ui-licenses.term.removeTerm" />}
           header={header}
           key={term.value}
           onDelete={termType === 'optional' ? () => this.handleDeleteTerm(term, i) : null}

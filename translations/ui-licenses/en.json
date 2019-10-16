@@ -32,6 +32,7 @@
 
   "coreDocs.add": "Add core document",
   "coreDocs.none": "No core documents have been added.",
+  "coreDocs.removeCoreDoc": "Remove core document",
 
   "errors.endDateGreaterThanStartDate": "End date must be after the start date.",
   "errors.multipleLicensors": "Only one Licensor per license is allowed.",
@@ -122,6 +123,7 @@
 
   "supplementaryDocs.add": "Add supplementary document",
   "supplementaryDocs.none": "No supplementary documents have been added",
+  "supplementaryDocs.remove": "Remove supplementary document",
 
   "terms.add": "Add term",
   "terms.term": "Term",
@@ -132,6 +134,7 @@
   "term.internalFalse": "Public",
   "term.internalNote": "Internal note",
   "term.publicNote": "Public note",
+  "term.removeTerm": "Remove term",
 
   "warn.clearEndDate": "End date will be cleared because \"Open ended\" is checked."
 }
