@@ -43,6 +43,7 @@ export default class Licenses extends React.Component {
     source: PropTypes.object,
     syncToLocationSearch: PropTypes.bool,
     visibleColumns: PropTypes.arrayOf(PropTypes.string),
+    selectedRecordId: PropTypes.string,
   }
 
   static defaultProps = {
@@ -208,12 +209,12 @@ export default class Licenses extends React.Component {
       source,
       syncToLocationSearch,
       visibleColumns,
+      selectedRecordId,
     } = this.props;
 
     const query = queryGetter() || {};
     const count = source ? source.totalCount() : 0;
     const sortOrder = query.sort || '';
-
     return (
       <div data-test-licenses ref={contentRef}>
         <SearchAndSortQuery
@@ -317,6 +318,7 @@ export default class Licenses extends React.Component {
                       onHeaderClick={onSort}
                       onNeedMoreData={onNeedMoreData}
                       onRowClick={onSelectRow}
+                      isSelected={({ item }) => item.id === selectedRecordId}
                       rowFormatter={this.rowFormatter}
                       sortDirection={sortOrder.startsWith('-') ? 'descending' : 'ascending'}
                       sortOrder={sortOrder.replace(/^-/, '').replace(/,.*/, '')}

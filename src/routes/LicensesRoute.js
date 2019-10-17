@@ -76,6 +76,11 @@ class LicensesRoute extends React.Component {
       hasPerm: PropTypes.func.isRequired,
       logger: PropTypes.object,
     }),
+    match: PropTypes.shape({
+      params: PropTypes.shape({
+        id: PropTypes.string,
+      }),
+    }),
   }
 
   constructor(props) {
@@ -131,7 +136,7 @@ class LicensesRoute extends React.Component {
   }
 
   render() {
-    const { children, location, resources } = this.props;
+    const { children, location, resources, match } = this.props;
 
     if (this.source) {
       this.source.update(this.props, 'licenses');
@@ -148,6 +153,7 @@ class LicensesRoute extends React.Component {
           orgRoleValues: get(resources, 'orgRoleValues.records', []),
           tagsValues: get(resources, 'tagsValues.records', []),
         }}
+        selectedRecordId={match.params.id}
         onNeedMoreData={this.handleNeedMoreData}
         queryGetter={this.queryGetter}
         querySetter={this.querySetter}
