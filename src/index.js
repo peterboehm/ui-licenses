@@ -41,7 +41,7 @@ class App extends React.Component {
         <Route path={`${path}/:id/edit`} component={EditLicenseRoute} />
         <Route path={`${path}/:id/amendments/create`} component={CreateAmendmentRoute} />
         <Route path={`${path}/:id/amendments/:amendmentId/edit`} component={EditAmendmentRoute} />
-        <Route path={path} component={LicensesRoute}>
+        <Route path={`${path}/:id?`} component={LicensesRoute}>
           <Switch>
             <Route path={`${path}/:id`} exact component={ViewLicenseRoute} />
             <Route path={`${path}/:id/amendments/:amendmentId`} exact component={ViewAmendmentRoute} />

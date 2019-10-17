@@ -34,22 +34,17 @@ export default class Licenses extends React.Component {
     children: PropTypes.node,
     contentRef: PropTypes.object,
     data: PropTypes.object,
-    disableRecordCreation: PropTypes.bool,
     onNeedMoreData: PropTypes.func,
-    onSelectRow: PropTypes.func,
     queryGetter: PropTypes.func,
     querySetter: PropTypes.func,
     searchString: PropTypes.string,
+    selectedRecordId: PropTypes.string,
     source: PropTypes.object,
-    syncToLocationSearch: PropTypes.bool,
-    visibleColumns: PropTypes.arrayOf(PropTypes.string),
   }
 
   static defaultProps = {
     data: {},
     searchString: '',
-    syncToLocationSearch: true,
-    visibleColumns: ['name', 'type', 'status', 'startDate', 'endDate'],
   }
 
   state = {
@@ -81,17 +76,9 @@ export default class Licenses extends React.Component {
 
   rowFormatter = (row) => {
     const { rowClass, rowData, rowIndex, rowProps = {}, cells } = row;
-    let RowComponent;
-
-    if (this.props.onSelectRow) {
-      RowComponent = 'div';
-    } else {
-      RowComponent = Link;
-      rowProps.to = this.rowURL(rowData.id);
-    }
 
     return (
-      <RowComponent
+      <Link
         aria-rowindex={rowIndex + 2}
         className={rowClass}
         data-label={[
@@ -101,10 +88,11 @@ export default class Licenses extends React.Component {
         ].join('...')}
         key={`row-${rowIndex}`}
         role="row"
+        to={this.rowURL(rowData.id)}
         {...rowProps}
       >
         {cells}
-      </RowComponent>
+      </Link>
     );
   }
 
@@ -171,10 +159,6 @@ export default class Licenses extends React.Component {
   }
 
   renderResultsLastMenu() {
-    if (this.props.disableRecordCreation) {
-      return null;
-    }
-
     return (
       <IfPermission perm="ui-licenses.licenses.edit">
         <PaneMenu>
@@ -202,18 +186,15 @@ export default class Licenses extends React.Component {
       contentRef,
       data,
       onNeedMoreData,
-      onSelectRow,
       queryGetter,
       querySetter,
+      selectedRecordId,
       source,
-      syncToLocationSearch,
-      visibleColumns,
     } = this.props;
 
     const query = queryGetter() || {};
     const count = source ? source.totalCount() : 0;
     const sortOrder = query.sort || '';
-
     return (
       <div data-test-licenses ref={contentRef}>
         <SearchAndSortQuery
@@ -222,7 +203,6 @@ export default class Licenses extends React.Component {
           initialSearchState={{ query: '' }}
           queryGetter={queryGetter}
           querySetter={querySetter}
-          syncToLocationSearch={syncToLocationSearch}
         >
           {
             ({
@@ -316,13 +296,13 @@ export default class Licenses extends React.Component {
                       isEmptyMessage={this.renderIsEmptyMessage(query, source)}
                       onHeaderClick={onSort}
                       onNeedMoreData={onNeedMoreData}
-                      onRowClick={onSelectRow}
+                      isSelected={({ item }) => item.id === selectedRecordId}
                       rowFormatter={this.rowFormatter}
                       sortDirection={sortOrder.startsWith('-') ? 'descending' : 'ascending'}
                       sortOrder={sortOrder.replace(/^-/, '').replace(/,.*/, '')}
                       totalCount={count}
                       virtualize
-                      visibleColumns={visibleColumns}
+                      visibleColumns={['name', 'type', 'status', 'startDate', 'endDate']}
                     />
                   </Pane>
                   {children}
