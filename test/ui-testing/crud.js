@@ -47,12 +47,12 @@ const createLicense = (nightmare, done, defaultValues) => {
         throw Error(`Name of license is incorrect. Expected "${expectedValues.name}" and got "${foundName}" `);
       }
 
-      const foundType = document.querySelector('[data-test-license-type]').innerText;
+      const foundType = document.querySelector('[data-test-license-card-type]').innerText;
       if (foundType !== expectedValues.type) {
         throw Error(`Type of license is incorrect. Expected "${expectedValues.type}" and got "${foundType}" `);
       }
 
-      const foundStatus = document.querySelector('[data-test-license-status]').innerText;
+      const foundStatus = document.querySelector('[data-test-license-card-status]').innerText;
       if (foundStatus !== expectedValues.status) {
         throw Error(`Status of license is incorrect. Expected "${expectedValues.status}" and got "${foundStatus}" `);
       }
@@ -113,12 +113,12 @@ module.exports.test = (uiTestCtx) => {
               throw Error(`Name of license is incorrect. Expected "${expectedName}" and got "${foundName}" `);
             }
 
-            const foundType = document.querySelector('[data-test-license-type]').innerText;
+            const foundType = document.querySelector('[data-test-license-card-type]').innerText;
             if (foundType !== 'Local') {
               throw Error(`Type of license is incorrect. Expected "Local" and got "${foundType}" `);
             }
 
-            const foundStatus = document.querySelector('[data-test-license-status]').innerText;
+            const foundStatus = document.querySelector('[data-test-license-card-status]').innerText;
             if (foundStatus !== 'Active') {
               throw Error(`Status of license is incorrect. Expected "Active" and got "${foundStatus}" `);
             }
@@ -186,12 +186,12 @@ module.exports.test = (uiTestCtx) => {
               throw Error(`Name of found license is incorrect. "${expectedName}" and got "${name}"`);
             }
 
-            const type = document.querySelector('[data-test-license-type]').innerText;
+            const type = document.querySelector('[data-test-license-card-type]').innerText;
             if (type !== expectedValues.editedType) {
               throw Error(`Type of license is incorrect. Expected "${expectedValues.editedType}" and got "${type}" `);
             }
 
-            const status = document.querySelector('[data-test-license-status]').innerText;
+            const status = document.querySelector('[data-test-license-card-status]').innerText;
             if (status !== expectedValues.editedStatus) {
               throw Error(`Status of license is incorrect. Expected "${expectedValues.editedStatus}" and got "${status}" `);
             }
@@ -245,9 +245,9 @@ module.exports.test = (uiTestCtx) => {
           .waitUntilNetworkIdle(1000)
 
           .evaluate(() => {
-            const endDate = document.querySelector('[data-test-license-end-date]').innerText;
+            const endDate = document.querySelector('[data-test-license-card-end-date]').innerText;
             if (endDate !== 'Open ended') {
-              throw Error('Expected [data-test-license-end-date] to be "Open ended"');
+              throw Error('Expected [data-test-license-card-end-date] to be "Open ended"');
             }
           })
           .then(done)
