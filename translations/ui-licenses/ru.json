@@ -111,5 +111,8 @@
     "showTags": "Показать теги",
     "tags": "Теги",
     "terms.primaryTerms": "Основные условия",
-    "terms.optionalTerms": "Необязательные условия"
+    "terms.optionalTerms": "Необязательные условия",
+    "coreDocs.removeCoreDoc": "Remove core document",
+    "supplementaryDocs.remove": "Remove supplementary document",
+    "term.removeTerm": "Remove term"
 }

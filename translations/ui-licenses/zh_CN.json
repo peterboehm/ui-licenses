@@ -110,6 +110,9 @@
     "terms.term": "条款",
     "showTags": "显示标签",
     "tags": "标签",
-    "terms.primaryTerms": "Primary terms",
-    "terms.optionalTerms": "Optional terms"
+    "terms.primaryTerms": "主要条款",
+    "terms.optionalTerms": "可选条款",
+    "coreDocs.removeCoreDoc": "移除核心文档",
+    "supplementaryDocs.remove": "移除补充文档",
+    "term.removeTerm": "移除条款"
 }

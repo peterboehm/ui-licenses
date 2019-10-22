@@ -111,5 +111,8 @@
     "showTags": "عرض الوسوم",
     "tags": "الوسوم",
     "terms.primaryTerms": "مصطلحات رئيسية",
-    "terms.optionalTerms": "مصطلحات اختيارية"
+    "terms.optionalTerms": "مصطلحات اختيارية",
+    "coreDocs.removeCoreDoc": "إزالة وثيقة أساسية",
+    "supplementaryDocs.remove": "إزالة وثيقة تكميلية",
+    "term.removeTerm": "إزالة مصطلح"
 }
