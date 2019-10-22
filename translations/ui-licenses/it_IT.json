@@ -111,5 +111,8 @@
     "showTags": "Mostra tag",
     "tags": "Tag",
     "terms.primaryTerms": "Primary terms",
-    "terms.optionalTerms": "Optional terms"
+    "terms.optionalTerms": "Optional terms",
+    "coreDocs.removeCoreDoc": "Remove core document",
+    "supplementaryDocs.remove": "Remove supplementary document",
+    "term.removeTerm": "Remove term"
 }
