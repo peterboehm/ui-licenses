@@ -49,9 +49,16 @@ class EditLicenseRoute extends React.Component {
     users: {
       type: 'okapi',
       path: 'users',
-      fetch: false,
-      accumulate: true,
-      shouldRefresh: () => false,
+      params: (_q, _p, _r, _l, props) => {
+        const query = get(props.resources, 'license.records[0].contacts', [])
+          .filter(contact => contact.user)
+          .map(contact => `id==${contact.user}`)
+          .join(' or ');
+
+        return query ? { query } : null;
+      },
+      fetch: props => !!props.stripes.hasInterface('users', '15.0'),
+      records: 'users',
     },
   });
 
@@ -96,29 +103,6 @@ class EditLicenseRoute extends React.Component {
     this.state = {
       hasPerms: props.stripes.hasPerm('ui-licenses.licenses.edit'),
     };
-  }
-
-  componentDidMount() {
-    const contacts = get(this.props.resources, 'license.records[0].contacts', []);
-    if (contacts.length) {
-      this.fetchUsers(contacts);
-    }
-  }
-
-  componentDidUpdate(prevProps) {
-    const prevLicense = get(prevProps.resources, 'license.records[0]', {});
-    const currLicense = get(this.props.resources, 'license.records[0]', {});
-    const prevContacts = prevLicense.contacts || [];
-    const currContacts = currLicense.contacts || [];
-    const newContacts = difference(currContacts, prevContacts);
-    if (prevLicense.id !== currLicense.id || newContacts.length) {
-      this.fetchUsers(newContacts);
-    }
-  }
-
-  fetchUsers = (newContacts) => {
-    const { mutator } = this.props;
-    newContacts.forEach(contact => mutator.users.GET({ path: `users/${contact.user}` }));
   }
 
   getInitialValues = () => {
