@@ -112,7 +112,7 @@
     "tags": "Tags",
     "terms.primaryTerms": "Primary terms",
     "terms.optionalTerms": "Optional terms",
-    "coreDocs.removeCoreDoc": "Remove core document",
-    "supplementaryDocs.remove": "Remove supplementary document",
-    "term.removeTerm": "Remove term"
+    "coreDocs.removeCoreDoc": "コアドキュメントを削除",
+    "supplementaryDocs.remove": "補足ドキュメントを削除",
+    "term.removeTerm": "用語を削除"
 }
