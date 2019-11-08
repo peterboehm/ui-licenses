@@ -58,6 +58,7 @@ class AmendmentFormInfo extends React.Component {
                   name="name"
                   label={<FormattedMessage id="ui-licenses.prop.name" />}
                   component={TextField}
+                  maxLength={255}
                   placeholder={placeholder}
                   required
                   validate={requiredValidator}
