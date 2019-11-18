@@ -51,11 +51,11 @@ export default class LicenseFormInfo extends React.Component {
             <FormattedMessage id="ui-licenses.placeholder.licenseName">
               {placeholder => (
                 <Field
-                  id="edit-license-name"
-                  name="name"
-                  label={<FormattedMessage id="ui-licenses.prop.name" />}
                   component={TextField}
+                  id="edit-license-name"
+                  label={<FormattedMessage id="ui-licenses.prop.name" />}
                   maxLength={255}
+                  name="name"
                   placeholder={placeholder}
                   required
                   validate={requiredValidator}
@@ -67,21 +67,21 @@ export default class LicenseFormInfo extends React.Component {
         <Row>
           <Col xs={12} md={6}>
             <Field
-              id="edit-license-type"
               component={Select}
               dataOptions={data.typeValues}
-              name="type"
+              id="edit-license-type"
               label={<FormattedMessage id="ui-licenses.prop.type" />}
+              name="type"
               required
             />
           </Col>
           <Col xs={12} md={6}>
             <Field
-              id="edit-license-status"
               component={Select}
               dataOptions={data.statusValues}
-              name="status"
+              id="edit-license-status"
               label={<FormattedMessage id="ui-licenses.prop.status" />}
+              name="status"
               required
             />
           </Col>
@@ -90,23 +90,25 @@ export default class LicenseFormInfo extends React.Component {
           <Col xs={12} md={5}>
             <Field
               backendDateStandard="YYYY-MM-DD"
-              id="edit-license-start-date"
-              name="startDate"
-              label={<FormattedMessage id="ui-licenses.prop.startDate" />}
               component={Datepicker}
               dateFormat="YYYY-MM-DD"
+              id="edit-license-start-date"
+              label={<FormattedMessage id="ui-licenses.prop.startDate" />}
+              name="startDate"
+              parse={v => v} // Lets us pass an empty string instead of `undefined`
             />
           </Col>
           <Col xs={10} md={5}>
             <Field
-              name="endDate"
-              component={Datepicker}
-              validate={this.validateEndDate}
               backendDateStandard="YYYY-MM-DD"
-              id="edit-license-end-date"
-              label={<FormattedMessage id="ui-licenses.prop.endDate" />}
+              component={Datepicker}
               dateFormat="YYYY-MM-DD"
               disabled={values.openEnded}
+              id="edit-license-end-date"
+              label={<FormattedMessage id="ui-licenses.prop.endDate" />}
+              name="endDate"
+              parse={v => v} // Lets us pass an empty string instead of `undefined`
+              validate={this.validateEndDate}
             />
           </Col>
           <Col xs={2} style={{ paddingTop: 20 }}>
@@ -125,8 +127,7 @@ export default class LicenseFormInfo extends React.Component {
                         </div>
                       ) : undefined
                     });
-                  }
-                  }
+                  }}
                   type="checkbox"
                 />);
               }}
@@ -138,11 +139,12 @@ export default class LicenseFormInfo extends React.Component {
             <FormattedMessage id="ui-licenses.placeholder.licenseDescription">
               {placeholder => (
                 <Field
-                  id="edit-license-description"
-                  name="description"
-                  label={<FormattedMessage id="ui-licenses.prop.description" />}
-                  placeholder={placeholder}
                   component={TextArea}
+                  id="edit-license-description"
+                  label={<FormattedMessage id="ui-licenses.prop.description" />}
+                  name="description"
+                  parse={v => v} // Lets us pass an empty string instead of `undefined`
+                  placeholder={placeholder}
                 />
               )}
             </FormattedMessage>

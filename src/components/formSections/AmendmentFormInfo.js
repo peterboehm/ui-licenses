@@ -54,11 +54,11 @@ class AmendmentFormInfo extends React.Component {
             <FormattedMessage id="ui-licenses.placeholder.amendmentName">
               {placeholder => (
                 <Field
-                  id="edit-amendment-name"
-                  name="name"
-                  label={<FormattedMessage id="ui-licenses.prop.name" />}
                   component={TextField}
+                  id="edit-amendment-name"
+                  label={<FormattedMessage id="ui-licenses.prop.name" />}
                   maxLength={255}
+                  name="name"
                   placeholder={placeholder}
                   required
                   validate={requiredValidator}
@@ -70,11 +70,11 @@ class AmendmentFormInfo extends React.Component {
         <Row>
           <Col xs={12}>
             <Field
-              id="edit-amendment-status"
               component={Select}
               dataOptions={data.statusValues}
-              name="status"
+              id="edit-amendment-status"
               label={<FormattedMessage id="ui-licenses.prop.status" />}
+              name="status"
               required
             />
           </Col>
@@ -83,11 +83,12 @@ class AmendmentFormInfo extends React.Component {
           <Col xs={12} md={5}>
             <Field
               backendDateStandard="YYYY-MM-DD"
-              id="edit-amendment-start-date"
-              name="startDate"
-              label={<FormattedMessage id="ui-licenses.prop.startDate" />}
               component={Datepicker}
               dateFormat="YYYY-MM-DD"
+              id="edit-amendment-start-date"
+              label={<FormattedMessage id="ui-licenses.prop.startDate" />}
+              parse={v => v} // Lets us pass an empty string instead of `undefined`
+              name="startDate"
             />
           </Col>
           <Col xs={10} md={5}>
@@ -99,6 +100,7 @@ class AmendmentFormInfo extends React.Component {
               id="edit-amendment-end-date"
               label={<FormattedMessage id="ui-licenses.prop.endDate" />}
               name="endDate"
+              parse={v => v} // Lets us pass an empty string instead of `undefined`
               validate={this.validateEndDate}
             />
           </Col>
@@ -118,8 +120,7 @@ class AmendmentFormInfo extends React.Component {
                         </div>
                       ) : undefined
                     });
-                  }
-                  }
+                  }}
                   type="checkbox"
                 />);
               }}
@@ -131,11 +132,12 @@ class AmendmentFormInfo extends React.Component {
             <FormattedMessage id="ui-licenses.placeholder.amendmentDescription">
               {placeholder => (
                 <Field
-                  id="edit-amendment-description"
-                  name="description"
-                  label={<FormattedMessage id="ui-licenses.prop.description" />}
-                  placeholder={placeholder}
                   component={TextArea}
+                  id="edit-amendment-description"
+                  label={<FormattedMessage id="ui-licenses.prop.description" />}
+                  name="description"
+                  parse={v => v} // Lets us pass an empty string instead of `undefined`
+                  placeholder={placeholder}
                 />
               )}
             </FormattedMessage>

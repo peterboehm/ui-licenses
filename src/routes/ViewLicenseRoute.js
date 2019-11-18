@@ -22,7 +22,7 @@ class ViewLicenseRoute extends React.Component {
           ...new Set(interfaces.map(i => `id==${i}`))
         ].join(' or ');
 
-        return query ? { query } : null;
+        return query ? { query } : {};
       },
       fetch: props => !!props.stripes.hasInterface('organizations-storage.interfaces', '2.0'),
       records: 'interfaces',
@@ -65,7 +65,7 @@ class ViewLicenseRoute extends React.Component {
           .map(contact => `id==${contact.user}`)
           .join(' or ');
 
-        return query ? { query } : null;
+        return query ? { query } : {};
       },
       fetch: props => !!props.stripes.hasInterface('users', '15.0'),
       records: 'users',
