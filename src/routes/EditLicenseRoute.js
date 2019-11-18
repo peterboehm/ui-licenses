@@ -55,7 +55,7 @@ class EditLicenseRoute extends React.Component {
           .map(contact => `id==${contact.user}`)
           .join(' or ');
 
-        return query ? { query } : null;
+        return query ? { query } : {};
       },
       fetch: props => !!props.stripes.hasInterface('users', '15.0'),
       records: 'users',
