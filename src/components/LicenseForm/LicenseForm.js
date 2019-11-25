@@ -38,7 +38,6 @@ class LicenseForm extends React.Component {
     handlers: PropTypes.PropTypes.shape({
       onClose: PropTypes.func.isRequired,
     }),
-    initialValues: PropTypes.object,
     handleSubmit: PropTypes.func.isRequired,
     isLoading: PropTypes.bool,
     form: PropTypes.object,
@@ -46,10 +45,6 @@ class LicenseForm extends React.Component {
     pristine: PropTypes.bool,
     submitting: PropTypes.bool,
     values: PropTypes.object,
-  }
-
-  static defaultProps = {
-    initialValues: {},
   }
 
   state = {
@@ -109,47 +104,37 @@ class LicenseForm extends React.Component {
 
   renderPaneFooter() {
     const {
+      handlers,
       handleSubmit,
-      initialValues,
       pristine,
       submitting,
+      values,
     } = this.props;
-
-    let id;
-    if (initialValues && initialValues.id) {
-      id = 'clickable-update-license';
-    } else {
-      id = 'clickable-create-license';
-    }
-
-    const startButton = (
-      <Button
-        buttonStyle="default mega"
-        id="clickable-cancel"
-        marginBottom0
-        onClick={this.props.handlers.onClose}
-      >
-        <FormattedMessage id="stripes-components.cancel" />
-      </Button>
-    );
-
-    const endButton = (
-      <Button
-        buttonStyle="primary mega"
-        disabled={pristine || submitting}
-        id={id}
-        marginBottom0
-        onClick={handleSubmit}
-        type="submit"
-      >
-        <FormattedMessage id="stripes-components.saveAndClose" />
-      </Button>
-    );
 
     return (
       <PaneFooter
-        renderStart={startButton}
-        renderEnd={endButton}
+        renderStart={(
+          <Button
+            buttonStyle="default mega"
+            id="clickable-cancel"
+            marginBottom0
+            onClick={handlers.onClose}
+          >
+            <FormattedMessage id="stripes-components.cancel" />
+          </Button>
+        )}
+        renderEnd={(
+          <Button
+            buttonStyle="primary mega"
+            disabled={pristine || submitting}
+            id={values.id ? 'clickable-update-license' : 'clickable-create-license'}
+            marginBottom0
+            onClick={handleSubmit}
+            type="submit"
+          >
+            <FormattedMessage id="stripes-components.saveAndClose" />
+          </Button>
+        )}
       />
     );
   }
@@ -172,7 +157,7 @@ class LicenseForm extends React.Component {
   }
 
   render() {
-    const { initialValues: { id, name }, isLoading } = this.props;
+    const { isLoading, values: { id, name } } = this.props;
     if (isLoading) return this.renderLoadingPane();
 
     return (
