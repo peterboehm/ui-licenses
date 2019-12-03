@@ -6,7 +6,7 @@
     "editLicense": "编辑许可证",
     "newLicense": "新建许可证",
     "updateLicense": "更新许可证",
-    "errors.endDateGreaterThanStartDate": "结束日期必须在开始日期之后",
+    "errors.endDateGreaterThanStartDate": "结束日期必须在开始日期之后。",
     "prop.description": "描述",
     "prop.endDate": "截止日期",
     "prop.name": "名称",
