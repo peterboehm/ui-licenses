@@ -44,7 +44,7 @@ export default class LicenseOrganizations extends React.Component {
           headerStart={
             <span>
               <AppIcon
-                app="licenses"
+                app="organizations"
                 size="small"
               >
                 <Link to={`/organizations/view/${org.orgsUuid}`}>
