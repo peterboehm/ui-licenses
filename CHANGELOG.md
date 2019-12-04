@@ -1,6 +1,6 @@
 # Change history for ui-licenses
 
-## 3.6.0 IN PROGRESS
+## 3.6.0 2019-12-04
 * Port ui-licenses to RFF. ERM-487.
 * Update stripes to v2.10.1 to support PaneFooter.
 * Move the Save & close button and add a Cancel button to Pane footer. ERM-412.
