@@ -5,13 +5,14 @@ import { noop } from 'lodash';
 import { FormattedMessage } from 'react-intl';
 
 import {
-  MultiColumnList,
-  SearchField,
-  Pane,
-  Icon,
   Button,
+  FormattedUTCDate,
+  Icon,
+  MultiColumnList,
+  Pane,
   PaneMenu,
   Paneset,
+  SearchField,
 } from '@folio/stripes/components';
 
 import { AppIcon, IfPermission } from '@folio/stripes/core';
@@ -24,7 +25,6 @@ import {
 
 import { LicenseEndDate } from '@folio/stripes-erm-components';
 
-import FormattedUTCDate from '../FormattedUTCDate';
 import LicenseFilters from '../LicenseFilters';
 
 import css from './Licenses.css';
