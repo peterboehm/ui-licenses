@@ -7,12 +7,11 @@ import {
   Accordion,
   Badge,
   Button,
+  FormattedUTCDate,
   MultiColumnList,
 } from '@folio/stripes/components';
 
 import { LicenseEndDate } from '@folio/stripes-erm-components';
-
-import FormattedUTCDate from '../FormattedUTCDate';
 
 export default class LicenseAmendments extends React.Component {
   static propTypes = {

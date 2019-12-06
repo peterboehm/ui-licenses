@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import { get } from 'lodash';
 import { FormattedMessage } from 'react-intl';
 
-import { Accordion, Badge } from '@folio/stripes/components';
-import { InternalContactCard, Spinner } from '@folio/stripes-erm-components';
+import { Accordion, Badge, Spinner } from '@folio/stripes/components';
+import { InternalContactCard } from '@folio/stripes-erm-components';
 
 export default class LicenseInternalContacts extends React.Component {
   static propTypes = {

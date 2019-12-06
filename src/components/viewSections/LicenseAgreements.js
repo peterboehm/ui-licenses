@@ -7,13 +7,12 @@ import { IfInterface } from '@folio/stripes/core';
 import {
   Accordion,
   Badge,
+  FormattedUTCDate,
   InfoPopover,
   Layout,
   MultiColumnList,
+  Spinner,
 } from '@folio/stripes/components';
-import { Spinner } from '@folio/stripes-erm-components';
-
-import FormattedUTCDate from '../FormattedUTCDate';
 
 export default class LicenseAgreements extends React.Component {
   static propTypes = {
