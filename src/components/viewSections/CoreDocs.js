@@ -6,8 +6,9 @@ import {
   Accordion,
   Badge,
   Layout,
+  Spinner,
 } from '@folio/stripes/components';
-import { DocumentCard, Spinner } from '@folio/stripes-erm-components';
+import { DocumentCard } from '@folio/stripes-erm-components';
 
 export default class CoreDocs extends React.Component {
   static propTypes = {

@@ -15,9 +15,9 @@ import {
   Pane,
   PaneMenu,
   Row,
+  Spinner,
 } from '@folio/stripes/components';
 import { AppIcon, IfPermission, TitleManager } from '@folio/stripes/core';
-import { Spinner } from '@folio/stripes-erm-components';
 
 import {
   LicenseAgreements,

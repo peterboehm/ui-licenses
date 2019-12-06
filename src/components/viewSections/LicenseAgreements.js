@@ -10,8 +10,8 @@ import {
   InfoPopover,
   Layout,
   MultiColumnList,
+  Spinner,
 } from '@folio/stripes/components';
-import { Spinner } from '@folio/stripes-erm-components';
 
 import FormattedUTCDate from '../FormattedUTCDate';
 

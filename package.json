@@ -28,7 +28,7 @@
   },
   "devDependencies": {
     "@folio/eslint-config-stripes": "^4.2.0",
-    "@folio/stripes": "^2.10.1",
+    "@folio/stripes": "^2.12.0",
     "@folio/stripes-cli": "^1.8.0",
     "babel-eslint": "^9.0.0",
     "eslint": "^5.5.0"
@@ -49,7 +49,7 @@
     "redux-form": "^7.0.3"
   },
   "peerDependencies": {
-    "@folio/stripes": "^2.10.1",
+    "@folio/stripes": "^2.12.0",
     "react": "*"
   },
   "stripes": {
