@@ -1,5 +1,9 @@
 # Change history for ui-licenses
 
+## 3.7.0 IN PROGRESS
+* Switched to using `<FormattedUTCDate>` from Stripes. ERM-635
+* Switched to using `<Spinner>` from Stripes. ERM-635
+
 ## 3.6.0 2019-12-04
 * Port ui-licenses to RFF. ERM-487.
 * Update stripes to v2.10.1 to support PaneFooter.
