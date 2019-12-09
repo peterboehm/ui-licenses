@@ -51,7 +51,7 @@
   "organizations.licenseHasNone": "No organizations have been added.",
   "organizations.selectRole": "Select a role",
   "organizations.createNew": "Create new organization",
-  "organizations.addOrganizationToLicense": "Add organization to license",
+  "organizations.addOrganizationToLicense": "Add organization",
 
   "prop.agreementStatus": "Agreement status",
   "prop.description": "Description",
