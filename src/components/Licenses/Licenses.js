@@ -68,6 +68,17 @@ export default class Licenses extends React.Component {
   }
 
   formatter = {
+    name: a => {
+      return (
+        <AppIcon
+          size="small"
+          app="licenses"
+          iconKey="app"
+        >
+          {a.name}
+        </AppIcon>
+      );
+    },
     type: ({ type }) => type && type.label,
     status: ({ status }) => status && status.label,
     startDate: ({ startDate }) => (startDate ? <FormattedUTCDate value={startDate} /> : ''),
