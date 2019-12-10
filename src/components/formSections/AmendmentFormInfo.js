@@ -51,20 +51,15 @@ class AmendmentFormInfo extends React.Component {
       >
         <Row>
           <Col xs={12}>
-            <FormattedMessage id="ui-licenses.placeholder.amendmentName">
-              {placeholder => (
-                <Field
-                  component={TextField}
-                  id="edit-amendment-name"
-                  label={<FormattedMessage id="ui-licenses.prop.name" />}
-                  maxLength={255}
-                  name="name"
-                  placeholder={placeholder}
-                  required
-                  validate={requiredValidator}
-                />
-              )}
-            </FormattedMessage>
+            <Field
+              component={TextField}
+              id="edit-amendment-name"
+              label={<FormattedMessage id="ui-licenses.prop.name" />}
+              maxLength={255}
+              name="name"
+              required
+              validate={requiredValidator}
+            />
           </Col>
         </Row>
         <Row>
@@ -129,18 +124,13 @@ class AmendmentFormInfo extends React.Component {
         </Row>
         <Row>
           <Col xs={12}>
-            <FormattedMessage id="ui-licenses.placeholder.amendmentDescription">
-              {placeholder => (
-                <Field
-                  component={TextArea}
-                  id="edit-amendment-description"
-                  label={<FormattedMessage id="ui-licenses.prop.description" />}
-                  name="description"
-                  parse={v => v} // Lets us pass an empty string instead of `undefined`
-                  placeholder={placeholder}
-                />
-              )}
-            </FormattedMessage>
+            <Field
+              component={TextArea}
+              id="edit-amendment-description"
+              label={<FormattedMessage id="ui-licenses.prop.description" />}
+              name="description"
+              parse={v => v} // Lets us pass an empty string instead of `undefined`
+            />
           </Col>
         </Row>
       </div>

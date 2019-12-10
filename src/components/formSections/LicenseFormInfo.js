@@ -48,20 +48,15 @@ export default class LicenseFormInfo extends React.Component {
       <div data-test-license-info id={id}>
         <Row>
           <Col xs={12}>
-            <FormattedMessage id="ui-licenses.placeholder.licenseName">
-              {placeholder => (
-                <Field
-                  component={TextField}
-                  id="edit-license-name"
-                  label={<FormattedMessage id="ui-licenses.prop.name" />}
-                  maxLength={255}
-                  name="name"
-                  placeholder={placeholder}
-                  required
-                  validate={requiredValidator}
-                />
-              )}
-            </FormattedMessage>
+            <Field
+              component={TextField}
+              id="edit-license-name"
+              label={<FormattedMessage id="ui-licenses.prop.name" />}
+              maxLength={255}
+              name="name"
+              required
+              validate={requiredValidator}
+            />
           </Col>
         </Row>
         <Row>
@@ -136,18 +131,13 @@ export default class LicenseFormInfo extends React.Component {
         </Row>
         <Row>
           <Col xs={12}>
-            <FormattedMessage id="ui-licenses.placeholder.licenseDescription">
-              {placeholder => (
-                <Field
-                  component={TextArea}
-                  id="edit-license-description"
-                  label={<FormattedMessage id="ui-licenses.prop.description" />}
-                  name="description"
-                  parse={v => v} // Lets us pass an empty string instead of `undefined`
-                  placeholder={placeholder}
-                />
-              )}
-            </FormattedMessage>
+            <Field
+              component={TextArea}
+              id="edit-license-description"
+              label={<FormattedMessage id="ui-licenses.prop.description" />}
+              name="description"
+              parse={v => v} // Lets us pass an empty string instead of `undefined`
+            />
           </Col>
         </Row>
       </div>
