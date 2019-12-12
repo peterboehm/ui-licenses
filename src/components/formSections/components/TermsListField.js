@@ -88,6 +88,7 @@ export default class TermsListField extends React.Component {
 
     return (
       <Select
+        autoFocus={isEmpty(term)}
         data-test-term-name
         dataOptions={[term, ...unsetTerms]} // The selected term, and the available unset terms
         id={`edit-term-${i}-name`}

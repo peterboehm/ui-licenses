@@ -105,21 +105,6 @@ module.exports.test = (uiTestCtx) => {
           });
         }
 
-        if (amendment.coreDocs) {
-          it('should fill out amendment core docs', done => {
-            let chain = nightmare;
-
-            amendment.coreDocs.forEach((doc, i) => {
-              chain = chain
-                .click('#add-docs-btn')
-                .insert(`#docs-name-${i}`, doc)
-                .insert(`#docs-location-${i}`, 'Filing Cabinet');
-            });
-
-            chain.then(done).catch(done);
-          });
-        }
-
         if (amendment.supplementaryDocs) {
           it('should fill out amendment supplementary docs', done => {
             let chain = nightmare;
@@ -127,8 +112,23 @@ module.exports.test = (uiTestCtx) => {
             amendment.supplementaryDocs.forEach((doc, i) => {
               chain = chain
                 .click('#add-supplementaryDocs-btn')
-                .insert(`#supplementaryDocs-name-${i}`, doc)
-                .insert(`#supplementaryDocs-location-${i}`, 'Filing Cabinet');
+                .insert(`#supplementaryDocs-${i}-name`, doc)
+                .insert(`#supplementaryDocs-${i}-location`, 'Filing Cabinet');
+            });
+
+            chain.then(done).catch(done);
+          });
+        }
+
+        if (amendment.coreDocs) {
+          it('should fill out amendment core docs', done => {
+            let chain = nightmare;
+
+            amendment.coreDocs.forEach((doc, i) => {
+              chain = chain
+                .click('#add-docs-btn')
+                .insert(`#docs-${i}-name`, doc)
+                .insert(`#docs-${i}-location`, 'Filing Cabinet');
             });
 
             chain.then(done).catch(done);
