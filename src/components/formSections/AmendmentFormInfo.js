@@ -52,6 +52,7 @@ class AmendmentFormInfo extends React.Component {
         <Row>
           <Col xs={12}>
             <Field
+              autoFocus
               component={TextField}
               id="edit-amendment-name"
               label={<FormattedMessage id="ui-licenses.prop.name" />}

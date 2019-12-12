@@ -49,6 +49,7 @@ export default class LicenseFormInfo extends React.Component {
         <Row>
           <Col xs={12}>
             <Field
+              autoFocus
               component={TextField}
               id="edit-license-name"
               label={<FormattedMessage id="ui-licenses.prop.name" />}
