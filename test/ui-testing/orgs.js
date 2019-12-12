@@ -63,11 +63,11 @@ module.exports.test = (uiTestCtx) => {
           nightmare
             .click('#add-org-btn')
             .evaluate((r) => {
-              if (!document.querySelector(`#orgs-link-${r}-search-button`)) {
+              if (!document.querySelector(`#orgs-${r}-link-button`)) {
                 throw Error('Expected organization picker button to exist.');
               }
 
-              if (!document.querySelector(`#orgs-role-${r}`)) {
+              if (!document.querySelector(`#orgs-${r}-role`)) {
                 throw Error('Expected role dropdown to exist.');
               }
             }, row)
@@ -77,12 +77,12 @@ module.exports.test = (uiTestCtx) => {
 
         it('should select org', done => {
           nightmare
-            .click(`#orgs-link-${row}-search-button`)
+            .click(`#orgs-${row}-link-button`)
             .wait(`#list-plugin-find-organization [aria-rowindex="${row + 3}"] > a`)
             .click(`#list-plugin-find-organization [aria-rowindex="${row + 3}"] > a`)
             .waitUntilNetworkIdle(2000)
             .evaluate((r, _orgs) => {
-              const orgElement = document.querySelector(`#orgs-name-${r}`);
+              const orgElement = document.querySelector(`#orgs-${r}-name`);
               const name = orgElement.textContent;
               if (!name) {
                 throw Error('Org field has no value!');
@@ -99,11 +99,11 @@ module.exports.test = (uiTestCtx) => {
 
         it(`should assign role: ${org.role}`, done => {
           nightmare
-            .wait(`#orgs-role-${row}`)
-            .click(`#orgs-role-${row}`)
-            .type(`#orgs-role-${row}`, org.role)
+            .wait(`#orgs-${row}-role`)
+            .click(`#orgs-${row}-role`)
+            .type(`#orgs-${row}-role`, org.role)
             .evaluate((r, o) => {
-              const roleElement = document.querySelector(`#orgs-role-${r}`);
+              const roleElement = document.querySelector(`#orgs-${r}-role`);
               const role = roleElement.selectedOptions[0].textContent;
               if (role !== o.role) {
                 throw Error(`Expected role to be ${o.role} but is ${role}`);
@@ -167,7 +167,7 @@ module.exports.test = (uiTestCtx) => {
         it(`should find correctly loaded values for org ${i}`, done => {
           nightmare
             .evaluate(o => {
-              const orgElements = [...document.querySelectorAll('[id^=orgs-name-]')];
+              const orgElements = [...document.querySelectorAll('[data-test-org-name]')];
               const orgElement = orgElements.find(e => e.textContent === o.name);
               if (!orgElement) {
                 throw Error(`Failed to find org name picker with loaded org of ${o.name}`);
@@ -189,7 +189,7 @@ module.exports.test = (uiTestCtx) => {
         it('should edit license', done => {
           nightmare
             .evaluate(o => {
-              const nameElements = [...document.querySelectorAll('[id^=orgs-name-]')];
+              const nameElements = [...document.querySelectorAll('[data-test-org-name]')];
               const index = nameElements.findIndex(e => e.textContent === o.name);
               if (index === -1) {
                 throw Error(`Failed to find org picker with loaded value of ${o.name}`);
@@ -198,16 +198,16 @@ module.exports.test = (uiTestCtx) => {
             }, orgToEdit)
             .then(row => {
               return nightmare
-                .wait(`#orgs-link-${row}-search-button`)
-                .click(`#orgs-link-${row}-search-button`)
+                .wait(`#orgs-${row}-link-button`)
+                .click(`#orgs-${row}-link-button`)
                 .wait('#list-plugin-find-organization [aria-rowindex="12"] > a')
                 .click('#list-plugin-find-organization [aria-rowindex="12"] > a')
                 .waitUntilNetworkIdle(2000)
-                .wait(`#orgs-role-${row}`)
-                .click(`#orgs-role-${row}`)
-                .type(`#orgs-role-${row}`, orgToEdit.editedRole)
+                .wait(`#orgs-${row}-role`)
+                .click(`#orgs-${row}-role`)
+                .type(`#orgs-${row}-role`, orgToEdit.editedRole)
                 .evaluate((r, _orgs) => {
-                  const orgElement = document.querySelector(`#orgs-name-${r}`);
+                  const orgElement = document.querySelector(`#orgs-${r}-name`);
                   const name = orgElement.textContent;
                   if (!name) {
                     throw Error('Org name field has no value!');
@@ -227,7 +227,7 @@ module.exports.test = (uiTestCtx) => {
         it('should delete org', done => {
           nightmare
             .evaluate(o => {
-              const nameElements = [...document.querySelectorAll('[id^=orgs-name-]')];
+              const nameElements = [...document.querySelectorAll('[data-test-org-name]')];
               const index = nameElements.findIndex(e => e.textContent === o.name);
               if (index === -1) {
                 throw Error(`Failed to find org picker with loaded user of ${o.name}`);
@@ -235,7 +235,7 @@ module.exports.test = (uiTestCtx) => {
 
               return index;
             }, orgToDelete)
-            .then(row => nightmare.click(`#orgs-delete-${row}`))
+            .then(row => nightmare.click(`#orgs-${row}-delete-btn`))
             .then(done)
             .catch(done);
         });
