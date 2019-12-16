@@ -57,8 +57,6 @@
     "amendments.closePane": "إعلاق لوحة تحرير التعديلات",
     "amendments.create": "إنشاء تعديل",
     "amendments.amendmentInfo": "معلومات التعديل",
-    "amendments.delete": "حذف تعديل",
-    "amendments.edit": "تحرير تعديل",
     "amendments.update": "تحديث التعديل",
     "placeholder.amendmentName": "قم بإدخال اسم التعديل",
     "placeholder.amendmentDescription": "إدخال وصف للتعديل",
@@ -114,5 +112,7 @@
     "terms.optionalTerms": "مصطلحات اختيارية",
     "coreDocs.removeCoreDoc": "إزالة وثيقة أساسية",
     "supplementaryDocs.remove": "إزالة وثيقة تكميلية",
-    "term.removeTerm": "إزالة مصطلح"
+    "term.removeTerm": "إزالة مصطلح",
+    "delete": "Delete",
+    "edit": "Edit"
 }

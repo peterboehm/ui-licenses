@@ -57,8 +57,6 @@
     "amendments.closePane": "Cerrar el panel de edición de enmienda",
     "amendments.create": "Crear enmienda",
     "amendments.amendmentInfo": "Información sobre la enmienda",
-    "amendments.delete": "Eliminar la enmienda",
-    "amendments.edit": "Editar la enmienda",
     "amendments.update": "Actualizar enmienda",
     "placeholder.amendmentName": "Introduzca el nombre de la enmienda",
     "placeholder.amendmentDescription": "Introduzca una descripción de la enmienda",
@@ -114,5 +112,7 @@
     "terms.optionalTerms": "Optional terms",
     "coreDocs.removeCoreDoc": "Remove core document",
     "supplementaryDocs.remove": "Remove supplementary document",
-    "term.removeTerm": "Remove term"
+    "term.removeTerm": "Remove term",
+    "delete": "Delete",
+    "edit": "Edit"
 }

@@ -57,8 +57,6 @@
     "amendments.closePane": "Close edit amendment pane",
     "amendments.create": "Create amendment",
     "amendments.amendmentInfo": "Amendment information",
-    "amendments.delete": "Delete amendment",
-    "amendments.edit": "Edit amendment",
     "amendments.update": "Update amendment",
     "placeholder.amendmentName": "Enter the amendment name",
     "placeholder.amendmentDescription": "Enter a description of the amendment",
@@ -114,5 +112,7 @@
     "terms.optionalTerms": "Optional terms",
     "coreDocs.removeCoreDoc": "コアドキュメントを削除",
     "supplementaryDocs.remove": "補足ドキュメントを削除",
-    "term.removeTerm": "用語を削除"
+    "term.removeTerm": "用語を削除",
+    "delete": "Delete",
+    "edit": "Edit"
 }

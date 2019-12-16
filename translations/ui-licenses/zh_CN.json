@@ -57,8 +57,6 @@
     "amendments.closePane": "关闭编辑修改窗格",
     "amendments.create": "创建修改",
     "amendments.amendmentInfo": "修改信息",
-    "amendments.delete": "删除修改",
-    "amendments.edit": "编辑修改",
     "amendments.update": "更新修改",
     "placeholder.amendmentName": "输入修改名称",
     "placeholder.amendmentDescription": "输入修改说明",
@@ -114,5 +112,7 @@
     "terms.optionalTerms": "可选条款",
     "coreDocs.removeCoreDoc": "移除核心文档",
     "supplementaryDocs.remove": "移除补充文档",
-    "term.removeTerm": "移除条款"
+    "term.removeTerm": "移除条款",
+    "delete": "Delete",
+    "edit": "Edit"
 }
