@@ -105,7 +105,7 @@ class License extends React.Component {
           to={urls.edit()}
         >
           <Icon icon="edit">
-            <FormattedMessage id="ui-licenses.editLicense" />
+            <FormattedMessage id="ui-licenses.edit" />
           </Icon>
         </Button>
       </React.Fragment>

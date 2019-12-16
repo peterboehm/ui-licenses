@@ -98,7 +98,7 @@ export default class Amendment extends React.Component {
             to={urls.editAmendment()}
           >
             <Icon icon="edit">
-              <FormattedMessage id="ui-licenses.amendments.edit" />
+              <FormattedMessage id="ui-licenses.edit" />
             </Icon>
           </Button>
         }
@@ -112,7 +112,7 @@ export default class Amendment extends React.Component {
             }}
           >
             <Icon icon="trash">
-              <FormattedMessage id="ui-licenses.amendments.delete" />
+              <FormattedMessage id="ui-licenses.delete" />
             </Icon>
           </Button>
         }

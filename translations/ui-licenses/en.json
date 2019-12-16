@@ -13,7 +13,9 @@
   "closeEditLicense": "Close edit license pane",
   "createLicense": "Create license",
   "create": "Create",
+  "delete": "Delete",
   "editLicense": "Edit license",
+  "edit": "Edit",
   "newLicense": "New license",
   "updateLicense": "Update license",
 
@@ -26,8 +28,6 @@
   "amendments.closePane": "Close edit amendment pane",
   "amendments.create": "Create amendment",
   "amendments.amendmentInfo": "Amendment information",
-  "amendments.delete": "Delete amendment",
-  "amendments.edit": "Edit amendment",
   "amendments.update": "Update amendment",
 
   "coreDocs.add": "Add core document",
