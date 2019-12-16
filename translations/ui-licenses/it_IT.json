@@ -57,8 +57,6 @@
     "amendments.closePane": "Chiudi il pannello di modifica amendment",
     "amendments.create": "Crea amendment",
     "amendments.amendmentInfo": "Informazioni sull'amendment",
-    "amendments.delete": "Elimina amendment",
-    "amendments.edit": "Modifica amendment",
     "amendments.update": "Aggiorna amendment",
     "placeholder.amendmentName": "Inserisci il nome dell'amendment",
     "placeholder.amendmentDescription": "Inserisci una descrizione dell'amendment",
@@ -114,5 +112,7 @@
     "terms.optionalTerms": "Optional terms",
     "coreDocs.removeCoreDoc": "Remove core document",
     "supplementaryDocs.remove": "Remove supplementary document",
-    "term.removeTerm": "Remove term"
+    "term.removeTerm": "Remove term",
+    "delete": "Delete",
+    "edit": "Edit"
 }

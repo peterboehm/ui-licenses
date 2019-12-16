@@ -57,8 +57,6 @@
     "amendments.closePane": "Fechar painel de edição de emenda",
     "amendments.create": "Criar emenda",
     "amendments.amendmentInfo": "Informação da emenda",
-    "amendments.delete": "Excluir emenda",
-    "amendments.edit": "Editar emenda",
     "amendments.update": "Atualizar emenda",
     "placeholder.amendmentName": "Digite o nome da emenda",
     "placeholder.amendmentDescription": "Digite uma descrição da emenda",
@@ -66,7 +64,7 @@
     "license": "Licença",
     "licensePlural": "{count} {count, plural, one {licença} other {licenças}}",
     "errors.termNoteWithoutValue": "Um valor deve ser definido para este termo para salvar uma anotação",
-    "organizations.addOrganizationToLicense": "Adicionar organização à licença",
+    "organizations.addOrganizationToLicense": "Adicionar organização",
     "errors.termVisibilityWithoutValue": "Um valor deve ser definido para este termo para alterar a visibilidade",
     "prop.termVisibility": "Visibilidade",
     "term.title": "Termo {number}",
@@ -114,5 +112,7 @@
     "terms.optionalTerms": "Termos opcionais",
     "coreDocs.removeCoreDoc": "Remover documento principal",
     "supplementaryDocs.remove": "Remover documento suplementar",
-    "term.removeTerm": "Remover termo"
+    "term.removeTerm": "Remover termo",
+    "delete": "Delete",
+    "edit": "Edit"
 }
