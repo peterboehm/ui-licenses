@@ -113,6 +113,6 @@
     "coreDocs.removeCoreDoc": "إزالة وثيقة أساسية",
     "supplementaryDocs.remove": "إزالة وثيقة تكميلية",
     "term.removeTerm": "إزالة مصطلح",
-    "delete": "Delete",
-    "edit": "Edit"
+    "delete": "حذف",
+    "edit": "تحرير"
 }
