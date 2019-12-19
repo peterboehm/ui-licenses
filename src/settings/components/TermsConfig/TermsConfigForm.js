@@ -2,11 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { get } from 'lodash';
 import { FormattedMessage } from 'react-intl';
+import SafeHTMLMessage from '@folio/react-intl-safe-html';
 import { FieldArray } from 'react-final-form-arrays';
 
 import { Callout, Pane } from '@folio/stripes/components';
 import stripesFinalForm from '@folio/stripes/final-form';
 import TermsConfigListFieldArray from './TermsConfigListFieldArray';
+
+import css from './TermsConfig.css';
 
 class TermsConfigForm extends React.Component {
   static propTypes = {
@@ -29,6 +32,14 @@ class TermsConfigForm extends React.Component {
     });
   }
 
+  sendCalloutTermInUse = () => {
+    this.callout.sendCallout({
+      type: 'error',
+      message: <SafeHTMLMessage id="ui-licenses.settings.terms.callout.delete.termInUse" values={{ className: css.error }} />,
+      timeout: 0,
+    });
+  }
+
   handleDelete = (...rest) => {
     return this.props.onDelete(...rest)
       .then(() => this.sendCallout('delete', 'success'))
@@ -36,7 +47,14 @@ class TermsConfigForm extends React.Component {
         // Attempt to show an error message if we got JSON back with a message.
         // If json()ification fails, show the generic error callout.
         response.json()
-          .then(error => this.sendCallout('delete', 'error', error.message))
+          .then((error) => {
+            const pattern = new RegExp('violates foreign key constraint.*is still referenced from table', 'ms');
+            if (pattern.test(error.message)) {
+              this.sendCalloutTermInUse();
+            } else {
+              this.sendCallout('delete', 'error', error.message);
+            }
+          })
           .catch(() => this.sendCallout('delete', 'error'));
 
         // Return a rejected promise to break any downstream Promise chains.
