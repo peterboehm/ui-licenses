@@ -27,7 +27,7 @@
     "notSet": "Not set",
     "errors.multipleLicensors": "Only one Licensor per license is allowed.",
     "header.licensor": "Licensor",
-    "organizations.add": "Add organization",
+    "organizations.add": "Añadir organización",
     "organizations.licenseHasNone": "No se han añadido organizaciones.",
     "organizations.selectRole": "Select a role",
     "organizations.createNew": "Create new organization",
