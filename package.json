@@ -102,7 +102,6 @@
       {
         "permissionName": "ui-licenses.licenses.delete",
         "displayName": "Licenses: Delete licenses",
-        "visible": true,
         "subPermissions": [
           "ui-licenses.licenses.view",
           "licenses.licenses.item.delete"
@@ -110,14 +109,14 @@
       },
       {
         "permissionName": "settings.licenses.enabled",
-        "displayName": "Settings (licenses): display list of settings pages",
+        "displayName": "Settings (Licenses): display list of settings pages",
         "subPermissions": [
           "settings.enabled"
         ]
       },
       {
         "permissionName": "ui-licenses.picklists.manage",
-        "displayName": "Licenses: Manage pick lists and values",
+        "displayName": "Settings (Licenses): Manage pick lists and values",
         "visible": true,
         "subPermissions": [
           "settings.licenses.enabled",
@@ -126,7 +125,7 @@
       },
       {
         "permissionName": "ui-licenses.terms.manage",
-        "displayName": "Licenses: Manage license terms",
+        "displayName": "Settings (Licenses): Manage license terms",
         "visible": true,
         "subPermissions": [
           "settings.licenses.enabled",
