@@ -114,5 +114,6 @@
     "supplementaryDocs.remove": "Eliminar documento suplementario",
     "term.removeTerm": "Eliminar término",
     "delete": "Eliminar",
-    "edit": "Editar"
+    "edit": "Editar",
+    "settings.terms.callout.delete.termInUse": "<strong>Term</strong> was not deleted because it is in use on one or more licenses."
 }

@@ -114,5 +114,6 @@
     "supplementaryDocs.remove": "補足ドキュメントを削除",
     "term.removeTerm": "用語を削除",
     "delete": "Delete",
-    "edit": "Edit"
+    "edit": "Edit",
+    "settings.terms.callout.delete.termInUse": "<strong>Term</strong> was not deleted because it is in use on one or more licenses."
 }
