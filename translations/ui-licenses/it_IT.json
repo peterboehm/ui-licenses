@@ -113,6 +113,6 @@
     "coreDocs.removeCoreDoc": "Remove core document",
     "supplementaryDocs.remove": "Remove supplementary document",
     "term.removeTerm": "Remove term",
-    "delete": "Delete",
-    "edit": "Edit"
+    "delete": "Elimina",
+    "edit": "Modifica"
 }
