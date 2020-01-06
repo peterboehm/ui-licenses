@@ -9,8 +9,6 @@ import { Callout, Pane } from '@folio/stripes/components';
 import stripesFinalForm from '@folio/stripes/final-form';
 import TermsConfigListFieldArray from './TermsConfigListFieldArray';
 
-import css from '../styles.css';
-
 class TermsConfigForm extends React.Component {
   static propTypes = {
     initialValues: PropTypes.shape({
@@ -35,7 +33,7 @@ class TermsConfigForm extends React.Component {
   sendCalloutTermInUse = () => {
     this.callout.sendCallout({
       type: 'error',
-      message: <SafeHTMLMessage id="ui-licenses.settings.terms.callout.delete.termInUse" values={{ className: css.error }} />,
+      message: <SafeHTMLMessage id="ui-licenses.settings.terms.callout.delete.termInUse" />,
       timeout: 0,
     });
   }
