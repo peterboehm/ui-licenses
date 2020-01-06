@@ -48,7 +48,7 @@ class TermsConfigForm extends React.Component {
         // If json()ification fails, show the generic error callout.
         response.json()
           .then((error) => {
-            const pattern = new RegExp('violates foreign key constraint.*is still referenced from table', 'ms');
+            const pattern = new RegExp('violates foreign key constraint.*is still referenced from table', 's');
             if (pattern.test(error.message)) {
               this.sendCalloutTermInUse();
             } else {
