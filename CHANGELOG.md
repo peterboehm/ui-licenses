@@ -5,6 +5,7 @@
 * Switched to using `<Spinner>` from Stripes. ERM-635
 * Keyboard navigation and focus improvements. ERM-593 622 628
 * Hid "Delete License" permission set. ERM-615
+* Added @folio/react-intl-safe-html to dependencies. ERM-539
 
 ## 3.6.0 2019-12-04
 * Port ui-licenses to RFF. ERM-487.

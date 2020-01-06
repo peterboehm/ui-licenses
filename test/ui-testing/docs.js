@@ -134,7 +134,7 @@ module.exports.test = (uiTestCtx,
       docs.forEach(doc => {
         it(`should find correctly loaded values for ${doc.name}`, done => {
           nightmare
-            .evaluate((d, field) => {
+            .evaluate((d) => {
               const nameElements = [...document.querySelectorAll('[data-test-document-field-name]')];
               const nameElement = nameElements.find(e => e.value === d.name);
               if (!nameElement) {
@@ -183,7 +183,7 @@ module.exports.test = (uiTestCtx,
       if (editedDoc) {
         it(`should edit license with changed doc ${editedDoc.name}`, done => {
           nightmare
-            .evaluate((d, field) => {
+            .evaluate((d) => {
               const nameElements = [...document.querySelectorAll('[data-test-document-field-name]')];
               const index = nameElements.findIndex(e => e.value === d.docToEdit);
               if (index === -1) {
