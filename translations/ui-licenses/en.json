@@ -99,7 +99,7 @@
   "settings.terms.newLicenseTerm": "New license term",
   "settings.terms.callout.delete.error": "There was an error deleting the term. {error}",
   "settings.terms.callout.delete.success": "Term successfully deleted.",
-  "settings.terms.callout.delete.termInUse": "<strong><span class='{className}'>Error:</span> Term</strong> was not deleted because it is in use on one or more licenses.",
+  "settings.terms.callout.delete.termInUse": "<span class='{className}'><strong>Term</strong> was not deleted because it is in use on one or more licenses.</span>",
   "settings.terms.callout.save.error": "There was an error saving the term. {error}",
   "settings.terms.callout.save.success": "Term successfully saved.",
   "settings.terms.help.label": "A license term 'label' is used when displaying the term to users within Folio and in any other systems that display license terms to users. It should be a short text string that clearly communicates what information is recorded in the term. The Description should be used where further explanation of the term is required for display to users.",
