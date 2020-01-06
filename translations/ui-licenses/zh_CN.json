@@ -114,5 +114,6 @@
     "supplementaryDocs.remove": "移除补充文档",
     "term.removeTerm": "移除条款",
     "delete": "Delete",
-    "edit": "Edit"
+    "edit": "Edit",
+    "settings.terms.callout.delete.termInUse": "<strong>Term</strong> was not deleted because it is in use on one or more licenses."
 }

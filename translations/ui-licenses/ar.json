@@ -83,7 +83,7 @@
     "no": "لا",
     "yes": "نعم",
     "errors.termNameHasNonAlpha": "يمكن أن يحتوي اسم المصطلح على أحرف لاتينية (A-Z) وأرقام غير بادئة فقط",
-    "settings.terms.termCount": "{count, number} محفوظ {count, plural, one {مصطلحًا} other {مصطلحًا}}",
+    "settings.terms.termCount": "{count, number}  {count, plural, one {مصطلحًا} other {مصطلحًا}} محفوظًا",
     "settings.terms.editLicenseTerm": "تحرير مصطلح الرخصة",
     "settings.terms.newLicenseTerm": "مصطلح رخصة جديد",
     "settings.terms.callout.delete.error": "حدث خطأ اثناء حذف المصطلح.{error}",
@@ -114,5 +114,6 @@
     "supplementaryDocs.remove": "إزالة وثيقة تكميلية",
     "term.removeTerm": "إزالة مصطلح",
     "delete": "حذف",
-    "edit": "تحرير"
+    "edit": "تحرير",
+    "settings.terms.callout.delete.termInUse": "<strong>Term</strong> was not deleted because it is in use on one or more licenses."
 }
