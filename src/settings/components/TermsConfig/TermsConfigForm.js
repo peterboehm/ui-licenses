@@ -9,7 +9,7 @@ import { Callout, Pane } from '@folio/stripes/components';
 import stripesFinalForm from '@folio/stripes/final-form';
 import TermsConfigListFieldArray from './TermsConfigListFieldArray';
 
-import css from './TermsConfig.css';
+import css from './styles.css';
 
 class TermsConfigForm extends React.Component {
   static propTypes = {
