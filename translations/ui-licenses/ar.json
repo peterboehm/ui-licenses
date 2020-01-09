@@ -115,5 +115,5 @@
     "term.removeTerm": "إزالة مصطلح",
     "delete": "حذف",
     "edit": "تحرير",
-    "settings.terms.callout.delete.termInUse": "<strong>Term</strong> was not deleted because it is in use on one or more licenses."
+    "settings.terms.callout.delete.termInUse": "لم يتم حذف <strong>المصطلح</strong> لأنه قيد استخدام ترخيص أو أكثر."
 }
