@@ -115,5 +115,5 @@
     "term.removeTerm": "Remove term",
     "delete": "Elimina",
     "edit": "Modifica",
-    "settings.terms.callout.delete.termInUse": "<strong>Term</strong> was not deleted because it is in use on one or more licenses."
+    "settings.terms.callout.delete.termInUse": "<strong>Termine</strong> non è stato eliminato perché è in uso in una o più licenze."
 }

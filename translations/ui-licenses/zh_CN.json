@@ -64,7 +64,7 @@
     "license": "许可证",
     "licensePlural": "{count} {count, plural, one { license } other { licenses }}",
     "errors.termNoteWithoutValue": "必须为此条款设置一个值才能保存附注",
-    "organizations.addOrganizationToLicense": "添加组织到许可证",
+    "organizations.addOrganizationToLicense": "添加组织",
     "errors.termVisibilityWithoutValue": "必须为此条款设置一个值才能更改可见性",
     "prop.termVisibility": "可见性",
     "term.title": "条款{number}",
@@ -113,7 +113,7 @@
     "coreDocs.removeCoreDoc": "移除核心文档",
     "supplementaryDocs.remove": "移除补充文档",
     "term.removeTerm": "移除条款",
-    "delete": "Delete",
-    "edit": "Edit",
-    "settings.terms.callout.delete.termInUse": "<strong>Term</strong> was not deleted because it is in use on one or more licenses."
+    "delete": "删除",
+    "edit": "编辑",
+    "settings.terms.callout.delete.termInUse": "<strong>条款</strong>未被删除，因为正在一个或多个许可证中使用。"
 }
