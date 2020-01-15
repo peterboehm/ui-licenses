@@ -88,14 +88,25 @@ class CreateAmendmentRoute extends React.Component {
   }
 
   handleSubmit = (amendment) => {
+    const { location, match } = this.props;
     const license = get(this.props.resources, 'license.records[0]', {});
+    const originalAmendmentIds = {};
+    (license.amendments || []).forEach(a => { originalAmendmentIds[a.id] = 1; });
 
     this.props.mutator.license
       .PUT({
         ...license,
         amendments: [amendment]
       })
-      .then(this.handleClose);
+      .then(updatedLicense => {
+        let newAmendmentId;
+        (updatedLicense.amendments || []).forEach(a => {
+          if (originalAmendmentIds[a.id] === undefined) {
+            newAmendmentId = a.id;
+          }
+        });
+        this.props.history.push(`/licenses/${match.params.id}/amendments/${newAmendmentId}${location.search}`);
+      });
   }
 
   fetchIsPending = () => {
