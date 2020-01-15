@@ -138,6 +138,15 @@ module.exports.test = (uiTestCtx) => {
         it('should create amendment', done => {
           nightmare
             .click('#clickable-create-amendment')
+            .waitUntilNetworkIdle(1000)
+            .wait('#pane-view-amendment')
+            .then(done)
+            .catch(done);
+        });
+
+        it('should close amendment view pane', done => {
+          nightmare
+            .click('#pane-view-amendment [icon="times"]')
             .wait('#licenseAmendments')
             .then(done)
             .catch(done);
