@@ -86,7 +86,7 @@
     "settings.terms.termCount": "{count, number} sauvegardé {count, plural, one { terme } other { termes }}",
     "settings.terms.editLicenseTerm": "Modifier le terme de la licence",
     "settings.terms.newLicenseTerm": "Nouveau terme de licence",
-    "settings.terms.callout.delete.error": "There was an error deleting the term. {error}",
+    "settings.terms.callout.delete.error": "Une erreur s'est produite lors de la suppression du terme. {error}",
     "settings.terms.callout.delete.success": "Terme supprimé avec succès.",
     "settings.terms.callout.save.error": "Une erreur s'est produite lors de la sauvegarde du terme. {error}",
     "settings.terms.callout.save.success": "Terme sauvegardé avec succès.",
