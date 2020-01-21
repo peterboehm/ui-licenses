@@ -2,6 +2,7 @@
 
 const NUMBER = Math.round(Math.random() * 100000);
 const LICENSE_NAME = `Amendments License #${NUMBER}`;
+
 const AMENDMENTS = [{
   name: `Amendment ${NUMBER}.1`,
   status: 'Not yet active',
@@ -11,12 +12,12 @@ const AMENDMENTS = [{
   coreDocs: ['C1', 'C2'],
   supplementaryDocs: ['S1', 'S2'],
   terms: [{
-    name: 'otherRestrictions',
+    input: 'O',
     label: 'Other restrictions',
+    name: 'otherRestrictions',
     value: 'A Few',
   }],
-
-  editedName: `Amendment ${NUMBER}.1.1`,
+  editedName: '.1',
 }, {
   name: `Amendment ${NUMBER}.2`,
   status: 'Not yet active',
@@ -32,7 +33,7 @@ module.exports.test = (uiTestCtx) => {
 
     this.timeout(Number(config.test_timeout));
 
-    describe('login > open licenses > create license > edit contacts > logout', () => {
+    describe('login > open licenses > create license > add amendments > logout', () => {
       before((done) => {
         helpers.login(nightmare, config, done);
       });
@@ -82,7 +83,6 @@ module.exports.test = (uiTestCtx) => {
           if (amendment.startDate) chain = chain.insert('#edit-amendment-start-date', amendment.startDate);
           if (amendment.endDate) chain = chain.insert('#edit-amendment-end-date', amendment.endDate);
           if (amendment.openEnded) chain = chain.click('#edit-amendment-open-ended');
-
           chain.then(done).catch(done);
         });
 
@@ -92,11 +92,15 @@ module.exports.test = (uiTestCtx) => {
 
             amendment.terms.forEach(term => {
               chain = chain
+                .wait('#add-term-btn')
                 .click('#add-term-btn')
+                .wait(500)
                 .evaluate(() => [...document.querySelectorAll('[data-test-term]')].length - 1)
                 .then(index => {
                   nightmare
-                    .type(`#edit-term-${index}-name`, term.label)
+                    .wait(`#edit-term-${index}-name`)
+                    .type(`#edit-term-${index}-name`, term.input)
+                    .wait(`#edit-term-${index}-value`)
                     .type(`#edit-term-${index}-value`, term.value);
                 });
             });
@@ -139,7 +143,6 @@ module.exports.test = (uiTestCtx) => {
           nightmare
             .click('#clickable-create-amendment')
             .waitUntilNetworkIdle(1000)
-            .wait('#pane-view-amendment')
             .then(done)
             .catch(done);
         });
@@ -315,17 +318,17 @@ module.exports.test = (uiTestCtx) => {
         }
 
         if (amendment.editedName) {
-          it(`should edit amendment name to ${amendment.name}${amendment.editedName}`, done => {
+          it(`should edit amendment name from ${amendment.name} to ${amendment.name}${amendment.editedName}`, done => {
             nightmare
               .click('#clickable-edit-amendment')
               .wait('#edit-amendment-name')
-              .insert('#edit-amendment-name', '')
               .insert('#edit-amendment-name', amendment.editedName)
               .click('#clickable-update-amendment')
+              .waitUntilNetworkIdle(1000)
               .wait('#amendment-info')
               .evaluate(_amendment => {
                 const amendmentName = document.querySelector('[data-test-amendment-name]').textContent;
-                if (amendmentName !== _amendment.name + _amendment.editedName) throw Error(`Expected amendment name to be ${_amendment.editedName} and found ${amendmentName}`);
+                if (amendmentName !== _amendment.name + _amendment.editedName) throw Error(`Expected amendment name to be ${_amendment.name}${_amendment.editedName} and found ${amendmentName}`);
               }, amendment)
               .then(done)
               .catch(done);

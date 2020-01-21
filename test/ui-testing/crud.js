@@ -12,7 +12,7 @@ const generateLicenseValues = () => {
     startDate: '2020-01-01',
     endDate: '2020-01-11',
 
-    editedName: `Edited License #${number}`,
+    editedName: ' Edited',
     editedType: 'National',
     editedStatus: 'Active',
   };
@@ -166,7 +166,6 @@ module.exports.test = (uiTestCtx) => {
           .wait('#clickable-edit-license')
           .click('#clickable-edit-license')
           .wait('#edit-license-name')
-          .insert('#edit-license-name', '')
           .insert('#edit-license-name', values.editedName)
 
           .click('#datepicker-clear-button-edit-license-start-date')
