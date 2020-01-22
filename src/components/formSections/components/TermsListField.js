@@ -142,6 +142,14 @@ export default class TermsListField extends React.Component {
       if ((note && !value) || (publicNote && !value)) {
         errors[term.value] = <FormattedMessage id="ui-licenses.errors.termNoteWithoutValue" />;
       }
+
+      if (term.type === TERM_TYPE_NUMBER) {
+        const min = Number.MIN_SAFE_INTEGER;
+        const max = Number.MAX_SAFE_INTEGER;
+        if (value < min || value > max) {
+          errors[term.value] = <FormattedMessage id="ui-licenses.errors.termValueNotInRange" values={{ min, max }} />;
+        }
+      }
     });
 
     this.setState({ errors });
