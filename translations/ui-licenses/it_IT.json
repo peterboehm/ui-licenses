@@ -115,5 +115,6 @@
     "term.removeTerm": "Remove term",
     "delete": "Elimina",
     "edit": "Modifica",
-    "settings.terms.callout.delete.termInUse": "<strong>Termine</strong> non è stato eliminato perché è in uso in una o più licenze."
+    "settings.terms.callout.delete.termInUse": "<strong>Termine</strong> non è stato eliminato perché è in uso in una o più licenze.",
+    "errors.termValueNotInRange": "Please enter a whole number in the range {min} to {max} to continue"
 }

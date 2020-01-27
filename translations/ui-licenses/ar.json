@@ -115,5 +115,6 @@
     "term.removeTerm": "إزالة مصطلح",
     "delete": "حذف",
     "edit": "تحرير",
-    "settings.terms.callout.delete.termInUse": "لم يتم حذف <strong>المصطلح</strong> لأنه قيد استخدام ترخيص أو أكثر."
+    "settings.terms.callout.delete.termInUse": "لم يتم حذف <strong>المصطلح</strong> لأنه قيد استخدام ترخيص أو أكثر.",
+    "errors.termValueNotInRange": "يرجى إدخال رقم كامل في النطاق من {min} إلى {max} للمتابعة"
 }
