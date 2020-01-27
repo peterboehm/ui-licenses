@@ -115,5 +115,6 @@
     "term.removeTerm": "Remover termo",
     "delete": "Excluir",
     "edit": "Editar",
-    "settings.terms.callout.delete.termInUse": "<strong>Termo</strong> não foi excluído porque está sendo usado em uma ou mais licenças."
+    "settings.terms.callout.delete.termInUse": "<strong>Termo</strong> não foi excluído porque está sendo usado em uma ou mais licenças.",
+    "errors.termValueNotInRange": "Digite um número inteiro no intervalo de {min} a {max} para continuar"
 }

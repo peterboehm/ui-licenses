@@ -115,5 +115,6 @@
     "term.removeTerm": "移除条款",
     "delete": "删除",
     "edit": "编辑",
-    "settings.terms.callout.delete.termInUse": "<strong>条款</strong>未被删除，因为正在一个或多个许可证中使用。"
+    "settings.terms.callout.delete.termInUse": "<strong>条款</strong>未被删除，因为正在一个或多个许可证中使用。",
+    "errors.termValueNotInRange": "Please enter a whole number in the range {min} to {max} to continue"
 }

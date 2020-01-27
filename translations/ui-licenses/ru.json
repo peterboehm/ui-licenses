@@ -115,5 +115,6 @@
     "term.removeTerm": "Удалить термин",
     "delete": "Delete",
     "edit": "Edit",
-    "settings.terms.callout.delete.termInUse": "<strong>Term</strong> was not deleted because it is in use on one or more licenses."
+    "settings.terms.callout.delete.termInUse": "<strong>Term</strong> was not deleted because it is in use on one or more licenses.",
+    "errors.termValueNotInRange": "Please enter a whole number in the range {min} to {max} to continue"
 }
