@@ -44,6 +44,7 @@ module.exports.test = (uiTestCtx) => {
         nightmare
           .wait('a[href="/settings/licenses"]')
           .click('a[href="/settings/licenses"]')
+          .wait('a[href="/settings/licenses/terms"]')
           .click('a[href="/settings/licenses/terms"]')
           .waitUntilNetworkIdle(2000)
           .then(done)
