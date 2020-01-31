@@ -206,10 +206,133 @@ export default class Licenses extends React.Component {
     const query = queryGetter() || {};
     const count = source ? source.totalCount() : 0;
     const sortOrder = query.sort || '';
+
+    const getFilterStringToObject = ({
+      rawFilterNames,
+    }) => {
+      return (str) => {
+        const filterObject = {};
+        const filterArray = str.split(',');
+        filterArray.forEach(filter => {
+          const isRawFilter = rawFilterNames.some(rawFilterName => {
+            if (filter.includes(rawFilterName)) {
+              filterObject[rawFilterName] = filter;
+              return true;
+            }
+
+            return false;
+          });
+
+          if (isRawFilter === false) {
+            const filters = filter.split('||');
+            filters.forEach(f => {
+              const [filterName, filterValue] = f.split('==');
+              if (!filterObject[filterName]) filterObject[filterName] = [];
+              filterObject[filterName].push(filterValue);
+            });
+          }
+        });
+        return filterObject;
+      };
+    };
+
+    const filterStringToObject = getFilterStringToObject({ rawFilterNames: ['customProperties'] });
+
+    // const filterStringToObject = (str) => {
+    //   const filterObject = {};
+    //   const filterArray = str.split(',');
+    //   filterArray.forEach(f => {
+    //     const filter = f.split('.');
+    //     if (filterObject[filter[0]]) {
+    //       filterObject[filter[0]].push(filter[1]);
+    //     } else {
+    //       filterObject[filter[0]] = [filter[1]];
+    //     }
+    //   });
+    //   return filterObject;
+    // };
+
+    const getBuildFilterString = ({
+      rawFilterNames,
+    }) => {
+      return (activeFilters) => {
+        const enabledFilters = Object.keys(activeFilters)
+          .filter((filterName) => {
+            const filters = activeFilters[filterName];
+            if (!Array.isArray(filters) && !typeof filters === 'string') return false;
+
+            return filters.length;
+          });
+
+        const standardFilters = enabledFilters.filter(filterName => !rawFilterNames.includes(filterName));
+        const rawFilters = enabledFilters.filter(filterName => rawFilterNames.includes(filterName));
+
+        const standardFilterString = standardFilters
+          .map(filterName => {
+            return activeFilters[filterName]
+              .map(filterValue => `${filterName}==${filterValue}`)
+              .join('||');
+          })
+          .join(',');
+
+        const rawFilterString = rawFilters
+          .map(filterName => activeFilters[filterName])
+          .join(',');
+
+        if (!standardFilterString) return rawFilterString;
+        if (!rawFilterString) return standardFilterString;
+
+        return `${standardFilterString},${rawFilterString}`;
+      };
+    };
+
+    const customBuildFilterString = getBuildFilterString({ rawFilterNames: ['customProperties'] });
+
+    const customBuildFilterParams = activeFilters => ({
+      filters: customBuildFilterString(activeFilters)
+    });
+
+    // output is ?filters=name.value,name.value,name.value
+    // const buildFilterString = (activeFilters) => {
+    //   // activeFilters is of form SASQ.state.filterFields, ie, `props.initialFilterState`
+    //   const newFiltersString = Object.keys(activeFilters)
+    //     .filter((filterName) => Array.isArray(activeFilters[filterName]) && activeFilters[filterName].length)
+    //     .map((filterName) => {
+    //       return activeFilters[filterName].map((filterValue) => {
+    //         return `${filterName}.${filterValue}`;
+    //       }).join(',');
+    //     }).join(',');
+
+    //   return newFiltersString;
+    // };
+
+    // const buildFilterParams = (activeFilters) => {
+    //   // activeFilters is of form SASQ.state.filterFields, ie, `props.initialFilterState`
+    //   const filterString = buildFilterString(activeFilters);
+    //   return { filters: filterString };
+    // };
+
     return (
       <div data-test-licenses ref={contentRef}>
         <SearchAndSortQuery
-          initialFilterState={{ status: ['Active'] }}
+          filterParamsMapping={{
+            filters: filterStringToObject,
+          }}
+          filtersToString={customBuildFilterString}
+          filtersToParams={customBuildFilterParams}
+          // initialFilterState={{
+          //   status: ['Active'],
+          //   customProperties: [
+          //     'remoteAccess.value==1883e41b6fe75466016fe7a1bd9e001f||remoteAccess.value==1883e41b6fe75466016fe7a1bd9e001e',
+          //     'concurrentAccess.value>10',
+          //     'remoteAccess.value!=deadbeef',
+          //   ]
+            // 'customProperties.remoteAccess.value': [
+            //   '1883e41b6fe75466016fe7a1bd9e001f',
+            //   '1883e41b6fe75466016fe7a1bd90001e'
+            // ]
+          // }}
+          initialFilterState={{ 'status.value': ['active'] }}
           initialSortState={{ sort: 'name' }}
           initialSearchState={{ query: '' }}
           queryGetter={queryGetter}
