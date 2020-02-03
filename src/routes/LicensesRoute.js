@@ -53,6 +53,11 @@ class LicensesRoute extends React.Component {
       },
       records: 'tags',
     },
+    terms: {
+      type: 'okapi',
+      path: 'licenses/custprops',
+      shouldRefresh: () => false,
+    },
     query: { initialValue: {} },
     resultCount: { initialValue: INITIAL_RESULT_COUNT },
   });
@@ -148,6 +153,7 @@ class LicensesRoute extends React.Component {
           typeValues: get(resources, 'typeValues.records', []),
           orgRoleValues: get(resources, 'orgRoleValues.records', []),
           tagsValues: get(resources, 'tagsValues.records', []),
+          terms: get(resources, 'terms.records', []),
         }}
         selectedRecordId={match.params.id}
         onNeedMoreData={this.handleNeedMoreData}

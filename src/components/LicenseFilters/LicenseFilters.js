@@ -1,10 +1,13 @@
+/* eslint-disable react/jsx-closing-tag-location */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
-import { Accordion, AccordionSet, FilterAccordionHeader, Selection, Button } from '@folio/stripes/components';
+import { Accordion, AccordionSet, FilterAccordionHeader, Selection, KeyValue } from '@folio/stripes/components';
 import { CheckboxFilter, MultiSelectionFilter } from '@folio/stripes/smart-components';
 import { OrganizationSelection } from '@folio/stripes-erm-components';
+
+import TermFilters from './TermFilters';
 
 const FILTERS = [
   'status',
@@ -160,24 +163,7 @@ export default class LicenseFilters extends React.Component {
   }
 
   renderTermFilters = () => {
-    const { activeFilters } = this.props;
-    const termFilters = activeFilters.customProperties || [];
-
-    return (
-      <Button
-        onClick={() => {
-          this.props.filterHandlers.state({
-            ...activeFilters,
-            customProperties: [
-              'customProperties.remoteAccess.value==1883e41b6fe75466016fe7a1bd9e001f||customProperties.remoteAccess.value==1883e41b6fe75466016fe7a1bd90001e',
-              'customProperties.concurrentAccess.value>10',
-            ].join('&&')
-          });
-        }}
-      >
-        Set Term Filters
-      </Button>
-    );
+    return <TermFilters {...this.props} />;
   }
 
   render() {
