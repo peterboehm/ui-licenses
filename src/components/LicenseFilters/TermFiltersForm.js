@@ -1,30 +1,27 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { Form, Field } from 'react-final-form';
+import { Field } from 'react-final-form';
 import { FieldArray } from 'react-final-form-arrays';
-import arrayMutators from 'final-form-arrays';
 
 import {
-  Accordion,
   Button,
-  Card,
   Col,
-  FilterAccordionHeader,
   IconButton,
+  Layout,
   Modal,
   ModalFooter,
-  MultiSelection,
   Row,
   Selection,
   TextField,
 } from '@folio/stripes/components';
 
-import stripesFinalForm from '@folio/stripes/final-form'
+import stripesFinalForm from '@folio/stripes/final-form';
 
-const TERM_TYPE_TEXT = 'com.k_int.web.toolkit.custprops.types.CustomPropertyText'; // eslint-disable-line no-unused-vars
-const TERM_TYPE_NUMBER = 'com.k_int.web.toolkit.custprops.types.CustomPropertyInteger';
-const TERM_TYPE_SELECT = 'com.k_int.web.toolkit.custprops.types.CustomPropertyRefdata';
+import {
+  EditCard,
+  customPropertyTypes,
+} from '@folio/stripes-erm-components';
 
 class TermFiltersForm extends React.Component {
   static propTypes = {
@@ -37,6 +34,11 @@ class TermFiltersForm extends React.Component {
     ),
     filterHandlers: PropTypes.shape({
       state: PropTypes.func.isRequired,
+    }),
+    form: PropTypes.shape({
+      mutators: PropTypes.shape({
+        push: PropTypes.func.isRequired,
+      }),
     }),
     handleSubmit: PropTypes.func.isRequired,
   };
@@ -84,86 +86,103 @@ class TermFiltersForm extends React.Component {
           <Modal
             dismissible
             enforceFocus={false}
+            onClose={() => this.setState({ editingFilters: false })}
             open
             footer={this.renderFooter()}
             label="Term filter builder"
-            size="large"
+            size="medium"
           >
             <FieldArray name="filters">
               {({ fields }) => fields.map((name, index) => (
-                <Card
-                  headerStart={`Term filter ${index + 1}`}
-                >
-                  <Field
-                    name={`${name}.customProperty`}
-                    component={Selection}
-                    dataOptions={terms.map(t => ({ label: t.label, value: t.name }))}
-                  />
-                  <FieldArray name={`${name}.rules`}>
-                    {({ fields: ruleFields }) => ruleFields.map((ruleName, ruleIndex) => {
-                      const termDefinition = terms.find(t => t.name === fields.value[index].customProperty);
-                      const termType = termDefinition?.type ?? TERM_TYPE_NUMBER;
-
-                      let operatorOptions;
-                      let ValueComponent;
-                      let valueOptions;
-                      let valueType;
-
-                      if (termType === TERM_TYPE_NUMBER) {
-                        operatorOptions = [
-                          { label: 'equals', value: '==' },
-                          { label: 'does not equal', value: '!=' },
-                          { label: 'is greater than or equal', value: '>=' },
-                          { label: 'is less than or equal', value: '<=' },
-                        ];
-                        ValueComponent = TextField;
-                        valueType = 'number';
-                      } else if (termType === TERM_TYPE_SELECT) {
-                        operatorOptions = [
-                          { label: 'is', value: '==' },
-                          { label: 'is not', value: '!=' },
-                        ];
-                        ValueComponent = Selection;
-                        valueOptions = termDefinition.category.values.map(rdv => ({ label: rdv.label, value: rdv.id }));
-                      }
-
-                      return (
-                        <Row>
-                          <Col xs={2}>
-                            {ruleIndex === 0 ? null : 'OR'}
-                          </Col>
-                          <Col xs={4}>
-                            <Field
-                              name={`${ruleName}.operator`}
-                              component={Selection}
-                              dataOptions={operatorOptions}
-                            />
-                          </Col>
-                          <Col xs={4}>
-                            <Field
-                              name={`${ruleName}.value`}
-                              component={ValueComponent}
-                              dataOptions={valueOptions}
-                              type={valueType}
-                            />
-                          </Col>
-                          <Col xs={2}>
-                            <IconButton
-                              icon="trash"
-                              onClick={() => ruleFields.remove(ruleIndex)}
-                            />
-                          </Col>
-                        </Row>
-                      );
-                    })}
-                  </FieldArray>
-                  <Button
-                    disabled={!fields.value[index]?.customProperty}
-                    onClick={() => push(`${name}.rules`)}
+                <React.Fragment key={name}>
+                  <EditCard
+                    header={`Term filter ${index + 1}`}
+                    key={name}
+                    onDelete={() => fields.remove(index)}
                   >
-                    Add rule
-                  </Button>
-                </Card>
+                    <Field
+                      name={`${name}.customProperty`}
+                      component={Selection}
+                      dataOptions={terms.map(t => ({ label: t.label, value: t.name }))}
+                    />
+                    <FieldArray name={`${name}.rules`}>
+                      {({ fields: ruleFields }) => ruleFields.map((ruleFieldName, ruleFieldIndex) => {
+                        const termDefinition = terms.find(t => t.name === fields.value[index].customProperty);
+                        const termType = termDefinition?.type ?? customPropertyTypes.NUMBER;
+
+                        let operatorOptions;
+                        let ValueComponent;
+                        const valueComponentProps = {};
+
+                        if (termType === customPropertyTypes.NUMBER) {
+                          operatorOptions = [
+                            { label: 'equals', value: '==' },
+                            { label: 'does not equal', value: '!=' },
+                            { label: 'is greater than or equal', value: '>=' },
+                            { label: 'is less than or equal', value: '<=' },
+                          ];
+
+                          ValueComponent = TextField;
+                          valueComponentProps.type = 'number';
+                        } else if (termType === customPropertyTypes.SELECT) {
+                          operatorOptions = [
+                            { label: 'is', value: '==' },
+                            { label: 'is not', value: '!=' },
+                          ];
+
+                          ValueComponent = Selection;
+                          valueComponentProps.dataOptions = termDefinition.category.values.map(rdv => ({ label: rdv.label, value: rdv.id }));
+                        } else {
+                          operatorOptions = [
+                            { label: 'contains', value: '=~' },
+                            { label: 'does not contain', value: '!~' },
+                          ];
+
+                          ValueComponent = TextField;
+                        }
+
+                        return (
+                          <Row key={ruleFieldName}>
+                            <Col xs={2}>
+                              {ruleFieldIndex === 0 ? null : 'OR'}
+                            </Col>
+                            <Col xs={4}>
+                              <Field
+                                name={`${ruleFieldName}.operator`}
+                                component={Selection}
+                                dataOptions={operatorOptions}
+                              />
+                            </Col>
+                            <Col xs={4}>
+                              <Field
+                                name={`${ruleFieldName}.value`}
+                                component={ValueComponent}
+                                {...valueComponentProps}
+                              />
+                            </Col>
+                            <Col xs={2}>
+                              <IconButton
+                                icon="trash"
+                                onClick={() => ruleFields.remove(ruleFieldIndex)}
+                              />
+                            </Col>
+                          </Row>
+                        );
+                      })}
+                    </FieldArray>
+                    <Button
+                      disabled={!fields.value[index]?.customProperty}
+                      onClick={() => push(`${name}.rules`)}
+                    >
+                      Add rule
+                    </Button>
+                  </EditCard>
+                  {index <= fields.value.length - 2 && (
+                    <Layout className="textCentered">
+                      AND
+                    </Layout>
+                  )}
+                </React.Fragment>
               ))}
             </FieldArray>
             <Button onClick={() => push('filters')}>
@@ -173,21 +192,6 @@ class TermFiltersForm extends React.Component {
         }
       </>
     );
-    /*
-    <Button
-      onClick={() => {
-        filterHandlers.state({
-          ...activeFilters,
-          customProperties: [
-            'customProperties.remoteAccess.value==1883e41b6fe75466016fe7a1bd9e001f||customProperties.remoteAccess.value==1883e41b6fe75466016fe7a1bd90001e',
-            'customProperties.concurrentAccess.value>10',
-          ].join('&&')
-        });
-      }}
-    >
-      Edit Term Filters
-    </Button>
-    */
   }
 }
 
