@@ -292,34 +292,53 @@ export default class Licenses extends React.Component {
       filters: customBuildFilterString(activeFilters)
     });
 
-    // output is ?filters=name.value,name.value,name.value
-    // const buildFilterString = (activeFilters) => {
-    //   // activeFilters is of form SASQ.state.filterFields, ie, `props.initialFilterState`
-    //   const newFiltersString = Object.keys(activeFilters)
-    //     .filter((filterName) => Array.isArray(activeFilters[filterName]) && activeFilters[filterName].length)
-    //     .map((filterName) => {
-    //       return activeFilters[filterName].map((filterValue) => {
-    //         return `${filterName}.${filterValue}`;
-    //       }).join(',');
-    //     }).join(',');
+    const simpleFilterStringToObject = str => {
+      const filterMap = {};
+      str.split(',').forEach(filter => {
+        const [filterName, ...rest] = filter.split('==');
+        const filterValue = rest.join('==');
+        if (!filterMap[filterName]) filterMap[filterName] = [];
+        filterMap[filterName].push(filterValue);
+      });
+      return filterMap;
+    };
 
-    //   return newFiltersString;
-    // };
+    const simpleBuildFilterString = activeFilters => {
+      const enabledFilters = Object.keys(activeFilters)
+        .filter((filterName) => {
+          const filters = activeFilters[filterName];
+          if (!Array.isArray(filters) && !typeof filters === 'string') return false;
 
-    // const buildFilterParams = (activeFilters) => {
-    //   // activeFilters is of form SASQ.state.filterFields, ie, `props.initialFilterState`
-    //   const filterString = buildFilterString(activeFilters);
-    //   return { filters: filterString };
-    // };
+          return filters.length;
+        });
+
+      return enabledFilters
+        .map(filterName => {
+          return activeFilters[filterName]
+            .map(filterValue => `${filterName}==${filterValue}`)
+            .join(',');
+        })
+        .join(',');
+    };
+
+    const simpleBuildFilterParams = activeFilters => ({
+      filters: simpleBuildFilterString(activeFilters),
+    });
 
     return (
       <div data-test-licenses ref={contentRef}>
         <SearchAndSortQuery
+          // filterParamsMapping={{
+          //   filters: filterStringToObject,
+          // }}
+          // filtersToString={customBuildFilterString}
+          // filtersToParams={customBuildFilterParams}
           filterParamsMapping={{
-            filters: filterStringToObject,
+            filters: simpleFilterStringToObject,
           }}
-          filtersToString={customBuildFilterString}
-          filtersToParams={customBuildFilterParams}
+          filtersToString={simpleBuildFilterString}
+          filtersToParams={simpleBuildFilterParams}
+
           // initialFilterState={{
           //   status: ['Active'],
           //   customProperties: [
@@ -332,7 +351,7 @@ export default class Licenses extends React.Component {
             //   '1883e41b6fe75466016fe7a1bd90001e'
             // ]
           // }}
-          initialFilterState={{ 'status.value': ['active'] }}
+          initialFilterState={{ status: ['active'] }}
           initialSortState={{ sort: 'name' }}
           initialSearchState={{ query: '' }}
           queryGetter={queryGetter}

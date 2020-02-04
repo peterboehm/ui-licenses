@@ -66,17 +66,6 @@ class TermFiltersForm extends React.Component {
     </ModalFooter>
   );
 
-  getRuleFieldType = (filterValue = {}) => {
-    if (!filterValue.customProperty) return null;
-
-    const termDefinition = this.props.terms.find(t => t.name === filterValue.customProperty);
-
-    if (termDefinition?.type === TERM_TYPE_NUMBER) return NumberRulesFieldArray;
-    if (termDefinition?.type === TERM_TYPE_SELECT) return SelectRulesFieldArray;
-
-    return null;
-  }
-
   render() {
     const {
       form: {

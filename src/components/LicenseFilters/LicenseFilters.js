@@ -12,7 +12,6 @@ import TermFilters from './TermFilters';
 const FILTERS = [
   'status',
   'type',
-  'tags'
 ];
 
 export default class LicenseFilters extends React.Component {
@@ -45,16 +44,18 @@ export default class LicenseFilters extends React.Component {
       }
     });
 
+    if ((props.data?.tags?.length ?? 0) !== state.tags.length) {
+      newState.tags = props.data.tags.map(({ label }) => ({ value: label, label }));
+    }
+
     if (Object.keys(newState).length) return newState;
 
     return null;
   }
 
   renderCheckboxFilter = (name, props) => {
-    const internalName = `${name}.value`;
-
     const { activeFilters } = this.props;
-    const groupFilters = activeFilters[internalName] || [];
+    const groupFilters = activeFilters[name] || [];
 
     return (
       <Accordion
@@ -62,13 +63,13 @@ export default class LicenseFilters extends React.Component {
         displayClearButton={groupFilters.length > 0}
         header={FilterAccordionHeader}
         label={<FormattedMessage id={`ui-licenses.prop.${name}`} />}
-        onClearFilter={() => { this.props.filterHandlers.clearGroup(internalName); }}
+        onClearFilter={() => { this.props.filterHandlers.clearGroup(name); }}
         separator={false}
         {...props}
       >
         <CheckboxFilter
           dataOptions={this.state[name]}
-          name={internalName}
+          name={name}
           onChange={(group) => { this.props.filterHandlers.state({ ...activeFilters, [group.name]: group.values }); }}
           selectedValues={groupFilters}
         />
@@ -78,7 +79,7 @@ export default class LicenseFilters extends React.Component {
 
   renderOrganizationFilter = () => {
     const { activeFilters } = this.props;
-    const orgFilters = activeFilters['orgs.org'] || [];
+    const orgFilters = activeFilters.org || [];
 
     return (
       <Accordion
@@ -90,7 +91,7 @@ export default class LicenseFilters extends React.Component {
           this.props.filterHandlers.state({
             ...activeFilters,
             role: [],
-            'orgs.org': [],
+            org: [],
           });
         }}
         separator={false}
@@ -99,7 +100,7 @@ export default class LicenseFilters extends React.Component {
           path="licenses/org"
           input={{
             name: 'license-orgs-filter',
-            onChange: value => this.props.filterHandlers.state({ ...activeFilters, 'orgs.org': [value] }),
+            onChange: value => this.props.filterHandlers.state({ ...activeFilters, org: [value] }),
             value: orgFilters[0] || '',
           }}
         />
@@ -115,8 +116,8 @@ export default class LicenseFilters extends React.Component {
     }));
 
     const { activeFilters } = this.props;
-    const orgFilters = activeFilters['orgs.org'] || [];
-    const roleFilters = activeFilters['orgs.role'] || [];
+    const orgFilters = activeFilters.org || [];
+    const roleFilters = activeFilters.role || [];
 
     return (
       <Accordion
@@ -124,14 +125,14 @@ export default class LicenseFilters extends React.Component {
         displayClearButton={roleFilters.length > 0}
         header={FilterAccordionHeader}
         label={<FormattedMessage id="ui-licenses.filters.organizationRole" />}
-        onClearFilter={() => { this.props.filterHandlers.clearGroup('orgs.role'); }}
+        onClearFilter={() => { this.props.filterHandlers.clearGroup('role'); }}
         separator={false}
       >
         <Selection
           dataOptions={dataOptions}
           disabled={orgFilters.length === 0}
           value={roleFilters[0] || ''}
-          onChange={value => this.props.filterHandlers.state({ ...activeFilters, 'orgs.role': [value] })}
+          onChange={value => this.props.filterHandlers.state({ ...activeFilters, role: [value] })}
         />
       </Accordion>
     );
@@ -139,7 +140,7 @@ export default class LicenseFilters extends React.Component {
 
   renderTagsFilter = () => {
     const { activeFilters } = this.props;
-    const tagFilters = activeFilters['tags.value'] || [];
+    const tagFilters = activeFilters.tags || [];
 
     return (
       <Accordion
@@ -148,14 +149,14 @@ export default class LicenseFilters extends React.Component {
         displayClearButton={tagFilters.length > 0}
         header={FilterAccordionHeader}
         label={<FormattedMessage id="ui-licenses.tags" />}
-        onClearFilter={() => { this.props.filterHandlers.clearGroup('tags.value'); }}
+        onClearFilter={() => { this.props.filterHandlers.clearGroup('tags'); }}
         separator={false}
       >
         <MultiSelectionFilter
           dataOptions={this.state.tags}
           id="tags-filter"
-          name="tags.value"
-          onChange={e => this.props.filterHandlers.state({ ...activeFilters, 'tags.value': e.values })}
+          name="tags"
+          onChange={e => this.props.filterHandlers.state({ ...activeFilters, tags: e.values })}
           selectedValues={tagFilters}
         />
       </Accordion>

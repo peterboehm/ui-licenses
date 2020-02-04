@@ -22,23 +22,22 @@ export default class TermFilters extends React.Component {
 
     console.log('Term Filters:', filters);
 
-    const filterString = filters
+    const filterStrings = filters
       .map(filter => filter.rules
         .map(rule => `customProperties.${filter.customProperty}.value${rule.operator}${rule.value}`)
-        .join('||'))
-      .join('&&');
+        .join('||'));
 
-    console.log('Term Filter String:', filterString);
+    console.log('Term Filter Strings:', filterStrings);
 
-    filterHandlers.state({ ...activeFilters, customProperties: filterString });
+    filterHandlers.state({ ...activeFilters, terms: filterStrings });
   }
 
   render() {
     const { activeFilters, data, filterHandlers } = this.props;
 
     let numberOfFilters = 0;
-    const filterString = activeFilters.customProperties;
-    const filters = !filterString ? [] : filterString.split('&&').map(filter => {
+    const filterStrings = activeFilters.terms || [];
+    const filters = filterStrings.map(filter => {
       let customProperty;
       const rules = filter.split('||').map(ruleString => {
         // ruleString is constructed in this.handleSubmit passed to TermFiltersForm
@@ -66,7 +65,7 @@ export default class TermFilters extends React.Component {
         displayClearButton={numberOfFilters > 0}
         header={FilterAccordionHeader}
         label={<FormattedMessage id="ui-licenses.section.terms" />}
-        onClearFilter={() => filterHandlers.state({ ...activeFilters, customProperties: '' })}
+        onClearFilter={() => filterHandlers.state({ ...activeFilters, terms: [] })}
         separator={false}
       >
         {`${numberOfFilters} term filters applied`}

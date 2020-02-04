@@ -23,10 +23,13 @@ class LicensesRoute extends React.Component {
       path: 'licenses/licenses',
       params: generateQueryParams({
         searchKey: 'name',
-        // filterKeys: {
-        //   orgs: 'orgs.org',
-        //   role: 'orgs.role',
-        // },
+        filterKeys: {
+          org: 'orgs.org',
+          role: 'orgs.role',
+          status: 'status.value',
+          tags: 'tags.value',
+          type: 'type.value'
+        },
       })
     },
     statusValues: {
@@ -44,7 +47,7 @@ class LicensesRoute extends React.Component {
       path: 'licenses/refdata/LicenseOrg/role',
       shouldRefresh: () => false,
     },
-    tagsValues: {
+    tags: {
       type: 'okapi',
       path: 'tags',
       params: {
@@ -152,7 +155,7 @@ class LicensesRoute extends React.Component {
           statusValues: get(resources, 'statusValues.records', []),
           typeValues: get(resources, 'typeValues.records', []),
           orgRoleValues: get(resources, 'orgRoleValues.records', []),
-          tagsValues: get(resources, 'tagsValues.records', []),
+          tags: get(resources, 'tags.records', []),
           terms: get(resources, 'terms.records', []),
         }}
         selectedRecordId={match.params.id}
