@@ -159,15 +159,16 @@ module.exports.test = (uiTestCtx) => {
 
       it('should delete the note', done => {
         nightmare
-          .wait('#notes-list div[aria-rowindex="2"]')
-          .click('#notes-list div[aria-rowindex="2"]')
+          .wait('#notes-list [aria-rowindex="2"]')
+          .click('#notes-list [aria-rowindex="2"]')
           .waitUntilNetworkIdle(2000)
-          .wait('[class*=paneHeaderCenterButton]')
-          .click('[class*=paneHeaderCenterButton]')
+          .wait('[data-test-pane-header-actions-button]')
+          .click('[data-test-pane-header-actions-button]')
           .wait('[data-test-note-delete]')
           .click('[data-test-note-delete]')
           .wait('#clickable-confirm-delete-note-confirm')
           .click('#clickable-confirm-delete-note-confirm')
+          .waitUntilNetworkIdle(2000)
           .evaluate(note => {
             const notesRows = [...document.querySelectorAll('#notes-list')].map(e => e.textContent);
             const noteElement = notesRows.find(r => r.indexOf(note) >= 0);
