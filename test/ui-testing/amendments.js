@@ -92,16 +92,16 @@ module.exports.test = (uiTestCtx) => {
 
             amendment.terms.forEach(term => {
               chain = chain
-                .wait('#add-term-btn')
-                .click('#add-term-btn')
+                .wait('#add-customproperty-btn')
+                .click('#add-customproperty-btn')
                 .wait(500)
-                .evaluate(() => [...document.querySelectorAll('[data-test-term]')].length - 1)
+                .evaluate(() => [...document.querySelectorAll('[data-test-customproperty]')].length - 1)
                 .then(index => {
                   nightmare
-                    .wait(`#edit-term-${index}-name`)
-                    .type(`#edit-term-${index}-name`, term.input)
-                    .wait(`#edit-term-${index}-value`)
-                    .type(`#edit-term-${index}-value`, term.value);
+                    .wait(`#edit-customproperty-${index}-name`)
+                    .type(`#edit-customproperty-${index}-name`, term.input)
+                    .wait(`#edit-customproperty-${index}-value`)
+                    .type(`#edit-customproperty-${index}-value`, term.value);
                 });
             });
 
@@ -275,7 +275,7 @@ module.exports.test = (uiTestCtx) => {
             amendment.terms.forEach(term => {
               chain = chain
                 .evaluate(_term => {
-                  const termValueNode = document.querySelector(`[data-test-term-value="${_term.name}"]`);
+                  const termValueNode = document.querySelector(`[data-test-customproperty-value="${_term.name}"]`);
                   if (!termValueNode) throw Error(`Failed to find term value for ${_term.label}`);
                   if (termValueNode.textContent !== _term.value) throw Error(`Expected term value to be ${_term.value} and found ${termValueNode.textContent}.`);
                 }, term);

@@ -7,48 +7,63 @@ import { FieldArray } from 'react-final-form-arrays';
 
 import { Callout, Pane } from '@folio/stripes/components';
 import stripesFinalForm from '@folio/stripes/final-form';
-import TermsConfigListFieldArray from './TermsConfigListFieldArray';
+import { CustomPropertiesConfigListFieldArray } from '@folio/stripes-erm-components';
 
 class TermsConfigForm extends React.Component {
   static propTypes = {
     initialValues: PropTypes.shape({
-      terms: PropTypes.arrayOf(PropTypes.object),
+      customProperties: PropTypes.arrayOf(PropTypes.object),
     }),
     form: PropTypes.shape({
       mutators: PropTypes.object.isRequired,
     }).isRequired,
+    match: PropTypes.shape({
+      url: PropTypes.string,
+    }).isRequired,
     onDelete: PropTypes.func.isRequired,
     onSave: PropTypes.func.isRequired,
     pickLists: PropTypes.arrayOf(PropTypes.object),
-  }
+  };
 
   sendCallout = (operation, outcome, error = '') => {
     this.callout.sendCallout({
       type: outcome,
-      message: <FormattedMessage id={`ui-licenses.settings.terms.callout.${operation}.${outcome}`} values={{ error }} />,
+      message: (
+        <FormattedMessage
+          id={`ui-licenses.terms.callout.${operation}.${outcome}`}
+          values={{ error }}
+        />
+      ),
       timeout: error ? 0 : undefined, // Don't autohide callouts with a specified error message.
     });
-  }
+  };
 
-  sendCalloutTermInUse = () => {
-    this.callout.sendCallout({
+  sendCalloutInUse = () => {
+    return this.callout.sendCallout({
       type: 'error',
-      message: <SafeHTMLMessage id="ui-licenses.settings.terms.callout.delete.termInUse" />,
+      message: (
+        <SafeHTMLMessage id="ui-licenses.terms.callout.delete.termsInUse" />
+      ),
       timeout: 0,
     });
-  }
+  };
 
-  handleDelete = (...rest) => {
-    return this.props.onDelete(...rest)
+  handleDelete = customProperty => {
+    return this.props
+      .onDelete(customProperty)
       .then(() => this.sendCallout('delete', 'success'))
       .catch(response => {
         // Attempt to show an error message if we got JSON back with a message.
         // If json()ification fails, show the generic error callout.
-        response.json()
-          .then((error) => {
-            const pattern = new RegExp('violates foreign key constraint.*is still referenced from table', 's');
+        response
+          .json()
+          .then(error => {
+            const pattern = new RegExp(
+              'violates foreign key constraint.*is still referenced from table',
+              's'
+            );
             if (pattern.test(error.message)) {
-              this.sendCalloutTermInUse();
+              this.sendCalloutInUse();
             } else {
               this.sendCallout('delete', 'error', error.message);
             }
@@ -58,22 +73,24 @@ class TermsConfigForm extends React.Component {
         // Return a rejected promise to break any downstream Promise chains.
         return Promise.reject();
       });
-  }
+  };
 
-  handleSave = (...rest) => {
-    return this.props.onSave(...rest)
+  handleSave = customProperty => {
+    return this.props
+      .onSave(customProperty)
       .then(() => this.sendCallout('save', 'success'))
       .catch(response => {
         // Attempt to show an error message if we got JSON back with a message.
         // If json()ification fails, show the generic error callout.
-        response.json()
+        response
+          .json()
           .then(error => this.sendCallout('save', 'error', error.message))
           .catch(() => this.sendCallout('save', 'error'));
 
         // Return a rejected promise to break any downstream Promise chains.
         return Promise.reject();
       });
-  }
+  };
 
   render() {
     const {
@@ -81,26 +98,33 @@ class TermsConfigForm extends React.Component {
       pickLists,
     } = this.props;
 
-    const count = get(this.props, 'initialValues.terms.length', 0);
+    const count = get(this.props, 'initialValues.customProperties.length', 0);
 
     return (
       <Pane
         defaultWidth="fill"
         id="settings-terms"
         paneTitle={<FormattedMessage id="ui-licenses.section.terms" />}
-        paneSub={<FormattedMessage id="ui-licenses.settings.terms.termCount" values={{ count }} />}
+        paneSub={
+          <FormattedMessage id="ui-licenses.terms.count" values={{ count }} />
+        }
       >
         <form>
           <FieldArray
-            component={TermsConfigListFieldArray}
+            component={CustomPropertiesConfigListFieldArray}
             mutators={mutators}
-            name="terms"
-            onDelete={this.handleDelete}
-            onSave={this.handleSave}
+            name="customProperties"
+            onDelete={customProperty => this.handleDelete(customProperty)}
+            onSave={customProperty => this.handleSave(customProperty)}
             pickLists={pickLists}
+            translationKey="term"
           />
         </form>
-        <Callout ref={ref => { this.callout = ref; }} />
+        <Callout
+          ref={ref => {
+            this.callout = ref;
+          }}
+        />
       </Pane>
     );
   }
@@ -110,7 +134,7 @@ export default stripesFinalForm({
   enableReinitialize: true,
   keepDirtyOnReinitialize: false,
   mutators: {
-    setTermValue: (args, state, tools) => {
+    setCustomPropertyValue: (args, state, tools) => {
       tools.changeValue(state, args[0], () => args[1]);
     },
   },

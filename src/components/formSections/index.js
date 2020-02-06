@@ -5,5 +5,5 @@ export { default as LicenseFormInternalContacts } from './LicenseFormInternalCon
 export { default as LicenseFormOrganizations } from './LicenseFormOrganizations';
 
 export { default as FormCoreDocs } from './FormCoreDocs';
-export { default as FormSupplementaryDocs } from './FormSupplementaryDocs';
 export { default as FormTerms } from './FormTerms';
+export { default as FormSupplementaryDocs } from './FormSupplementaryDocs';

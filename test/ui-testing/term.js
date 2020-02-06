@@ -53,7 +53,7 @@ module.exports.test = (uiTestCtx, term = TERM) => {
 
       it('should count the number of terms', done => {
         nightmare
-          .evaluate(() => [...document.querySelectorAll('[data-test-term]')].length)
+          .evaluate(() => [...document.querySelectorAll('[data-test-customproperty]')].length)
           .then(count => {
             NUMBER_OF_TERMS = count;
           })
@@ -64,10 +64,10 @@ module.exports.test = (uiTestCtx, term = TERM) => {
       it('should find a primary term and shouldnt have a name field and delete button', done => {
         nightmare
           .evaluate(() => {
-            const primaryTermsList = [...document.querySelectorAll('[data-test-term=primary]')];
+            const primaryTermsList = [...document.querySelectorAll('[data-test-customproperty=primary]')];
             if (primaryTermsList.length > 0) {
-              const nameField = document.querySelector('#edit-term-0-name');
-              const trashButton = document.querySelector('#edit-term-0-delete');
+              const nameField = document.querySelector('#edit-customproperty-0-name');
+              const trashButton = document.querySelector('#edit-customproperty-0-delete');
               if (nameField) throw Error('Should not have an editable name field');
               if (trashButton) throw Error('Should not have the ability to delete the term');
             }
@@ -78,9 +78,9 @@ module.exports.test = (uiTestCtx, term = TERM) => {
 
       it('should add term', done => {
         nightmare
-          .click('#add-term-btn')
+          .click('#add-customproperty-btn')
           .wait(500)
-          .evaluate(() => [...document.querySelectorAll('[data-test-term]')].length)
+          .evaluate(() => [...document.querySelectorAll('[data-test-customproperty]')].length)
           .then(count => {
             if (count !== NUMBER_OF_TERMS + 1) {
               throw Error(`Expected ${NUMBER_OF_TERMS + 1} terms but found ${count}!`);
@@ -95,7 +95,7 @@ module.exports.test = (uiTestCtx, term = TERM) => {
       it('added term should be optional term', done => {
         nightmare
           .evaluate(() => {
-            const addedTerm = document.querySelector('[data-test-term=optional]');
+            const addedTerm = document.querySelector('[data-test-customproperty=optional]');
             if (!addedTerm) {
               throw Error('Expect the added term to be an optional term');
             }
@@ -107,8 +107,8 @@ module.exports.test = (uiTestCtx, term = TERM) => {
       it('added optional term should have name field and delete option', done => {
         nightmare
           .evaluate(() => {
-            const optionalTermNameField = document.querySelector('[data-test-term=optional] [data-test-term-name]');
-            const optionalTermTrashButton = document.querySelector('[data-test-term=optional] [data-test-term-delete-btn]');
+            const optionalTermNameField = document.querySelector('[data-test-customproperty=optional] [data-test-customproperty-name]');
+            const optionalTermTrashButton = document.querySelector('[data-test-customproperty=optional] [data-test-customproperty-delete-btn]');
             if (!optionalTermNameField) throw Error('Optional term should have a name field');
             if (!optionalTermTrashButton) throw Error('Optional term should have a delete button');
           })
@@ -118,10 +118,10 @@ module.exports.test = (uiTestCtx, term = TERM) => {
 
       it(`should set term to: ${term.value}`, done => {
         nightmare
-          .type('[data-test-term=optional] [data-test-term-name]', term.label)
-          .type('[data-test-term=optional] [data-test-term-value]', term.value)
-          .type('[data-test-term=optional] [data-test-term-note]', term.note)
-          .type('[data-test-term=optional] [data-test-term-public-note]', term.publicNote)
+          .select('[data-test-customproperty=optional] [data-test-customproperty-name]', term.name)
+          .type('[data-test-customproperty=optional] [data-test-customproperty-value]', term.value)
+          .type('[data-test-customproperty=optional] [data-test-customproperty-note]', term.note)
+          .type('[data-test-customproperty=optional] [data-test-customproperty-public-note]', term.publicNote)
           .then(done)
           .catch(done);
       });
@@ -137,11 +137,11 @@ module.exports.test = (uiTestCtx, term = TERM) => {
       it('should find new term in terms list', done => {
         nightmare
           .evaluate((expectedTerm) => {
-            const nameElement = document.querySelector(`[data-test-term-label=${expectedTerm.name}]`);
-            const valueElement = document.querySelector(`[data-test-term-value=${expectedTerm.name}]`);
-            const noteElement = document.querySelector(`[data-test-term-note=${expectedTerm.name}]`);
-            const pubNoteElement = document.querySelector(`[data-test-term-public-note=${expectedTerm.name}]`);
-            const visibilityElement = document.querySelector(`[data-test-term-visibility=${expectedTerm.name}]`);
+            const nameElement = document.querySelector(`[data-test-customproperty-label=${expectedTerm.name}]`);
+            const valueElement = document.querySelector(`[data-test-customproperty-value=${expectedTerm.name}]`);
+            const noteElement = document.querySelector(`[data-test-customproperty-note=${expectedTerm.name}]`);
+            const pubNoteElement = document.querySelector(`[data-test-customproperty-public-note=${expectedTerm.name}]`);
+            const visibilityElement = document.querySelector(`[data-test-customproperty-visibility=${expectedTerm.name}]`);
 
             if (!nameElement) {
               throw Error(`Expected to find ${expectedTerm.name} label`);
@@ -190,7 +190,7 @@ module.exports.test = (uiTestCtx, term = TERM) => {
           .wait('#licenseFormInfo')
           .waitUntilNetworkIdle(2000)
           .evaluate(() => {
-            const optionaTerm = document.querySelector('[data-test-term=optional]');
+            const optionaTerm = document.querySelector('[data-test-customproperty=optional]');
             if (!optionaTerm) throw Error('Should find the optional term');
           })
           .then(done)
@@ -199,10 +199,10 @@ module.exports.test = (uiTestCtx, term = TERM) => {
 
       it(`should edit term value to: ${term.editedValue} and set visibility to ${term.internal.text}`, done => {
         nightmare
-          .insert('[data-test-term=optional] [data-test-term-value]', '')
-          .type('[data-test-term=optional] [data-test-term-value]', term.editedValue)
-          .wait('[data-test-term=optional] [data-test-term-visibility]')
-          .type('[data-test-term=optional] [data-test-term-visibility]', term.internal.text)
+          .insert('[data-test-customproperty=optional] [data-test-customproperty-value]', '')
+          .type('[data-test-customproperty=optional] [data-test-customproperty-value]', term.editedValue)
+          .wait('[data-test-customproperty=optional] [data-test-customproperty-visibility]')
+          .type('[data-test-customproperty=optional] [data-test-customproperty-visibility]', term.internal.text)
           .then(done)
           .catch(done);
       });
@@ -218,9 +218,9 @@ module.exports.test = (uiTestCtx, term = TERM) => {
       it('should find edited term in terms list', done => {
         nightmare
           .evaluate((expectedTerm) => {
-            const nameElement = document.querySelector(`[data-test-term-label=${expectedTerm.name}]`);
-            const valueElement = document.querySelector(`[data-test-term-value=${expectedTerm.name}]`);
-            const visibilityElement = document.querySelector(`[data-test-term-visibility=${expectedTerm.name}]`);
+            const nameElement = document.querySelector(`[data-test-customproperty-label=${expectedTerm.name}]`);
+            const valueElement = document.querySelector(`[data-test-customproperty-value=${expectedTerm.name}]`);
+            const visibilityElement = document.querySelector(`[data-test-customproperty-visibility=${expectedTerm.name}]`);
 
             if (!nameElement) {
               throw Error(`Expected to find ${expectedTerm.name} label`);
@@ -257,9 +257,9 @@ module.exports.test = (uiTestCtx, term = TERM) => {
           .wait('#licenseFormInfo')
           .waitUntilNetworkIdle(2000)
           .evaluate((expectedTerm) => {
-            const nameElement = document.querySelector('[data-test-term=optional] [data-test-term-name]');
-            const valueElement = document.querySelector('[data-test-term=optional] [data-test-term-value]');
-            const visibilityElement = document.querySelector('[data-test-term=optional] [data-test-term-visibility]');
+            const nameElement = document.querySelector('[data-test-customproperty=optional] [data-test-customproperty-name]');
+            const valueElement = document.querySelector('[data-test-customproperty=optional] [data-test-customproperty-value]');
+            const visibilityElement = document.querySelector('[data-test-customproperty=optional] [data-test-customproperty-visibility]');
 
             if (expectedTerm.label !== nameElement.selectedOptions[0].textContent) {
               throw Error(`Expected to have label ${expectedTerm.label}`);
@@ -287,7 +287,7 @@ module.exports.test = (uiTestCtx, term = TERM) => {
 
       it('should remove term from license and save', done => {
         nightmare
-          .click('[data-test-term=optional] [data-test-term-delete-btn]')
+          .click('[data-test-customproperty=optional] [data-test-customproperty-delete-btn]')
           .wait(500)
           .click('#clickable-update-license')
           .waitUntilNetworkIdle(2000) // Wait for record to be fetched
@@ -298,8 +298,8 @@ module.exports.test = (uiTestCtx, term = TERM) => {
       it('should not find term in list', done => {
         nightmare
           .evaluate((expectedTerm) => {
-            const nameElement = document.querySelector(`[data-test-term-label=${expectedTerm.name}]`);
-            const valueElement = document.querySelector(`[data-test-term-value=${expectedTerm.name}]`);
+            const nameElement = document.querySelector(`[data-test-customproperty-label=${expectedTerm.name}]`);
+            const valueElement = document.querySelector(`[data-test-customproperty-value=${expectedTerm.name}]`);
 
             if (nameElement) {
               throw Error(`Expected to NOT FIND ${expectedTerm.name} label`);

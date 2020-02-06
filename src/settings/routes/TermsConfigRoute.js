@@ -4,7 +4,7 @@ import { get } from 'lodash';
 
 import { stripesConnect } from '@folio/stripes/core';
 
-import TermsConfigForm from '../components/TermsConfig/TermsConfigForm';
+import TermsConfigForm from '../components';
 
 class TermsConfigRoute extends React.Component {
   static manifest = Object.freeze({
@@ -89,7 +89,7 @@ class TermsConfigRoute extends React.Component {
 
     return (
       <TermsConfigForm
-        initialValues={{ terms }}
+        initialValues={{ customProperties: terms }}
         pickLists={pickLists}
         onDelete={this.handleDelete}
         onSave={this.handleSave}

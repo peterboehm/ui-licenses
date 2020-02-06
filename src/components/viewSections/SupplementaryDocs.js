@@ -57,12 +57,12 @@ export default class SupplementaryDocs extends React.Component {
         displayWhenClosed={this.renderBadge()}
         displayWhenOpen={this.renderBadge()}
         id={id}
-        label={<FormattedMessage id="ui-licenses.section.supplementInformation" />}
+        label={<FormattedMessage id="ui-licenses.section.supplementaryDocuments" />}
         onToggle={onToggle}
         open={open}
       >
         <Layout className="padding-bottom-gutter">
-          { supplementaryDocs.length ? this.renderDocs(supplementaryDocs) : <FormattedMessage id="ui-licenses.supplementaryDocs.none" /> }
+          {supplementaryDocs.length ? this.renderDocs(supplementaryDocs) : <FormattedMessage id="ui-licenses.supplementaryDocs.none" />}
         </Layout>
       </Accordion>
     );
