@@ -79,7 +79,7 @@
     "supplementaryDocs.remove": "إزالة وثيقة تكميلية",
     "delete": "حذف",
     "edit": "تحرير",
-    "section.supplementaryDocuments": "Supplementary documents",
+    "section.supplementaryDocuments": "وثائق تكميلية",
     "terms.count": "{count, number} saved {count, plural, one {term} other {terms}}",
     "terms.callout.delete.error": "There was an error deleting the term. {error}",
     "terms.callout.delete.success": "Term successfully deleted.",
