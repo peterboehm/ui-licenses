@@ -80,10 +80,10 @@
     "delete": "حذف",
     "edit": "تحرير",
     "section.supplementaryDocuments": "وثائق تكميلية",
-    "terms.count": "{count, number} saved {count, plural, one {term} other {terms}}",
-    "terms.callout.delete.error": "There was an error deleting the term. {error}",
-    "terms.callout.delete.success": "Term successfully deleted.",
-    "terms.callout.delete.termInUse": "<strong>Term</strong> was not deleted because it is in use on one or more licenses.",
-    "terms.callout.save.error": "There was an error saving the term. {error}",
-    "terms.callout.save.success": "Term successfully saved."
+    "terms.count": "{count, number}  {count, plural, one {مصطلحًا} other {مصطلحًا}} محفوظًا",
+    "terms.callout.delete.error": "حدث خطأ اثناء حذف المصطلح.{error}",
+    "terms.callout.delete.success": "تم حذف المصطلح بنجاح",
+    "terms.callout.delete.termInUse": "لم يتم حذف <strong>المصطلح</strong> لأنه قيد استخدام ترخيص أو أكثر.",
+    "terms.callout.save.error": "حدث خطأ اثناء حفظ المصطلح.{error}",
+    "terms.callout.save.success": "تم حفظ المصطلح بنجاح"
 }
