@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Field } from 'react-final-form';
 import { requiredValidator } from '@folio/stripes-erm-components';
-
 import {
   Checkbox,
   Col,
@@ -13,6 +12,7 @@ import {
   TextArea,
   TextField,
 } from '@folio/stripes/components';
+import { parseDateOnlyString } from '../utils';
 
 class AmendmentFormInfo extends React.Component {
   static propTypes = {
@@ -80,10 +80,10 @@ class AmendmentFormInfo extends React.Component {
             <Field
               backendDateStandard="YYYY-MM-DD"
               component={Datepicker}
-              dateFormat="YYYY-MM-DD"
               id="edit-amendment-start-date"
               label={<FormattedMessage id="ui-licenses.prop.startDate" />}
               parse={v => v} // Lets us pass an empty string instead of `undefined`
+              parser={parseDateOnlyString}
               name="startDate"
             />
           </Col>
@@ -91,12 +91,12 @@ class AmendmentFormInfo extends React.Component {
             <Field
               backendDateStandard="YYYY-MM-DD"
               component={Datepicker}
-              dateFormat="YYYY-MM-DD"
               disabled={values.openEnded}
               id="edit-amendment-end-date"
               label={<FormattedMessage id="ui-licenses.prop.endDate" />}
               name="endDate"
               parse={v => v} // Lets us pass an empty string instead of `undefined`
+              parser={parseDateOnlyString}
               validate={this.validateEndDate}
             />
           </Col>

@@ -14,6 +14,8 @@ import {
   TextField,
 } from '@folio/stripes/components';
 
+import { parseDateOnlyString } from '../utils';
+
 export default class LicenseFormInfo extends React.Component {
   static propTypes = {
     data: PropTypes.shape({
@@ -87,23 +89,23 @@ export default class LicenseFormInfo extends React.Component {
             <Field
               backendDateStandard="YYYY-MM-DD"
               component={Datepicker}
-              dateFormat="YYYY-MM-DD"
               id="edit-license-start-date"
               label={<FormattedMessage id="ui-licenses.prop.startDate" />}
               name="startDate"
               parse={v => v} // Lets us pass an empty string instead of `undefined`
+              parser={parseDateOnlyString}
             />
           </Col>
           <Col xs={10} md={5}>
             <Field
               backendDateStandard="YYYY-MM-DD"
               component={Datepicker}
-              dateFormat="YYYY-MM-DD"
               disabled={values.openEnded}
               id="edit-license-end-date"
               label={<FormattedMessage id="ui-licenses.prop.endDate" />}
               name="endDate"
               parse={v => v} // Lets us pass an empty string instead of `undefined`
+              parser={parseDateOnlyString}
               validate={this.validateEndDate}
             />
           </Col>

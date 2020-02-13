@@ -9,8 +9,8 @@ const generateLicenseValues = () => {
     description: `This license of count #${number} is still in its initial stages.`,
     type: 'Alliance',
     status: 'In negotiation',
-    startDate: '2020-01-01',
-    endDate: '2020-01-11',
+    startDate: '01/01/2020',
+    endDate: '01/11/2020',
 
     editedName: ' Edited',
     editedType: 'National',
@@ -169,9 +169,9 @@ module.exports.test = (uiTestCtx) => {
           .insert('#edit-license-name', values.editedName)
 
           .click('#datepicker-clear-button-edit-license-start-date')
-          .insert('#edit-license-start-date', '2020-02-02')
+          .insert('#edit-license-start-date', '02/02/2020')
           .click('#datepicker-clear-button-edit-license-end-date')
-          .insert('#edit-license-end-date', '2020-02-12')
+          .insert('#edit-license-end-date', '02/12/2020')
 
           .type('#edit-license-type', values.editedType)
           .type('#edit-license-status', values.editedStatus)
@@ -205,8 +205,8 @@ module.exports.test = (uiTestCtx) => {
           .wait('#edit-license-name')
           .insert('#edit-license-name', 'Invalid Date')
 
-          .type('#edit-license-end-date', '2020-01-04\u000d')
-          .type('#edit-license-start-date', '2020-01-05\u000d')
+          .type('#edit-license-end-date', '01/04/2020\u000d')
+          .type('#edit-license-start-date', '01/05/2020\u000d')
           .click('#clickable-create-license')
 
           .evaluate(() => {
@@ -229,9 +229,9 @@ module.exports.test = (uiTestCtx) => {
           .click('#clickable-new-license')
           .wait('#edit-license-name')
           .insert('#edit-license-name', `Open Ended License #${generateNumber()}`)
-          .type('#edit-license-end-date', '2020-01-11\u000d')
+          .type('#edit-license-end-date', '01/11/2020\u000d')
           .click('#edit-license-open-ended')
-          .type('#edit-license-start-date', '2020-01-01\u000d')
+          .type('#edit-license-start-date', '01/01/2020\u000d')
           .wait(1000)
 
           .evaluate(() => {

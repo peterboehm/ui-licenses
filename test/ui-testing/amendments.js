@@ -7,7 +7,7 @@ const AMENDMENTS = [{
   name: `Amendment ${NUMBER}.1`,
   status: 'Not yet active',
   description: 'The first amendment',
-  startDate: '2020-04-01',
+  startDate: '04/01/2020',
   openEnded: true,
   coreDocs: ['C1', 'C2'],
   supplementaryDocs: ['S1', 'S2'],
@@ -22,7 +22,7 @@ const AMENDMENTS = [{
   name: `Amendment ${NUMBER}.2`,
   status: 'Not yet active',
   description: 'The second amendment',
-  startDate: '2020-05-01',
+  startDate: '05/01/2020',
   delete: true,
 }];
 
@@ -173,8 +173,8 @@ module.exports.test = (uiTestCtx) => {
           nightmare
             .evaluate(_amendment => {
               const NADate = date => {
-                const parts = date.split('-').map(p => parseInt(p, 10));
-                return `${parts[1]}/${parts[2]}/${parts[0]}`;
+                const parts = date.split('/').map(p => parseInt(p, 10));
+                return `${parts[0]}/${parts[1]}/${parts[2]}`;
               };
 
               const cells = [...document.querySelectorAll('#amendments-table [role="gridcell"]')];
@@ -229,8 +229,8 @@ module.exports.test = (uiTestCtx) => {
           nightmare
             .evaluate((_licenseName, _amendment) => {
               const NADate = date => {
-                const parts = date.split('-').map(p => parseInt(p, 10));
-                return `${parts[1]}/${parts[2]}/${parts[0]}`;
+                const parts = date.split('/').map(p => parseInt(p, 10));
+                return `${parts[0]}/${parts[1]}/${parts[2]}`;
               };
 
               const licenseName = document.querySelector('[data-test-license-card-name]').textContent;
