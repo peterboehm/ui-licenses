@@ -40,6 +40,7 @@ class License extends React.Component {
     }),
     handlers: PropTypes.shape({
       onClose: PropTypes.func.isRequired,
+      onToggleTags: PropTypes.func,
     }).isRequired,
     helperApp: PropTypes.node,
     isLoading: PropTypes.bool,
@@ -98,7 +99,7 @@ class License extends React.Component {
     if (!urls.edit) return null;
 
     return (
-      <React.Fragment>
+      <>
         <Button
           buttonStyle="dropdownItem"
           id="clickable-dropdown-edit-license"
@@ -108,7 +109,7 @@ class License extends React.Component {
             <FormattedMessage id="ui-licenses.edit" />
           </Icon>
         </Button>
-      </React.Fragment>
+      </>
     );
   }
 
@@ -174,7 +175,7 @@ class License extends React.Component {
     if (isLoading) return this.renderLoadingPane();
 
     return (
-      <React.Fragment>
+      <>
         <Pane
           actionMenu={this.getActionMenu}
           appIcon={<AppIcon app="licenses" />}
@@ -218,7 +219,7 @@ class License extends React.Component {
           </TitleManager>
         </Pane>
         {helperApp}
-      </React.Fragment>
+      </>
     );
   }
 }

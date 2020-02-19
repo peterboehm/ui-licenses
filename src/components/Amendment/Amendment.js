@@ -36,6 +36,7 @@ export default class Amendment extends React.Component {
         }),
       }).isRequired,
       license: PropTypes.object.isRequired,
+      terms: PropTypes.arrayOf(PropTypes.object),
     }),
     handlers: PropTypes.shape({
       onClose: PropTypes.func.isRequired,
@@ -90,7 +91,7 @@ export default class Amendment extends React.Component {
     if (!urls.editAmendment && !handlers.onDelete) return null;
 
     return (
-      <React.Fragment>
+      <>
         {urls.editAmendment &&
           <Button
             buttonStyle="dropdownItem"
@@ -116,7 +117,7 @@ export default class Amendment extends React.Component {
             </Icon>
           </Button>
         }
-      </React.Fragment>
+      </>
     );
   }
 

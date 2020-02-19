@@ -89,6 +89,9 @@ class ViewLicenseRoute extends React.Component {
       }).isRequired
     }).isRequired,
     mutator: PropTypes.shape({
+      interfaceRecord: PropTypes.shape({
+        replace: PropTypes.func,
+      }),
       query: PropTypes.shape({
         update: PropTypes.func.isRequired,
       }).isRequired,
@@ -97,6 +100,9 @@ class ViewLicenseRoute extends React.Component {
       interfaces: PropTypes.object,
       linkedAgreements: PropTypes.object,
       license: PropTypes.object,
+      query: PropTypes.shape({
+        helper: PropTypes.string,
+      }),
       terms: PropTypes.object,
       users: PropTypes.object,
     }).isRequired,

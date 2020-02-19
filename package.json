@@ -27,7 +27,7 @@
     "lint": "eslint src test"
   },
   "devDependencies": {
-    "@folio/eslint-config-stripes": "^4.2.0",
+    "@folio/eslint-config-stripes": "^5.2.0",
     "@folio/stripes": "^2.12.0",
     "@folio/stripes-cli": "^1.8.0",
     "babel-eslint": "^9.0.0",
