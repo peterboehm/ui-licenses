@@ -31,7 +31,9 @@
     "@folio/stripes": "^3.0.0",
     "@folio/stripes-cli": "^1.8.0",
     "babel-eslint": "^9.0.0",
-    "eslint": "^5.5.0"
+    "eslint": "^5.5.0",
+    "react-intl": "^2.4.0",
+    "react-router-dom": "^4.1.1"
   },
   "dependencies": {
     "@folio/stripes-erm-components": "^2.3.0",
