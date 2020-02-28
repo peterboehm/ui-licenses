@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 import { get } from 'lodash';
 import compose from 'compose-function';
 
-import { stripesConnect } from '@folio/stripes/core';
+import SafeHTMLMessage from '@folio/react-intl-safe-html';
+import { CalloutContext, stripesConnect } from '@folio/stripes/core';
 
 import withFileHandlers from './components/withFileHandlers';
 import Form from '../components/AmendmentForm';
@@ -66,6 +67,8 @@ class CreateAmendmentRoute extends React.Component {
     handlers: {},
   }
 
+  static contextType = CalloutContext;
+
   getInitialValues = () => {
     const { resources } = this.props;
 
@@ -92,7 +95,7 @@ class CreateAmendmentRoute extends React.Component {
     const license = get(this.props.resources, 'license.records[0]', {});
     const originalAmendmentIds = {};
     (license.amendments || []).forEach(a => { originalAmendmentIds[a.id] = 1; });
-
+    const name = amendment?.name;
     this.props.mutator.license
       .PUT({
         ...license,
@@ -105,6 +108,7 @@ class CreateAmendmentRoute extends React.Component {
             newAmendmentId = a.id;
           }
         });
+        this.context.sendCallout({ message: <SafeHTMLMessage id="ui-licenses.amendments.create.callout" values={{ name }} /> });
         this.props.history.push(`/licenses/${match.params.id}/amendments/${newAmendmentId}${location.search}`);
       });
   }

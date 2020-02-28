@@ -2,9 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { get } from 'lodash';
 import { FormattedMessage } from 'react-intl';
-import SafeHTMLMessage from '@folio/react-intl-safe-html';
 import { FieldArray } from 'react-final-form-arrays';
 
+import SafeHTMLMessage from '@folio/react-intl-safe-html';
 import { Callout, Pane } from '@folio/stripes/components';
 import stripesFinalForm from '@folio/stripes/final-form';
 import { CustomPropertiesConfigListFieldArray } from '@folio/stripes-erm-components';
@@ -25,13 +25,13 @@ class TermsConfigForm extends React.Component {
     pickLists: PropTypes.arrayOf(PropTypes.object),
   };
 
-  sendCallout = (operation, outcome, error = '') => {
+  sendCallout = (operation, outcome, error = '', custPropName = '') => {
     this.callout.sendCallout({
       type: outcome,
       message: (
-        <FormattedMessage
+        <SafeHTMLMessage
           id={`ui-licenses.terms.callout.${operation}.${outcome}`}
-          values={{ error }}
+          values={{ error, name: custPropName }}
         />
       ),
       timeout: error ? 0 : undefined, // Don't autohide callouts with a specified error message.
@@ -42,7 +42,7 @@ class TermsConfigForm extends React.Component {
     return this.callout.sendCallout({
       type: 'error',
       message: (
-        <SafeHTMLMessage id="ui-licenses.terms.callout.delete.termsInUse" />
+        <SafeHTMLMessage id="ui-licenses.terms.callout.delete.termInUse" />
       ),
       timeout: 0,
     });
@@ -51,7 +51,7 @@ class TermsConfigForm extends React.Component {
   handleDelete = customProperty => {
     return this.props
       .onDelete(customProperty)
-      .then(() => this.sendCallout('delete', 'success'))
+      .then(() => this.sendCallout('delete', 'success', '', customProperty.name))
       .catch(response => {
         // Attempt to show an error message if we got JSON back with a message.
         // If json()ification fails, show the generic error callout.
@@ -65,10 +65,10 @@ class TermsConfigForm extends React.Component {
             if (pattern.test(error.message)) {
               this.sendCalloutInUse();
             } else {
-              this.sendCallout('delete', 'error', error.message);
+              this.sendCallout('delete', 'error', error.message, customProperty?.name);
             }
           })
-          .catch(() => this.sendCallout('delete', 'error'));
+          .catch(() => this.sendCallout('delete', 'error', '', customProperty?.name));
 
         // Return a rejected promise to break any downstream Promise chains.
         return Promise.reject();
@@ -78,14 +78,14 @@ class TermsConfigForm extends React.Component {
   handleSave = customProperty => {
     return this.props
       .onSave(customProperty)
-      .then(() => this.sendCallout('save', 'success'))
+      .then(() => this.sendCallout('save', 'success', '', customProperty?.name))
       .catch(response => {
         // Attempt to show an error message if we got JSON back with a message.
         // If json()ification fails, show the generic error callout.
         response
           .json()
-          .then(error => this.sendCallout('save', 'error', error.message))
-          .catch(() => this.sendCallout('save', 'error'));
+          .then(error => this.sendCallout('save', 'error', error.message, customProperty?.name))
+          .catch(() => this.sendCallout('save', 'error', '', customProperty?.name));
 
         // Return a rejected promise to break any downstream Promise chains.
         return Promise.reject();

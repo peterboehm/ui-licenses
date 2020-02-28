@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 import { get } from 'lodash';
 import compose from 'compose-function';
 
-import { stripesConnect } from '@folio/stripes/core';
+import SafeHTMLMessage from '@folio/react-intl-safe-html';
+import { CalloutContext, stripesConnect } from '@folio/stripes/core';
 
 import withFileHandlers from './components/withFileHandlers';
 import View from '../components/LicenseForm';
@@ -80,6 +81,8 @@ class CreateLicenseRoute extends React.Component {
     handlers: {},
   }
 
+  static contextType = CalloutContext;
+
   constructor(props) {
     super(props);
 
@@ -113,10 +116,11 @@ class CreateLicenseRoute extends React.Component {
 
   handleSubmit = (license) => {
     const { history, location, mutator } = this.props;
-
+    const name = license?.name;
     mutator.licenses
       .POST(license)
       .then(({ id }) => {
+        this.context.sendCallout({ message: <SafeHTMLMessage id="ui-licenses.create.callout" values={{ name }} /> });
         history.push(`/licenses/${id}${location.search}`);
       });
   }

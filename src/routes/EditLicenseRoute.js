@@ -3,7 +3,9 @@ import PropTypes from 'prop-types';
 import { cloneDeep, get } from 'lodash';
 import compose from 'compose-function';
 
-import { stripesConnect } from '@folio/stripes/core';
+import SafeHTMLMessage from '@folio/react-intl-safe-html';
+import { CalloutContext, stripesConnect } from '@folio/stripes/core';
+
 
 import withFileHandlers from './components/withFileHandlers';
 import Form from '../components/LicenseForm';
@@ -97,6 +99,8 @@ class EditLicenseRoute extends React.Component {
     handlers: {},
   }
 
+  static contextType = CalloutContext;
+
   constructor(props) {
     super(props);
 
@@ -140,9 +144,13 @@ class EditLicenseRoute extends React.Component {
   }
 
   handleSubmit = (license) => {
+    const name = license?.name;
     this.props.mutator.license
       .PUT(license)
-      .then(this.handleClose);
+      .then(() => {
+        this.context.sendCallout({ message: <SafeHTMLMessage id="ui-licenses.update.callout" values={{ name }} /> });
+        this.handleClose();
+      });
   }
 
   fetchIsPending = () => {
