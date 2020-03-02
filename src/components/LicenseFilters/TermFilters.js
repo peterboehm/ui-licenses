@@ -20,6 +20,7 @@ export default class TermFilters extends React.Component {
     console.log('Term Filters:', filters);
 
     const filterStrings = filters
+      .filter(filter => filter.rules)
       .map(filter => filter.rules
         .map(rule => `customProperties.${filter.customProperty}.value${rule.operator}${rule.value}`)
         .join('||'));
@@ -27,6 +28,8 @@ export default class TermFilters extends React.Component {
     console.log('Term Filter Strings:', filterStrings);
 
     filterHandlers.state({ ...activeFilters, terms: filterStrings });
+
+    return Promise.resolve();
   }
 
   render() {
@@ -65,9 +68,11 @@ export default class TermFilters extends React.Component {
         onClearFilter={() => filterHandlers.state({ ...activeFilters, terms: [] })}
         separator={false}
       >
-        {`${numberOfFilters} term filters applied`}
+        <div>
+          {`${numberOfFilters} term filters applied`}
+        </div>
         <TermFiltersForm
-          initialValues={{ filters: filters.length ? filters : [{}] }}
+          initialValues={{ filters: filters.length ? filters : [{ rules: [{}] }] }}
           onSubmit={this.handleSubmit}
           terms={data.terms}
         />

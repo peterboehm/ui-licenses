@@ -21,6 +21,7 @@ import stripesFinalForm from '@folio/stripes/final-form';
 import {
   EditCard,
   customPropertyTypes,
+  requiredValidator,
 } from '@folio/stripes-erm-components';
 
 class TermFiltersForm extends React.Component {
@@ -51,9 +52,9 @@ class TermFiltersForm extends React.Component {
     <ModalFooter>
       <Button
         buttonStyle="primary"
-        onClick={event => {
-          this.setState({ editingFilters: false });
-          this.props.handleSubmit(event);
+        onClick={values => {
+          this.props.handleSubmit(values)
+            .then(() => this.setState({ editingFilters: false }))
         }}
       >
         Apply
@@ -86,10 +87,10 @@ class TermFiltersForm extends React.Component {
           <Modal
             dismissible
             enforceFocus={false}
-            onClose={() => this.setState({ editingFilters: false })}
-            open
             footer={this.renderFooter()}
             label="Term filter builder"
+            onClose={() => this.setState({ editingFilters: false })}
+            open
             size="medium"
           >
             <FieldArray name="filters">
@@ -98,12 +99,15 @@ class TermFiltersForm extends React.Component {
                   <EditCard
                     header={`Term filter ${index + 1}`}
                     key={name}
-                    onDelete={() => fields.remove(index)}
+                    marginBottom0
+                    onDelete={index && (() => fields.remove(index))}
                   >
                     <Field
-                      name={`${name}.customProperty`}
                       component={Selection}
                       dataOptions={terms.map(t => ({ label: t.label, value: t.name }))}
+                      name={`${name}.customProperty`}
+                      required
+                      validate={requiredValidator}
                     />
                     <FieldArray name={`${name}.rules`}>
                       {({ fields: ruleFields }) => ruleFields.map((ruleFieldName, ruleFieldIndex) => {
@@ -148,23 +152,30 @@ class TermFiltersForm extends React.Component {
                             </Col>
                             <Col xs={4}>
                               <Field
-                                name={`${ruleFieldName}.operator`}
                                 component={Selection}
                                 dataOptions={operatorOptions}
+                                name={`${ruleFieldName}.operator`}
+                                required
+                                validate={requiredValidator}
                               />
                             </Col>
                             <Col xs={4}>
                               <Field
-                                name={`${ruleFieldName}.value`}
                                 component={ValueComponent}
+                                name={`${ruleFieldName}.value`}
+                                required
+                                validate={requiredValidator}
                                 {...valueComponentProps}
                               />
                             </Col>
                             <Col xs={2}>
+                            { ruleFieldIndex ?
                               <IconButton
                                 icon="trash"
                                 onClick={() => ruleFields.remove(ruleFieldIndex)}
                               />
+                              : null
+                            }
                             </Col>
                           </Row>
                         );
@@ -197,5 +208,4 @@ class TermFiltersForm extends React.Component {
 
 export default stripesFinalForm({
   enableReinitialize: true,
-  navigationCheck: true,
 })(TermFiltersForm);
