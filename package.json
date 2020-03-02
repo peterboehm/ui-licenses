@@ -27,31 +27,34 @@
     "lint": "eslint src test"
   },
   "devDependencies": {
-    "@folio/eslint-config-stripes": "^4.2.0",
-    "@folio/stripes": "^2.12.0",
+    "@folio/eslint-config-stripes": "^5.2.0",
+    "@folio/stripes": "^3.0.0",
     "@folio/stripes-cli": "^1.8.0",
     "babel-eslint": "^9.0.0",
-    "eslint": "^5.5.0"
+    "eslint": "^5.5.0",
+    "react-intl": "^2.4.0",
+    "react-router-dom": "^4.1.1"
   },
   "dependencies": {
-    "@folio/stripes-erm-components": "^2.0.0",
+    "@folio/stripes-erm-components": "^2.3.0",
     "@folio/react-intl-safe-html": "^1.0.3",
     "compose-function": "^3.0.3",
     "final-form": "^4.18.4",
     "final-form-arrays": "^3.0.1",
     "final-form-set-field-data": "^1.0.2",
     "lodash": "^4.17.11",
+    "moment": "^2.22.2",
     "prop-types": "^15.6.0",
     "react-final-form": "^6.3.0",
     "react-final-form-arrays": "^3.1.0",
-    "react-intl": "^2.4.0",
-    "react-router-dom": "^4.1.1",
     "react-router-prop-types": "^1.0.4",
     "redux-form": "^7.0.3"
   },
   "peerDependencies": {
-    "@folio/stripes": "^2.12.0",
-    "react": "*"
+    "@folio/stripes": "^3.0.0",
+    "react": "*",
+    "react-intl": "^2.4.0",
+    "react-router-dom": "^4.1.1"
   },
   "stripes": {
     "type": "app",

@@ -26,7 +26,7 @@ export default class FormSupplementaryDocs extends React.Component {
     return (
       <Accordion
         id={id}
-        label={<FormattedMessage id="ui-licenses.section.supplementInformation" />}
+        label={<FormattedMessage id="ui-licenses.section.supplementaryDocuments" />}
         open={open}
         onToggle={onToggle}
       >

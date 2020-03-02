@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Accordion } from '@folio/stripes/components';
-import { LicenseTermsList } from '@folio/stripes-erm-components';
+import { CustomPropertiesList } from '@folio/stripes-erm-components';
 
 export default class Terms extends React.Component {
   static propTypes = {
@@ -23,9 +23,9 @@ export default class Terms extends React.Component {
         open={open}
         onToggle={onToggle}
       >
-        <LicenseTermsList
-          license={record}
-          terms={terms}
+        <CustomPropertiesList
+          customProperties={terms}
+          resource={record}
         />
       </Accordion>
     );

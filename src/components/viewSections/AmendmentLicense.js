@@ -12,7 +12,7 @@ export default class AmendmentLicense extends React.Component {
 
   render() {
     return (
-      <React.Fragment>
+      <>
         <Headline
           faded
           margin="none"
@@ -21,7 +21,7 @@ export default class AmendmentLicense extends React.Component {
           <FormattedMessage id="ui-licenses.section.licenseInformation" />
         </Headline>
         <LicenseCard license={this.props.license} />
-      </React.Fragment>
+      </>
     );
   }
 }

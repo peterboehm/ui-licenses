@@ -7,7 +7,7 @@ const AMENDMENTS = [{
   name: `Amendment ${NUMBER}.1`,
   status: 'Not yet active',
   description: 'The first amendment',
-  startDate: '2020-04-01',
+  startDate: '04/01/2020',
   openEnded: true,
   coreDocs: ['C1', 'C2'],
   supplementaryDocs: ['S1', 'S2'],
@@ -22,7 +22,7 @@ const AMENDMENTS = [{
   name: `Amendment ${NUMBER}.2`,
   status: 'Not yet active',
   description: 'The second amendment',
-  startDate: '2020-05-01',
+  startDate: '05/01/2020',
   delete: true,
 }];
 
@@ -92,16 +92,16 @@ module.exports.test = (uiTestCtx) => {
 
             amendment.terms.forEach(term => {
               chain = chain
-                .wait('#add-term-btn')
-                .click('#add-term-btn')
+                .wait('#add-customproperty-btn')
+                .click('#add-customproperty-btn')
                 .wait(500)
-                .evaluate(() => [...document.querySelectorAll('[data-test-term]')].length - 1)
+                .evaluate(() => [...document.querySelectorAll('[data-test-customproperty]')].length - 1)
                 .then(index => {
                   nightmare
-                    .wait(`#edit-term-${index}-name`)
-                    .type(`#edit-term-${index}-name`, term.input)
-                    .wait(`#edit-term-${index}-value`)
-                    .type(`#edit-term-${index}-value`, term.value);
+                    .wait(`#edit-customproperty-${index}-name`)
+                    .type(`#edit-customproperty-${index}-name`, term.input)
+                    .wait(`#edit-customproperty-${index}-value`)
+                    .type(`#edit-customproperty-${index}-value`, term.value);
                 });
             });
 
@@ -173,8 +173,8 @@ module.exports.test = (uiTestCtx) => {
           nightmare
             .evaluate(_amendment => {
               const NADate = date => {
-                const parts = date.split('-').map(p => parseInt(p, 10));
-                return `${parts[1]}/${parts[2]}/${parts[0]}`;
+                const parts = date.split('/').map(p => parseInt(p, 10));
+                return `${parts[0]}/${parts[1]}/${parts[2]}`;
               };
 
               const cells = [...document.querySelectorAll('#amendments-table [role="gridcell"]')];
@@ -229,8 +229,8 @@ module.exports.test = (uiTestCtx) => {
           nightmare
             .evaluate((_licenseName, _amendment) => {
               const NADate = date => {
-                const parts = date.split('-').map(p => parseInt(p, 10));
-                return `${parts[1]}/${parts[2]}/${parts[0]}`;
+                const parts = date.split('/').map(p => parseInt(p, 10));
+                return `${parts[0]}/${parts[1]}/${parts[2]}`;
               };
 
               const licenseName = document.querySelector('[data-test-license-card-name]').textContent;
@@ -275,7 +275,7 @@ module.exports.test = (uiTestCtx) => {
             amendment.terms.forEach(term => {
               chain = chain
                 .evaluate(_term => {
-                  const termValueNode = document.querySelector(`[data-test-term-value="${_term.name}"]`);
+                  const termValueNode = document.querySelector(`[data-test-customproperty-value="${_term.name}"]`);
                   if (!termValueNode) throw Error(`Failed to find term value for ${_term.label}`);
                   if (termValueNode.textContent !== _term.value) throw Error(`Expected term value to be ${_term.value} and found ${termValueNode.textContent}.`);
                 }, term);

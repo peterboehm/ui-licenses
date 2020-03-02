@@ -62,24 +62,24 @@ module.exports.test = (uiTestCtx) => {
           };
 
           let chain = nightmare // eslint-disable-line no-unused-vars
-            .click('#clickable-new-term')
-            .wait('input[name="terms[0].label"]');
+            .click('#clickable-new-customproperty')
+            .wait('input[name="customProperties[0].label"]');
 
           Object.entries(term).forEach(([key, value]) => {
-            chain = chain.type(`[name="terms[0].${key}"]`, value);
+            chain = chain.type(`[name="customProperties[0].${key}"]`, value);
           });
 
           if (term.type === 'Pick list') {
-            chain = chain.type('[name="terms[0].category"]', 'Permitted/Prohibited');
+            chain = chain.type('[name="customProperties[0].category"]', 'Permitted/Prohibited');
           }
 
           chain = chain
-            .click('[data-test-term-save-btn]')
+            .click('[data-test-customproperty-save-btn]')
             .waitUntilNetworkIdle(2000)
             .evaluate(_term => {
-              const card = document.querySelector(`[data-test-term=${_term.name}]`);
+              const card = document.querySelector(`[data-test-customproperty=${_term.name}]`);
               Object.entries(_term).forEach(([key, expectedValue]) => {
-                const foundValue = card.querySelector(`[data-test-term-${key.toLowerCase()}] > [data-test-kv-value]`).textContent;
+                const foundValue = card.querySelector(`[data-test-customproperty-${key.toLowerCase()}] > [data-test-kv-value]`).textContent;
                 if (foundValue !== expectedValue) {
                   throw Error(`Expected ${key} with value ${expectedValue}. Found ${foundValue}`);
                 }
@@ -87,7 +87,7 @@ module.exports.test = (uiTestCtx) => {
             }, term)
             .then(() => {
               nightmare
-                .click(`[data-test-term=${term.name}] [data-test-term-delete-btn]`)
+                .click(`[data-test-customproperty=${term.name}] [data-test-customproperty-delete-btn]`)
                 .waitUntilNetworkIdle(2000)
                 .then(done)
                 .catch(done);
@@ -98,31 +98,31 @@ module.exports.test = (uiTestCtx) => {
 
       it('should create, edit and delete term', done => {
         let chain = nightmare // eslint-disable-line no-unused-vars
-          .click('#clickable-new-term')
-          .wait('input[name="terms[0].label"]');
+          .click('#clickable-new-customproperty')
+          .wait('input[name="customProperties[0].label"]');
 
         // Fill out the terms values for the first time.
         Object.entries(editableTerm).forEach(([key, value]) => {
-          chain = chain.type(`[name="terms[0].${key}"]`, value);
+          chain = chain.type(`[name="customProperties[0].${key}"]`, value);
         });
 
         // Save the term.
         chain = chain
-          .click('[data-test-term-save-btn]')
+          .click('[data-test-customproperty-save-btn]')
           .waitUntilNetworkIdle(2000);
 
         chain = chain
-          .wait(`[data-test-term=${editableTerm.name}] [data-test-term-edit-btn]`)
-          .click(`[data-test-term=${editableTerm.name}] [data-test-term-edit-btn]`)
-          .wait(`[data-test-term=${editableTerm.name}] input[name*=label]`);
+          .wait(`[data-test-customproperty=${editableTerm.name}] [data-test-customproperty-edit-btn]`)
+          .click(`[data-test-customproperty=${editableTerm.name}] [data-test-customproperty-edit-btn]`)
+          .wait(`[data-test-customproperty=${editableTerm.name}] input[name*=label]`);
 
         // Make some changes and cancel out of them.
         const garbageText = 'This data should never be saved or shown in a view field.';
         chain = chain
-          .insert(`[data-test-term=${editableTerm.name}] input[name*=label]`, garbageText)
-          .click('[data-test-term-cancel-btn]')
+          .insert(`[data-test-customproperty=${editableTerm.name}] input[name*=label]`, garbageText)
+          .click('[data-test-customproperty-cancel-btn]')
           .evaluate((_term, _garbageText) => {
-            const label = document.querySelector(`[data-test-term=${_term.name}] [data-test-term-label] > [data-test-kv-value]`);
+            const label = document.querySelector(`[data-test-customproperty=${_term.name}] [data-test-customproperty-label] > [data-test-kv-value]`);
             if (label.textContent.indexOf(_garbageText) >= 0) {
               throw Error('Found garbage text that should not be visible when cancelling edits.');
             }
@@ -130,8 +130,8 @@ module.exports.test = (uiTestCtx) => {
 
         // Start editing the term again.
         chain = chain
-          .click(`[data-test-term=${editableTerm.name}] [data-test-term-edit-btn]`)
-          .wait(`[data-test-term=${editableTerm.name}] input[name*=label]`);
+          .click(`[data-test-customproperty=${editableTerm.name}] [data-test-customproperty-edit-btn]`)
+          .wait(`[data-test-customproperty=${editableTerm.name}] input[name*=label]`);
 
         const newValues = {
           primary: 'No',
@@ -140,24 +140,24 @@ module.exports.test = (uiTestCtx) => {
 
         // Edit the term with the new values.
         Object.entries(newValues).forEach(([key, value]) => {
-          chain = chain.type(`[data-test-term=${editableTerm.name}] [name*=${key}]`, value);
+          chain = chain.type(`[data-test-customproperty=${editableTerm.name}] [name*=${key}]`, value);
         });
 
         // Save the changes and confirm they were persisted.
         chain
-          .click('[data-test-term-save-btn]')
+          .click('[data-test-customproperty-save-btn]')
           .waitUntilNetworkIdle(2000)
           .evaluate((_term, _name) => {
-            const card = document.querySelector(`[data-test-term=${_name}]`);
+            const card = document.querySelector(`[data-test-customproperty=${_name}]`);
             Object.entries(_term).forEach(([key, expectedValue]) => {
-              const foundValue = card.querySelector(`[data-test-term-${key.toLowerCase()}] > [data-test-kv-value]`).textContent;
+              const foundValue = card.querySelector(`[data-test-customproperty-${key.toLowerCase()}] > [data-test-kv-value]`).textContent;
               if (foundValue !== expectedValue) {
                 throw Error(`Expected ${key} with value ${expectedValue}. Found ${foundValue}`);
               }
             });
           }, newValues, editableTerm.name)
           // Delete the term.
-          .click(`[data-test-term=${editableTerm.name}] [data-test-term-delete-btn]`)
+          .click(`[data-test-customproperty=${editableTerm.name}] [data-test-customproperty-delete-btn]`)
           .waitUntilNetworkIdle(2000)
           .then(done)
           .catch(done);
@@ -166,9 +166,9 @@ module.exports.test = (uiTestCtx) => {
       it('should not have any sample terms', done => {
         nightmare
           .refresh()
-          .wait('[data-test-term]')
+          .wait('[data-test-customproperty]')
           .evaluate(_baseTermName => {
-            const termNames = [...document.querySelectorAll('[data-test-term] > [data-test-kv-value]')];
+            const termNames = [...document.querySelectorAll('[data-test-customproperty] > [data-test-kv-value]')];
             const sampleTermName = termNames.find(l => l.textContent.indexOf(_baseTermName) >= 0);
 
             if (sampleTermName) {

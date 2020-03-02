@@ -1,9 +1,6 @@
 {
   "meta.title": "Licenses",
 
-  "no": "No",
-  "yes": "Yes",
-
   "loading": "Loading...",
   "searchInputLabel": "Search Licenses",
 
@@ -13,13 +10,13 @@
   "closeEditLicense": "Close edit license pane",
   "createLicense": "Create license",
   "create": "Create",
+  "create.callout": "<strong>License created:</strong> {name}",
+  "update.callout": "<strong>License updated:</strong> {name}",
   "delete": "Delete",
   "editLicense": "Edit license",
   "edit": "Edit",
   "newLicense": "New license",
   "updateLicense": "Update license",
-
-  "notSet": "Not set",
 
   "showTags": "Show Tags",
   "tags": "Tags",
@@ -27,8 +24,15 @@
   "amendments.add": "Add amendment",
   "amendments.closePane": "Close edit amendment pane",
   "amendments.create": "Create amendment",
+  "amendments.create.callout": "<strong>Amendment created:</strong> {name}",
   "amendments.amendmentInfo": "Amendment information",
   "amendments.update": "Update amendment",
+  "amendments.update.callout": "<strong>Amendment updated:</strong> {name}",
+  
+  "amendments.delete.callout": "<strong>Amendment deleted:</strong> {name}",
+  "amendments.delete.confirmLabel": "Delete",
+  "amendments.delete.confirmHeading": "Delete amendment",
+  "amendments.delete.confirmMessage": "Amendment <strong>{name}</strong> will be <strong>deleted</strong>.",
 
   "coreDocs.add": "Add core document",
   "coreDocs.none": "No core documents have been added.",
@@ -36,9 +40,6 @@
 
   "errors.endDateGreaterThanStartDate": "End date must be after the start date.",
   "errors.multipleLicensors": "Only one Licensor per license is allowed.",
-  "errors.termNameHasNonAlpha": "The term name can only contain Latin alphabetical characters (a-z) and non-leading numeric characters.",
-  "errors.termNoteWithoutValue": "A value must be set for this term in order to save a note",
-  "errors.termValueNotInRange" : "Please enter a whole number in the range {min} to {max} to continue",
   "errors.termVisibilityWithoutValue": "A value must be set for this term in order to change visibility",
 
   "filters.organization": "Organizations",
@@ -64,7 +65,6 @@
   "prop.orgRole": "Role",
   "prop.parentLicense": "Parent License",
   "prop.terms": "License Terms",
-  "prop.termName": "Name",
   "prop.termNote": "Note",
   "prop.termValue": "Value",
   "prop.termVisibility": "Visibility",
@@ -85,7 +85,7 @@
   "section.licenseAgreements": "Agreements linked to this license",
   "section.licenseInformation": "License information",
   "section.organizations": "Organizations",
-  "section.supplementInformation": "Supplementary information",
+  "section.supplementaryDocuments": "Supplementary documents",
   "section.terms": "Terms",
 
   "settings.general": "General",
@@ -94,30 +94,6 @@
   "settings.pickListSelect": "Select pick list",
   "settings.pickListValues": "Pick list values",
   "settings.termPickList": "License term pick list setup",
-  "settings.terms.termCount": "{count, number} saved {count, plural, one {term} other {terms}}",
-
-  "settings.terms.editLicenseTerm": "Edit license term",
-  "settings.terms.newLicenseTerm": "New license term",
-  "settings.terms.callout.delete.error": "There was an error deleting the term. {error}",
-  "settings.terms.callout.delete.success": "Term successfully deleted.",
-  "settings.terms.callout.delete.termInUse": "<strong>Term</strong> was not deleted because it is in use on one or more licenses.",
-  "settings.terms.callout.save.error": "There was an error saving the term. {error}",
-  "settings.terms.callout.save.success": "Term successfully saved.",
-  "settings.terms.help.label": "A license term 'label' is used when displaying the term to users within Folio and in any other systems that display license terms to users. It should be a short text string that clearly communicates what information is recorded in the term. The Description should be used where further explanation of the term is required for display to users.",
-  "settings.terms.help.name": "A license term 'name' is used when outputting the term data in a machine readable format. It is not intended to be displayed to users (staff or patrons). It should be a short Latin alphabet string that can be used by any external systems or programs that access the license term data. Use of camelCase is suggested but not required. Changes to the license term name would affect any external systems using license term data and changes should not be made without consulting those responsible for relevant external systems and software.",
-  "settings.terms.term.defaultVisibility": "Default visibility",
-  "settings.terms.term.description": "Description",
-  "settings.terms.term.label": "Label",
-  "settings.terms.term.name": "Name",
-  "settings.terms.term.orderWeight": "Order weight",
-  "settings.terms.term.pickList": "Pick list",
-  "settings.terms.term.primaryTerm": "Primary term",
-  "settings.terms.term.type": "Type",
-  "settings.terms.type.decimal": "Decimal",
-  "settings.terms.type.integer": "Integer",
-  "settings.terms.type.pickList": "Pick list",
-  "settings.terms.type.refdata": "Pick list",
-  "settings.terms.type.text": "Text",
 
   "settings.actions": "Actions",
   "settings.values": "values",
@@ -128,15 +104,14 @@
   "supplementaryDocs.remove": "Remove supplementary document",
 
   "terms.add": "Add term",
-  "terms.term": "Term",
-  "terms.primaryTerms": "Primary terms",
+  "terms.count": "{count, number} saved {count, plural, one {term} other {terms}}",
+  "terms.callout.delete.error": "There was an error deleting term {name}: {error}",
+  "terms.callout.delete.success": "<strong>Term deleted:</strong> {name}",
+  "terms.callout.delete.termInUse": "<strong>Term</strong> {name} was not deleted because it is in use on one or more licenses.",
+  "terms.callout.save.error": "There was an error saving term {name}: {error}",
+  "terms.callout.save.success": "<strong>Term saved:</strong> {name}",
   "terms.optionalTerms": "Optional terms",
-  "term.title": "Term {number}",
-  "term.internalTrue": "Internal",
-  "term.internalFalse": "Public",
-  "term.internalNote": "Internal note",
-  "term.publicNote": "Public note",
-  "term.removeTerm": "Remove term",
+  "terms.primaryTerms": "Primary terms",
 
   "warn.clearEndDate": "End date will be cleared because \"Open ended\" is checked."
 }

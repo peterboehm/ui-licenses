@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 import { cloneDeep, get } from 'lodash';
 import compose from 'compose-function';
 
-import { stripesConnect } from '@folio/stripes/core';
+import SafeHTMLMessage from '@folio/react-intl-safe-html';
+import { CalloutContext, stripesConnect } from '@folio/stripes/core';
 
 import withFileHandlers from './components/withFileHandlers';
 
@@ -68,6 +69,8 @@ class EditAmendmentRoute extends React.Component {
     handlers: {},
   }
 
+  static contextType = CalloutContext;
+
   state = {
     selectedAmendment: {}
   }
@@ -111,13 +114,16 @@ class EditAmendmentRoute extends React.Component {
 
   handleSubmit = (amendment) => {
     const license = get(this.props.resources, 'license.records[0]', {});
-
+    const name = amendment?.name;
     this.props.mutator.license
       .PUT({
         ...license,
         amendments: [amendment]
       })
-      .then(this.handleClose);
+      .then(() => {
+        this.context.sendCallout({ message: <SafeHTMLMessage id="ui-licenses.amendments.update.callout" values={{ name }} /> });
+        this.handleClose();
+      });
   }
 
   fetchIsPending = () => {
