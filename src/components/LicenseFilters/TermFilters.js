@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
-import { Accordion, FilterAccordionHeader } from '@folio/stripes/components';
+import { Accordion, FilterAccordionHeader, Layout } from '@folio/stripes/components';
 
 import TermFiltersForm from './TermFiltersForm';
 
@@ -17,15 +17,11 @@ export default class TermFilters extends React.Component {
     const { activeFilters, filterHandlers } = this.props;
     const { filters = [] } = values;
 
-    console.log('Term Filters:', filters);
-
     const filterStrings = filters
       .filter(filter => filter.rules)
       .map(filter => filter.rules
         .map(rule => `customProperties.${filter.customProperty}.value${rule.operator}${rule.value}`)
         .join('||'));
-
-    console.log('Term Filter Strings:', filterStrings);
 
     filterHandlers.state({ ...activeFilters, terms: filterStrings });
 
@@ -60,17 +56,20 @@ export default class TermFilters extends React.Component {
 
     return (
       <Accordion
-        // closedByDefault TODO uncomment this
-        id="clickable-terms-filter"
+        closedByDefault
         displayClearButton={numberOfFilters > 0}
         header={FilterAccordionHeader}
+        id="clickable-terms-filter"
         label={<FormattedMessage id="ui-licenses.section.terms" />}
         onClearFilter={() => filterHandlers.state({ ...activeFilters, terms: [] })}
         separator={false}
       >
-        <div>
-          {`${numberOfFilters} term filters applied`}
-        </div>
+        <Layout className="padding-bottom-gutter">
+          <FormattedMessage
+            id="ui-licenses.terms.filters.filtersApplied"
+            values={{ count: numberOfFilters }}
+          />
+        </Layout>
         <TermFiltersForm
           initialValues={{ filters: filters.length ? filters : [{ rules: [{}] }] }}
           onSubmit={this.handleSubmit}

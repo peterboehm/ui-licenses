@@ -7,6 +7,8 @@
   "license": "License",
   "licensePlural": "{count} {count, plural, one {license} other {licenses}}",
 
+  "apply": "Apply",
+  "cancel": "Cancel",
   "closeEditLicense": "Close edit license pane",
   "createLicense": "Create license",
   "create": "Create",
@@ -20,6 +22,9 @@
 
   "showTags": "Show Tags",
   "tags": "Tags",
+  "term": "Term",
+  "OR": "OR",
+  "AND": "AND",
 
   "amendments.add": "Add amendment",
   "amendments.closePane": "Close edit amendment pane",
@@ -28,7 +33,7 @@
   "amendments.amendmentInfo": "Amendment information",
   "amendments.update": "Update amendment",
   "amendments.update.callout": "<strong>Amendment updated:</strong> {name}",
-  
+
   "amendments.delete.callout": "<strong>Amendment deleted:</strong> {name}",
   "amendments.delete.confirmLabel": "Delete",
   "amendments.delete.confirmHeading": "Delete amendment",
@@ -48,6 +53,15 @@
   "header.licensor": "Licensor",
 
   "licenseAgreements.none": "No agreements currently linked to this license.",
+
+  "operator.equals": "equals",
+  "operator.doesNotEqual": "does not equal",
+  "operator.isGreaterThanOrEqual": "is greater than or equal",
+  "operator.isLessThanOrEqual": "is less than or equal",
+  "operator.is": "is",
+  "operator.isNot": "is not",
+  "operator.contains": "contains",
+  "operator.doesNotContain": "does not contain",
 
   "organizations.add": "Add organization",
   "organizations.licenseHasNone": "No organizations have been added.",
@@ -110,6 +124,16 @@
   "terms.callout.delete.termInUse": "<strong>Term</strong> {name} was not deleted because it is in use on one or more licenses.",
   "terms.callout.save.error": "There was an error saving term {name}: {error}",
   "terms.callout.save.success": "<strong>Term saved:</strong> {name}",
+  "terms.filters.addRule": "Add rule",
+  "terms.filters.addTermFilter": "Add term filter",
+  "terms.filters.editTermFilters": "Edit term filters",
+  "terms.filters.filtersApplied": "{count, number} {count, plural, one {term filter} other {term filters}} applied",
+  "terms.filters.builder": "Term filter builder",
+  "terms.filters.comparator": "Comparator",
+  "terms.filters.value": "Value",
+  "terms.filters.removeRule": "Remove rule {index}",
+  "terms.filters.removeTerm": "Remove term filter {index}",
+  "terms.filters.termFilterIndex": "Term filter {index}",
   "terms.optionalTerms": "Optional terms",
   "terms.primaryTerms": "Primary terms",
 

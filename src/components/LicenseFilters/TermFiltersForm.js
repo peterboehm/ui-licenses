@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
+import { uniqueId } from 'lodash';
+import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import { Field } from 'react-final-form';
 import { FieldArray } from 'react-final-form-arrays';
 
@@ -8,12 +9,14 @@ import {
   Button,
   Col,
   IconButton,
+  Label,
   Layout,
   Modal,
   ModalFooter,
   Row,
   Selection,
   TextField,
+  Tooltip,
 } from '@folio/stripes/components';
 
 import stripesFinalForm from '@folio/stripes/final-form';
@@ -26,13 +29,7 @@ import {
 
 class TermFiltersForm extends React.Component {
   static propTypes = {
-    terms: PropTypes.arrayOf(
-      PropTypes.shape({
-        label: PropTypes.string.isRequired,
-        name: PropTypes.string.isRequired,
-        type: PropTypes.string.isRequired,
-      })
-    ),
+    intl: intlShape,
     filterHandlers: PropTypes.shape({
       state: PropTypes.func.isRequired,
     }),
@@ -42,6 +39,13 @@ class TermFiltersForm extends React.Component {
       }),
     }),
     handleSubmit: PropTypes.func.isRequired,
+    terms: PropTypes.arrayOf(
+      PropTypes.shape({
+        label: PropTypes.string.isRequired,
+        name: PropTypes.string.isRequired,
+        type: PropTypes.string.isRequired,
+      })
+    ),
   };
 
   state = {
@@ -57,14 +61,12 @@ class TermFiltersForm extends React.Component {
             .then(() => this.setState({ editingFilters: false }))
         }}
       >
-        Apply
+        <FormattedMessage id="ui-licenses.apply" />
       </Button>
       <Button
-        onClick={() => {
-          this.setState({ editingFilters: false });
-        }}
+        onClick={() => this.setState({ editingFilters: false })}
       >
-        Cancel
+        <FormattedMessage id="ui-licenses.cancel" />
       </Button>
     </ModalFooter>
   );
@@ -81,14 +83,14 @@ class TermFiltersForm extends React.Component {
     return (
       <>
         <Button onClick={() => this.setState({ editingFilters: true })}>
-          Edit term filters
+          <FormattedMessage id="ui-licenses.terms.filters.editTermFilters" />
         </Button>
         { editingFilters &&
           <Modal
             dismissible
             enforceFocus={false}
             footer={this.renderFooter()}
-            label="Term filter builder"
+            label={<FormattedMessage id="ui-licenses.terms.filters.builder" />}
             onClose={() => this.setState({ editingFilters: false })}
             open
             size="medium"
@@ -97,18 +99,41 @@ class TermFiltersForm extends React.Component {
               {({ fields }) => fields.map((name, index) => (
                 <React.Fragment key={name}>
                   <EditCard
-                    header={`Term filter ${index + 1}`}
+                    deleteButtonTooltipText={<FormattedMessage id="ui-licenses.terms.filters.removeTerm" values={{ index: index + 1 }} />}
+                    header={<FormattedMessage id="ui-licenses.terms.filters.termFilterIndex" values={{ index: index + 1 }} />}
                     key={name}
-                    marginBottom0
+                    marginBottom0={index !== fields.length - 1}
                     onDelete={index && (() => fields.remove(index))}
                   >
                     <Field
                       component={Selection}
                       dataOptions={terms.map(t => ({ label: t.label, value: t.name }))}
+                      label={<FormattedMessage id="ui-licenses.term" />}
                       name={`${name}.customProperty`}
                       required
                       validate={requiredValidator}
                     />
+                    {/* This next div is rendered so that it can be referred to using aria-labelledby */}
+                    <div
+                      id={`selected-term-name-${index}`}
+                      style={{ display: 'none' }}
+                    >
+                      {terms.find(t => t.name === fields.value[index]?.customProperty)?.label ?? ''}
+                    </div>
+                    <Row>
+                      <Col xs={2} />
+                      <Col xs={4}>
+                        <Label id="rule-column-header-comparator" required>
+                          <FormattedMessage id="ui-licenses.terms.filters.comparator" />
+                        </Label>
+                      </Col>
+                      <Col xs={4}>
+                        <Label id="rule-column-header-value" required>
+                          <FormattedMessage id="ui-licenses.terms.filters.value" />
+                        </Label>
+                      </Col>
+                      <Col xs={2} />
+                    </Row>
                     <FieldArray name={`${name}.rules`}>
                       {({ fields: ruleFields }) => ruleFields.map((ruleFieldName, ruleFieldIndex) => {
                         const termDefinition = terms.find(t => t.name === fields.value[index].customProperty);
@@ -118,28 +143,30 @@ class TermFiltersForm extends React.Component {
                         let ValueComponent;
                         const valueComponentProps = {};
 
+                        const { intl: { formatMessage }} = this.props;
+
                         if (termType === customPropertyTypes.NUMBER) {
                           operatorOptions = [
-                            { label: 'equals', value: '==' },
-                            { label: 'does not equal', value: '!=' },
-                            { label: 'is greater than or equal', value: '>=' },
-                            { label: 'is less than or equal', value: '<=' },
+                            { value: '==', label: formatMessage({ id: 'ui-licenses.operator.equals'}) },
+                            { value: '!=', label: formatMessage({ id: 'ui-licenses.operator.doesNotEqual'}) },
+                            { value: '>=', label: formatMessage({ id: 'ui-licenses.operator.isGreaterThanOrEqual'}) },
+                            { value: '<=', label: formatMessage({ id: 'ui-licenses.operator.isLessThanOrEqual'}) },
                           ];
 
                           ValueComponent = TextField;
                           valueComponentProps.type = 'number';
                         } else if (termType === customPropertyTypes.SELECT) {
                           operatorOptions = [
-                            { label: 'is', value: '==' },
-                            { label: 'is not', value: '!=' },
+                            { value: '==', label: formatMessage({ id: 'ui-licenses.operator.is'}) },
+                            { value: '!=', label: formatMessage({ id: 'ui-licenses.operator.isNot'}) },
                           ];
 
                           ValueComponent = Selection;
                           valueComponentProps.dataOptions = termDefinition.category.values.map(rdv => ({ label: rdv.label, value: rdv.id }));
                         } else {
                           operatorOptions = [
-                            { label: 'contains', value: '=~' },
-                            { label: 'does not contain', value: '!~' },
+                            { value: '=~', label: formatMessage({ id: 'ui-licenses.operator.contains'}) },
+                            { value: '!~', label: formatMessage({ id: 'ui-licenses.operator.doesNotContain'}) },
                           ];
 
                           ValueComponent = TextField;
@@ -148,10 +175,13 @@ class TermFiltersForm extends React.Component {
                         return (
                           <Row key={ruleFieldName}>
                             <Col xs={2}>
-                              {ruleFieldIndex === 0 ? null : 'OR'}
+                              <Layout className="textCentered">
+                                {ruleFieldIndex === 0 ? null : <FormattedMessage id="ui-licenses.OR" />}
+                              </Layout>
                             </Col>
                             <Col xs={4}>
                               <Field
+                                aria-labelledby={`selected-term-name-${index} rule-column-header-comparator`}
                                 component={Selection}
                                 dataOptions={operatorOptions}
                                 name={`${ruleFieldName}.operator`}
@@ -161,6 +191,7 @@ class TermFiltersForm extends React.Component {
                             </Col>
                             <Col xs={4}>
                               <Field
+                                aria-labelledby={`selected-term-name-${index} rule-column-header-value`}
                                 component={ValueComponent}
                                 name={`${ruleFieldName}.value`}
                                 required
@@ -169,13 +200,21 @@ class TermFiltersForm extends React.Component {
                               />
                             </Col>
                             <Col xs={2}>
-                            { ruleFieldIndex ?
-                              <IconButton
-                                icon="trash"
-                                onClick={() => ruleFields.remove(ruleFieldIndex)}
-                              />
-                              : null
-                            }
+                            { ruleFieldIndex ? (
+                              <Tooltip
+                                id={uniqueId('delete-rule-btn')}
+                                text={<FormattedMessage id="ui-licenses.terms.filters.removeRule" values={{ index: ruleFieldIndex + 1 }} />}
+                              >
+                                {({ ref, ariaIds }) => (
+                                  <IconButton
+                                    aria-labelledby={ariaIds.text}
+                                    icon="trash"
+                                    onClick={() => ruleFields.remove(ruleFieldIndex)}
+                                    ref={ref}
+                                  />
+                                )}
+                              </Tooltip>
+                            ) : null}
                             </Col>
                           </Row>
                         );
@@ -185,19 +224,19 @@ class TermFiltersForm extends React.Component {
                       disabled={!fields.value[index]?.customProperty}
                       onClick={() => push(`${name}.rules`)}
                     >
-                      Add rule
+                      <FormattedMessage id="ui-licenses.terms.filters.addRule" />
                     </Button>
                   </EditCard>
-                  {index <= fields.value.length - 2 && (
+                  {index < fields.value.length - 1 && (
                     <Layout className="textCentered">
-                      AND
+                      <FormattedMessage id="ui-licenses.AND" />
                     </Layout>
                   )}
                 </React.Fragment>
               ))}
             </FieldArray>
-            <Button onClick={() => push('filters')}>
-              Add term filter
+            <Button onClick={() => push('filters', { rules: [{}]})}>
+              <FormattedMessage id="ui-licenses.terms.filters.addTermFilter" />
             </Button>
           </Modal>
         }
@@ -208,4 +247,4 @@ class TermFiltersForm extends React.Component {
 
 export default stripesFinalForm({
   enableReinitialize: true,
-})(TermFiltersForm);
+})(injectIntl(TermFiltersForm));
