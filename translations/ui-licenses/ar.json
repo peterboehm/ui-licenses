@@ -85,5 +85,13 @@
     "terms.callout.delete.success": "تم حذف المصطلح بنجاح",
     "terms.callout.delete.termInUse": "لم يتم حذف <strong>المصطلح</strong> لأنه قيد استخدام ترخيص أو أكثر.",
     "terms.callout.save.error": "حدث خطأ اثناء حفظ المصطلح.{error}",
-    "terms.callout.save.success": "تم حفظ المصطلح بنجاح"
+    "terms.callout.save.success": "تم حفظ المصطلح بنجاح",
+    "create.callout": "<strong>تم إنشاء الترخيص:</strong> {name}",
+    "update.callout": "<strong>تم تحديث الترخيص:</strong> {name}",
+    "amendments.create.callout": "<strong>تم إنشاء التعديل:</strong> {name}",
+    "amendments.update.callout": "<strong>تم تحديث التعديل:</strong> {name}",
+    "amendments.delete.callout": "<strong>تم تحديث التعديل:</strong> {name}",
+    "amendments.delete.confirmLabel": "حذف",
+    "amendments.delete.confirmHeading": "حذف التعديل",
+    "amendments.delete.confirmMessage": "سيتم <strong>حذف</strong> التعديل <strong>{name}</strong>"
 }
