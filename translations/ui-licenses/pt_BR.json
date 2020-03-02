@@ -85,5 +85,13 @@
     "terms.callout.delete.success": "Termo excluído com sucesso.",
     "terms.callout.delete.termInUse": "<strong>Termo</strong> não foi excluído porque está sendo usado em uma ou mais licenças.",
     "terms.callout.save.error": "Houve um erro ao salvar o termo. {error}",
-    "terms.callout.save.success": "Termo salvo com sucesso."
+    "terms.callout.save.success": "Termo salvo com sucesso.",
+    "create.callout": "<strong>Licença criada:</strong> {name}",
+    "update.callout": "<strong>Licença atualizada:</strong> {name}",
+    "amendments.create.callout": "<strong>Emenda criada:</strong> {name}",
+    "amendments.update.callout": "<strong>Emenda atualizada:</strong> {name}",
+    "amendments.delete.callout": "<strong>Emenda excluída:</strong> {name}",
+    "amendments.delete.confirmLabel": "Excluir",
+    "amendments.delete.confirmHeading": "Excluir emenda",
+    "amendments.delete.confirmMessage": "A emenda <strong>{name}</strong> será <strong>excluída</strong>."
 }

@@ -85,5 +85,13 @@
     "terms.callout.delete.success": "<strong>Term deleted:</strong> {name}",
     "terms.callout.delete.termInUse": "<strong>Term</strong> {name} was not deleted because it is in use on one or more licenses.",
     "terms.callout.save.error": "There was an error saving term {name}: {error}",
-    "terms.callout.save.success": "<strong>Term saved:</strong> {name}"
+    "terms.callout.save.success": "<strong>Term saved:</strong> {name}",
+    "create.callout": "<strong>License created:</strong> {name}",
+    "update.callout": "<strong>License updated:</strong> {name}",
+    "amendments.create.callout": "<strong>Amendment created:</strong> {name}",
+    "amendments.update.callout": "<strong>Amendment updated:</strong> {name}",
+    "amendments.delete.callout": "<strong>Amendment deleted:</strong> {name}",
+    "amendments.delete.confirmLabel": "Delete",
+    "amendments.delete.confirmHeading": "Delete amendment",
+    "amendments.delete.confirmMessage": "Amendment <strong>{name}</strong> will be <strong>deleted</strong>."
 }
