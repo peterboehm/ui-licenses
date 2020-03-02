@@ -53,7 +53,7 @@ class TermFiltersForm extends React.Component {
         buttonStyle="primary"
         onClick={event => {
           this.setState({ editingFilters: false });
-          this.props.handleSubmit(event, 1, 2, 3);
+          this.props.handleSubmit(event);
         }}
       >
         Apply

@@ -2,12 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
-import { Accordion, AccordionSet, FilterAccordionHeader, Selection, KeyValue } from '@folio/stripes/components';
-import { CheckboxFilter, MultiSelectionFilter } from '@folio/stripes/smart-components';
-import { OrganizationSelection } from '@folio/stripes-erm-components';
+import { Accordion, FilterAccordionHeader } from '@folio/stripes/components';
 
 import TermFiltersForm from './TermFiltersForm';
-
 
 export default class TermFilters extends React.Component {
   static propTypes = {
@@ -70,7 +67,7 @@ export default class TermFilters extends React.Component {
       >
         {`${numberOfFilters} term filters applied`}
         <TermFiltersForm
-          initialValues={{ filters }}
+          initialValues={{ filters: filters.length ? filters : [{}] }}
           onSubmit={this.handleSubmit}
           terms={data.terms}
         />
