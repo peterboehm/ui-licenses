@@ -176,16 +176,16 @@ class LicenseForm extends React.Component {
               <TitleManager record={id ? name : create}>
                 <form id="form-license">
                   <div className={css.licenseForm}>
+                    <Row end="xs">
+                      <Col xs>
+                        <ExpandAllButton
+                          accordionStatus={this.state.sections}
+                          id="clickable-expand-all"
+                          onToggle={this.handleAllSectionsToggle}
+                        />
+                      </Col>
+                    </Row>
                     <AccordionSet>
-                      <Row end="xs">
-                        <Col xs>
-                          <ExpandAllButton
-                            accordionStatus={this.state.sections}
-                            id="clickable-expand-all"
-                            onToggle={this.handleAllSectionsToggle}
-                          />
-                        </Col>
-                      </Row>
                       <LicenseFormInfo {...this.getSectionProps('licenseFormInfo')} />
                       <LicenseFormInternalContacts {...this.getSectionProps('licenseFormInternalContacts')} />
                       <LicenseFormOrganizations {...this.getSectionProps('licenseFormOrganizations')} />
