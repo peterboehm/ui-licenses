@@ -60,7 +60,7 @@ export default class Licenses extends React.Component {
   }
 
   columnWidths = {
-    name: 300,
+    name: 500,
     type: 150,
     status: 150,
     startDate: 150,
@@ -75,7 +75,9 @@ export default class Licenses extends React.Component {
           app="licenses"
           iconKey="app"
         >
-          {a.name}
+          <div style={{ wordBreak: 'break-all' }}>
+            {a.name}
+          </div>
         </AppIcon>
       );
     },
