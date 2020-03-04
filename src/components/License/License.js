@@ -189,17 +189,17 @@ class License extends React.Component {
         >
           <TitleManager record={data.license.name}>
             <LicenseHeader {...this.getSectionProps()} />
+            <LicenseInfo {...this.getSectionProps('licenseInfo')} />
+            <Row end="xs">
+              <Col xs>
+                <ExpandAllButton
+                  accordionStatus={this.state.sections}
+                  id="clickable-expand-all"
+                  onToggle={this.handleAllSectionsToggle}
+                />
+              </Col>
+            </Row>
             <AccordionSet>
-              <LicenseInfo {...this.getSectionProps('licenseInfo')} />
-              <Row end="xs">
-                <Col xs>
-                  <ExpandAllButton
-                    accordionStatus={this.state.sections}
-                    id="clickable-expand-all"
-                    onToggle={this.handleAllSectionsToggle}
-                  />
-                </Col>
-              </Row>
               <LicenseInternalContacts {...this.getSectionProps('licenseInternalContacts')} />
               <LicenseOrganizations {...this.getSectionProps('licenseOrganizations')} />
               <CoreDocs {...this.getSectionProps('licenseCoreDocs')} />

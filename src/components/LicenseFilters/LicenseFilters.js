@@ -2,14 +2,15 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
-import { Accordion, AccordionSet, FilterAccordionHeader, Selection } from '@folio/stripes/components';
+import { Accordion, AccordionSet, FilterAccordionHeader, Selection, KeyValue } from '@folio/stripes/components';
 import { CheckboxFilter, MultiSelectionFilter } from '@folio/stripes/smart-components';
 import { OrganizationSelection } from '@folio/stripes-erm-components';
+
+import TermFilters from './TermFilters';
 
 const FILTERS = [
   'status',
   'type',
-  'tags'
 ];
 
 export default class LicenseFilters extends React.Component {
@@ -38,9 +39,13 @@ export default class LicenseFilters extends React.Component {
     FILTERS.forEach(filter => {
       const values = props.data[`${filter}Values`];
       if (values.length !== state[filter].length) {
-        newState[filter] = values.map(({ label }) => ({ label, value: label }));
+        newState[filter] = values;
       }
     });
+
+    if ((props.data?.tags?.length ?? 0) !== state.tags.length) {
+      newState.tags = props.data.tags.map(({ label }) => ({ value: label, label }));
+    }
 
     if (Object.keys(newState).length) return newState;
 
@@ -73,7 +78,7 @@ export default class LicenseFilters extends React.Component {
 
   renderOrganizationFilter = () => {
     const { activeFilters } = this.props;
-    const orgFilters = activeFilters.orgs || [];
+    const orgFilters = activeFilters.org || [];
 
     return (
       <Accordion
@@ -85,7 +90,7 @@ export default class LicenseFilters extends React.Component {
           this.props.filterHandlers.state({
             ...activeFilters,
             role: [],
-            orgs: [],
+            org: [],
           });
         }}
         separator={false}
@@ -94,7 +99,7 @@ export default class LicenseFilters extends React.Component {
           path="licenses/org"
           input={{
             name: 'license-orgs-filter',
-            onChange: value => this.props.filterHandlers.state({ ...activeFilters, orgs: [value] }),
+            onChange: value => this.props.filterHandlers.state({ ...activeFilters, org: [value] }),
             value: orgFilters[0] || '',
           }}
         />
@@ -110,7 +115,7 @@ export default class LicenseFilters extends React.Component {
     }));
 
     const { activeFilters } = this.props;
-    const orgFilters = activeFilters.orgs || [];
+    const orgFilters = activeFilters.org || [];
     const roleFilters = activeFilters.role || [];
 
     return (
@@ -157,6 +162,10 @@ export default class LicenseFilters extends React.Component {
     );
   }
 
+  renderTermFilters = () => {
+    return <TermFilters {...this.props} />;
+  }
+
   render() {
     return (
       <AccordionSet>
@@ -165,6 +174,7 @@ export default class LicenseFilters extends React.Component {
         {this.renderOrganizationFilter()}
         {this.renderRoleLabel()}
         {this.renderTagsFilter()}
+        {this.renderTermFilters()}
       </AccordionSet>
     );
   }

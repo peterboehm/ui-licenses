@@ -188,16 +188,16 @@ class AmendmentForm extends React.Component {
                 <form id="form-amendment">
                   <div className={css.amendmentForm}>
                     <AmendmentFormInfo {...this.getSectionProps()} />
+                    <Row end="xs">
+                      <Col xs>
+                        <ExpandAllButton
+                          accordionStatus={this.state.sections}
+                          id="clickable-expand-all"
+                          onToggle={this.handleAllSectionsToggle}
+                        />
+                      </Col>
+                    </Row>
                     <AccordionSet>
-                      <Row end="xs">
-                        <Col xs>
-                          <ExpandAllButton
-                            accordionStatus={this.state.sections}
-                            id="clickable-expand-all"
-                            onToggle={this.handleAllSectionsToggle}
-                          />
-                        </Col>
-                      </Row>
                       <FormCoreDocs {...this.getSectionProps('amendmentFormCoreDocs')} />
                       <FormTerms {...this.getSectionProps('amendmentFormTerms')} />
                       <FormSupplementaryDocs {...this.getSectionProps('amendmentFormSupplementaryDocs')} />

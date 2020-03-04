@@ -180,16 +180,16 @@ export default class Amendment extends React.Component {
         <TitleManager record={amendment.name}>
           <AmendmentLicense {...this.getSectionProps()} />
           <AmendmentInfo {...this.getSectionProps()} />
+          <Row end="xs">
+            <Col xs>
+              <ExpandAllButton
+                accordionStatus={this.state.sections}
+                id="clickable-expand-all"
+                onToggle={this.handleAllSectionsToggle}
+              />
+            </Col>
+          </Row>
           <AccordionSet>
-            <Row end="xs">
-              <Col xs>
-                <ExpandAllButton
-                  accordionStatus={this.state.sections}
-                  id="clickable-expand-all"
-                  onToggle={this.handleAllSectionsToggle}
-                />
-              </Col>
-            </Row>
             <CoreDocs {...this.getSectionProps('amendmentCoreDocs')} />
             <Terms {...this.getSectionProps('amendmentTerms')} />
             <SupplementaryDocs {...this.getSectionProps('amendmentSupplementaryDocs')} />

@@ -60,7 +60,7 @@ export default class Licenses extends React.Component {
   }
 
   columnWidths = {
-    name: 300,
+    name: 500,
     type: 150,
     status: 150,
     startDate: 150,
@@ -76,7 +76,9 @@ export default class Licenses extends React.Component {
           iconAlignment="baseline"
           iconKey="app"
         >
-          {a.name}
+          <div style={{ wordBreak: 'break-all' }}>
+            {a.name}
+          </div>
         </AppIcon>
       );
     },
@@ -207,10 +209,11 @@ export default class Licenses extends React.Component {
     const query = queryGetter() || {};
     const count = source ? source.totalCount() : 0;
     const sortOrder = query.sort || '';
+
     return (
       <div data-test-licenses ref={contentRef}>
         <SearchAndSortQuery
-          initialFilterState={{ status: ['Active'] }}
+          initialFilterState={{ status: ['active'] }}
           initialSortState={{ sort: 'name' }}
           initialSearchState={{ query: '' }}
           queryGetter={queryGetter}
