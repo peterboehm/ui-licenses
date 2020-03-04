@@ -67,6 +67,7 @@ export default class Amendment extends React.Component {
       onToggle: this.handleSectionToggle,
       open: this.state.sections[id],
       record: data.amendment,
+      recordType: 'amendment',
       terms: data.terms,
       urls,
     };

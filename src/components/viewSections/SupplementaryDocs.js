@@ -28,6 +28,7 @@ export default class SupplementaryDocs extends React.Component {
         }),
       ),
     }).isRequired,
+    recordType: PropTypes.string.isRequired,
     onToggle: PropTypes.func,
     open: PropTypes.bool,
   };
@@ -49,22 +50,26 @@ export default class SupplementaryDocs extends React.Component {
   }
 
   render() {
-    const { id, onToggle, open } = this.props;
+    const { id, onToggle, open, recordType } = this.props;
     const { supplementaryDocs = [] } = this.props.record;
 
     return (
-      <Accordion
-        displayWhenClosed={this.renderBadge()}
-        displayWhenOpen={this.renderBadge()}
-        id={id}
-        label={<FormattedMessage id="ui-licenses.section.supplementaryDocuments" />}
-        onToggle={onToggle}
-        open={open}
-      >
-        <Layout className="padding-bottom-gutter">
-          {supplementaryDocs.length ? this.renderDocs(supplementaryDocs) : <FormattedMessage id="ui-licenses.supplementaryDocs.none" />}
-        </Layout>
-      </Accordion>
+      <FormattedMessage id={`ui-licenses.${recordType}`}>
+        {type => (
+          <Accordion
+            displayWhenClosed={this.renderBadge()}
+            displayWhenOpen={this.renderBadge()}
+            id={id}
+            label={<FormattedMessage id="ui-licenses.section.supplementaryDocuments" />}
+            onToggle={onToggle}
+            open={open}
+          >
+            <Layout className="padding-bottom-gutter">
+              {supplementaryDocs.length ? this.renderDocs(supplementaryDocs) : <FormattedMessage id="ui-licenses.emptyAccordion.supplementaryDocuments" values={{ type: type.toLowerCase() }} /> }
+            </Layout>
+          </Accordion>
+        )}
+      </FormattedMessage>
     );
   }
 }

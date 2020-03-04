@@ -81,9 +81,17 @@
     "edit": "Edit",
     "section.supplementaryDocuments": "Supplementary documents",
     "terms.count": "{count, number} saved {count, plural, one {term} other {terms}}",
-    "terms.callout.delete.error": "There was an error deleting the term. {error}",
-    "terms.callout.delete.success": "Term successfully deleted.",
-    "terms.callout.delete.termInUse": "<strong>Term</strong> was not deleted because it is in use on one or more licenses.",
-    "terms.callout.save.error": "There was an error saving the term. {error}",
-    "terms.callout.save.success": "Term successfully saved."
+    "terms.callout.delete.error": "There was an error deleting term {name}: {error}",
+    "terms.callout.delete.success": "<strong>Term deleted:</strong> {name}",
+    "terms.callout.delete.termInUse": "<strong>Term</strong> {name} was not deleted because it is in use on one or more licenses.",
+    "terms.callout.save.error": "There was an error saving term {name}: {error}",
+    "terms.callout.save.success": "<strong>Term saved:</strong> {name}",
+    "create.callout": "<strong>License created:</strong> {name}",
+    "update.callout": "<strong>License updated:</strong> {name}",
+    "amendments.create.callout": "<strong>Amendment created:</strong> {name}",
+    "amendments.update.callout": "<strong>Amendment updated:</strong> {name}",
+    "amendments.delete.callout": "<strong>Amendment deleted:</strong> {name}",
+    "amendments.delete.confirmLabel": "Delete",
+    "amendments.delete.confirmHeading": "Delete amendment",
+    "amendments.delete.confirmMessage": "Amendment <strong>{name}</strong> will be <strong>deleted</strong>."
 }

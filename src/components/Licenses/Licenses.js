@@ -73,6 +73,7 @@ export default class Licenses extends React.Component {
         <AppIcon
           size="small"
           app="licenses"
+          iconAlignment="baseline"
           iconKey="app"
         >
           <div style={{ wordBreak: 'break-all' }}>

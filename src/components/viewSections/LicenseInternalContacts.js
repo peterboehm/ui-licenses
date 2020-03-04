@@ -29,7 +29,7 @@ export default class LicenseInternalContacts extends React.Component {
     const { license } = this.props;
     const contacts = license.contacts || [];
 
-    if (!contacts.length) return <FormattedMessage id="ui-agreements.contacts.noContacts" />;
+    if (!contacts.length) return <FormattedMessage id="ui-licenses.emptyAccordion.internalContacts" />;
 
     return contacts.map(contact => (
       <InternalContactCard
