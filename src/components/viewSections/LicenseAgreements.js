@@ -124,7 +124,7 @@ export default class LicenseAgreements extends React.Component {
           open={open}
         >
           <Layout className="padding-bottom-gutter">
-            { this.state.groupedLinkedAgreements.length ? this.renderLinkedAgreements() : <FormattedMessage id="ui-licenses.licenseAgreements.none" /> }
+            { this.state.groupedLinkedAgreements.length ? this.renderLinkedAgreements() : <FormattedMessage id="ui-licenses.emptyAccordion.linkedAgreements" /> }
           </Layout>
         </Accordion>
       </IfInterface>

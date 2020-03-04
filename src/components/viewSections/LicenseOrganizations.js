@@ -63,7 +63,7 @@ export default class LicenseOrganizations extends React.Component {
   renderOrganizations = () => {
     const { orgs } = this.props.license;
 
-    if (!orgs || !orgs.length) return <FormattedMessage id="ui-licenses.organizations.licenseHasNone" />;
+    if (!orgs || !orgs.length) return <FormattedMessage id="ui-licenses.emptyAccordion.organizations" />;
 
     return this.renderOrgList(orgs);
   }

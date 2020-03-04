@@ -75,6 +75,7 @@ class License extends React.Component {
       onToggle: this.handleSectionToggle,
       open: this.state.sections[id],
       record: data.license,
+      recordType: 'license',
       terms: data.terms,
       users: data.users,
     };

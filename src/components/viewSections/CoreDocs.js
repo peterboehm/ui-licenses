@@ -28,6 +28,7 @@ export default class CoreDocs extends React.Component {
         }),
       ),
     }).isRequired,
+    recordType: PropTypes.string.isRequired,
     onToggle: PropTypes.func,
     open: PropTypes.bool,
   };
@@ -48,22 +49,26 @@ export default class CoreDocs extends React.Component {
   }
 
   render() {
-    const { id, onToggle, open } = this.props;
+    const { id, onToggle, open, recordType } = this.props;
     const { docs = [] } = this.props.record;
 
     return (
-      <Accordion
-        displayWhenClosed={this.renderBadge()}
-        displayWhenOpen={this.renderBadge()}
-        id={id}
-        label={<FormattedMessage id="ui-licenses.section.coreDocs" />}
-        onToggle={onToggle}
-        open={open}
-      >
-        <Layout className="padding-bottom-gutter">
-          { docs.length ? this.renderDocs(docs) : <FormattedMessage id="ui-licenses.coreDocs.none" /> }
-        </Layout>
-      </Accordion>
+      <FormattedMessage id={`ui-licenses.${recordType}`}>
+        {type => (
+          <Accordion
+            displayWhenClosed={this.renderBadge()}
+            displayWhenOpen={this.renderBadge()}
+            id={id}
+            label={<FormattedMessage id="ui-licenses.section.coreDocs" />}
+            onToggle={onToggle}
+            open={open}
+          >
+            <Layout className="padding-bottom-gutter">
+              { docs.length ? this.renderDocs(docs) : <FormattedMessage id="ui-licenses.emptyAccordion.coreDocuments" values={{ type: type.toLowerCase() }} /> }
+            </Layout>
+          </Accordion>
+        )}
+      </FormattedMessage>
     );
   }
 }

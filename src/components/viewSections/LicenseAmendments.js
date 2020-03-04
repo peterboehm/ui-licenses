@@ -77,6 +77,7 @@ export default class LicenseAmendments extends React.Component {
           }}
           id="amendments-table"
           interactive={false}
+          isEmptyMessage={<FormattedMessage id="ui-licenses.emptyAccordion.amendments" />}
           visibleColumns={[
             'name',
             'status',
