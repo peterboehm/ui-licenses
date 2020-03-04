@@ -103,7 +103,7 @@ class TermFiltersForm extends React.Component {
                     header={<FormattedMessage id="ui-licenses.terms.filters.termFilterIndex" values={{ index: index + 1 }} />}
                     key={name}
                     marginBottom0={index !== fields.length - 1}
-                    onDelete={index && (() => fields.remove(index))}
+                    onDelete={() => fields.remove(index)}
                   >
                     <Field
                       component={Selection}
