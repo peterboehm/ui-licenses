@@ -12,6 +12,7 @@
     "start": "stripes serve",
     "build": "stripes build --output ./output",
     "test": "stripes test nightmare --run crud/text-term/select-term/orgs/core-docs/more-docs/contacts/amendments/pick-lists/tags-crud/term-config",
+    "test-bigtest": "stripes test karma",
     "test-crud": "stripes test nightmare --run crud",
     "test-text-term": "stripes test nightmare --run text-term",
     "test-select-term": "stripes test nightmare --run select-term",
@@ -27,17 +28,27 @@
     "lint": "eslint src test"
   },
   "devDependencies": {
+    "@bigtest/interactor": "^0.9.3",
+    "@bigtest/mirage": "^0.0.1",
+    "@bigtest/mocha": "^0.5.2",
+    "@bigtest/react": "^0.1.2",
     "@folio/eslint-config-stripes": "^5.2.0",
     "@folio/stripes": "^3.0.0",
     "@folio/stripes-cli": "^1.8.0",
     "babel-eslint": "^9.0.0",
+    "chai": "^4.2.0",
+    "chai-spies": "^1.0.0",
+    "core-js": "^3.6.1",
     "eslint": "^5.5.0",
+    "mocha": "^7.0.1",
     "react-intl": "^2.4.0",
-    "react-router-dom": "^4.1.1"
+    "react-router-dom": "^4.1.1",
+    "regenerator-runtime": "^0.13.3",
+    "sinon": "^9.0.0"
   },
   "dependencies": {
-    "@folio/stripes-erm-components": "^2.3.0",
     "@folio/react-intl-safe-html": "^1.0.3",
+    "@folio/stripes-erm-components": "^2.3.0",
     "compose-function": "^3.0.3",
     "final-form": "^4.18.4",
     "final-form-arrays": "^3.0.1",
