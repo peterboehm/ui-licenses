@@ -1,0 +1,9 @@
+@import "@folio/stripes-components/lib/variables.css";
+
+.labelClass {
+  font-weight: var(--text-weight-normal);
+}
+
+.separator {
+  border-bottom: 1px solid var(--color-border-p2);
+}

@@ -79,6 +79,11 @@ class LicensesRoute extends React.Component {
     stripes: PropTypes.shape({
       hasPerm: PropTypes.func.isRequired,
       logger: PropTypes.object,
+      okapi: PropTypes.shape({
+        tenant: PropTypes.string.isRequired,
+        token: PropTypes.string.isRequired,
+        url: PropTypes.string.isRequired,
+      }).isRequired,
     }),
     match: PropTypes.shape({
       params: PropTypes.shape({
@@ -124,6 +129,32 @@ class LicensesRoute extends React.Component {
     }
   }
 
+  downloadBlob = () => (
+    blob => {
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'compare_terms.csv';
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+    }
+  )
+
+  handleCompareLicenseTerms = (payload) => {
+    const { stripes: { okapi } } = this.props;
+
+    return fetch(`${okapi.url}/licenses/licenses/compareTerms`, {
+      method: 'POST',
+      headers: {
+        'X-Okapi-Tenant': okapi.tenant,
+        'X-Okapi-Token': okapi.token,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(payload),
+    }).then(response => response.blob())
+      .then(this.downloadBlob());
+  }
 
   handleNeedMoreData = () => {
     if (this.source) {
@@ -151,14 +182,15 @@ class LicensesRoute extends React.Component {
     return (
       <View
         data={{
-          licenses: get(resources, 'licenses.records', []),
-          statusValues: get(resources, 'statusValues.records', []),
-          typeValues: get(resources, 'typeValues.records', []),
-          orgRoleValues: get(resources, 'orgRoleValues.records', []),
-          tags: get(resources, 'tags.records', []),
-          terms: get(resources, 'terms.records', []),
+          licenses: resources?.licenses?.records ?? [],
+          statusValues: resources?.statusValues?.records ?? [],
+          typeValues: resources?.typeValues?.records ?? [],
+          orgRoleValues: resources?.orgRoleValues?.records ?? [],
+          tagsValues: resources?.tagsValues?.records ?? [],
+          terms: resources?.terms?.records ?? [],
         }}
         selectedRecordId={match.params.id}
+        onCompareLicenseTerms={this.handleCompareLicenseTerms}
         onNeedMoreData={this.handleNeedMoreData}
         queryGetter={this.queryGetter}
         querySetter={this.querySetter}

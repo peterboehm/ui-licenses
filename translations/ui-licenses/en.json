@@ -56,6 +56,25 @@
   "errors.multipleLicensors": "Only one Licensor per license is allowed.",
   "errors.termVisibilityWithoutValue": "A value must be set for this term in order to change visibility",
 
+  "export.csv.label": "Export selected as CSV ({count, number} items)",
+
+  "exportLicenses": "Export licenses as CSV",
+
+  "exportLicensesModal.message": "Please select which license details to export",
+  "exportLicensesModal.selectAll": "Select all/deselect all",
+  "exportLicensesModal.licenseInformation": "License information",
+  "exportLicensesModal.terms": "Terms",
+  "exportLicensesModal.termNames": "Term names",
+  "exportLicensesModal.name": "Name",
+  "exportLicensesModal.startDate": "Start date",
+  "exportLicensesModal.endDate": "End date",
+  "exportLicensesModal.status": "Status",
+  "exportLicensesModal.type": "Type",
+  "exportLicensesModal.value": "Value",
+  "exportLicensesModal.note": "Internal note",
+  "exportLicensesModal.publicNote": "Public note",
+  "exportLicensesModal.internal": "Visibility",
+
   "filters.organization": "Organizations",
   "filters.organizationRole": "Organization role",
 
