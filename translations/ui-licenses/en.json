@@ -84,8 +84,8 @@
 
   "operator.equals": "equals",
   "operator.doesNotEqual": "does not equal",
-  "operator.isGreaterThanOrEqual": "is greater than or equal",
-  "operator.isLessThanOrEqual": "is less than or equal",
+  "operator.isGreaterThanOrEqual": "is greater than or equals",
+  "operator.isLessThanOrEqual": "is less than or equals",
   "operator.is": "is",
   "operator.isNot": "is not",
   "operator.contains": "contains",

@@ -10,6 +10,7 @@ const warnBlacklist = [
 const error = console.error;
 const errorBlacklist = [
   /\[React Intl\]/,
+  /Cannot update a component from inside the function body of a different component/,
 ];
 
 export default function turnOffWarnings() {
