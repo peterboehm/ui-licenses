@@ -76,7 +76,7 @@ export default class Licenses extends React.Component {
           iconAlignment="baseline"
           iconKey="app"
         >
-          <div style={{ wordBreak: 'break-all' }}>
+          <div style={{ overflowWrap: 'break-word' }}>
             {a.name}
           </div>
         </AppIcon>
