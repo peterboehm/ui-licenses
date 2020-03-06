@@ -11,7 +11,7 @@
   "apply": "Apply",
   "cancel": "Cancel",
   "closeEditLicense": "Close edit license pane",
-  "createLicense": "Create license",
+  "createLicense": "New license",
   "create": "Create",
   "create.callout": "<strong>License created:</strong> {name}",
   "update.callout": "<strong>License updated:</strong> {name}",
@@ -29,7 +29,7 @@
 
   "amendments.add": "Add amendment",
   "amendments.closePane": "Close edit amendment pane",
-  "amendments.create": "Create amendment",
+  "amendments.create": "New amendment",
   "amendments.create.callout": "<strong>Amendment created:</strong> {name}",
   "amendments.amendmentInfo": "Amendment information",
   "amendments.update": "Update amendment",
