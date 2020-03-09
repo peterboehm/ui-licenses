@@ -70,8 +70,8 @@ export default class Licenses extends React.Component {
     name: 500,
     type: 150,
     status: 150,
-    startDate: 150,
-    endDate: 150
+    startDate: 120,
+    endDate: 120
   }
 
   formatter = {
