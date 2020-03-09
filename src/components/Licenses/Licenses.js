@@ -77,8 +77,8 @@ export default class Licenses extends React.Component {
   formatter = {
     selected: resource => (
       <Checkbox
-        name={`selected-${resource.id}`}
         checked={!!(this.state.selectedLicenses[resource.id])}
+        name={`selected-${resource.id}`}
         onChange={() => this.handleToggleLicenseCheckBox(resource)}
         onClick={e => e.stopPropagation()}
       />
@@ -86,10 +86,10 @@ export default class Licenses extends React.Component {
     name: a => {
       return (
         <AppIcon
-          size="small"
           app="licenses"
           iconAlignment="baseline"
           iconKey="app"
+          size="small"
         >
           <div style={{ overflowWrap: 'break-word', width: 460 }}>
             {a.name}
@@ -143,6 +143,7 @@ export default class Licenses extends React.Component {
 
     return (
       <Link
+        key={`row-${rowIndex}`}
         aria-rowindex={rowIndex + 2}
         className={rowClass}
         data-label={[
@@ -150,7 +151,6 @@ export default class Licenses extends React.Component {
           this.formatter.type(rowData),
           this.formatter.status(rowData),
         ].join('...')}
-        key={`row-${rowIndex}`}
         role="row"
         to={this.rowURL(rowData.id)}
         {...rowProps}
@@ -178,9 +178,9 @@ export default class Licenses extends React.Component {
     return (
       <div data-test-licenses-no-results-message>
         <NoResultsMessage
-          source={source}
-          searchTerm={query.query || ''}
           filterPaneIsVisible
+          searchTerm={query.query || ''}
+          source={source}
           toggleFilterPane={noop}
         />
       </div>
@@ -200,10 +200,10 @@ export default class Licenses extends React.Component {
             <FormattedMessage id={hideOrShowMessageId}>
               {hideOrShowMessage => (
                 <FilterPaneToggle
-                  visible={filterPaneIsVisible}
                   aria-label={`${hideOrShowMessage}...${appliedFiltersMessage}`}
-                  onClick={this.toggleFilterPane}
                   badge={!filterPaneIsVisible && filterCount ? filterCount : undefined}
+                  onClick={this.toggleFilterPane}
+                  visible={filterPaneIsVisible}
                 />
               )}
             </FormattedMessage>
@@ -263,11 +263,11 @@ export default class Licenses extends React.Component {
     const sortOrder = query.sort || '';
 
     return (
-      <div data-test-licenses ref={contentRef}>
+      <div ref={contentRef} data-test-licenses>
         <SearchAndSortQuery
           initialFilterState={{ status: ['active'] }}
-          initialSortState={{ sort: 'name' }}
           initialSearchState={{ query: '' }}
+          initialSortState={{ sort: 'name' }}
           queryGetter={queryGetter}
           querySetter={querySetter}
         >
@@ -327,8 +327,8 @@ export default class Licenses extends React.Component {
                         <div className={css.resetButtonWrap}>
                           <Button
                             buttonStyle="none"
-                            id="clickable-reset-all"
                             disabled={disableReset()}
+                            id="clickable-reset-all"
                             onClick={resetAll}
                           >
                             <Icon icon="times-circle-solid">
@@ -351,8 +351,8 @@ export default class Licenses extends React.Component {
                     firstMenu={this.renderResultsFirstMenu(activeFilters)}
                     lastMenu={this.renderResultsLastMenu()}
                     padContent={false}
-                    paneTitle={<FormattedMessage id="ui-licenses.meta.title" />}
                     paneSub={this.renderResultsPaneSubtitle(source)}
+                    paneTitle={<FormattedMessage id="ui-licenses.meta.title" />}
                   >
                     <MultiColumnList
                       autosize
@@ -362,9 +362,9 @@ export default class Licenses extends React.Component {
                       formatter={this.formatter}
                       id="list-licenses"
                       isEmptyMessage={this.renderIsEmptyMessage(query, source)}
+                      isSelected={({ item }) => item.id === selectedRecordId}
                       onHeaderClick={onSort}
                       onNeedMoreData={onNeedMoreData}
-                      isSelected={({ item }) => item.id === selectedRecordId}
                       rowFormatter={this.rowFormatter}
                       rowUpdater={resource => this.state.selectedLicenses[resource.id]}
                       sortDirection={sortOrder.startsWith('-') ? 'descending' : 'ascending'}

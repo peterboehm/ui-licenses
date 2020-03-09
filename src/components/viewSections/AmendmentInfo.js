@@ -48,21 +48,21 @@ export default class AmendmentInfo extends React.Component {
           </Col>
         </Row>
         <Row>
-          <Col xs={6} md={3}>
+          <Col md={3} xs={6}>
             <KeyValue label={<FormattedMessage id="ui-licenses.prop.status" />}>
               <div data-test-amendment-status>
                 {get(amendment, ['status', 'label'], '-')}
               </div>
             </KeyValue>
           </Col>
-          <Col xs={6} md={3}>
+          <Col md={3} xs={6}>
             <KeyValue label={<FormattedMessage id="ui-licenses.prop.startDate" />}>
               <div data-test-amendment-start-date>
                 {amendment.startDate ? <FormattedUTCDate value={amendment.startDate} /> : '-'}
               </div>
             </KeyValue>
           </Col>
-          <Col xs={6} md={3}>
+          <Col md={3} xs={6}>
             <KeyValue label={<FormattedMessage id="ui-licenses.prop.endDate" />}>
               <div data-test-amendment-end-date>
                 <LicenseEndDate license={amendment} />

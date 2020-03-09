@@ -43,13 +43,13 @@ class NoteViewRoute extends Component {
 
     return (
       <NoteViewPage
-        entityTypeTranslationKeys={{ license: 'ui-licenses.license' }}
         entityTypePluralizedTranslationKeys={{ license: 'ui-licenses.licensePlural' }}
+        entityTypeTranslationKeys={{ license: 'ui-licenses.license' }}
         navigateBack={this.navigateBack}
+        noteId={match.params.noteId}
         onEdit={this.onEdit}
         paneHeaderAppIcon="license"
         referredEntityData={formatNoteReferrer(location.state)}
-        noteId={match.params.noteId}
       />
     );
   }

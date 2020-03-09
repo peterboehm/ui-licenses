@@ -28,9 +28,9 @@ export default class LicenseFormInternalContacts extends React.Component {
         open={open}
       >
         <FieldArray
-          name="contacts"
           component={InternalContactsFieldArray}
           contactRoles={data.contactRoleValues}
+          name="contacts"
           users={data.users}
         />
       </Accordion>

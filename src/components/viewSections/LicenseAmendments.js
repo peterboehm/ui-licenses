@@ -52,8 +52,8 @@ export default class LicenseAmendments extends React.Component {
         displayWhenOpen={this.renderAddAmendmentButton()}
         id={id}
         label={<FormattedMessage id="ui-licenses.section.amendments" />}
-        open={open}
         onToggle={onToggle}
+        open={open}
       >
         <MultiColumnList
           columnMapping={{

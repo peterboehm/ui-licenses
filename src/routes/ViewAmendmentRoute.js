@@ -130,13 +130,13 @@ class ViewAmendmentsRoute extends React.Component {
         />
         {this.state.showConfirmDelete && (
           <ConfirmationModal
-            id="delete-job-confirmation"
+            buttonStyle="danger"
             confirmLabel={<FormattedMessage id="ui-licenses.amendments.delete.confirmLabel" />}
             heading={<FormattedMessage id="ui-licenses.amendments.delete.confirmHeading" />}
+            id="delete-job-confirmation"
             message={<SafeHTMLMessage id="ui-licenses.amendments.delete.confirmMessage" values={{ name }} />}
             onCancel={this.hideDeleteConfirmationModal}
             onConfirm={this.handleDelete}
-            buttonStyle="danger"
             open
           />
         )}

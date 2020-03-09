@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
-import { Accordion, AccordionSet, FilterAccordionHeader, Selection, KeyValue } from '@folio/stripes/components';
+import { Accordion, AccordionSet, FilterAccordionHeader, Selection } from '@folio/stripes/components';
 import { CheckboxFilter, MultiSelectionFilter } from '@folio/stripes/smart-components';
 import { OrganizationSelection } from '@folio/stripes-erm-components';
 
@@ -58,9 +58,9 @@ export default class LicenseFilters extends React.Component {
 
     return (
       <Accordion
-        id={`filter-accordion-${name}`}
         displayClearButton={groupFilters.length > 0}
         header={FilterAccordionHeader}
+        id={`filter-accordion-${name}`}
         label={<FormattedMessage id={`ui-licenses.prop.${name}`} />}
         onClearFilter={() => { this.props.filterHandlers.clearGroup(name); }}
         separator={false}
@@ -96,12 +96,12 @@ export default class LicenseFilters extends React.Component {
         separator={false}
       >
         <OrganizationSelection
-          path="licenses/org"
           input={{
             name: 'license-orgs-filter',
             onChange: value => this.props.filterHandlers.state({ ...activeFilters, org: [value] }),
             value: orgFilters[0] || '',
           }}
+          path="licenses/org"
         />
       </Accordion>
     );
@@ -130,8 +130,8 @@ export default class LicenseFilters extends React.Component {
         <Selection
           dataOptions={dataOptions}
           disabled={orgFilters.length === 0}
-          value={roleFilters[0] || ''}
           onChange={value => this.props.filterHandlers.state({ ...activeFilters, role: [value] })}
+          value={roleFilters[0] || ''}
         />
       </Accordion>
     );
@@ -144,9 +144,9 @@ export default class LicenseFilters extends React.Component {
     return (
       <Accordion
         closedByDefault
-        id="clickable-tags-filter"
         displayClearButton={tagFilters.length > 0}
         header={FilterAccordionHeader}
+        id="clickable-tags-filter"
         label={<FormattedMessage id="ui-licenses.tags" />}
         onClearFilter={() => { this.props.filterHandlers.clearGroup('tags'); }}
         separator={false}

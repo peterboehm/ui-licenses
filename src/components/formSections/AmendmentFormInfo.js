@@ -76,18 +76,18 @@ class AmendmentFormInfo extends React.Component {
           </Col>
         </Row>
         <Row>
-          <Col xs={12} md={5}>
+          <Col md={5} xs={12}>
             <Field
               backendDateStandard="YYYY-MM-DD"
               component={Datepicker}
               id="edit-amendment-start-date"
               label={<FormattedMessage id="ui-licenses.prop.startDate" />}
-              parse={v => v} // Lets us pass an empty string instead of `undefined`
+              name="startDate" // Lets us pass an empty string instead of `undefined`
+              parse={v => v}
               parser={parseDateOnlyString}
-              name="startDate"
             />
           </Col>
-          <Col xs={10} md={5}>
+          <Col md={5} xs={10}>
             <Field
               backendDateStandard="YYYY-MM-DD"
               component={Datepicker}
@@ -100,12 +100,12 @@ class AmendmentFormInfo extends React.Component {
               validate={this.validateEndDate}
             />
           </Col>
-          <Col xs={2} style={{ paddingTop: 20 }}>
+          <Col style={{ paddingTop: 20 }} xs={2}>
             <Field name="openEnded" type="checkbox">
               {props => {
                 return (<Checkbox
-                  id="edit-amendment-open-ended"
                   checked={props.input.value}
+                  id="edit-amendment-open-ended"
                   label={<FormattedMessage id="ui-licenses.prop.openEnded" />}
                   onChange={e => {
                     props.input.onChange(e);

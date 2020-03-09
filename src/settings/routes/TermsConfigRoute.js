@@ -90,10 +90,10 @@ class TermsConfigRoute extends React.Component {
     return (
       <TermsConfigForm
         initialValues={{ customProperties: terms }}
-        pickLists={pickLists}
         onDelete={this.handleDelete}
         onSave={this.handleSave}
         onSubmit={this.handleSave}
+        pickLists={pickLists}
       />
     );
   }

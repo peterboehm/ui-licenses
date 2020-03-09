@@ -25,17 +25,17 @@ export default class FormCoreDocs extends React.Component {
       <Accordion
         id={id}
         label={<FormattedMessage id="ui-licenses.section.coreDocs" />}
-        open={open}
         onToggle={onToggle}
+        open={open}
       >
         <FieldArray
           addDocBtnLabel={<FormattedMessage id="ui-licenses.coreDocs.add" />}
           component={DocumentsFieldArray}
           deleteBtnTooltipMsgId="ui-licenses.coreDocs.removeCoreDoc"
-          onDownloadFile={handlers.onDownloadFile}
-          onUploadFile={handlers.onUploadFile}
           isEmptyMessage={<FormattedMessage id="ui-licenses.coreDocs.none" />}
           name="docs"
+          onDownloadFile={handlers.onDownloadFile}
+          onUploadFile={handlers.onUploadFile}
         />
       </Accordion>
     );

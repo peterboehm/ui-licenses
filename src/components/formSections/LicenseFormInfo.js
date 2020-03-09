@@ -63,7 +63,7 @@ export default class LicenseFormInfo extends React.Component {
           </Col>
         </Row>
         <Row>
-          <Col xs={12} md={6}>
+          <Col md={6} xs={12}>
             <Field
               component={Select}
               dataOptions={data.typeValues}
@@ -73,7 +73,7 @@ export default class LicenseFormInfo extends React.Component {
               required
             />
           </Col>
-          <Col xs={12} md={6}>
+          <Col md={6} xs={12}>
             <Field
               component={Select}
               dataOptions={data.statusValues}
@@ -85,7 +85,7 @@ export default class LicenseFormInfo extends React.Component {
           </Col>
         </Row>
         <Row>
-          <Col xs={12} md={5}>
+          <Col md={5} xs={12}>
             <Field
               backendDateStandard="YYYY-MM-DD"
               component={Datepicker}
@@ -96,7 +96,7 @@ export default class LicenseFormInfo extends React.Component {
               parser={parseDateOnlyString}
             />
           </Col>
-          <Col xs={10} md={5}>
+          <Col md={5} xs={10}>
             <Field
               backendDateStandard="YYYY-MM-DD"
               component={Datepicker}
@@ -109,12 +109,12 @@ export default class LicenseFormInfo extends React.Component {
               validate={this.validateEndDate}
             />
           </Col>
-          <Col xs={2} style={{ paddingTop: 20 }}>
+          <Col style={{ paddingTop: 20 }} xs={2}>
             <Field name="openEnded" type="checkbox">
               {props => {
                 return (<Checkbox
-                  id="edit-license-open-ended"
                   checked={props.input.value}
+                  id="edit-license-open-ended"
                   label={<FormattedMessage id="ui-licenses.prop.openEnded" />}
                   onChange={e => {
                     props.input.onChange(e);

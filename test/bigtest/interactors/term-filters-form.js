@@ -29,7 +29,7 @@ import {
   selectTerm = selectable('[data-test-term');
 }
 
- export default @interactor class TermFiltersFormInteractor {
+export default @interactor class TermFiltersFormInteractor {
   open = clickable('[data-test-open-custprops-filters]');
   cancel = clickable('[data-test-cancel-filters]');
   apply = clickable('[data-test-apply-filters]');

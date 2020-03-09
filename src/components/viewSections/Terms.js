@@ -23,8 +23,8 @@ export default class Terms extends React.Component {
           <Accordion
             id={id}
             label={<FormattedMessage id="ui-licenses.section.terms" />}
-            open={open}
             onToggle={onToggle}
+            open={open}
           >
             {
               terms?.length ?

@@ -189,12 +189,12 @@ class LicensesRoute extends React.Component {
           tagsValues: resources?.tagsValues?.records ?? [],
           terms: resources?.terms?.records ?? [],
         }}
-        selectedRecordId={match.params.id}
         onCompareLicenseTerms={this.handleCompareLicenseTerms}
         onNeedMoreData={this.handleNeedMoreData}
         queryGetter={this.queryGetter}
         querySetter={this.querySetter}
         searchString={location.search}
+        selectedRecordId={match.params.id}
         source={this.source}
       >
         {children}

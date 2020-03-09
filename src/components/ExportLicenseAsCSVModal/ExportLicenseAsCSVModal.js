@@ -93,8 +93,8 @@ export default class ExportLicenseAsCSVModal extends React.Component {
           {
           this[section].map(({ key, value }, index) => (
             <Checkbox
-              checked={this.state[section][key]}
               key={index}
+              checked={this.state[section][key]}
               label={value}
               labelClass={css.labelClass}
               name={key}
