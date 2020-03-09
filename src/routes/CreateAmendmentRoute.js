@@ -96,7 +96,8 @@ class CreateAmendmentRoute extends React.Component {
     const originalAmendmentIds = {};
     (license.amendments || []).forEach(a => { originalAmendmentIds[a.id] = 1; });
     const name = amendment?.name;
-    this.props.mutator.license
+
+    return this.props.mutator.license
       .PUT({
         ...license,
         amendments: [amendment]

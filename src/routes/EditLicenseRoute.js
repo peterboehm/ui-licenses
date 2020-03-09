@@ -145,7 +145,8 @@ class EditLicenseRoute extends React.Component {
 
   handleSubmit = (license) => {
     const name = license?.name;
-    this.props.mutator.license
+
+    return this.props.mutator.license
       .PUT(license)
       .then(() => {
         this.context.sendCallout({ message: <SafeHTMLMessage id="ui-licenses.update.callout" values={{ name }} /> });
