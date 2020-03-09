@@ -33,8 +33,8 @@ export default class LicenseInternalContacts extends React.Component {
 
     return contacts.map(contact => (
       <InternalContactCard
-        contact={contact}
         key={contact.id}
+        contact={contact}
       />
     ));
   }

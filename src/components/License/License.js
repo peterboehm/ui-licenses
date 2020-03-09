@@ -127,11 +127,11 @@ class License extends React.Component {
             <FormattedMessage id="ui-licenses.showTags">
               {ariaLabel => (
                 <IconButton
+                  ariaLabel={ariaLabel}
+                  badgeCount={get(license, 'tags.length', 0)}
                   icon="tag"
                   id="clickable-show-tags"
-                  badgeCount={get(license, 'tags.length', 0)}
                   onClick={handlers.onToggleTags}
-                  ariaLabel={ariaLabel}
                 />
               )}
             </FormattedMessage>
@@ -210,9 +210,9 @@ class License extends React.Component {
               <NotesSmartAccordion
                 {...this.getSectionProps('licenseNotes')}
                 domainName="licenses"
+                entityId={data.license.id}
                 entityName={data.license.name}
                 entityType="license"
-                entityId={data.license.id}
                 pathToNoteCreate="notes/create"
                 pathToNoteDetails="notes"
               />

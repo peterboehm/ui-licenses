@@ -59,7 +59,7 @@ class TermFiltersForm extends React.Component {
         data-test-apply-filters
         onClick={values => {
           const promise = this.props.handleSubmit(values);
-          promise?.then(() => this.setState({ editingFilters: false }))
+          promise?.then(() => this.setState({ editingFilters: false })); // eslint-disable-line no-unused-expressions
         }}
       >
         <FormattedMessage id="ui-licenses.apply" />
@@ -105,10 +105,10 @@ class TermFiltersForm extends React.Component {
               {({ fields }) => fields.map((name, index) => (
                 <React.Fragment key={name}>
                   <EditCard
+                    key={name}
                     data-test-term-filter
                     deleteButtonTooltipText={<FormattedMessage id="ui-licenses.terms.filters.removeTerm" values={{ index: index + 1 }} />}
                     header={<FormattedMessage id="ui-licenses.terms.filters.termFilterIndex" values={{ index: index + 1 }} />}
-                    key={name}
                     marginBottom0={index !== fields.length - 1}
                     onDelete={() => fields.remove(index)}
                   >
@@ -154,31 +154,31 @@ class TermFiltersForm extends React.Component {
                         let ValueComponent;
                         const valueComponentProps = {};
 
-                        const { intl: { formatMessage }} = this.props;
+                        const { intl: { formatMessage } } = this.props;
 
                         if (termType === customPropertyTypes.NUMBER || termType === customPropertyTypes.DECIMAL) {
                           operatorOptions = [
-                            { value: '==', label: formatMessage({ id: 'ui-licenses.operator.equals'}) },
-                            { value: '!=', label: formatMessage({ id: 'ui-licenses.operator.doesNotEqual'}) },
-                            { value: '>=', label: formatMessage({ id: 'ui-licenses.operator.isGreaterThanOrEqual'}) },
-                            { value: '<=', label: formatMessage({ id: 'ui-licenses.operator.isLessThanOrEqual'}) },
+                            { value: '==', label: formatMessage({ id: 'ui-licenses.operator.equals' }) },
+                            { value: '!=', label: formatMessage({ id: 'ui-licenses.operator.doesNotEqual' }) },
+                            { value: '>=', label: formatMessage({ id: 'ui-licenses.operator.isGreaterThanOrEqual' }) },
+                            { value: '<=', label: formatMessage({ id: 'ui-licenses.operator.isLessThanOrEqual' }) },
                           ];
 
                           ValueComponent = TextField;
                           valueComponentProps.type = 'number';
                         } else if (termType === customPropertyTypes.SELECT) {
                           operatorOptions = [
-                            { value: '==', label: formatMessage({ id: 'ui-licenses.operator.is'}) },
-                            { value: '!=', label: formatMessage({ id: 'ui-licenses.operator.isNot'}) },
+                            { value: '==', label: formatMessage({ id: 'ui-licenses.operator.is' }) },
+                            { value: '!=', label: formatMessage({ id: 'ui-licenses.operator.isNot' }) },
                           ];
 
                           ValueComponent = Select;
                           valueComponentProps.dataOptions = termDefinition.category.values.map(rdv => ({ label: rdv.label, value: rdv.id }));
-                          valueComponentProps.placeholder = " ";
+                          valueComponentProps.placeholder = ' ';
                         } else {
                           operatorOptions = [
-                            { value: '=~', label: formatMessage({ id: 'ui-licenses.operator.contains'}) },
-                            { value: '!~', label: formatMessage({ id: 'ui-licenses.operator.doesNotContain'}) },
+                            { value: '=~', label: formatMessage({ id: 'ui-licenses.operator.contains' }) },
+                            { value: '!~', label: formatMessage({ id: 'ui-licenses.operator.doesNotContain' }) },
                           ];
 
                           ValueComponent = TextField;
@@ -186,8 +186,8 @@ class TermFiltersForm extends React.Component {
 
                         return (
                           <Row
-                            data-test-rule-row
                             key={ruleFieldName}
+                            data-test-rule-row
                           >
                             <Col xs={2}>
                               <Layout className="textCentered">
@@ -218,22 +218,22 @@ class TermFiltersForm extends React.Component {
                               />
                             </Col>
                             <Col xs={2}>
-                            { ruleFieldIndex ? (
-                              <Tooltip
-                                id={uniqueId('delete-rule-btn')}
-                                text={<FormattedMessage id="ui-licenses.terms.filters.removeRule" values={{ index: ruleFieldIndex + 1 }} />}
-                              >
-                                {({ ref, ariaIds }) => (
-                                  <IconButton
-                                    aria-labelledby={ariaIds.text}
-                                    data-test-delete-rule-btn
-                                    icon="trash"
-                                    onClick={() => ruleFields.remove(ruleFieldIndex)}
-                                    ref={ref}
-                                  />
-                                )}
-                              </Tooltip>
-                            ) : null}
+                              { ruleFieldIndex ? (
+                                <Tooltip
+                                  id={uniqueId('delete-rule-btn')}
+                                  text={<FormattedMessage id="ui-licenses.terms.filters.removeRule" values={{ index: ruleFieldIndex + 1 }} />}
+                                >
+                                  {({ ref, ariaIds }) => (
+                                    <IconButton
+                                      ref={ref}
+                                      aria-labelledby={ariaIds.text}
+                                      data-test-delete-rule-btn
+                                      icon="trash"
+                                      onClick={() => ruleFields.remove(ruleFieldIndex)}
+                                    />
+                                  )}
+                                </Tooltip>
+                              ) : null}
                             </Col>
                           </Row>
                         );
@@ -257,7 +257,7 @@ class TermFiltersForm extends React.Component {
             </FieldArray>
             <Button
               data-test-add-term-filter-btn
-              onClick={() => push('filters', { rules: [{}]})}
+              onClick={() => push('filters', { rules: [{}] })}
             >
               <FormattedMessage id="ui-licenses.terms.filters.addTermFilter" />
             </Button>

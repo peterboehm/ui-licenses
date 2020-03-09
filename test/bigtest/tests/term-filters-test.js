@@ -7,7 +7,7 @@ import { StaticRouter as Router } from 'react-router-dom';
 import '@folio/stripes-components/lib/global.css';
 
 import { mountWithContext } from '../helpers/mountWithContext';
-import translations from '../../../translations/ui-licenses/en.json';
+import translations from '../../../translations/ui-licenses/en';
 
 import TermFiltersForm from '../../../src/components/LicenseFilters/TermFiltersForm';
 import TermFiltersFormInteractor from '../interactors/term-filters-form';
@@ -169,7 +169,7 @@ describe('Term Filters', () => {
               }],
             });
           });
-        })
+        });
       });
 
       describe('clicking the "Add term filter" button', () => {

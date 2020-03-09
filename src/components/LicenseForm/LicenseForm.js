@@ -89,8 +89,8 @@ class LicenseForm extends React.Component {
     return (
       <Paneset>
         <Pane
-          dismissible
           defaultWidth="100%"
+          dismissible
           id="pane-license-form"
           onClose={this.props.handlers.onClose}
           paneTitle={<FormattedMessage id="ui-licenses.loading" />}
@@ -114,16 +114,6 @@ class LicenseForm extends React.Component {
 
     return (
       <PaneFooter
-        renderStart={(
-          <Button
-            buttonStyle="default mega"
-            id="clickable-cancel"
-            marginBottom0
-            onClick={handlers.onClose}
-          >
-            <FormattedMessage id="stripes-components.cancel" />
-          </Button>
-        )}
         renderEnd={(
           <Button
             buttonStyle="primary mega"
@@ -136,6 +126,16 @@ class LicenseForm extends React.Component {
             <FormattedMessage id="stripes-components.saveAndClose" />
           </Button>
         )}
+        renderStart={(
+          <Button
+            buttonStyle="default mega"
+            id="clickable-cancel"
+            marginBottom0
+            onClick={handlers.onClose}
+          >
+            <FormattedMessage id="stripes-components.cancel" />
+          </Button>
+        )}
       />
     );
   }
@@ -146,10 +146,10 @@ class LicenseForm extends React.Component {
         <FormattedMessage id="ui-licenses.closeEditLicense">
           {ariaLabel => (
             <IconButton
+              aria-label={ariaLabel}
               icon="times"
               id="close-license-form-button"
               onClick={this.props.handlers.onClose}
-              aria-label={ariaLabel}
             />
           )}
         </FormattedMessage>
@@ -168,8 +168,8 @@ class LicenseForm extends React.Component {
             <Pane
               appIcon={<AppIcon app="licenses" />}
               defaultWidth="100%"
-              footer={this.renderPaneFooter()}
               firstMenu={this.renderFirstMenu()}
+              footer={this.renderPaneFooter()}
               id="pane-license-form"
               paneTitle={id ? name : <FormattedMessage id="ui-licenses.createLicense" />}
             >

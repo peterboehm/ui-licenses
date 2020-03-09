@@ -39,18 +39,18 @@ class App extends React.Component {
     return (
       <Suspense fallback={null}>
         <Switch>
-          <Route path={`${path}/notes/create`} exact component={NoteCreateRoute} />
-          <Route path={`${path}/notes/:noteId`} exact component={NoteViewRoute} />
-          <Route path={`${path}/notes/:noteId/edit`} exact component={NoteEditRoute} />
-          <Route path={`${path}/create`} component={CreateLicenseRoute} />
-          <Route path={`${path}/:id/edit`} component={EditLicenseRoute} />
-          <Route path={`${path}/:id/amendments/create`} component={CreateAmendmentRoute} />
-          <Route path={`${path}/:id/amendments/:amendmentId/edit`} component={EditAmendmentRoute} />
-          <Route path={`${path}/:id?`} component={LicensesRoute}>
+          <Route component={NoteCreateRoute} exact path={`${path}/notes/create`} />
+          <Route component={NoteViewRoute} exact path={`${path}/notes/:noteId`} />
+          <Route component={NoteEditRoute} exact path={`${path}/notes/:noteId/edit`} />
+          <Route component={CreateLicenseRoute} path={`${path}/create`} />
+          <Route component={EditLicenseRoute} path={`${path}/:id/edit`} />
+          <Route component={CreateAmendmentRoute} path={`${path}/:id/amendments/create`} />
+          <Route component={EditAmendmentRoute} path={`${path}/:id/amendments/:amendmentId/edit`} />
+          <Route component={LicensesRoute} path={`${path}/:id?`}>
             <Suspense fallback={null}>
               <Switch>
-                <Route path={`${path}/:id`} exact component={ViewLicenseRoute} />
-                <Route path={`${path}/:id/amendments/:amendmentId`} exact component={ViewAmendmentRoute} />
+                <Route component={ViewLicenseRoute} exact path={`${path}/:id`} />
+                <Route component={ViewAmendmentRoute} exact path={`${path}/:id/amendments/:amendmentId`} />
               </Switch>
             </Suspense>
           </Route>

@@ -31,13 +31,13 @@ export default class NoteEditRoute extends Component {
 
     return (
       <NoteEditPage
-        referredEntityData={formatNoteReferrer(location.state)}
-        entityTypeTranslationKeys={{ license: 'ui-licenses.license' }}
-        entityTypePluralizedTranslationKeys={{ license: 'ui-licenses.licensePlural' }}
-        paneHeaderAppIcon="license"
         domain="licenses"
+        entityTypePluralizedTranslationKeys={{ license: 'ui-licenses.licensePlural' }}
+        entityTypeTranslationKeys={{ license: 'ui-licenses.license' }}
         navigateBack={this.goToNoteView}
         noteId={match.params.noteId}
+        paneHeaderAppIcon="license"
+        referredEntityData={formatNoteReferrer(location.state)}
       />
     );
   }

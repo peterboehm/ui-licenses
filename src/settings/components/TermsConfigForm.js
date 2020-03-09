@@ -104,10 +104,10 @@ class TermsConfigForm extends React.Component {
       <Pane
         defaultWidth="fill"
         id="settings-terms"
-        paneTitle={<FormattedMessage id="ui-licenses.section.terms" />}
         paneSub={
           <FormattedMessage id="ui-licenses.terms.count" values={{ count }} />
         }
+        paneTitle={<FormattedMessage id="ui-licenses.section.terms" />}
       >
         <form>
           <FieldArray

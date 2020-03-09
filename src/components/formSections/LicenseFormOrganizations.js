@@ -34,9 +34,9 @@ class LicenseFormOrganizations extends React.Component {
         <Row>
           <Col xs={12}>
             <FieldArray
-              name="orgs"
               addOrganizationBtnLabel={<FormattedMessage id="ui-licenses.organizations.addOrganizationToLicense" />}
               component={OrganizationsFieldArray}
+              name="orgs"
               roles={data.orgRoleValues}
               uniqueRole="licensor"
             />

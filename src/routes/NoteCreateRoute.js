@@ -19,11 +19,11 @@ export default class NoteCreateRoute extends Component {
 
     return (
       <NoteCreatePage
-        referredEntityData={formatNoteReferrer(this.props.location.state)}
-        entityTypeTranslationKeys={{ license: 'ui-licenses.license' }}
-        paneHeaderAppIcon="licenses"
         domain="licenses"
+        entityTypeTranslationKeys={{ license: 'ui-licenses.license' }}
         navigateBack={history.goBack}
+        paneHeaderAppIcon="licenses"
+        referredEntityData={formatNoteReferrer(this.props.location.state)}
       />
     );
   }

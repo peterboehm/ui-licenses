@@ -27,8 +27,8 @@ export default class FormSupplementaryDocs extends React.Component {
       <Accordion
         id={id}
         label={<FormattedMessage id="ui-licenses.section.supplementaryDocuments" />}
-        open={open}
         onToggle={onToggle}
+        open={open}
       >
         <FieldArray
           addDocBtnLabel={<FormattedMessage id="ui-licenses.supplementaryDocs.add" />}

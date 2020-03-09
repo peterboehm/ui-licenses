@@ -90,8 +90,8 @@ class AmendmentForm extends React.Component {
     return (
       <Paneset>
         <Pane
-          dismissible
           defaultWidth="100%"
+          dismissible
           id="pane-amendment-form"
           onClose={this.props.handlers.onClose}
           paneTitle={<FormattedMessage id="ui-licenses.loading" />}
@@ -145,8 +145,8 @@ class AmendmentForm extends React.Component {
 
     return (
       <PaneFooter
-        renderStart={startButton}
         renderEnd={endButton}
+        renderStart={startButton}
       />
     );
   }
@@ -157,10 +157,10 @@ class AmendmentForm extends React.Component {
         <FormattedMessage id="ui-licenses.amendments.closePane">
           {ariaLabel => (
             <IconButton
+              aria-label={ariaLabel}
               icon="times"
               id="close-amendment-form-button"
               onClick={this.props.handlers.onClose}
-              aria-label={ariaLabel}
             />
           )}
         </FormattedMessage>
@@ -179,9 +179,9 @@ class AmendmentForm extends React.Component {
           {create => (
             <Pane
               defaultWidth="100%"
-              id="pane-amendment-form"
               firstMenu={this.renderFirstMenu()}
               footer={this.renderPaneFooter()}
+              id="pane-amendment-form"
               paneTitle={id ? name : <FormattedMessage id="ui-licenses.amendments.create" />}
             >
               <TitleManager record={id ? name : create}>

@@ -38,9 +38,9 @@ export default class LicenseOrganizations extends React.Component {
 
       return (
         <ViewOrganizationCard
+          key={`${org.orgsUuid}-${role.value}`}
           data-test-license-org
           fetchCredentials={this.props.handlers.onFetchCredentials}
-          key={`${org.orgsUuid}-${role.value}`}
           headerStart={
             <span>
               <AppIcon
