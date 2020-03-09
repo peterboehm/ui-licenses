@@ -115,7 +115,8 @@ class EditAmendmentRoute extends React.Component {
   handleSubmit = (amendment) => {
     const license = get(this.props.resources, 'license.records[0]', {});
     const name = amendment?.name;
-    this.props.mutator.license
+
+    return this.props.mutator.license
       .PUT({
         ...license,
         amendments: [amendment]
