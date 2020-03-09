@@ -57,6 +57,7 @@ export default class Licenses extends React.Component {
   }
 
   columnMapping = {
+    selected: ' ',
     name: <FormattedMessage id="ui-licenses.prop.name" />,
     type: <FormattedMessage id="ui-licenses.prop.type" />,
     status: <FormattedMessage id="ui-licenses.prop.status" />,
@@ -65,6 +66,7 @@ export default class Licenses extends React.Component {
   }
 
   columnWidths = {
+    selected: 40,
     name: 500,
     type: 150,
     status: 150,
@@ -73,7 +75,7 @@ export default class Licenses extends React.Component {
   }
 
   formatter = {
-    '': resource => (
+    selected: resource => (
       <Checkbox
         name={`selected-${resource.id}`}
         checked={!!(this.state.selectedLicenses[resource.id])}
@@ -369,7 +371,7 @@ export default class Licenses extends React.Component {
                       sortOrder={sortOrder.replace(/^-/, '').replace(/,.*/, '')}
                       totalCount={count}
                       virtualize
-                      visibleColumns={['', 'name', 'type', 'status', 'startDate', 'endDate']}
+                      visibleColumns={['selected', 'name', 'type', 'status', 'startDate', 'endDate']}
                     />
                   </Pane>
                   {children}
