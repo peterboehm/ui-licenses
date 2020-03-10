@@ -84,11 +84,12 @@ export default class Licenses extends React.Component {
       />
     ),
     name: a => {
+      const iconKey = a?.status?.value === 'expired' || a?.status?.value === 'rejected' ? 'inactiveLicense' : 'app';
       return (
         <AppIcon
           app="licenses"
           iconAlignment="baseline"
-          iconKey="app"
+          iconKey={iconKey}
           size="small"
         >
           <div style={{ overflowWrap: 'break-word', width: 460 }}>
