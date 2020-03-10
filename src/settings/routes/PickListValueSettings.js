@@ -7,26 +7,15 @@ import { Select } from '@folio/stripes/components';
 import { IntlConsumer } from '@folio/stripes/core';
 
 export default class PickListValueSettings extends React.Component {
-  static manifest = {
-    categories: {
-      type: 'okapi',
-      path: 'licenses/refdata',
-      params: {
-        perPage: '100',
-        sort: 'desc;asc',
-      },
-      accumulate: true,
-    },
-  };
-
   static propTypes = {
     stripes: PropTypes.shape({
       connect: PropTypes.func.isRequired,
     }).isRequired,
     resources: PropTypes.shape({
       categories: PropTypes.arrayOf(PropTypes.shape({
-        id: PropTypes.string,
         desc: PropTypes.string,
+        id: PropTypes.string,
+        internal: PropTypes.bool,
         values: PropTypes.arrayOf({
           id: PropTypes.string,
           value: PropTypes.string,
@@ -42,12 +31,24 @@ export default class PickListValueSettings extends React.Component {
     })
   };
 
+  static manifest = {
+    categories: {
+      type: 'okapi',
+      path: 'licenses/refdata',
+      params: {
+        perPage: '100',
+        sort: 'desc;asc',
+      },
+      accumulate: true,
+    },
+  };
+
   constructor(props) {
     super(props);
     this.connectedControlledVocab = props.stripes.connect(ControlledVocab);
 
     this.state = {
-      categoryId: null,
+      selectedCategory: null,
     };
   }
 
@@ -63,7 +64,9 @@ export default class PickListValueSettings extends React.Component {
   }
 
   onChangeCategory = (e) => {
-    this.setState({ categoryId: e.target.value });
+    const records = this.props?.resources?.categories?.records ?? [];
+    const selectedCategory = records.find(item => item.id === e.target.value);
+    this.setState({ selectedCategory });
   }
 
   renderCategories(intl) {
@@ -91,8 +94,9 @@ export default class PickListValueSettings extends React.Component {
         {intl => (
           <this.connectedControlledVocab
             {...this.props}
+            actionSuppressor={{ edit: this.state.selectedCategory?.internal, delete: this.state.selectedCategory?.internal }}
             actuatorType="refdata"
-            baseUrl={`licenses/refdata/${this.state.categoryId}`}
+            baseUrl={`erm/refdata/${this.state.selectedCategory?.id}`}
             columnMapping={{
               label: intl.formatMessage({ id: 'ui-licenses.settings.value' }),
               actions: intl.formatMessage({ id: 'ui-licenses.settings.actions' }),
@@ -104,7 +108,7 @@ export default class PickListValueSettings extends React.Component {
             id="pick-list-values"
             label={<FormattedMessage id="ui-licenses.settings.pickListValues" />}
             labelSingular={intl.formatMessage({ id: 'ui-licenses.settings.value' })}
-            listSuppressor={() => !this.state.categoryId}
+            listSuppressor={() => !this.state.selectedCategory?.id}
             nameKey="label"
             objectLabel={<FormattedMessage id="ui-licenses.settings.values" />}
             records="values"
