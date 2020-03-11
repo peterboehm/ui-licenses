@@ -1,12 +1,20 @@
 # Change history for ui-licenses
 
-## 3.7.0 IN PROGRESS
+## 3.7.0 2019-03-11
 * Switched to using `<FormattedUTCDate>` from Stripes. ERM-635
 * Switched to using `<Spinner>` from Stripes. ERM-635
 * Keyboard navigation and focus improvements. ERM-593 622 628
 * Hid "Delete License" permission set. ERM-615
 * Added @folio/react-intl-safe-html to dependencies. ERM-539
 * Added ability to filter licenses by their terms. ERM-668
+* Switched to showing amendment record after it's created. ERM-454
+* Added type checks for term values. ERM-645
+* Added ability to export licenses. ERM-712
+* Added callouts and confirmation modals. ERM-723 724 725
+* Upgrade to Stripes 3.0
+* Added ability to filter licenses by terms. ERM-684
+* Added inactive indication to icon in Licenses list. ERM-745
+* Fixed bug with resetting 'Open Ended' checkbox. ERM-770
 
 ## 3.6.0 2019-12-04
 * Port ui-licenses to RFF. ERM-487.
