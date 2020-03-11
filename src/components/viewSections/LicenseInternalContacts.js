@@ -47,7 +47,7 @@ export default class LicenseInternalContacts extends React.Component {
         displayWhenClosed={this.renderBadge()}
         displayWhenOpen={this.renderBadge()}
         id={id}
-        label={<FormattedMessage id="ui-agreements.agreements.internalContacts" />}
+        label={<FormattedMessage id="ui-licenses.emptyAccordion.internalContacts" />}
         onToggle={onToggle}
         open={open}
       >
