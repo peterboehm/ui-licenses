@@ -28,6 +28,7 @@ import { LicenseEndDate } from '@folio/stripes-erm-components';
 import ExportLicenseAsCSVModal from '../ExportLicenseAsCSVModal';
 
 import LicenseFilters from '../LicenseFilters';
+import { statuses } from '../../constants';
 
 import css from './Licenses.css';
 
@@ -84,11 +85,12 @@ export default class Licenses extends React.Component {
       />
     ),
     name: a => {
+      const iconKey = a?.status?.value === statuses.EXPIRED || a?.status?.value === statuses.REJECTED ? 'inactiveLicense' : 'app';
       return (
         <AppIcon
           app="licenses"
           iconAlignment="baseline"
-          iconKey="app"
+          iconKey={iconKey}
           size="small"
         >
           <div style={{ overflowWrap: 'break-word', width: 460 }}>

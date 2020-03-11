@@ -153,6 +153,11 @@
         "name": "app",
         "alt": "ERM license functionality for Stripes",
         "title": "Licenses"
+      },
+      {
+        "name": "inactiveLicense",
+        "alt": " ",
+        "title": "Inactive license"
       }
     ]
   }
