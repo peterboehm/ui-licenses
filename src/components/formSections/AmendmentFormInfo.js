@@ -104,7 +104,7 @@ class AmendmentFormInfo extends React.Component {
             <Field name="openEnded" type="checkbox">
               {props => {
                 return (<Checkbox
-                  checked={props.input.value}
+                  checked={props.input.checked}
                   id="edit-amendment-open-ended"
                   label={<FormattedMessage id="ui-licenses.prop.openEnded" />}
                   onChange={e => {
