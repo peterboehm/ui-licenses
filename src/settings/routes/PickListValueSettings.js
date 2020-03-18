@@ -96,7 +96,7 @@ export default class PickListValueSettings extends React.Component {
             {...this.props}
             actionSuppressor={{ edit: this.state.selectedCategory?.internal, delete: this.state.selectedCategory?.internal }}
             actuatorType="refdata"
-            baseUrl={`erm/refdata/${this.state.selectedCategory?.id}`}
+            baseUrl={`licenses/refdata/${this.state.selectedCategory?.id}`}
             columnMapping={{
               label: intl.formatMessage({ id: 'ui-licenses.settings.value' }),
               actions: intl.formatMessage({ id: 'ui-licenses.settings.actions' }),
