@@ -52,6 +52,12 @@ class TermFiltersForm extends React.Component {
     editingFilters: false,
   }
 
+  isValidNumber = (value) => {
+    return !value ? <FormattedMessage id="stripes-erm-components.errors.customPropertyInvalidNumber" />
+      :
+      undefined;
+  }
+
   renderFooter = () => (
     <ModalFooter>
       <Button
@@ -213,7 +219,11 @@ class TermFiltersForm extends React.Component {
                                 data-test-rule-value
                                 name={`${ruleFieldName}.value`}
                                 required
-                                validate={requiredValidator}
+                                validate={
+                                  termType === customPropertyTypes.NUMBER || termType === customPropertyTypes.DECIMAL
+                                    ? this.isValidNumber :
+                                    requiredValidator
+                                }
                                 {...valueComponentProps}
                               />
                             </Col>
