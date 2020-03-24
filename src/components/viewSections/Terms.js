@@ -26,13 +26,11 @@ export default class Terms extends React.Component {
             onToggle={onToggle}
             open={open}
           >
-            {
-              terms?.length ?
-                <CustomPropertiesList
-                  customProperties={terms}
-                  resource={record}
-                /> : <FormattedMessage id="ui-licenses.emptyAccordion.terms" values={{ type: type.toLowerCase() }} />
-            }
+            <CustomPropertiesList
+              customProperties={terms}
+              isEmptyMessage={<FormattedMessage id="ui-licenses.emptyAccordion.terms" values={{ type: type.toLowerCase() }} />}
+              resource={record}
+            />
           </Accordion>
         )}
       </FormattedMessage>
