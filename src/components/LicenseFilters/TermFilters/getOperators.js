@@ -8,8 +8,8 @@ export default (termDefinition, formatMessage) => {
   const type = termDefinition?.type;
 
   const operators = [
-    { value: ' isNotNull', label: getLabel('ui-licenses.operator.isSet'), noValueAllowed: true },
-    { value: ' isNull', label: getLabel('ui-licenses.operator.isNotSet'), noValueAllowed: true },
+    { value: ' isSet', label: getLabel('ui-licenses.operator.isSet'), noValueAllowed: true },
+    { value: ' isNotSet', label: getLabel('ui-licenses.operator.isNotSet'), noValueAllowed: true },
   ];
 
   if (!type || type === NUMBER || type === DECIMAL) {
