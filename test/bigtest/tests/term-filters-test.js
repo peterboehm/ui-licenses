@@ -33,7 +33,7 @@ let handleSubmit = spy(() => Promise.resolve());
 
 const interactor = new TermFiltersFormInteractor();
 
-describe.only('Term Filters', () => {
+describe('Term Filters', () => {
   describe('no initial values', () => {
     beforeEach(async () => {
       handleSubmit = spy(() => Promise.resolve());
