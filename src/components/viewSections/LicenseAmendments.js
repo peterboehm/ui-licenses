@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { get } from 'lodash';
 import { FormattedMessage } from 'react-intl';
-import Link from 'react-router-dom/Link';
 import {
   Accordion,
   Badge,
@@ -18,6 +17,9 @@ export default class LicenseAmendments extends React.Component {
     license: PropTypes.shape({
       amendments: PropTypes.array,
     }),
+    handlers: PropTypes.shape({
+      onAmendmentClick: PropTypes.func,
+    }),
     id: PropTypes.string,
     onToggle: PropTypes.func,
     open: PropTypes.bool,
@@ -26,6 +28,11 @@ export default class LicenseAmendments extends React.Component {
       viewAmendment: PropTypes.func.isRequired,
     }).isRequired
   };
+
+  onRowClick = (_, row) => {
+    const { handlers: { onAmendmentClick } } = this.props;
+    onAmendmentClick(row.id);
+  }
 
   renderAddAmendmentButton = () => {
     const { urls } = this.props;
@@ -44,7 +51,7 @@ export default class LicenseAmendments extends React.Component {
   }
 
   render() {
-    const { id, license, onToggle, open, urls } = this.props;
+    const { id, license, onToggle, open } = this.props;
 
     return (
       <Accordion
@@ -70,14 +77,14 @@ export default class LicenseAmendments extends React.Component {
           }}
           contentData={license.amendments || []}
           formatter={{
-            name: a => <Link to={urls.viewAmendment(a.id)}>{a.name}</Link>,
+            name: a => a.name,
             status: a => get(a, ['status', 'label'], '-'),
             startDate: a => (a.startDate ? <FormattedUTCDate value={a.startDate} /> : '-'),
             endDate: a => <LicenseEndDate license={a} />,
           }}
           id="amendments-table"
-          interactive={false}
           isEmptyMessage={<FormattedMessage id="ui-licenses.emptyAccordion.amendments" />}
+          onRowClick={this.onRowClick}
           visibleColumns={[
             'name',
             'status',
