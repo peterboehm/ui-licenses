@@ -193,6 +193,10 @@ class ViewLicenseRoute extends React.Component {
     this.handleToggleHelper('tags');
   }
 
+  viewAmendment = (id) => {
+    this.props.history.push(this.urls.viewAmendment(id));
+  }
+
   urls = {
     edit: this.props.stripes.hasPerm('ui-licenses.licenses.edit') && (() => `${this.props.location.pathname}/edit${this.props.location.search}`),
     addAmendment: this.props.stripes.hasPerm('ui-licenses.licenses.edit') && (() => `${this.props.location.pathname}/amendments/create${this.props.location.search}`),
@@ -212,6 +216,7 @@ class ViewLicenseRoute extends React.Component {
           ...handlers,
           onClose: this.handleClose,
           onFetchCredentials: this.handleFetchCredentials,
+          onAmendmentClick: this.viewAmendment,
           onToggleHelper: this.handleToggleHelper,
           onToggleTags: tagsEnabled ? this.handleToggleTags : undefined,
         }}
