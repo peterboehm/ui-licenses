@@ -9,7 +9,7 @@ import '@folio/stripes-components/lib/global.css';
 import { mountWithContext } from '../helpers/mountWithContext';
 import translations from '../../../translations/ui-licenses/en';
 
-import TermFiltersForm from '../../../src/components/LicenseFilters/TermFiltersForm';
+import TermFiltersForm from '../../../src/components/LicenseFilters/TermFilters/TermFiltersForm';
 import TermFiltersFormInteractor from '../interactors/term-filters-form';
 
 import {
@@ -33,7 +33,7 @@ let handleSubmit = spy(() => Promise.resolve());
 
 const interactor = new TermFiltersFormInteractor();
 
-describe('Term Filters', () => {
+describe.only('Term Filters', () => {
   describe('no initial values', () => {
     beforeEach(async () => {
       handleSubmit = spy(() => Promise.resolve());
@@ -186,6 +186,25 @@ describe('Term Filters', () => {
         });
       });
 
+      describe('selecting the Decimal Term, setting a rule to "is set" and applying', () => {
+        beforeEach(async () => {
+          await interactor.filters(0).selectTerm(DecimalTerm.label);
+          await interactor.filters(0).rules(0).selectOperator('is set');
+          await interactor.apply();
+        });
+
+        it('calls handleSubmit with the expected filters', () => {
+          expect(handleSubmit).to.have.been.called.with({
+            filters: [{
+              customProperty: DecimalTerm.name,
+              rules: [
+                { operator: ' isSet', value: '' }
+              ],
+            }],
+          });
+        });
+      });
+
       describe('selecting the Decimal Term, setting a rule to "equals 42.5" and applying', () => {
         beforeEach(async () => {
           await interactor.filters(0).selectTerm(DecimalTerm.label);
@@ -286,6 +305,25 @@ describe('Term Filters', () => {
         });
       });
 
+      describe('selecting the Integer Term, setting a rule to "is set" and applying', () => {
+        beforeEach(async () => {
+          await interactor.filters(0).selectTerm(IntegerTerm.label);
+          await interactor.filters(0).rules(0).selectOperator('is set');
+          await interactor.apply();
+        });
+
+        it('calls handleSubmit with the expected filters', () => {
+          expect(handleSubmit).to.have.been.called.with({
+            filters: [{
+              customProperty: IntegerTerm.name,
+              rules: [
+                { operator: ' isSet', value: '' }
+              ],
+            }],
+          });
+        });
+      });
+
       describe('selecting the RefData Term, setting a rule to "is Yes" and applying', () => {
         beforeEach(async () => {
           await interactor.filters(0).selectTerm(RefDataTerm.label);
@@ -301,6 +339,25 @@ describe('Term Filters', () => {
               customProperty: RefDataTerm.name,
               rules: [
                 { operator: '==', value: YesOption.id }
+              ],
+            }],
+          });
+        });
+      });
+
+      describe('selecting the RefData Term, setting a rule to "is set" and applying', () => {
+        beforeEach(async () => {
+          await interactor.filters(0).selectTerm(RefDataTerm.label);
+          await interactor.filters(0).rules(0).selectOperator('is set');
+          await interactor.apply();
+        });
+
+        it('calls handleSubmit with the expected filters', () => {
+          expect(handleSubmit).to.have.been.called.with({
+            filters: [{
+              customProperty: RefDataTerm.name,
+              rules: [
+                { operator: ' isSet', value: '' }
               ],
             }],
           });
@@ -341,6 +398,25 @@ describe('Term Filters', () => {
               customProperty: TextTerm.name,
               rules: [
                 { operator: '!~', value: 'foo' }
+              ],
+            }],
+          });
+        });
+      });
+
+      describe('selecting the Text Term, setting a rule to "is set" and applying', () => {
+        beforeEach(async () => {
+          await interactor.filters(0).selectTerm(TextTerm.label);
+          await interactor.filters(0).rules(0).selectOperator('is set');
+          await interactor.apply();
+        });
+
+        it('calls handleSubmit with the expected filters', () => {
+          expect(handleSubmit).to.have.been.called.with({
+            filters: [{
+              customProperty: TextTerm.name,
+              rules: [
+                { operator: ' isSet', value: '' }
               ],
             }],
           });
