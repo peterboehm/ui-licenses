@@ -24,6 +24,7 @@ export default class PickListSettings extends React.Component {
       <IntlConsumer>
         {intl => (
           <this.connectedControlledVocab
+            actionSuppressor={{ edit: (category) => category?.internal, delete: (category) => category?.internal }}
             baseUrl="licenses/refdata"
             columnMapping={{
               desc: intl.formatMessage({ id: 'ui-licenses.settings.pickList' }),
