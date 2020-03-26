@@ -60,6 +60,7 @@ class EditLicenseRoute extends React.Component {
         return query ? { query } : {};
       },
       fetch: props => !!props.stripes.hasInterface('users', '15.0'),
+      permissionsRequired: 'users.collection.get',
       records: 'users',
     },
   });
