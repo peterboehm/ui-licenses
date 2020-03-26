@@ -186,7 +186,7 @@ class LicensesRoute extends React.Component {
           statusValues: resources?.statusValues?.records ?? [],
           typeValues: resources?.typeValues?.records ?? [],
           orgRoleValues: resources?.orgRoleValues?.records ?? [],
-          tagsValues: resources?.tagsValues?.records ?? [],
+          tags: resources?.tags?.records ?? [],
           terms: resources?.terms?.records ?? [],
         }}
         onCompareLicenseTerms={this.handleCompareLicenseTerms}
