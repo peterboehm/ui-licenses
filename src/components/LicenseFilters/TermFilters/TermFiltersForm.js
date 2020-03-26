@@ -1,39 +1,36 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { uniqueId } from 'lodash';
-import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import { Field } from 'react-final-form';
 import { FieldArray } from 'react-final-form-arrays';
 
 import {
   Button,
   Col,
-  IconButton,
   Label,
   Layout,
   Modal,
   ModalFooter,
   Row,
   Select,
-  TextField,
-  Tooltip,
 } from '@folio/stripes/components';
 
 import stripesFinalForm from '@folio/stripes/final-form';
 
 import {
   EditCard,
-  customPropertyTypes,
   requiredValidator,
 } from '@folio/stripes-erm-components';
 
+import TermRule from './TermRule';
+
 class TermFiltersForm extends React.Component {
   static propTypes = {
-    intl: intlShape,
     filterHandlers: PropTypes.shape({
       state: PropTypes.func.isRequired,
     }),
     form: PropTypes.shape({
+      change: PropTypes.func.isRequired,
       mutators: PropTypes.shape({
         push: PropTypes.func.isRequired,
       }),
@@ -46,6 +43,7 @@ class TermFiltersForm extends React.Component {
         type: PropTypes.string.isRequired,
       })
     ),
+    values: PropTypes.object,
   };
 
   state = {
@@ -77,8 +75,10 @@ class TermFiltersForm extends React.Component {
     const {
       form: {
         mutators: { push },
+        change,
       },
-      terms
+      terms,
+      values,
     } = this.props;
     const { editingFilters } = this.state;
 
@@ -146,98 +146,18 @@ class TermFiltersForm extends React.Component {
                       <Col xs={2} />
                     </Row>
                     <FieldArray name={`${name}.rules`}>
-                      {({ fields: ruleFields }) => ruleFields.map((ruleFieldName, ruleFieldIndex) => {
-                        const termDefinition = terms.find(t => t.name === fields.value[index].customProperty);
-                        const termType = termDefinition?.type ?? customPropertyTypes.NUMBER;
-
-                        let operatorOptions;
-                        let ValueComponent;
-                        const valueComponentProps = {};
-
-                        const { intl: { formatMessage } } = this.props;
-
-                        if (termType === customPropertyTypes.NUMBER || termType === customPropertyTypes.DECIMAL) {
-                          operatorOptions = [
-                            { value: '==', label: formatMessage({ id: 'ui-licenses.operator.equals' }) },
-                            { value: '!=', label: formatMessage({ id: 'ui-licenses.operator.doesNotEqual' }) },
-                            { value: '>=', label: formatMessage({ id: 'ui-licenses.operator.isGreaterThanOrEqual' }) },
-                            { value: '<=', label: formatMessage({ id: 'ui-licenses.operator.isLessThanOrEqual' }) },
-                          ];
-
-                          ValueComponent = TextField;
-                          valueComponentProps.type = 'number';
-                        } else if (termType === customPropertyTypes.SELECT) {
-                          operatorOptions = [
-                            { value: '==', label: formatMessage({ id: 'ui-licenses.operator.is' }) },
-                            { value: '!=', label: formatMessage({ id: 'ui-licenses.operator.isNot' }) },
-                          ];
-
-                          ValueComponent = Select;
-                          valueComponentProps.dataOptions = termDefinition.category.values.map(rdv => ({ label: rdv.label, value: rdv.id }));
-                          valueComponentProps.placeholder = ' ';
-                        } else {
-                          operatorOptions = [
-                            { value: '=~', label: formatMessage({ id: 'ui-licenses.operator.contains' }) },
-                            { value: '!~', label: formatMessage({ id: 'ui-licenses.operator.doesNotContain' }) },
-                          ];
-
-                          ValueComponent = TextField;
-                        }
-
-                        return (
-                          <Row
-                            key={ruleFieldName}
-                            data-test-rule-row
-                          >
-                            <Col xs={2}>
-                              <Layout className="textCentered">
-                                {ruleFieldIndex === 0 ? null : <FormattedMessage id="ui-licenses.OR" />}
-                              </Layout>
-                            </Col>
-                            <Col xs={4}>
-                              <Field
-                                aria-labelledby={`selected-term-name-${index} rule-column-header-comparator`}
-                                component={Select}
-                                data-test-rule-operator
-                                dataOptions={operatorOptions}
-                                name={`${ruleFieldName}.operator`}
-                                placeholder=" "
-                                required
-                                validate={requiredValidator}
-                              />
-                            </Col>
-                            <Col xs={4}>
-                              <Field
-                                aria-labelledby={`selected-term-name-${index} rule-column-header-value`}
-                                component={ValueComponent}
-                                data-test-rule-value
-                                name={`${ruleFieldName}.value`}
-                                required
-                                validate={requiredValidator}
-                                {...valueComponentProps}
-                              />
-                            </Col>
-                            <Col xs={2}>
-                              { ruleFieldIndex ? (
-                                <Tooltip
-                                  id={uniqueId('delete-rule-btn')}
-                                  text={<FormattedMessage id="ui-licenses.terms.filters.removeRule" values={{ index: ruleFieldIndex + 1 }} />}
-                                >
-                                  {({ ref, ariaIds }) => (
-                                    <IconButton
-                                      ref={ref}
-                                      aria-labelledby={ariaIds.text}
-                                      data-test-delete-rule-btn
-                                      icon="trash"
-                                      onClick={() => ruleFields.remove(ruleFieldIndex)}
-                                    />
-                                  )}
-                                </Tooltip>
-                              ) : null}
-                            </Col>
-                          </Row>
-                        );
-                      })}
+                      {({ fields: ruleFields }) => ruleFields.map((ruleFieldName, ruleFieldIndex) => (
+                        <TermRule
+                          key={ruleFieldName}
+                          ariaLabelledby={`selected-term-name-${index}`}
+                          clearRuleValue={() => change(`filters[${index}].rules[${ruleFieldIndex}].value`, '')}
+                          index={ruleFieldIndex}
+                          name={ruleFieldName}
+                          onDelete={() => ruleFields.remove(ruleFieldIndex)}
+                          termDefinition={terms.find(t => t.name === fields.value[index].customProperty)}
+                          value={values.filters[index]?.rules[ruleFieldIndex]}
+                        />
+                      ))}
                     </FieldArray>
                     <Button
                       data-test-add-rule-btn
@@ -270,4 +190,7 @@ class TermFiltersForm extends React.Component {
 
 export default stripesFinalForm({
   enableReinitialize: true,
-})((injectIntl(TermFiltersForm)));
+  subscription: {
+    values: true,
+  },
+})(TermFiltersForm);

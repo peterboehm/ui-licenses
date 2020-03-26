@@ -1,6 +1,6 @@
 {
   "name": "@folio/licenses",
-  "version": "3.7.0",
+  "version": "3.8.0",
   "description": "ERM License functionality for Stripes",
   "main": "src/index.js",
   "repository": "",
@@ -48,7 +48,7 @@
   },
   "dependencies": {
     "@folio/react-intl-safe-html": "^1.0.3",
-    "@folio/stripes-erm-components": "^2.3.0",
+    "@folio/stripes-erm-components": "^2.4.0",
     "compose-function": "^3.0.3",
     "final-form": "^4.18.4",
     "final-form-arrays": "^3.0.1",
@@ -117,6 +117,7 @@
       {
         "permissionName": "ui-licenses.licenses.delete",
         "displayName": "Licenses: Delete licenses",
+        "visible": true,
         "subPermissions": [
           "ui-licenses.licenses.view",
           "licenses.licenses.item.delete"
