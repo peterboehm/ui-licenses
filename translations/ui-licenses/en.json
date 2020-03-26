@@ -15,7 +15,6 @@
   "create": "Create",
   "create.callout": "<strong>License created:</strong> {name}",
   "update.callout": "<strong>License updated:</strong> {name}",
-  "delete": "Delete",
   "editLicense": "Edit license",
   "edit": "Edit",
   "newLicense": "New license",
@@ -44,6 +43,11 @@
   "coreDocs.none": "No core documents have been added.",
   "coreDocs.removeCoreDoc": "Remove core document",
 
+  "delete": "Delete",
+  "deleteLicense": "Delete license",
+  "deletedLicense": "<strong>Deleted license:</strong> {name}",
+  "delete.confirmMessage": "License <strong>{name}</strong> and any attached amendments will be <strong>deleted</strong>.",
+
   "emptyAccordion.internalContacts": "No internal contacts for this license",
   "emptyAccordion.organizations": "No organizations for this license",
   "emptyAccordion.coreDocuments": "No core documents for this {type}",
@@ -55,6 +59,8 @@
   "errors.endDateGreaterThanStartDate": "End date must be after the start date.",
   "errors.multipleLicensors": "Only one Licensor per license is allowed.",
   "errors.termVisibilityWithoutValue": "A value must be set for this term in order to change visibility",
+  "errors.noDeleteHasLinkedAgreements": "<strong>License was not deleted</strong> because it is in use on one or more agreements.",
+  "errors.noDeleteLicenseBackendError": "<strong>License was not deleted:</strong> {message}",
 
   "export.csv.label": "Export selected as CSV ({count, number} items)",
 

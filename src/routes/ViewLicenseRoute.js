@@ -3,12 +3,14 @@ import PropTypes from 'prop-types';
 import { get, flatten, uniqBy } from 'lodash';
 import compose from 'compose-function';
 
-import { stripesConnect } from '@folio/stripes/core';
+import { CalloutContext, stripesConnect } from '@folio/stripes/core';
 import { withTags } from '@folio/stripes/smart-components';
 import { Tags } from '@folio/stripes-erm-components';
+import SafeHTMLMessage from '@folio/react-intl-safe-html';
 
 import withFileHandlers from './components/withFileHandlers';
 import View from '../components/License';
+import { urls } from '../components/utils';
 
 class ViewLicenseRoute extends React.Component {
   static manifest = Object.freeze({
@@ -25,6 +27,7 @@ class ViewLicenseRoute extends React.Component {
         return query ? { query } : {};
       },
       fetch: props => !!props.stripes.hasInterface('organizations-storage.interfaces', '2.0'),
+      permissionsRequired: 'storage.interfaces.collection.get',
       records: 'interfaces',
     },
     interfacesCredentials: {
@@ -39,6 +42,10 @@ class ViewLicenseRoute extends React.Component {
     license: {
       type: 'okapi',
       path: 'licenses/licenses/:{id}',
+      shouldRefresh: (resource, action) => {
+        if (resource.name !== 'license') return true;
+        return !action.meta.originatingActionType?.includes('DELETE');
+      },
     },
     linkedAgreements: {
       type: 'okapi',
@@ -68,6 +75,7 @@ class ViewLicenseRoute extends React.Component {
         return query ? { query } : {};
       },
       fetch: props => !!props.stripes.hasInterface('users', '15.0'),
+      permissionsRequired: 'users.collection.get',
       records: 'users',
     },
     interfaceRecord: {},
@@ -91,6 +99,9 @@ class ViewLicenseRoute extends React.Component {
     mutator: PropTypes.shape({
       interfaceRecord: PropTypes.shape({
         replace: PropTypes.func,
+      }),
+      license: PropTypes.shape({
+        DELETE: PropTypes.func.isRequired,
       }),
       query: PropTypes.shape({
         update: PropTypes.func.isRequired,
@@ -116,6 +127,8 @@ class ViewLicenseRoute extends React.Component {
   static defaultProps = {
     handlers: {},
   }
+
+  static contextType = CalloutContext;
 
   getCompositeLicense = () => {
     const { resources } = this.props;
@@ -176,6 +189,26 @@ class ViewLicenseRoute extends React.Component {
     this.props.history.push(`/licenses${this.props.location.search}`);
   }
 
+  handleDelete = () => {
+    const { sendCallout } = this.context;
+    const { history, location, mutator } = this.props;
+    const license = this.getCompositeLicense();
+
+    if (license.linkedAgreements.length) {
+      sendCallout({ type: 'error', timeout: 0, message: <SafeHTMLMessage id="ui-licenses.errors.noDeleteHasLinkedAgreements" /> });
+      return;
+    }
+
+    mutator.license.DELETE(license)
+      .then(() => {
+        history.push(`${urls.licenses()}${location.search}`);
+        sendCallout({ message: <SafeHTMLMessage id="ui-licenses.deletedLicense" values={{ name : license.name }} /> });
+      })
+      .catch(error => {
+        sendCallout({ type: 'error', timeout: 0, message: <SafeHTMLMessage id="ui-licenses.errors.noDeleteLicenseBackendError" values={{ message: error.message }} /> });
+      });
+  }
+
   handleFetchCredentials = (id) => {
     const { mutator } = this.props;
     mutator.interfaceRecord.replace({ id });
@@ -215,6 +248,7 @@ class ViewLicenseRoute extends React.Component {
         handlers={{
           ...handlers,
           onClose: this.handleClose,
+          onDelete: this.handleDelete,
           onFetchCredentials: this.handleFetchCredentials,
           onAmendmentClick: this.viewAmendment,
           onToggleHelper: this.handleToggleHelper,
