@@ -194,7 +194,7 @@ class ViewLicenseRoute extends React.Component {
     const { history, location, mutator } = this.props;
     const license = this.getCompositeLicense();
 
-    if (license.linkedAgreements?.length) {
+    if (license.linkedAgreements.length) {
       sendCallout({ type: 'error', timeout: 0, message: <SafeHTMLMessage id="ui-licenses.errors.noDeleteHasLinkedAgreements" /> });
       return;
     }
