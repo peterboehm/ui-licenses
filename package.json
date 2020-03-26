@@ -1,6 +1,6 @@
 {
   "name": "@folio/licenses",
-  "version": "3.7.0",
+  "version": "3.8.0",
   "description": "ERM License functionality for Stripes",
   "main": "src/index.js",
   "repository": "",
@@ -117,6 +117,7 @@
       {
         "permissionName": "ui-licenses.licenses.delete",
         "displayName": "Licenses: Delete licenses",
+        "visible": true,
         "subPermissions": [
           "ui-licenses.licenses.view",
           "licenses.licenses.item.delete"
