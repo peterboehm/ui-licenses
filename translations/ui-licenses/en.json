@@ -88,6 +88,8 @@
   "operator.isLessThanOrEqual": "is less than or equals",
   "operator.is": "is",
   "operator.isNot": "is not",
+  "operator.isSet": "is set",
+  "operator.isNotSet": "is not set",
   "operator.contains": "contains",
   "operator.doesNotContain": "does not contain",
 

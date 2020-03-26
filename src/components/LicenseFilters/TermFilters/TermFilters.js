@@ -5,6 +5,9 @@ import { FormattedMessage } from 'react-intl';
 import { Accordion, FilterAccordionHeader, Layout } from '@folio/stripes/components';
 
 import TermFiltersForm from './TermFiltersForm';
+import getOperators from './getOperators';
+
+const operators = getOperators().map(o => o.value);
 
 export default class TermFilters extends React.Component {
   static propTypes = {
@@ -13,6 +16,7 @@ export default class TermFilters extends React.Component {
     filterHandlers: PropTypes.object,
   };
 
+
   handleSubmit = values => {
     const { activeFilters, filterHandlers } = this.props;
     const { filters = [] } = values;
@@ -20,7 +24,7 @@ export default class TermFilters extends React.Component {
     const filterStrings = filters
       .filter(filter => filter.rules)
       .map(filter => filter.rules
-        .map(rule => `customProperties.${filter.customProperty}.value${rule.operator}${rule.value}`)
+        .map(rule => `customProperties.${filter.customProperty}.value${rule.operator}${rule.value ?? ''}`)
         .join('||'));
 
     filterHandlers.state({ ...activeFilters, terms: filterStrings });
@@ -38,14 +42,15 @@ export default class TermFilters extends React.Component {
       const rules = filter.split('||').map(ruleString => {
         // ruleString is constructed in this.handleSubmit passed to TermFiltersForm
         // and has shape "customProperties.foo.value!=42"
-        const tokens = ruleString.split('.value');
-        customProperty = tokens[0].replace('customProperties.', '');
+        const [customPropertyPath, rule] = ruleString.split('.value');
+        customProperty = customPropertyPath.replace('customProperties.', '');
+
+        const operator = operators.find(o => rule.startsWith(o)) ?? '';
+        const value = rule.substring(operator.length);
 
         numberOfFilters += 1;
-        return {
-          operator: tokens[1].substring(0, 2),
-          value: tokens[1].substring(2),
-        };
+
+        return { operator, value };
       });
 
       return {

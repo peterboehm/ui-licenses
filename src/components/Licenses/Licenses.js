@@ -362,6 +362,7 @@ export default class Licenses extends React.Component {
                       columnWidths={this.columnWidths}
                       contentData={data.licenses}
                       formatter={this.formatter}
+                      hasMargin
                       id="list-licenses"
                       isEmptyMessage={this.renderIsEmptyMessage(query, source)}
                       isSelected={({ item }) => item.id === selectedRecordId}
