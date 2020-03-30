@@ -11,8 +11,10 @@
   "scripts": {
     "start": "stripes serve",
     "build": "stripes build --output ./output",
-    "test": "stripes test nightmare --run crud/text-term/select-term/orgs/core-docs/more-docs/contacts/amendments/pick-lists/tags-crud/term-config",
-    "test-bigtest": "stripes test karma",
+    "test": "stripes test karma",
+    "test-all": "yarn run test-bigtest-once; yarn run test-int",
+    "test-bigtest-once": "stripes test karma --karma.singleRun",
+    "test-int": "stripes test nightmare --run crud/text-term/select-term/orgs/core-docs/more-docs/contacts/amendments/pick-lists/tags-crud/term-config",
     "test-crud": "stripes test nightmare --run crud",
     "test-text-term": "stripes test nightmare --run text-term",
     "test-select-term": "stripes test nightmare --run select-term",
@@ -41,8 +43,12 @@
     "core-js": "^3.6.1",
     "eslint": "^6.2.1",
     "mocha": "^7.0.1",
+    "react": "^16.6.3",
+    "react-dom": "^16.6.3",
     "react-intl": "^2.4.0",
+    "react-redux": "^5.1.1",
     "react-router-dom": "^4.1.1",
+    "redux": "^3.7.2",
     "regenerator-runtime": "^0.13.3",
     "sinon": "^9.0.0"
   },
@@ -65,7 +71,10 @@
     "@folio/stripes": "^3.0.0",
     "react": "*",
     "react-intl": "^2.4.0",
-    "react-router-dom": "^4.1.1"
+    "react-dom": "*",
+    "react-redux": "*",
+    "react-router-dom": "^4.1.1",
+    "redux": "*"
   },
   "stripes": {
     "type": "app",
