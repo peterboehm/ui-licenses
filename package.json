@@ -43,8 +43,12 @@
     "core-js": "^3.6.1",
     "eslint": "^6.2.1",
     "mocha": "^7.0.1",
+    "react": "^16.6.3",
+    "react-dom": "^16.6.3",
     "react-intl": "^2.4.0",
+    "react-redux": "^5.1.1",
     "react-router-dom": "^4.1.1",
+    "redux": "^3.7.2",
     "regenerator-runtime": "^0.13.3",
     "sinon": "^9.0.0"
   },
@@ -67,7 +71,10 @@
     "@folio/stripes": "^3.0.0",
     "react": "*",
     "react-intl": "^2.4.0",
-    "react-router-dom": "^4.1.1"
+    "react-dom": "*",
+    "react-redux": "*",
+    "react-router-dom": "^4.1.1",
+    "redux": "*"
   },
   "stripes": {
     "type": "app",
