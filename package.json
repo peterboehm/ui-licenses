@@ -11,8 +11,10 @@
   "scripts": {
     "start": "stripes serve",
     "build": "stripes build --output ./output",
-    "test": "stripes test nightmare --run crud/text-term/select-term/orgs/core-docs/more-docs/contacts/amendments/pick-lists/tags-crud/term-config",
-    "test-bigtest": "stripes test karma",
+    "test": "stripes test karma",
+    "test-all": "yarn run test-bigtest-once; yarn run test-int",
+    "test-bigtest-once": "stripes test karma --karma.singleRun",
+    "test-int": "stripes test nightmare --run crud/text-term/select-term/orgs/core-docs/more-docs/contacts/amendments/pick-lists/tags-crud/term-config",
     "test-crud": "stripes test nightmare --run crud",
     "test-text-term": "stripes test nightmare --run text-term",
     "test-select-term": "stripes test nightmare --run select-term",

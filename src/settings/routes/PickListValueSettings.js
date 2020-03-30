@@ -7,6 +7,18 @@ import { Select } from '@folio/stripes/components';
 import { IntlConsumer } from '@folio/stripes/core';
 
 export default class PickListValueSettings extends React.Component {
+  static manifest = {
+    categories: {
+      type: 'okapi',
+      path: 'licenses/refdata',
+      params: {
+        perPage: '100',
+        sort: 'desc;asc',
+      },
+      accumulate: true,
+    },
+  };
+
   static propTypes = {
     stripes: PropTypes.shape({
       connect: PropTypes.func.isRequired,
@@ -29,18 +41,6 @@ export default class PickListValueSettings extends React.Component {
         reset: PropTypes.func.isRequired,
       }),
     })
-  };
-
-  static manifest = {
-    categories: {
-      type: 'okapi',
-      path: 'licenses/refdata',
-      params: {
-        perPage: '100',
-        sort: 'desc;asc',
-      },
-      accumulate: true,
-    },
   };
 
   constructor(props) {
