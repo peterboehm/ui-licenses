@@ -1,5 +1,8 @@
 # Change history for ui-licenses
 
+## 3.8.0 IN PROGRESS
+* Added permission set and ability to delete licenses. ERM-748
+
 ## 3.7.0 2020-03-11
 * Switched to using `<FormattedUTCDate>` from Stripes. ERM-635
 * Switched to using `<Spinner>` from Stripes. ERM-635

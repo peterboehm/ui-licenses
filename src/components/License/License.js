@@ -8,6 +8,7 @@ import {
   AccordionSet,
   Button,
   Col,
+  ConfirmationModal,
   ExpandAllButton,
   Icon,
   IconButton,
@@ -18,6 +19,7 @@ import {
   Spinner,
 } from '@folio/stripes/components';
 import { AppIcon, IfPermission, TitleManager } from '@folio/stripes/core';
+import SafeHTMLMessage from '@folio/react-intl-safe-html';
 
 import {
   LicenseAgreements,
@@ -40,6 +42,7 @@ class License extends React.Component {
     }),
     handlers: PropTypes.shape({
       onClose: PropTypes.func.isRequired,
+      onDelete: PropTypes.func.isRequired,
       onToggleTags: PropTypes.func,
     }).isRequired,
     helperApp: PropTypes.node,
@@ -51,6 +54,7 @@ class License extends React.Component {
   };
 
   state = {
+    showDeleteConfirmationModal: false,
     sections: {
       licenseInfo: true,
       licenseInternalContacts: false,
@@ -81,6 +85,14 @@ class License extends React.Component {
     };
   }
 
+  openDeleteConfirmationModal = () => {
+    this.setState({ showDeleteConfirmationModal: true });
+  }
+
+  closeDeleteConfirmationModal = () => {
+    this.setState({ showDeleteConfirmationModal: false });
+  }
+
   handleSectionToggle = ({ id }) => {
     this.setState((prevState) => ({
       sections: {
@@ -94,22 +106,39 @@ class License extends React.Component {
     this.setState({ sections });
   }
 
-  getActionMenu = () => {
+  getActionMenu = ({ onToggle }) => {
     const { urls } = this.props;
 
     if (!urls.edit) return null;
 
     return (
       <>
-        <Button
-          buttonStyle="dropdownItem"
-          id="clickable-dropdown-edit-license"
-          to={urls.edit()}
-        >
-          <Icon icon="edit">
-            <FormattedMessage id="ui-licenses.edit" />
-          </Icon>
-        </Button>
+        <IfPermission perm="ui-licenses.licenses.edit">
+          <Button
+            buttonStyle="dropdownItem"
+            id="clickable-dropdown-edit-license"
+            to={urls.edit()}
+          >
+            <Icon icon="edit">
+              <FormattedMessage id="ui-licenses.edit" />
+            </Icon>
+          </Button>
+        </IfPermission>
+        <IfPermission perm="ui-licenses.licenses.delete">
+          <Button
+            buttonStyle="dropdownItem"
+            id="clickable-dropdown-delete-licenses"
+            onClick={() => {
+              this.openDeleteConfirmationModal();
+              onToggle();
+            }}
+          >
+            <Icon icon="trash">
+              <FormattedMessage id="ui-licenses.delete" />
+            </Icon>
+          </Button>
+        </IfPermission>
+
       </>
     );
   }
@@ -220,6 +249,20 @@ class License extends React.Component {
           </TitleManager>
         </Pane>
         {helperApp}
+        <ConfirmationModal
+          buttonStyle="danger"
+          confirmLabel={<FormattedMessage id="ui-licenses.delete" />}
+          data-test-delete-confirmation-modal
+          heading={<FormattedMessage id="ui-licenses.deleteLicense" />}
+          id="delete-agreement-confirmation"
+          message={<SafeHTMLMessage id="ui-licenses.delete.confirmMessage" values={{ name: data.license?.name }} />}
+          onCancel={this.closeDeleteConfirmationModal}
+          onConfirm={() => {
+            handlers.onDelete();
+            this.closeDeleteConfirmationModal();
+          }}
+          open={this.state.showDeleteConfirmationModal}
+        />
       </>
     );
   }
