@@ -101,7 +101,8 @@ export default class PickListValueSettings extends React.Component {
             baseUrl={`licenses/refdata/${this.state.selectedCategory?.id}`}
             canCreate={!selectedCategory?.internal}
             columnMapping={{
-              label: intl.formatMessage({ id: 'ui-licenses.settings.value' }),
+              label: intl.formatMessage({ id: 'ui-agreements.settings.label' }),
+              value: intl.formatMessage({ id: 'ui-agreements.settings.value' }),
               actions: intl.formatMessage({ id: 'ui-licenses.settings.actions' }),
             }}
             // We have to unset the dataKey to prevent the props.resources in
@@ -114,11 +115,12 @@ export default class PickListValueSettings extends React.Component {
             listSuppressor={() => !this.state.selectedCategory?.id}
             nameKey="label"
             objectLabel={<FormattedMessage id="ui-licenses.settings.values" />}
+            readOnlyFields={['value']}
             records="values"
             rowFilter={this.renderRowFilter(intl)}
             sortby="label"
             stripes={this.props.stripes}
-            visibleFields={['label']}
+            visibleFields={['label', 'value']}
           />
         )}
       </IntlConsumer>

@@ -146,6 +146,7 @@
   "settings.termPickList": "License term pick list setup",
 
   "settings.actions": "Actions",
+  "settings.label": "Label",
   "settings.values": "values",
   "settings.value": "Value",
 
@@ -175,4 +176,3 @@
 
   "warn.clearEndDate": "End date will be cleared because \"Open ended\" is checked."
 }
-
