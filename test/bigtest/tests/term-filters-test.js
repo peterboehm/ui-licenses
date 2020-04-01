@@ -429,6 +429,7 @@ describe('Term Filters', () => {
           await interactor.filters(0).rules(0).selectOperator('does not contain');
           await interactor.filters(0).rules(0).fillValue('foo');
           await interactor.filters(0).addRule();
+          await new Promise(resolve => { setTimeout(resolve, 500); }); // Should be removed as a part of ERM-825
           await interactor.filters(0).rules(1).selectOperator('contains');
           await interactor.filters(0).rules(1).fillValue('bar');
           await interactor.apply();
@@ -447,21 +448,24 @@ describe('Term Filters', () => {
         });
       });
 
-      describe('setting multiple rules for multiple filters', () => {
+      describe('`setting multiple rules for multiple filters`', () => {
         beforeEach(async () => {
           await interactor.filters(0).selectTerm(TextTerm.label);
           await interactor.filters(0).rules(0).selectOperator('does not contain');
           await interactor.filters(0).rules(0).fillValue('foo');
           await interactor.filters(0).addRule();
+          await new Promise(resolve => { setTimeout(resolve, 500); }); // Should be removed as a part of ERM-825
           await interactor.filters(0).rules(1).selectOperator('contains');
           await interactor.filters(0).rules(1).fillValue('bar');
 
           await interactor.addTermFilter();
+          await new Promise(resolve => { setTimeout(resolve, 500); }); // Should be removed as a part of ERM-825
 
           await interactor.filters(1).selectTerm(IntegerTerm.label);
           await interactor.filters(1).rules(0).selectOperator('is greater than or equals');
           await interactor.filters(1).rules(0).fillValue('5');
           await interactor.filters(1).addRule();
+          await new Promise(resolve => { setTimeout(resolve, 500); }); // Should be removed as a part of ERM-825
           await interactor.filters(1).rules(1).selectOperator('is less than or equals');
           await interactor.filters(1).rules(1).fillValue('15');
 
