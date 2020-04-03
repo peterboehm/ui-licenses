@@ -140,5 +140,13 @@
     "exportLicensesModal.value": "قيمة",
     "exportLicensesModal.note": "ملاحظة داخلية",
     "exportLicensesModal.publicNote": "ملاحظة عامة",
-    "exportLicensesModal.internal": "الرؤية"
+    "exportLicensesModal.internal": "الرؤية",
+    "operator.isSet": "تم تعيينه",
+    "operator.isNotSet": "لم يتم تعيينه",
+    "deleteLicense": "حذف الرخصة",
+    "deletedLicense": "<strong>تم حذف الرخصة:</strong> {name}",
+    "delete.confirmMessage": "سيتم <strong>حذف</strong> رخصة <strong>{name}</strong> وأي تعديلات مرفقة بها",
+    "errors.noDeleteHasLinkedAgreements": "<strong>لم يتم حذف الرخصة</strong> لأنها قيد استخدام اتفاقية أو أكثر",
+    "errors.noDeleteLicenseBackendError": "<strong>لم يتم حذف الرخصة:</strong> {message}",
+    "settings.label": "ملصق التسمية"
 }

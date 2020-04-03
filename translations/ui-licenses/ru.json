@@ -140,5 +140,13 @@
     "exportLicensesModal.value": "Value",
     "exportLicensesModal.note": "Internal note",
     "exportLicensesModal.publicNote": "Public note",
-    "exportLicensesModal.internal": "Visibility"
+    "exportLicensesModal.internal": "Visibility",
+    "operator.isSet": "Установлен",
+    "operator.isNotSet": "Не установлен",
+    "deleteLicense": "Удалить лицензию",
+    "deletedLicense": "<strong>Удаленная лицензия:</strong> {имя}",
+    "delete.confirmMessage": "Лицензия <strong>{name}</strong> и все прилагаемые поправки к ней будут <strong> удалены</strong>.",
+    "errors.noDeleteHasLinkedAgreements": "<strong>License was not deleted</strong> because it is in use on one or more agreements.",
+    "errors.noDeleteLicenseBackendError": "<strong>License was not deleted:</strong> {message}",
+    "settings.label": "Label"
 }
