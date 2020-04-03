@@ -140,5 +140,13 @@
     "exportLicensesModal.value": "Valeur",
     "exportLicensesModal.note": "Note interne",
     "exportLicensesModal.publicNote": "Note publique",
-    "exportLicensesModal.internal": "Visibilité"
+    "exportLicensesModal.internal": "Visibilité",
+    "operator.isSet": "is set",
+    "operator.isNotSet": "is not set",
+    "deleteLicense": "Delete license",
+    "deletedLicense": "<strong>Deleted license:</strong> {name}",
+    "delete.confirmMessage": "License <strong>{name}</strong> and any attached amendments will be <strong>deleted</strong>.",
+    "errors.noDeleteHasLinkedAgreements": "<strong>License was not deleted</strong> because it is in use on one or more agreements.",
+    "errors.noDeleteLicenseBackendError": "<strong>License was not deleted:</strong> {message}",
+    "settings.label": "Label"
 }
