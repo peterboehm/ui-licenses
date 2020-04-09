@@ -26,6 +26,12 @@
   "OR": "OR",
   "AND": "AND",
 
+  "permission.licenses.view": "Licenses: Search & view licenses",
+  "permission.licenses.edit": "Licenses: Edit licenses",
+  "permission.licenses.delete": "Licenses: Delete licenses",
+  "permission.picklists.manage": "Settings (Licenses): Manage pick lists and values",
+  "permission.terms.manage": "Settings (Licenses): Manage license terms",
+
   "amendments.add": "Add amendment",
   "amendments.closePane": "Close edit amendment pane",
   "amendments.create": "New amendment",
