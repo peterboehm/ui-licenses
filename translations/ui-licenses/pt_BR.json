@@ -145,7 +145,7 @@
     "operator.isNotSet": "não está definido",
     "deleteLicense": "Excluir Licença",
     "deletedLicense": "<strong>Licença excluída:</strong> {name}",
-    "delete.confirmMessage": "License <strong>{name}</strong> and any attached amendments will be <strong>deleted</strong>.",
+    "delete.confirmMessage": "A licença <strong>{name}</strong> e quaisquer alterações anexadas serão <strong>excluídas</strong>.",
     "errors.noDeleteHasLinkedAgreements": "<strong>A licença não foi excluída</strong> porque está em uso em um ou mais contratos.",
     "errors.noDeleteLicenseBackendError": "<strong>A licença não foi excluída:</strong> {message}",
     "settings.label": "Rótulo"
