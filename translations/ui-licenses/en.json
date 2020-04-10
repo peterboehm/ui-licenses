@@ -7,6 +7,7 @@
   "amendment": "Amendment",
   "license": "License",
   "licensePlural": "{count} {count, plural, one {license} other {licenses}}",
+  "licenses.duplicate": "Duplicate",
 
   "apply": "Apply",
   "cancel": "Cancel",
@@ -53,6 +54,19 @@
   "deleteLicense": "Delete license",
   "deletedLicense": "<strong>Deleted license:</strong> {name}",
   "delete.confirmMessage": "License <strong>{name}</strong> and any attached amendments will be <strong>deleted</strong>.",
+
+  "duplicateLicenseModal.cloneEndpointError": "Unable to duplicate the license. The clone endpoint could not be accessed.",
+  "duplicateLicenseModal.coreDocs": "Core documents",
+  "duplicateLicenseModal.duplicateLicense": "Duplicate license",
+  "duplicateLicenseModal.duplicateMessage": "Please select which sections of the license to duplicate",
+  "duplicateLicenseModal.duplicateModalError": "Error: the license was not duplicated",
+  "duplicateLicenseModal.internalContacts": "Internal contacts",
+  "duplicateLicenseModal.invalidResponseError": "Unable to duplicate the license. The response received from the server was invalid.",
+  "duplicateLicenseModal.licenseDateInfo": "License date information",
+  "duplicateLicenseModal.licenseInfo": "License information",
+  "duplicateLicenseModal.organizations": "Organizations",
+  "duplicateLicenseModal.supplementaryDocs": "Supplementary documents",
+  "duplicateLicenseModal.terms": "Terms",
 
   "emptyAccordion.internalContacts": "No internal contacts for this license",
   "emptyAccordion.organizations": "No organizations for this license",

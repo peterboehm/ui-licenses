@@ -20,6 +20,7 @@ import {
 } from '@folio/stripes/components';
 import { AppIcon, IfPermission, TitleManager } from '@folio/stripes/core';
 import SafeHTMLMessage from '@folio/react-intl-safe-html';
+import DuplicateLicenseModal from '../DuplicateLicenseModal';
 
 import {
   LicenseAgreements,
@@ -41,6 +42,7 @@ class License extends React.Component {
       users: PropTypes.array,
     }),
     handlers: PropTypes.shape({
+      onClone: PropTypes.func.isRequired,
       onClose: PropTypes.func.isRequired,
       onDelete: PropTypes.func.isRequired,
       onToggleTags: PropTypes.func,
@@ -55,6 +57,7 @@ class License extends React.Component {
 
   state = {
     showDeleteConfirmationModal: false,
+    showDuplicateLicenseModal: false,
     sections: {
       licenseInfo: true,
       licenseInternalContacts: false,
@@ -93,6 +96,14 @@ class License extends React.Component {
     this.setState({ showDeleteConfirmationModal: false });
   }
 
+  openDuplicateLicenseModal = () => {
+    this.setState({ showDuplicateLicenseModal: true });
+  }
+
+  closeDuplicateLicenseModal = () => {
+    this.setState({ showDuplicateLicenseModal: false });
+  }
+
   handleSectionToggle = ({ id }) => {
     this.setState((prevState) => ({
       sections: {
@@ -121,6 +132,18 @@ class License extends React.Component {
           >
             <Icon icon="edit">
               <FormattedMessage id="ui-licenses.edit" />
+            </Icon>
+          </Button>
+          <Button
+            buttonStyle="dropdownItem"
+            id="clickable-dropdown-duplicate-license"
+            onClick={() => {
+              this.openDuplicateLicenseModal();
+              onToggle();
+            }}
+          >
+            <Icon icon="duplicate">
+              <FormattedMessage id="ui-licenses.licenses.duplicate" />
             </Icon>
           </Button>
         </IfPermission>
@@ -249,6 +272,12 @@ class License extends React.Component {
           </TitleManager>
         </Pane>
         {helperApp}
+        { this.state.showDuplicateLicenseModal &&
+          <DuplicateLicenseModal
+            onClone={(obj) => handlers.onClone(obj)}
+            onClose={this.closeDuplicateLicenseModal}
+          />
+        }
         <ConfirmationModal
           buttonStyle="danger"
           confirmLabel={<FormattedMessage id="ui-licenses.delete" />}

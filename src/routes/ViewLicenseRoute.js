@@ -11,6 +11,7 @@ import SafeHTMLMessage from '@folio/react-intl-safe-html';
 import withFileHandlers from './components/withFileHandlers';
 import View from '../components/License';
 import { urls } from '../components/utils';
+import { errorTypes } from '../constants';
 
 class ViewLicenseRoute extends React.Component {
   static manifest = Object.freeze({
@@ -185,6 +186,35 @@ class ViewLicenseRoute extends React.Component {
       .find(i => i.id === id);
   }
 
+  handleClone = (cloneableProperties) => {
+    const { history, location, match, stripes: { okapi } } = this.props;
+
+    return fetch(`${okapi.url}/licenses/licenses/${match.params.id}/clone`, {
+      method: 'POST',
+      headers: {
+        'X-Okapi-Tenant': okapi.tenant,
+        'X-Okapi-Token': okapi.token,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(cloneableProperties),
+    }).then(response => {
+      if (response.ok) {
+        return response.text(); // Parse it as text
+      } else {
+        throw new Error(errorTypes.JSON_ERROR);
+      }
+    }).then(text => {
+      const data = JSON.parse(text); // Try to parse it as json
+      if (data.id) {
+        return Promise.resolve(history.push(`${urls.licensesEdit(data.id)}${location.search}`));
+      } else {
+        throw new Error(errorTypes.INVALID_JSON_ERROR); // when the json response body doesn't contain an id
+      }
+    }).catch(error => {
+      throw error;
+    });
+  }
+
   handleClose = () => {
     this.props.history.push(`/licenses${this.props.location.search}`);
   }
@@ -247,6 +277,7 @@ class ViewLicenseRoute extends React.Component {
         }}
         handlers={{
           ...handlers,
+          onClone: this.handleClone,
           onClose: this.handleClose,
           onDelete: this.handleDelete,
           onFetchCredentials: this.handleFetchCredentials,
