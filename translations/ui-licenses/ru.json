@@ -156,15 +156,15 @@
     "permission.terms.manage": "Settings (Licenses): Manage license terms",
     "licenses.duplicate": "Duplicate",
     "duplicateLicenseModal.cloneEndpointError": "Unable to duplicate the license. The clone endpoint could not be accessed.",
-    "duplicateLicenseModal.coreDocs": "Core documents",
-    "duplicateLicenseModal.duplicateLicense": "Duplicate license",
+    "duplicateLicenseModal.coreDocs": "Основные документы",
+    "duplicateLicenseModal.duplicateLicense": "Дубликат лицензии",
     "duplicateLicenseModal.duplicateMessage": "Please select which sections of the license to duplicate",
     "duplicateLicenseModal.duplicateModalError": "Error: the license was not duplicated",
-    "duplicateLicenseModal.internalContacts": "Internal contacts",
+    "duplicateLicenseModal.internalContacts": "Внутренние контакты",
     "duplicateLicenseModal.invalidResponseError": "Unable to duplicate the license. The response received from the server was invalid.",
-    "duplicateLicenseModal.licenseDateInfo": "License date information",
-    "duplicateLicenseModal.licenseInfo": "License information",
-    "duplicateLicenseModal.organizations": "Organizations",
-    "duplicateLicenseModal.supplementaryDocs": "Supplementary documents",
-    "duplicateLicenseModal.terms": "Terms"
+    "duplicateLicenseModal.licenseDateInfo": "Информация о дате лицензии",
+    "duplicateLicenseModal.licenseInfo": "Информация о лицензии",
+    "duplicateLicenseModal.organizations": "Организации",
+    "duplicateLicenseModal.supplementaryDocs": "Дополнительные документы",
+    "duplicateLicenseModal.terms": "Условия"
 }
