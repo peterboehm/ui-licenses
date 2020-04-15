@@ -352,6 +352,7 @@ export default class Licenses extends React.Component {
                     defaultWidth="fill"
                     firstMenu={this.renderResultsFirstMenu(activeFilters)}
                     lastMenu={this.renderResultsLastMenu()}
+                    noOverflow
                     padContent={false}
                     paneSub={this.renderResultsPaneSubtitle(source)}
                     paneTitle={<FormattedMessage id="ui-licenses.meta.title" />}
