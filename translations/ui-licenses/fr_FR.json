@@ -149,14 +149,14 @@
     "errors.noDeleteHasLinkedAgreements": "<strong>License was not deleted</strong> because it is in use on one or more agreements.",
     "errors.noDeleteLicenseBackendError": "<strong>License was not deleted:</strong> {message}",
     "settings.label": "Label",
-    "permission.licenses.view": "Licenses: Search & view licenses",
-    "permission.licenses.edit": "Licenses: Edit licenses",
-    "permission.licenses.delete": "Licenses: Delete licenses",
+    "permission.licenses.view": "Licences: rechercher et afficher les licences",
+    "permission.licenses.edit": "Licences: modifier les licences",
+    "permission.licenses.delete": "Licences: supprimer les licences",
     "permission.picklists.manage": "Settings (Licenses): Manage pick lists and values",
     "permission.terms.manage": "Settings (Licenses): Manage license terms",
     "licenses.duplicate": "Dupliquer",
     "duplicateLicenseModal.cloneEndpointError": "Unable to duplicate the license. The clone endpoint could not be accessed.",
-    "duplicateLicenseModal.coreDocs": "Core documents",
+    "duplicateLicenseModal.coreDocs": "Documents de base",
     "duplicateLicenseModal.duplicateLicense": "Duplicate license",
     "duplicateLicenseModal.duplicateMessage": "Please select which sections of the license to duplicate",
     "duplicateLicenseModal.duplicateModalError": "Erreur: la licence n'a pas été dupliquée",
@@ -165,6 +165,6 @@
     "duplicateLicenseModal.licenseDateInfo": "License date information",
     "duplicateLicenseModal.licenseInfo": "Informations sur la licence",
     "duplicateLicenseModal.organizations": "Organisations",
-    "duplicateLicenseModal.supplementaryDocs": "Supplementary documents",
-    "duplicateLicenseModal.terms": "Terms"
+    "duplicateLicenseModal.supplementaryDocs": "Documents complémentaires",
+    "duplicateLicenseModal.terms": "Termes"
 }
