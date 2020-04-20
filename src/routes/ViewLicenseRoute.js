@@ -28,7 +28,7 @@ class ViewLicenseRoute extends React.Component {
         return query ? { query } : {};
       },
       fetch: props => !!props.stripes.hasInterface('organizations-storage.interfaces', '2.0'),
-      permissionsRequired: 'storage.interfaces.collection.get',
+      permissionsRequired: 'organizations-storage.interfaces.collection.get',
       records: 'interfaces',
     },
     interfacesCredentials: {
