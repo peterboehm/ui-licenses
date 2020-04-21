@@ -27,6 +27,8 @@
   "OR": "OR",
   "AND": "AND",
 
+  "alternativeNames": "Alternative names",
+
   "permission.licenses.view": "Licenses: Search & view licenses",
   "permission.licenses.edit": "Licenses: Edit licenses",
   "permission.licenses.delete": "Licenses: Delete licenses",

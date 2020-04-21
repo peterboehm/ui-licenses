@@ -2,7 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Field } from 'react-final-form';
-import { requiredValidator } from '@folio/stripes-erm-components';
+import { FieldArray } from 'react-final-form-arrays';
+import { AlternativeNamesFieldArray, requiredValidator } from '@folio/stripes-erm-components';
 
 import {
   Checkbox,
@@ -143,6 +144,10 @@ export default class LicenseFormInfo extends React.Component {
             />
           </Col>
         </Row>
+        <FieldArray
+          component={AlternativeNamesFieldArray}
+          name="alternateNames"
+        />
       </div>
     );
   }
