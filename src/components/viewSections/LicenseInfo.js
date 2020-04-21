@@ -35,7 +35,7 @@ class LicenseInfo extends React.Component {
             </KeyValue>
           </Col>
         </Row>
-        {license?.alternateNames?.length &&
+        {license?.alternateNames?.length !== 0 &&
           <MultiColumnList
             columnMapping={{ name: <FormattedMessage id="ui-licenses.alternativeNames" /> }}
             contentData={license.alternateNames}
