@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { Col, Headline, KeyValue, Row } from '@folio/stripes/components';
+import { Col, Headline, KeyValue, MultiColumnList, Row } from '@folio/stripes/components';
 
 class LicenseInfo extends React.Component {
   static propTypes = {
@@ -35,6 +35,13 @@ class LicenseInfo extends React.Component {
             </KeyValue>
           </Col>
         </Row>
+        {license?.alternateNames?.length !== 0 &&
+          <MultiColumnList
+            columnMapping={{ name: <FormattedMessage id="ui-licenses.alternativeNames" /> }}
+            contentData={license.alternateNames}
+            visibleColumns={['name']}
+          />
+        }
       </div>
     );
   }
