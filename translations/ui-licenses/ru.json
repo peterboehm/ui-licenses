@@ -166,5 +166,6 @@
     "duplicateLicenseModal.licenseInfo": "Информация о лицензии",
     "duplicateLicenseModal.organizations": "Организации",
     "duplicateLicenseModal.supplementaryDocs": "Дополнительные документы",
-    "duplicateLicenseModal.terms": "Условия"
+    "duplicateLicenseModal.terms": "Условия",
+    "alternativeNames": "Альтернативные имена"
 }

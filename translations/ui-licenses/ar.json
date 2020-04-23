@@ -166,5 +166,6 @@
     "duplicateLicenseModal.licenseInfo": "بيانات الترخيص",
     "duplicateLicenseModal.organizations": "المؤسسات",
     "duplicateLicenseModal.supplementaryDocs": "وثائق تكميلية",
-    "duplicateLicenseModal.terms": "مصطلحات"
+    "duplicateLicenseModal.terms": "مصطلحات",
+    "alternativeNames": "أسماء بديلة"
 }

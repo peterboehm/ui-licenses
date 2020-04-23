@@ -166,5 +166,6 @@
     "duplicateLicenseModal.licenseInfo": "ライセンス情報",
     "duplicateLicenseModal.organizations": "組織",
     "duplicateLicenseModal.supplementaryDocs": "補足文書",
-    "duplicateLicenseModal.terms": "条項"
+    "duplicateLicenseModal.terms": "条項",
+    "alternativeNames": "Alternative names"
 }
