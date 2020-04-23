@@ -166,5 +166,6 @@
     "duplicateLicenseModal.licenseInfo": "Informações de licença",
     "duplicateLicenseModal.organizations": "Organizações",
     "duplicateLicenseModal.supplementaryDocs": "Documentos suplementares",
-    "duplicateLicenseModal.terms": "Termos"
+    "duplicateLicenseModal.terms": "Termos",
+    "alternativeNames": "Nomes alternativos"
 }

@@ -166,5 +166,6 @@
     "duplicateLicenseModal.licenseInfo": "许可证信息",
     "duplicateLicenseModal.organizations": "组织",
     "duplicateLicenseModal.supplementaryDocs": "补充文档",
-    "duplicateLicenseModal.terms": "条款"
+    "duplicateLicenseModal.terms": "条款",
+    "alternativeNames": "Alternative names"
 }
