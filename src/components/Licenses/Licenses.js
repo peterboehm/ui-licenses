@@ -12,13 +12,13 @@ import {
   MultiColumnList,
   Pane,
   PaneMenu,
-  Paneset,
   SearchField,
 } from '@folio/stripes/components';
 
 import { AppIcon, IfPermission } from '@folio/stripes/core';
 
 import {
+  PersistedPaneset,
   SearchAndSortQuery,
   SearchAndSortNoResultsMessage as NoResultsMessage,
   SearchAndSortSearchButton as FilterPaneToggle,
@@ -288,10 +288,11 @@ export default class Licenses extends React.Component {
               const disableReset = () => (!filterChanged && !searchChanged);
 
               return (
-                <Paneset id="licenses-paneset">
+                <PersistedPaneset appId="@folio/licenses" id="licenses-paneset">
                   {this.state.filterPaneIsVisible &&
                     <Pane
                       defaultWidth="22%"
+                      id="pane-license-filters"
                       onClose={this.toggleFilterPane}
                       paneTitle={<FormattedMessage id="stripes-smart-components.searchAndFilter" />}
                     >
@@ -351,6 +352,7 @@ export default class Licenses extends React.Component {
                     appIcon={<AppIcon app="licenses" />}
                     defaultWidth="fill"
                     firstMenu={this.renderResultsFirstMenu(activeFilters)}
+                    id="pane-license-list"
                     lastMenu={this.renderResultsLastMenu()}
                     noOverflow
                     padContent={false}
@@ -387,7 +389,7 @@ export default class Licenses extends React.Component {
                       terms={data.terms}
                     />
                   }
-                </Paneset>
+                </PersistedPaneset>
               );
             }
           }
