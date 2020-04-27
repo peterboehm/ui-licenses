@@ -101,7 +101,7 @@ const Licenses = ({
               <PersistedPaneset appId="@folio/licenses" id="licenses-paneset">
                 {filterPaneIsVisible &&
                   <Pane
-                    defaultWidth="22%"
+                    defaultWidth="20%"
                     id="pane-license-filters"
                     lastMenu={
                       <PaneMenu>
