@@ -44,7 +44,7 @@ const propTypes = {
   source: PropTypes.object,
 };
 
-const filterPaneVisibilityKey = '@folio/agreements/agreementsFilterPaneVisibility';
+const filterPaneVisibilityKey = '@folio/licenses/licensesFilterPaneVisibility';
 
 const Licenses = ({
   children,
