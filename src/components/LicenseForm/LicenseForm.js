@@ -10,13 +10,12 @@ import {
   Col,
   ExpandAllButton,
   IconButton,
-  Layout,
+  LoadingView,
   Pane,
   PaneFooter,
   PaneMenu,
   Paneset,
   Row,
-  Spinner,
 } from '@folio/stripes/components';
 import { AppIcon, TitleManager } from '@folio/stripes/core';
 import stripesFinalForm from '@folio/stripes/final-form';
@@ -83,24 +82,6 @@ class LicenseForm extends React.Component {
     this.setState({ sections });
   }
 
-  renderLoadingPane = () => {
-    return (
-      <Paneset>
-        <Pane
-          defaultWidth="100%"
-          dismissible
-          id="pane-license-form"
-          onClose={this.props.handlers.onClose}
-          paneTitle={<FormattedMessage id="ui-licenses.loading" />}
-        >
-          <Layout className="marginTop1">
-            <Spinner />
-          </Layout>
-        </Pane>
-      </Paneset>
-    );
-  }
-
   renderPaneFooter() {
     const {
       handlers,
@@ -157,7 +138,13 @@ class LicenseForm extends React.Component {
 
   render() {
     const { isLoading, values: { id, name } } = this.props;
-    if (isLoading) return this.renderLoadingPane();
+
+    const paneProps = {
+      defaultWidth: '100%',
+      id: 'pane-license-form',
+    };
+
+    if (isLoading) return <LoadingView {...paneProps} />;
 
     return (
       <Paneset>
@@ -166,10 +153,8 @@ class LicenseForm extends React.Component {
             <Pane
               appIcon={<AppIcon app="licenses" />}
               centerContent
-              defaultWidth="100%"
               firstMenu={this.renderFirstMenu()}
               footer={this.renderPaneFooter()}
-              id="pane-license-form"
               paneTitle={id ? name : <FormattedMessage id="ui-licenses.createLicense" />}
             >
               <TitleManager record={id ? name : create}>

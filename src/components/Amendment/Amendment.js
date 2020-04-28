@@ -8,11 +8,10 @@ import {
   Col,
   ExpandAllButton,
   Icon,
-  Layout,
+  LoadingPane,
   Pane,
   PaneMenu,
   Row,
-  Spinner,
 } from '@folio/stripes/components';
 
 import { IfPermission, TitleManager } from '@folio/stripes/core';
@@ -122,22 +121,6 @@ export default class Amendment extends React.Component {
     );
   }
 
-  renderLoadingPane = () => {
-    return (
-      <Pane
-        defaultWidth="45%"
-        dismissible
-        id="pane-view-amendment"
-        onClose={this.props.handlers.onClose}
-        paneTitle={<FormattedMessage id="ui-licenses.loading" />}
-      >
-        <Layout className="marginTop1">
-          <Spinner />
-        </Layout>
-      </Pane>
-    );
-  }
-
   renderEditAmendmentPaneMenu = () => (
     <IfPermission perm="ui-licenses.licenses.edit">
       <PaneMenu>
@@ -165,17 +148,21 @@ export default class Amendment extends React.Component {
       isLoading,
     } = this.props;
 
-    if (isLoading) return this.renderLoadingPane();
+    const paneProps = {
+      defaultWidth: '45%',
+      dismissible: true,
+      id: 'pane-view-amendment',
+      onClose,
+    };
+
+    if (isLoading) return <LoadingPane {...paneProps} />;
 
     return (
       <Pane
         actionMenu={this.renderActionMenu}
-        defaultWidth="45%"
-        dismissible
-        id="pane-view-amendment"
         lastMenu={this.renderEditAmendmentPaneMenu()}
-        onClose={onClose}
         paneTitle={amendment.name}
+        {...paneProps}
       >
         <TitleManager record={amendment.name}>
           <AmendmentLicense {...this.getSectionProps()} />

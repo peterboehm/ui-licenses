@@ -12,11 +12,10 @@ import {
   ExpandAllButton,
   Icon,
   IconButton,
-  Layout,
+  LoadingPane,
   Pane,
   PaneMenu,
   Row,
-  Spinner,
 } from '@folio/stripes/components';
 import { AppIcon, IfPermission, TitleManager } from '@folio/stripes/core';
 import SafeHTMLMessage from '@folio/react-intl-safe-html';
@@ -206,38 +205,26 @@ class License extends React.Component {
     );
   }
 
-  renderLoadingPane = () => {
-    return (
-      <Pane
-        defaultWidth="45%"
-        dismissible
-        id="pane-view-license"
-        onClose={this.props.handlers.onClose}
-        paneTitle={<FormattedMessage id="ui-licenses.loading" />}
-      >
-        <Layout className="marginTop1">
-          <Spinner />
-        </Layout>
-      </Pane>
-    );
-  }
-
   render() {
     const { data, isLoading, handlers, helperApp } = this.props;
 
-    if (isLoading) return this.renderLoadingPane();
+    const paneProps = {
+      defaultWidth: '45%',
+      dismissible: true,
+      id: 'pane-view-license',
+      onClose: handlers.onClose,
+    };
+
+    if (isLoading) return <LoadingPane {...paneProps} />;
 
     return (
       <>
         <Pane
           actionMenu={this.getActionMenu}
           appIcon={<AppIcon app="licenses" />}
-          defaultWidth="45%"
-          dismissible
-          id="pane-view-license"
           lastMenu={this.renderLastMenu()}
-          onClose={handlers.onClose}
           paneTitle={data.license.name}
+          {...paneProps}
         >
           <TitleManager record={data.license.name}>
             <LicenseHeader {...this.getSectionProps()} />
