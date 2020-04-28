@@ -28,8 +28,6 @@ import {
   FormTerms,
 } from '../formSections';
 
-import css from './AmendmentForm.css';
-
 class AmendmentForm extends React.Component {
   static propTypes = {
     data: PropTypes.object,
@@ -178,6 +176,7 @@ class AmendmentForm extends React.Component {
         <FormattedMessage id="ui-licenses.create">
           {create => (
             <Pane
+              centerContent
               defaultWidth="100%"
               firstMenu={this.renderFirstMenu()}
               footer={this.renderPaneFooter()}
@@ -186,23 +185,21 @@ class AmendmentForm extends React.Component {
             >
               <TitleManager record={id ? name : create}>
                 <form id="form-amendment">
-                  <div className={css.amendmentForm}>
-                    <AmendmentFormInfo {...this.getSectionProps()} />
-                    <Row end="xs">
-                      <Col xs>
-                        <ExpandAllButton
-                          accordionStatus={this.state.sections}
-                          id="clickable-expand-all"
-                          onToggle={this.handleAllSectionsToggle}
-                        />
-                      </Col>
-                    </Row>
-                    <AccordionSet>
-                      <FormCoreDocs {...this.getSectionProps('amendmentFormCoreDocs')} />
-                      <FormTerms {...this.getSectionProps('amendmentFormTerms')} />
-                      <FormSupplementaryDocs {...this.getSectionProps('amendmentFormSupplementaryDocs')} />
-                    </AccordionSet>
-                  </div>
+                  <AmendmentFormInfo {...this.getSectionProps()} />
+                  <Row end="xs">
+                    <Col xs>
+                      <ExpandAllButton
+                        accordionStatus={this.state.sections}
+                        id="clickable-expand-all"
+                        onToggle={this.handleAllSectionsToggle}
+                      />
+                    </Col>
+                  </Row>
+                  <AccordionSet>
+                    <FormCoreDocs {...this.getSectionProps('amendmentFormCoreDocs')} />
+                    <FormTerms {...this.getSectionProps('amendmentFormTerms')} />
+                    <FormSupplementaryDocs {...this.getSectionProps('amendmentFormSupplementaryDocs')} />
+                  </AccordionSet>
                 </form>
               </TitleManager>
             </Pane>

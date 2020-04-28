@@ -30,8 +30,6 @@ import {
   FormTerms,
 } from '../formSections';
 
-import css from './LicenseForm.css';
-
 class LicenseForm extends React.Component {
   static propTypes = {
     data: PropTypes.object,
@@ -167,6 +165,7 @@ class LicenseForm extends React.Component {
           {create => (
             <Pane
               appIcon={<AppIcon app="licenses" />}
+              centerContent
               defaultWidth="100%"
               firstMenu={this.renderFirstMenu()}
               footer={this.renderPaneFooter()}
@@ -175,25 +174,23 @@ class LicenseForm extends React.Component {
             >
               <TitleManager record={id ? name : create}>
                 <form id="form-license">
-                  <div className={css.licenseForm}>
-                    <Row end="xs">
-                      <Col xs>
-                        <ExpandAllButton
-                          accordionStatus={this.state.sections}
-                          id="clickable-expand-all"
-                          onToggle={this.handleAllSectionsToggle}
-                        />
-                      </Col>
-                    </Row>
-                    <AccordionSet>
-                      <LicenseFormInfo {...this.getSectionProps('licenseFormInfo')} />
-                      <LicenseFormInternalContacts {...this.getSectionProps('licenseFormInternalContacts')} />
-                      <LicenseFormOrganizations {...this.getSectionProps('licenseFormOrganizations')} />
-                      <FormCoreDocs {...this.getSectionProps('licenseFormDocs')} />
-                      <FormTerms {...this.getSectionProps('licenseFormTerms')} />
-                      <FormSupplementaryDocs {...this.getSectionProps('licenseFormSupplementaryDocs')} />
-                    </AccordionSet>
-                  </div>
+                  <Row end="xs">
+                    <Col xs>
+                      <ExpandAllButton
+                        accordionStatus={this.state.sections}
+                        id="clickable-expand-all"
+                        onToggle={this.handleAllSectionsToggle}
+                      />
+                    </Col>
+                  </Row>
+                  <AccordionSet>
+                    <LicenseFormInfo {...this.getSectionProps('licenseFormInfo')} />
+                    <LicenseFormInternalContacts {...this.getSectionProps('licenseFormInternalContacts')} />
+                    <LicenseFormOrganizations {...this.getSectionProps('licenseFormOrganizations')} />
+                    <FormCoreDocs {...this.getSectionProps('licenseFormDocs')} />
+                    <FormTerms {...this.getSectionProps('licenseFormTerms')} />
+                    <FormSupplementaryDocs {...this.getSectionProps('licenseFormSupplementaryDocs')} />
+                  </AccordionSet>
                 </form>
               </TitleManager>
             </Pane>
