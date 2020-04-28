@@ -10,13 +10,12 @@ import {
   Col,
   ExpandAllButton,
   IconButton,
-  Layout,
+  LoadingView,
   Pane,
   PaneFooter,
   PaneMenu,
   Paneset,
   Row,
-  Spinner,
 } from '@folio/stripes/components';
 import { AppIcon, TitleManager } from '@folio/stripes/core';
 import stripesFinalForm from '@folio/stripes/final-form';
@@ -29,8 +28,6 @@ import {
   FormSupplementaryDocs,
   FormTerms,
 } from '../formSections';
-
-import css from './LicenseForm.css';
 
 class LicenseForm extends React.Component {
   static propTypes = {
@@ -83,24 +80,6 @@ class LicenseForm extends React.Component {
 
   handleAllSectionsToggle = (sections) => {
     this.setState({ sections });
-  }
-
-  renderLoadingPane = () => {
-    return (
-      <Paneset>
-        <Pane
-          defaultWidth="100%"
-          dismissible
-          id="pane-license-form"
-          onClose={this.props.handlers.onClose}
-          paneTitle={<FormattedMessage id="ui-licenses.loading" />}
-        >
-          <Layout className="marginTop1">
-            <Spinner />
-          </Layout>
-        </Pane>
-      </Paneset>
-    );
   }
 
   renderPaneFooter() {
@@ -159,7 +138,13 @@ class LicenseForm extends React.Component {
 
   render() {
     const { isLoading, values: { id, name } } = this.props;
-    if (isLoading) return this.renderLoadingPane();
+
+    const paneProps = {
+      defaultWidth: '100%',
+      id: 'pane-license-form',
+    };
+
+    if (isLoading) return <LoadingView {...paneProps} />;
 
     return (
       <Paneset>
@@ -167,33 +152,30 @@ class LicenseForm extends React.Component {
           {create => (
             <Pane
               appIcon={<AppIcon app="licenses" />}
-              defaultWidth="100%"
+              centerContent
               firstMenu={this.renderFirstMenu()}
               footer={this.renderPaneFooter()}
-              id="pane-license-form"
               paneTitle={id ? name : <FormattedMessage id="ui-licenses.createLicense" />}
             >
               <TitleManager record={id ? name : create}>
                 <form id="form-license">
-                  <div className={css.licenseForm}>
-                    <Row end="xs">
-                      <Col xs>
-                        <ExpandAllButton
-                          accordionStatus={this.state.sections}
-                          id="clickable-expand-all"
-                          onToggle={this.handleAllSectionsToggle}
-                        />
-                      </Col>
-                    </Row>
-                    <AccordionSet>
-                      <LicenseFormInfo {...this.getSectionProps('licenseFormInfo')} />
-                      <LicenseFormInternalContacts {...this.getSectionProps('licenseFormInternalContacts')} />
-                      <LicenseFormOrganizations {...this.getSectionProps('licenseFormOrganizations')} />
-                      <FormCoreDocs {...this.getSectionProps('licenseFormDocs')} />
-                      <FormTerms {...this.getSectionProps('licenseFormTerms')} />
-                      <FormSupplementaryDocs {...this.getSectionProps('licenseFormSupplementaryDocs')} />
-                    </AccordionSet>
-                  </div>
+                  <Row end="xs">
+                    <Col xs>
+                      <ExpandAllButton
+                        accordionStatus={this.state.sections}
+                        id="clickable-expand-all"
+                        onToggle={this.handleAllSectionsToggle}
+                      />
+                    </Col>
+                  </Row>
+                  <AccordionSet>
+                    <LicenseFormInfo {...this.getSectionProps('licenseFormInfo')} />
+                    <LicenseFormInternalContacts {...this.getSectionProps('licenseFormInternalContacts')} />
+                    <LicenseFormOrganizations {...this.getSectionProps('licenseFormOrganizations')} />
+                    <FormCoreDocs {...this.getSectionProps('licenseFormDocs')} />
+                    <FormTerms {...this.getSectionProps('licenseFormTerms')} />
+                    <FormSupplementaryDocs {...this.getSectionProps('licenseFormSupplementaryDocs')} />
+                  </AccordionSet>
                 </form>
               </TitleManager>
             </Pane>
