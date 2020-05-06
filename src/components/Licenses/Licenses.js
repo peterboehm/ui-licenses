@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useReducer, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { useLocalStorage, writeStorage } from '@rehooks/local-storage';
@@ -63,7 +63,10 @@ const Licenses = ({
 
   const searchField = useRef(null);
 
-  const [selectedLicenses, setSelectedLicenses] = useState({});
+  const [selectedLicenses, toggleLicenseSelection] = useReducer(
+    (state, licenseId) => ({ ...state, [licenseId]: !state[licenseId] }),
+    {}
+  );
   const [showExportLicenseAsCSVModal, setShowExportLicenseAsCSVModal] = useState(false);
 
   const [storedFilterPaneVisibility] = useLocalStorage(filterPaneVisibilityKey, true);
@@ -247,14 +250,7 @@ const Licenses = ({
                         <Checkbox
                           checked={!!(selectedLicenses[license.id])}
                           name={`selected-${license.id}`}
-                          onChange={() => {
-                            setSelectedLicenses(prevState => ({
-                              selectedLicenses: {
-                                ...prevState.selectedLicenses,
-                                [license.id]: !(prevState.selectedLicenses[license.id])
-                              },
-                            }));
-                          }}
+                          onChange={() => toggleLicenseSelection(license.id)}
                           onClick={e => e.stopPropagation()}
                         />
                       ),
