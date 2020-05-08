@@ -5,7 +5,7 @@ import compose from 'compose-function';
 
 import { CalloutContext, stripesConnect } from '@folio/stripes/core';
 import { withTags } from '@folio/stripes/smart-components';
-import { Tags } from '@folio/stripes-erm-components';
+import { preventResourceRefresh, Tags } from '@folio/stripes-erm-components';
 import SafeHTMLMessage from '@folio/react-intl-safe-html';
 
 import withFileHandlers from './components/withFileHandlers';
@@ -43,10 +43,7 @@ class ViewLicenseRoute extends React.Component {
     license: {
       type: 'okapi',
       path: 'licenses/licenses/:{id}',
-      shouldRefresh: (resource, action) => {
-        if (resource.name !== 'license') return true;
-        return !action.meta.originatingActionType?.includes('DELETE');
-      },
+      shouldRefresh: preventResourceRefresh({ 'license': ['DELETE'] }),
     },
     linkedAgreements: {
       type: 'okapi',
@@ -57,6 +54,7 @@ class ViewLicenseRoute extends React.Component {
       limitParam: 'perPage',
       perRequest: 100,
       recordsRequired: '1000',
+      shouldRefresh: preventResourceRefresh({ 'license': ['DELETE'] }),
       throwErrors: false,
     },
     terms: {
