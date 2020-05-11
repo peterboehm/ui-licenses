@@ -1,6 +1,6 @@
 # Change history for ui-licenses
 
-## 3.8.0 IN PROGRESS
+## 4.0.0 IN PROGRESS
 * Added permission set and ability to delete licenses. ERM-748
 
 ## 3.7.2 2020-03-27

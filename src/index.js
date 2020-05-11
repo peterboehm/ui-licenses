@@ -20,21 +20,21 @@ const Settings = lazy(() => import('./settings'));
 
 class App extends React.Component {
   static propTypes = {
+    actAs: PropTypes.string.isRequired,
     match: PropTypes.object.isRequired,
-    showSettings: PropTypes.bool,
     stripes: PropTypes.object.isRequired,
   }
 
   render() {
-    if (this.props.showSettings) {
+    const { actAs, match: { path } } = this.props;
+
+    if (actAs === 'settings') {
       return (
         <Suspense fallback={null}>
           <Settings {...this.props} />
         </Suspense>
       );
     }
-
-    const { match: { path } } = this.props;
 
     return (
       <Suspense fallback={null}>

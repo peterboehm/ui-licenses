@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { uniqueId } from 'lodash';
-import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
+import { FormattedMessage, injectIntl } from 'react-intl';
 import { Field } from 'react-final-form';
 
 import {
@@ -22,7 +22,7 @@ const propTypes = {
   ariaLabelledby: PropTypes.string.isRequired,
   clearRuleValue: PropTypes.func.isRequired,
   index: PropTypes.number.isRequired,
-  intl: intlShape,
+  intl: PropTypes.object,
   name: PropTypes.string.isRequired,
   onDelete: PropTypes.func.isRequired,
   termDefinition: PropTypes.shape({
