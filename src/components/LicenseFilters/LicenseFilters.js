@@ -4,9 +4,7 @@ import { FormattedMessage } from 'react-intl';
 
 import { Accordion, AccordionSet, FilterAccordionHeader, Selection } from '@folio/stripes/components';
 import { CheckboxFilter, MultiSelectionFilter } from '@folio/stripes/smart-components';
-import { OrganizationSelection } from '@folio/stripes-erm-components';
-
-import TermFilters from './TermFilters';
+import { CustomPropertyFilters, OrganizationSelection } from '@folio/stripes-erm-components';
 
 const FILTERS = [
   'status',
@@ -162,8 +160,13 @@ export default class LicenseFilters extends React.Component {
     );
   }
 
-  renderTermFilters = () => {
-    return <TermFilters {...this.props} />;
+  renderCustomPropertyFilters = () => {
+    return <CustomPropertyFilters
+      activeFilters={this.props.activeFilters}
+      customProperties={this.props.data.terms}
+      custPropName="term"
+      filterHandlers={this.props.filterHandlers}
+    />;
   }
 
   render() {
@@ -174,7 +177,7 @@ export default class LicenseFilters extends React.Component {
         {this.renderOrganizationFilter()}
         {this.renderRoleLabel()}
         {this.renderTagsFilter()}
-        {this.renderTermFilters()}
+        {this.renderCustomPropertyFilters()}
       </AccordionSet>
     );
   }

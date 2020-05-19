@@ -2,6 +2,7 @@
 
 ## 4.0.0 IN PROGRESS
 * Added permission set and ability to delete licenses. ERM-748
+* Moved ability to filter licenses by their terms to stripes-erm-components. ERM-876
 
 ## 3.7.2 2020-03-27
 * Fixed filtering licenses by tag. ERM-810

@@ -9,7 +9,6 @@
   "licensePlural": "{count} {count, plural, one {license} other {licenses}}",
   "licenses.duplicate": "Duplicate",
 
-  "apply": "Apply",
   "cancel": "Cancel",
   "closeEditLicense": "Close edit license pane",
   "createLicense": "New license",
@@ -24,8 +23,6 @@
   "showTags": "Show Tags",
   "tags": "Tags",
   "term": "Term",
-  "OR": "OR",
-  "AND": "AND",
 
   "alternativeNames": "Alternative names",
 
@@ -110,17 +107,6 @@
 
   "licenseAgreements.none": "No agreements currently linked to this license.",
 
-  "operator.equals": "equals",
-  "operator.doesNotEqual": "does not equal",
-  "operator.isGreaterThanOrEqual": "is greater than or equals",
-  "operator.isLessThanOrEqual": "is less than or equals",
-  "operator.is": "is",
-  "operator.isNot": "is not",
-  "operator.isSet": "is set",
-  "operator.isNotSet": "is not set",
-  "operator.contains": "contains",
-  "operator.doesNotContain": "does not contain",
-
   "organizations.add": "Add organization",
   "organizations.licenseHasNone": "No organizations have been added.",
   "organizations.selectRole": "Select a role",
@@ -183,16 +169,6 @@
   "terms.callout.delete.termInUse": "<strong>Term</strong> {name} was not deleted because it is in use on one or more licenses.",
   "terms.callout.save.error": "There was an error saving term {name}: {error}",
   "terms.callout.save.success": "<strong>Term saved:</strong> {name}",
-  "terms.filters.addRule": "Add rule",
-  "terms.filters.addTermFilter": "Add term filter",
-  "terms.filters.editTermFilters": "Edit term filters",
-  "terms.filters.filtersApplied": "{count, number} {count, plural, one {term filter} other {term filters}} applied",
-  "terms.filters.builder": "Term filter builder",
-  "terms.filters.comparator": "Comparator",
-  "terms.filters.value": "Value",
-  "terms.filters.removeRule": "Remove rule {index}",
-  "terms.filters.removeTerm": "Remove term filter {index}",
-  "terms.filters.termFilterIndex": "Term filter {index}",
   "terms.optionalTerms": "Optional terms",
   "terms.primaryTerms": "Primary terms",
 
