@@ -38,11 +38,11 @@ class TermsConfigForm extends React.Component {
     });
   };
 
-  sendCalloutInUse = () => {
+  sendCalloutInUse = (custPropName) => {
     return this.callout.sendCallout({
       type: 'error',
       message: (
-        <SafeHTMLMessage id="ui-licenses.terms.callout.delete.termInUse" />
+        <SafeHTMLMessage id="ui-licenses.terms.callout.delete.termInUse" values={{ name: custPropName }} />
       ),
       timeout: 0,
     });
@@ -63,7 +63,7 @@ class TermsConfigForm extends React.Component {
               's'
             );
             if (pattern.test(error.message)) {
-              this.sendCalloutInUse();
+              this.sendCalloutInUse(customProperty?.name);
             } else {
               this.sendCallout('delete', 'error', error.message, customProperty?.name);
             }
