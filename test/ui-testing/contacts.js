@@ -33,7 +33,6 @@ module.exports.test = (uiTestCtx) => {
         helpers.clickApp(nightmare, done, 'licenses');
       });
 
-
       it('should navigate to create license page', done => {
         const name = `Contacts License #${generateNumber()}`;
 

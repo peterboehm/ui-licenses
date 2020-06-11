@@ -46,7 +46,6 @@ module.exports.test = (uiTestCtx) => {
         helpers.clickApp(nightmare, done, 'licenses');
       });
 
-
       it(`should create license ${LICENSE_NAME}`, done => {
         nightmare
           .wait('#list-licenses')

@@ -44,7 +44,6 @@ export default class LicenseAgreements extends React.Component {
     groupedLinkedAgreements: [],
   }
 
-
   static getDerivedStateFromProps(props, state) {
     const { license: { linkedAgreements } } = props;
 

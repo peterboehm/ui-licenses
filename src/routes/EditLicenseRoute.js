@@ -6,7 +6,6 @@ import compose from 'compose-function';
 import SafeHTMLMessage from '@folio/react-intl-safe-html';
 import { CalloutContext, stripesConnect } from '@folio/stripes/core';
 
-
 import withFileHandlers from './components/withFileHandlers';
 import Form from '../components/LicenseForm';
 import NoPermissions from '../components/NoPermissions';

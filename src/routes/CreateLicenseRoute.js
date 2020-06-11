@@ -10,7 +10,6 @@ import withFileHandlers from './components/withFileHandlers';
 import View from '../components/LicenseForm';
 import NoPermissions from '../components/NoPermissions';
 
-
 class CreateLicenseRoute extends React.Component {
   static manifest = Object.freeze({
     licenses: {

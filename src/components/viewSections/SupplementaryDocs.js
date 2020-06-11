@@ -33,7 +33,6 @@ export default class SupplementaryDocs extends React.Component {
     open: PropTypes.bool,
   };
 
-
   renderDocs = (docs) => {
     return docs.map(doc => (
       <DocumentCard
