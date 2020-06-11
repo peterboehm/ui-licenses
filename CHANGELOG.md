@@ -1,8 +1,12 @@
 # Change history for ui-licenses
 
-## 4.0.0 IN PROGRESS
+## 4.0.0 2020-06-11
 * Added permission set and ability to delete licenses. ERM-748
+* Show/hide pick list actions based on refdata category type. ERM-735
+* Added ability to duplicate a license. ERM-814
+* Added support for "Alternative names" for licenses. refs ERM-828
 * Moved ability to filter licenses by their terms to stripes-erm-components. ERM-876
+* Bumped the required node version to 10.
 
 ## 3.7.2 2020-03-27
 * Fixed filtering licenses by tag. ERM-810
