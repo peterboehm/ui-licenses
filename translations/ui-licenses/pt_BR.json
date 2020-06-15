@@ -83,7 +83,7 @@
     "terms.count": "{count, number} salvo {count, plural, one {termo} other {termos}}",
     "terms.callout.delete.error": "Ocorreu um erro ao excluir o termo {name}: {error}",
     "terms.callout.delete.success": "<strong>Termo excluído:</strong> {name}",
-    "terms.callout.delete.termInUse": "<strong>Termo</strong> {name} não foi excluído porque está sendo usado em uma ou mais licenças.",
+    "terms.callout.delete.termInUse": "O termo <strong>{name}</strong> não foi excluído porque está sendo usado em uma ou mais licenças.",
     "terms.callout.save.error": "Ocorreu um erro ao salvar o termo {name}: {error}",
     "terms.callout.save.success": "<strong>Termo salvo:</strong> {name}",
     "create.callout": "<strong>Licença criada:</strong> {name}",

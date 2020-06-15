@@ -83,7 +83,7 @@
     "terms.count": "{count, number}已保存{count, plural, one {条款} other { 条款}}",
     "terms.callout.delete.error": "删除条款{name}出错： {error}",
     "terms.callout.delete.success": "<strong>条款已删除： </strong> {name}",
-    "terms.callout.delete.termInUse": "<strong>条款</strong> {name}未被删除，因为它已在一个或多个许可证上使用。",
+    "terms.callout.delete.termInUse": "未删除术语<strong> {name} </strong> ，因为一个或多个许可证正在使用该术语。",
     "terms.callout.save.error": "保存条款{name} 出错： {error}",
     "terms.callout.save.success": "<strong>条款已保存： </strong> {name}",
     "create.callout": "<strong>许可证已创建： </strong> {name}",

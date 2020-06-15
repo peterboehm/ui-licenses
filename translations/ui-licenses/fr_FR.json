@@ -83,7 +83,7 @@
     "terms.count": "{count, number} enregistré {count, plural, one { terme } other { termes }}",
     "terms.callout.delete.error": "Une erreur s'est produite lors de la suppression du terme {name} : {error}",
     "terms.callout.delete.success": "<strong> Terme supprimé: </strong> {name}",
-    "terms.callout.delete.termInUse": "<strong> Le terme </strong> {name} n'a pas été supprimé, car il est utilisé sur une ou plusieurs licences.",
+    "terms.callout.delete.termInUse": "Le terme <strong> {name} </strong> n'a pas été supprimé car il est utilisé sur une ou plusieurs licences.",
     "terms.callout.save.error": "Une erreur s'est produite lors de l'enregistrement du terme {name} : {error}",
     "terms.callout.save.success": "<strong> Terme enregistré: </strong> {name}",
     "create.callout": "<strong>Licence créée:</strong> {name}",
