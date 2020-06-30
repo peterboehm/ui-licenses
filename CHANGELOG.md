@@ -1,5 +1,8 @@
 # Change history for ui-licenses
 
+##  4.1.0 IN PROGRESS
+* Added ability to set and view notes on organizations. ERM-967
+
 ## 4.0.0 2020-06-11
 * Added permission set and ability to delete licenses. ERM-748
 * Show/hide pick list actions based on refdata category type. ERM-735

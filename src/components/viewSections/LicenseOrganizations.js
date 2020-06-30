@@ -16,6 +16,7 @@ export default class LicenseOrganizations extends React.Component {
     license: PropTypes.shape({
       orgs: PropTypes.arrayOf(
         PropTypes.shape({
+          note: PropTypes.string,
           org: PropTypes.shape({
             id: PropTypes.string,
             name: PropTypes.string.isRequired,
@@ -33,7 +34,7 @@ export default class LicenseOrganizations extends React.Component {
 
   renderOrgList = (orgs) => {
     return orgs.map(o => {
-      const { interfaces, org, role } = o;
+      const { interfaces, note, org, role } = o;
       if (!org || !role) return null;
 
       return (
@@ -55,6 +56,7 @@ export default class LicenseOrganizations extends React.Component {
             </span>
           }
           interfaces={interfaces}
+          note={note}
         />
       );
     });

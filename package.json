@@ -1,6 +1,6 @@
 {
   "name": "@folio/licenses",
-  "version": "4.0.0",
+  "version": "4.1.0",
   "description": "ERM License functionality for Stripes",
   "main": "src/index.js",
   "repository": "",
