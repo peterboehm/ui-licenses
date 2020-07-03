@@ -13,6 +13,8 @@ import View from '../components/License';
 import { urls } from '../components/utils';
 import { errorTypes } from '../constants';
 
+const RECORDS_PER_REQUEST = 100;
+
 class ViewLicenseRoute extends React.Component {
   static manifest = Object.freeze({
     interfaces: {
@@ -52,7 +54,7 @@ class ViewLicenseRoute extends React.Component {
         sort: 'owner.startDate;desc'
       },
       limitParam: 'perPage',
-      perRequest: 100,
+      perRequest: RECORDS_PER_REQUEST,
       recordsRequired: '1000',
       shouldRefresh: preventResourceRefresh({ 'license': ['DELETE'] }),
       throwErrors: false,
@@ -65,6 +67,7 @@ class ViewLicenseRoute extends React.Component {
     users: {
       type: 'okapi',
       path: 'users',
+      perRequest: RECORDS_PER_REQUEST,
       params: (_q, _p, _r, _l, props) => {
         const query = get(props.resources, 'license.records[0].contacts', [])
           .filter(contact => contact.user)

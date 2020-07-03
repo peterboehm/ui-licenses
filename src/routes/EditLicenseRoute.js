@@ -10,6 +10,8 @@ import withFileHandlers from './components/withFileHandlers';
 import Form from '../components/LicenseForm';
 import NoPermissions from '../components/NoPermissions';
 
+const RECORDS_PER_REQUEST = 100;
+
 class EditLicenseRoute extends React.Component {
   static manifest = Object.freeze({
     license: {
@@ -50,6 +52,7 @@ class EditLicenseRoute extends React.Component {
     users: {
       type: 'okapi',
       path: 'users',
+      perRequest: RECORDS_PER_REQUEST,
       params: (_q, _p, _r, _l, props) => {
         const query = get(props.resources, 'license.records[0].contacts', [])
           .filter(contact => contact.user)
