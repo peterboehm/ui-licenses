@@ -1,7 +1,11 @@
 # Change history for ui-licenses
 
-##  4.1.0 IN PROGRESS
+##  5.0.0 IN PROGRESS
 * Added ability to set and view notes on organizations. ERM-967
+* Upgrade to Stripes 5.0
+
+## 4.0.1 2020-07-06
+* Fixed issue with only 10 results being retrieved for internal contacts. ERM-980
 
 ## 4.0.0 2020-06-11
 * Added permission set and ability to delete licenses. ERM-748
