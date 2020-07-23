@@ -107,7 +107,7 @@
     "export.csv.label": "Export selected as CSV ({count, number} items)",
     "exportLicenses": "Export licenses as CSV",
     "exportLicensesModal.message": "Please select which license details to export",
-    "exportLicensesModal.selectAll": "Select all/deselect all",
+    "exportLicensesModal.selectAll": "Выбрать все / убрать выделение",
     "exportLicensesModal.licenseInformation": "License information",
     "exportLicensesModal.terms": "Terms",
     "exportLicensesModal.termNames": "Term names",
