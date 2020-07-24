@@ -3,6 +3,7 @@
 ##  5.0.0 IN PROGRESS
 * Added ability to set and view notes on organizations. ERM-967
 * Upgrade to Stripes 5.0
+* Refactor `bigtest/mirage` with `miragejs`.
 
 ## 4.0.1 2020-07-06
 * Fixed issue with only 10 results being retrieved for internal contacts. ERM-980

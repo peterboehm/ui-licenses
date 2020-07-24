@@ -7,7 +7,10 @@ export default function setupApplication({
   currentUser = {},
 } = {}) {
   setupStripesCore({
-    mirageOptions,
+    mirageOptions: {
+      serverType: 'miragejs',
+      ...mirageOptions
+    },
     scenarios,
     currentUser,
     stripesConfig: {
