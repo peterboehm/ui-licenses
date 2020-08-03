@@ -87,7 +87,6 @@ export default class LicenseFilters extends React.Component {
         onClearFilter={() => {
           this.props.filterHandlers.state({
             ...activeFilters,
-            role: [],
             org: [],
           });
         }}
@@ -105,7 +104,7 @@ export default class LicenseFilters extends React.Component {
     );
   }
 
-  renderRoleLabel = () => {
+  renderOrganizationRoleFilter = () => {
     const roles = this.props.data.orgRoleValues;
     const dataOptions = roles.map(role => ({
       value: role.id,
@@ -113,7 +112,6 @@ export default class LicenseFilters extends React.Component {
     }));
 
     const { activeFilters } = this.props;
-    const orgFilters = activeFilters.org || [];
     const roleFilters = activeFilters.role || [];
 
     return (
@@ -125,12 +123,16 @@ export default class LicenseFilters extends React.Component {
         onClearFilter={() => { this.props.filterHandlers.clearGroup('role'); }}
         separator={false}
       >
-        <Selection
-          dataOptions={dataOptions}
-          disabled={orgFilters.length === 0}
-          onChange={value => this.props.filterHandlers.state({ ...activeFilters, role: [value] })}
-          value={roleFilters[0] || ''}
-        />
+        <FormattedMessage id="ui-licenses.organizations.selectRole">
+          {placeholder => (
+            <Selection
+              dataOptions={dataOptions}
+              onChange={value => this.props.filterHandlers.state({ ...activeFilters, role: [value] })}
+              placeholder={placeholder}
+              value={roleFilters[0] || ''}
+            />
+          )}
+        </FormattedMessage>
       </Accordion>
     );
   }
@@ -175,7 +177,7 @@ export default class LicenseFilters extends React.Component {
         {this.renderCheckboxFilter('status')}
         {this.renderCheckboxFilter('type')}
         {this.renderOrganizationFilter()}
-        {this.renderRoleLabel()}
+        {this.renderOrganizationRoleFilter()}
         {this.renderTagsFilter()}
         {this.renderCustomPropertyFilters()}
       </AccordionSet>

@@ -22,7 +22,7 @@ class LicensesRoute extends React.Component {
       limitParam: 'perPage',
       path: 'licenses/licenses',
       params: generateQueryParams({
-        searchKey: 'name,alternateNames.name',
+        searchKey: 'name,alternateNames.name,description',
         filterKeys: {
           org: 'orgs.org',
           role: 'orgs.role',
