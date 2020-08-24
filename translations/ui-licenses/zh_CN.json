@@ -118,7 +118,7 @@
     "exportLicensesModal.type": "类型",
     "exportLicensesModal.value": "值",
     "exportLicensesModal.note": "内部附注",
-    "exportLicensesModal.publicNote": "公开附注",
+    "exportLicensesModal.publicNote": "公共附注",
     "exportLicensesModal.internal": "可见性",
     "deleteLicense": "删除许可证",
     "deletedLicense": "<strong>删除的许可证： </strong> {name}",
