@@ -129,7 +129,7 @@
     "permission.licenses.view": "Licenses: Search & view licenses",
     "permission.licenses.edit": "Licenses: Edit licenses",
     "permission.licenses.delete": "Licenses: Delete licenses",
-    "permission.picklists.manage": "Settings (Licenses): Manage pick lists and values",
+    "permission.picklists.manage": "Impostazioni (Licenses): gestire elenchi di selezione e valori",
     "permission.terms.manage": "Settings (Licenses): Manage license terms",
     "licenses.duplicate": "Duplicate",
     "duplicateLicenseModal.cloneEndpointError": "Unable to duplicate the license. The clone endpoint could not be accessed.",
