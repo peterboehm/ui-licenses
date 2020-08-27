@@ -54,7 +54,7 @@ export default class CoreDocs extends React.Component {
 
     return (
       <FormattedMessage id={`ui-licenses.${recordType}`}>
-        {type => (
+        {([type]) => (
           <Accordion
             displayWhenClosed={this.renderBadge()}
             displayWhenOpen={this.renderBadge()}

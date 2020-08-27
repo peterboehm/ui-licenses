@@ -19,7 +19,7 @@ export default class Terms extends React.Component {
 
     return (
       <FormattedMessage id={`ui-licenses.${recordType}`}>
-        {type => (
+        {([type]) => (
           <Accordion
             id={id}
             label={<FormattedMessage id="ui-licenses.section.terms" />}
