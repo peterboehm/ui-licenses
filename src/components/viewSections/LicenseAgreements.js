@@ -11,6 +11,7 @@ import {
   InfoPopover,
   Layout,
   MultiColumnList,
+  NoValue,
   Spinner,
 } from '@folio/stripes/components';
 
@@ -85,10 +86,10 @@ export default class LicenseAgreements extends React.Component {
         formatter={{
           linkNote: link => (link.note ? <InfoPopover content={link.note} /> : ''),
           name: ({ owner:agreement = {} }) => <Link to={`/erm/agreements/${agreement.id}`}>{agreement.name}</Link>,
-          startDate: ({ owner:agreement = {} }) => (agreement.startDate ? <FormattedUTCDate value={agreement.startDate} /> : '-'),
-          endDate: ({ owner:agreement = {} }) => (agreement.endDate ? <FormattedUTCDate value={agreement.endDate} /> : '-'),
-          agreementStatus: ({ owner:agreement = {} }) => get(agreement, ['agreementStatus', 'label'], '-'),
-          linkStatus: link => (link.status ? link.status.label : '-'),
+          startDate: ({ owner:agreement = {} }) => (agreement.startDate ? <FormattedUTCDate value={agreement.startDate} /> : <NoValue />),
+          endDate: ({ owner:agreement = {} }) => (agreement.endDate ? <FormattedUTCDate value={agreement.endDate} /> : <NoValue />),
+          agreementStatus: ({ owner:agreement = {} }) => agreement?.agreementStatus?.label ?? <NoValue />,
+          linkStatus: link => (link.status?.label ?? <NoValue />),
         }}
         id="linked-agreements-table"
         interactive={false}

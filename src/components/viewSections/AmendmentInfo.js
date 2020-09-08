@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { get } from 'lodash';
 import { FormattedMessage } from 'react-intl';
 
 import {
@@ -8,6 +7,7 @@ import {
   FormattedUTCDate,
   Headline,
   KeyValue,
+  NoValue,
   Row,
 } from '@folio/stripes/components';
 
@@ -51,14 +51,14 @@ export default class AmendmentInfo extends React.Component {
           <Col md={3} xs={6}>
             <KeyValue label={<FormattedMessage id="ui-licenses.prop.status" />}>
               <div data-test-amendment-status>
-                {get(amendment, ['status', 'label'], '-')}
+                {amendment?.status?.label ?? <NoValue />}
               </div>
             </KeyValue>
           </Col>
           <Col md={3} xs={6}>
             <KeyValue label={<FormattedMessage id="ui-licenses.prop.startDate" />}>
               <div data-test-amendment-start-date>
-                {amendment.startDate ? <FormattedUTCDate value={amendment.startDate} /> : '-'}
+                {amendment.startDate ? <FormattedUTCDate value={amendment.startDate} /> : <NoValue />}
               </div>
             </KeyValue>
           </Col>
@@ -74,7 +74,7 @@ export default class AmendmentInfo extends React.Component {
           <Col xs={12}>
             <KeyValue label={<FormattedMessage id="ui-licenses.prop.description" />}>
               <div data-test-amendment-description>
-                {amendment.description || '-'}
+                {amendment.description || <NoValue />}
               </div>
             </KeyValue>
           </Col>

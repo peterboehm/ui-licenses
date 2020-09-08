@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { Col, Headline, KeyValue, MultiColumnList, Row } from '@folio/stripes/components';
+import { Col, Headline, KeyValue, MultiColumnList, NoValue, Row } from '@folio/stripes/components';
 
 class LicenseInfo extends React.Component {
   static propTypes = {
@@ -30,7 +30,7 @@ class LicenseInfo extends React.Component {
           <Col xs={12}>
             <KeyValue label={<FormattedMessage id="ui-licenses.prop.description" />}>
               <div data-test-license-description style={{ whiteSpace: 'pre-wrap' }}>
-                {license.description || '-'}
+                {license.description || <NoValue />}
               </div>
             </KeyValue>
           </Col>

@@ -8,6 +8,7 @@ import {
   Button,
   FormattedUTCDate,
   MultiColumnList,
+  NoValue,
 } from '@folio/stripes/components';
 
 import { LicenseEndDate } from '@folio/stripes-erm-components';
@@ -78,8 +79,8 @@ export default class LicenseAmendments extends React.Component {
           contentData={license.amendments || []}
           formatter={{
             name: a => a.name,
-            status: a => get(a, ['status', 'label'], '-'),
-            startDate: a => (a.startDate ? <FormattedUTCDate value={a.startDate} /> : '-'),
+            status: a => a?.status?.label ?? <NoValue />,
+            startDate: a => (a.startDate ? <FormattedUTCDate value={a.startDate} /> : <NoValue />),
             endDate: a => <LicenseEndDate license={a} />,
           }}
           id="amendments-table"
