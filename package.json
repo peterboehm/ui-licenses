@@ -48,7 +48,7 @@
     "moment": "^2.22.2",
     "react": "^16.6.3",
     "react-dom": "^16.6.3",
-    "react-intl": "^4.5.1",
+    "react-intl": "^5.8.1",
     "react-redux": "^5.1.1",
     "react-router-dom": "^5.2.0",
     "redux": "^3.7.2",
@@ -75,7 +75,7 @@
     "moment": "^2.22.2",
     "react": "*",
     "react-dom": "*",
-    "react-intl": "^4.5.1",
+    "react-intl": "^5.8.1",
     "react-redux": "*",
     "react-router-dom": "^5.2.0",
     "redux": "*"
