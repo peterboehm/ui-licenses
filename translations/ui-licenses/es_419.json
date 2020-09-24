@@ -82,7 +82,7 @@
     "section.supplementaryDocuments": "Supplementary documents",
     "terms.count": "{count, number} saved {count, plural, one {term} other {terms}}",
     "terms.callout.delete.error": "There was an error deleting term {name}: {error}",
-    "terms.callout.delete.success": "Término exitosamente borrado.",
+    "terms.callout.delete.success": "<strong>Término eliminado:</strong> {name}",
     "terms.callout.delete.termInUse": "El término <strong> {name} </strong> no se eliminó porque está en uso en una o más licencias.",
     "terms.callout.save.error": "There was an error saving term {name}: {error}",
     "terms.callout.save.success": "<strong>Term saved:</strong> {name}",
