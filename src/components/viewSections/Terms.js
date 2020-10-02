@@ -7,15 +7,13 @@ import { CustomPropertiesList } from '@folio/stripes-erm-components';
 export default class Terms extends React.Component {
   static propTypes = {
     id: PropTypes.string,
-    onToggle: PropTypes.func,
-    open: PropTypes.bool,
     record: PropTypes.shape({ customProperties: PropTypes.object }),
     recordType: PropTypes.string.isRequired,
     terms: PropTypes.arrayOf(PropTypes.object),
   }
 
   render() {
-    const { id, onToggle, open, record, recordType, terms } = this.props;
+    const { id, record, recordType, terms } = this.props;
 
     return (
       <FormattedMessage id={`ui-licenses.${recordType}`}>
@@ -23,8 +21,6 @@ export default class Terms extends React.Component {
           <Accordion
             id={id}
             label={<FormattedMessage id="ui-licenses.section.terms" />}
-            onToggle={onToggle}
-            open={open}
           >
             <CustomPropertiesList
               customProperties={terms}

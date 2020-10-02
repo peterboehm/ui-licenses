@@ -16,8 +16,6 @@ export default class LicenseInternalContacts extends React.Component {
         })
       ),
     }).isRequired,
-    onToggle: PropTypes.func.isRequired,
-    open: PropTypes.bool.isRequired,
   };
 
   renderBadge = () => {
@@ -40,7 +38,7 @@ export default class LicenseInternalContacts extends React.Component {
   }
 
   render() {
-    const { id, onToggle, open } = this.props;
+    const { id } = this.props;
 
     return (
       <Accordion
@@ -48,8 +46,6 @@ export default class LicenseInternalContacts extends React.Component {
         displayWhenOpen={this.renderBadge()}
         id={id}
         label={<FormattedMessage id="ui-licenses.section.internalContacts" />}
-        onToggle={onToggle}
-        open={open}
       >
         { this.renderContacts() }
       </Accordion>

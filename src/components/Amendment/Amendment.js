@@ -1,9 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
+import { isEmpty } from 'lodash';
 
 import {
   AccordionSet,
+  AccordionStatus,
   Button,
   Col,
   ExpandAllButton,
@@ -47,14 +49,6 @@ export default class Amendment extends React.Component {
     }),
   }
 
-  state = {
-    sections: {
-      amendmentCoreDocs: false,
-      amendmentSupplementaryDocs: false,
-      amendmentTerms: false,
-    }
-  }
-
   getSectionProps = (id) => {
     const { data, handlers, urls } = this.props;
 
@@ -63,8 +57,6 @@ export default class Amendment extends React.Component {
       id,
       handlers,
       license: data.license,
-      onToggle: this.handleSectionToggle,
-      open: this.state.sections[id],
       record: data.amendment,
       recordType: 'amendment',
       terms: data.terms,
@@ -72,17 +64,14 @@ export default class Amendment extends React.Component {
     };
   }
 
-  handleSectionToggle = ({ id }) => {
-    this.setState((prevState) => ({
-      sections: {
-        ...prevState.sections,
-        [id]: !prevState.sections[id],
-      }
-    }));
-  }
+  getInitialAccordionsState = () => {
+    const { data, data: { amendment = {} } } = this.props;
 
-  handleAllSectionsToggle = (sections) => {
-    this.setState({ sections });
+    return {
+      amendmentCoreDocs: !isEmpty(amendment.docs),
+      amendmentSupplementaryDocs: !isEmpty(amendment.supplementaryDocs),
+      amendmentTerms: !isEmpty(data.terms),
+    };
   }
 
   renderActionMenu = ({ onToggle }) => {
@@ -167,20 +156,18 @@ export default class Amendment extends React.Component {
         <TitleManager record={amendment.name}>
           <AmendmentLicense {...this.getSectionProps()} />
           <AmendmentInfo {...this.getSectionProps()} />
-          <Row end="xs">
-            <Col xs>
-              <ExpandAllButton
-                accordionStatus={this.state.sections}
-                id="clickable-expand-all"
-                onToggle={this.handleAllSectionsToggle}
-              />
-            </Col>
-          </Row>
-          <AccordionSet>
-            <CoreDocs {...this.getSectionProps('amendmentCoreDocs')} />
-            <Terms {...this.getSectionProps('amendmentTerms')} />
-            <SupplementaryDocs {...this.getSectionProps('amendmentSupplementaryDocs')} />
-          </AccordionSet>
+          <AccordionStatus>
+            <Row end="xs">
+              <Col xs>
+                <ExpandAllButton />
+              </Col>
+            </Row>
+            <AccordionSet initialStatus={this.getInitialAccordionsState()}>
+              <CoreDocs {...this.getSectionProps('amendmentCoreDocs')} />
+              <Terms {...this.getSectionProps('amendmentTerms')} />
+              <SupplementaryDocs {...this.getSectionProps('amendmentSupplementaryDocs')} />
+            </AccordionSet>
+          </AccordionStatus>
         </TitleManager>
       </Pane>
     );

@@ -1,11 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { get } from 'lodash';
+import { isEmpty } from 'lodash';
 import { FormattedMessage } from 'react-intl';
 import { NotesSmartAccordion } from '@folio/stripes/smart-components';
 
 import {
   AccordionSet,
+  AccordionStatus,
   Button,
   Col,
   ConfirmationModal,
@@ -57,17 +58,6 @@ class License extends React.Component {
   state = {
     showDeleteConfirmationModal: false,
     showDuplicateLicenseModal: false,
-    sections: {
-      licenseInfo: true,
-      licenseInternalContacts: false,
-      licenseOrganizations: false,
-      licenseCoreDocs: false,
-      licenseAmendments: false,
-      licenseTerms: false,
-      licenseSupplement: false,
-      licenseAgreements: false,
-      licenseNotes: false,
-    }
   }
 
   getSectionProps = (id) => {
@@ -78,8 +68,6 @@ class License extends React.Component {
       handlers,
       urls,
       license: data.license,
-      onToggle: this.handleSectionToggle,
-      open: this.state.sections[id],
       record: data.license,
       recordType: 'license',
       terms: data.terms,
@@ -101,19 +89,6 @@ class License extends React.Component {
 
   closeDuplicateLicenseModal = () => {
     this.setState({ showDuplicateLicenseModal: false });
-  }
-
-  handleSectionToggle = ({ id }) => {
-    this.setState((prevState) => ({
-      sections: {
-        ...prevState.sections,
-        [id]: !prevState.sections[id],
-      }
-    }));
-  }
-
-  handleAllSectionsToggle = (sections) => {
-    this.setState({ sections });
   }
 
   getActionMenu = ({ onToggle }) => {
@@ -165,6 +140,21 @@ class License extends React.Component {
     );
   }
 
+  getInitialAccordionsState = () => {
+    const { data, data: { license = {} } } = this.props;
+
+    return {
+      licenseInternalContacts: !isEmpty(license.contacts),
+      licenseOrganizations: !isEmpty(license.orgs),
+      licenseCoreDocs: !isEmpty(license.docs),
+      licenseAmendments: !isEmpty(license.amendments),
+      licenseTerms: !isEmpty(data.terms),
+      licenseSupplement: !isEmpty(license.supplementaryDocs),
+      licenseAgreements: !isEmpty(license.linkedAgreements),
+      licenseNotes: true,
+    };
+  }
+
   renderLastMenu = () => {
     const {
       data: { license },
@@ -179,7 +169,7 @@ class License extends React.Component {
               {ariaLabel => (
                 <IconButton
                   ariaLabel={ariaLabel}
-                  badgeCount={get(license, 'tags.length', 0)}
+                  badgeCount={license?.tags?.length ?? 0}
                   icon="tag"
                   id="clickable-show-tags"
                   onClick={handlers.onToggleTags}
@@ -229,33 +219,31 @@ class License extends React.Component {
           <TitleManager record={data.license.name}>
             <LicenseHeader {...this.getSectionProps()} />
             <LicenseInfo {...this.getSectionProps('licenseInfo')} />
-            <Row end="xs">
-              <Col xs>
-                <ExpandAllButton
-                  accordionStatus={this.state.sections}
-                  id="clickable-expand-all"
-                  onToggle={this.handleAllSectionsToggle}
+            <AccordionStatus>
+              <Row end="xs">
+                <Col xs>
+                  <ExpandAllButton />
+                </Col>
+              </Row>
+              <AccordionSet initialStatus={this.getInitialAccordionsState()}>
+                <LicenseInternalContacts {...this.getSectionProps('licenseInternalContacts')} />
+                <LicenseOrganizations {...this.getSectionProps('licenseOrganizations')} />
+                <CoreDocs {...this.getSectionProps('licenseCoreDocs')} />
+                <Terms {...this.getSectionProps('licenseTerms')} />
+                <LicenseAmendments {...this.getSectionProps('licenseAmendments')} />
+                <SupplementaryDocs {...this.getSectionProps('licenseSupplement')} />
+                <LicenseAgreements {...this.getSectionProps('licenseAgreements')} />
+                <NotesSmartAccordion
+                  {...this.getSectionProps('licenseNotes')}
+                  domainName="licenses"
+                  entityId={data.license.id}
+                  entityName={data.license.name}
+                  entityType="license"
+                  pathToNoteCreate="notes/create"
+                  pathToNoteDetails="notes"
                 />
-              </Col>
-            </Row>
-            <AccordionSet>
-              <LicenseInternalContacts {...this.getSectionProps('licenseInternalContacts')} />
-              <LicenseOrganizations {...this.getSectionProps('licenseOrganizations')} />
-              <CoreDocs {...this.getSectionProps('licenseCoreDocs')} />
-              <Terms {...this.getSectionProps('licenseTerms')} />
-              <LicenseAmendments {...this.getSectionProps('licenseAmendments')} />
-              <SupplementaryDocs {...this.getSectionProps('licenseSupplement')} />
-              <LicenseAgreements {...this.getSectionProps('licenseAgreements')} />
-              <NotesSmartAccordion
-                {...this.getSectionProps('licenseNotes')}
-                domainName="licenses"
-                entityId={data.license.id}
-                entityName={data.license.name}
-                entityType="license"
-                pathToNoteCreate="notes/create"
-                pathToNoteDetails="notes"
-              />
-            </AccordionSet>
+              </AccordionSet>
+            </AccordionStatus>
           </TitleManager>
         </Pane>
         {helperApp}

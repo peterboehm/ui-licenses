@@ -29,8 +29,6 @@ export default class SupplementaryDocs extends React.Component {
       ),
     }).isRequired,
     recordType: PropTypes.string.isRequired,
-    onToggle: PropTypes.func,
-    open: PropTypes.bool,
   };
 
   renderDocs = (docs) => {
@@ -49,7 +47,7 @@ export default class SupplementaryDocs extends React.Component {
   }
 
   render() {
-    const { id, onToggle, open, recordType } = this.props;
+    const { id, recordType } = this.props;
     const { supplementaryDocs = [] } = this.props.record;
 
     return (
@@ -60,8 +58,6 @@ export default class SupplementaryDocs extends React.Component {
             displayWhenOpen={this.renderBadge()}
             id={id}
             label={<FormattedMessage id="ui-licenses.section.supplementaryDocuments" />}
-            onToggle={onToggle}
-            open={open}
           >
             <Layout className="padding-bottom-gutter">
               {supplementaryDocs.length ? this.renderDocs(supplementaryDocs) : <FormattedMessage id="ui-licenses.emptyAccordion.supplementaryDocuments" values={{ type: type.toLowerCase() }} /> }

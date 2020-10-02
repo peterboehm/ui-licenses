@@ -22,8 +22,6 @@ export default class LicenseAmendments extends React.Component {
       onAmendmentClick: PropTypes.func,
     }),
     id: PropTypes.string,
-    onToggle: PropTypes.func,
-    open: PropTypes.bool,
     urls: PropTypes.shape({
       addAmendment: PropTypes.func,
       viewAmendment: PropTypes.func.isRequired,
@@ -52,7 +50,7 @@ export default class LicenseAmendments extends React.Component {
   }
 
   render() {
-    const { id, license, onToggle, open } = this.props;
+    const { id, license } = this.props;
 
     return (
       <Accordion
@@ -60,8 +58,6 @@ export default class LicenseAmendments extends React.Component {
         displayWhenOpen={this.renderAddAmendmentButton()}
         id={id}
         label={<FormattedMessage id="ui-licenses.section.amendments" />}
-        onToggle={onToggle}
-        open={open}
       >
         <MultiColumnList
           columnMapping={{

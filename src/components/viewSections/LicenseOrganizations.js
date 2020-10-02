@@ -28,8 +28,6 @@ export default class LicenseOrganizations extends React.Component {
         }),
       ),
     }).isRequired,
-    onToggle: PropTypes.func.isRequired,
-    open: PropTypes.bool.isRequired,
   };
 
   renderOrgList = (orgs) => {
@@ -76,7 +74,7 @@ export default class LicenseOrganizations extends React.Component {
   }
 
   render() {
-    const { id, onToggle, open } = this.props;
+    const { id } = this.props;
 
     return (
       <Accordion
@@ -84,8 +82,6 @@ export default class LicenseOrganizations extends React.Component {
         displayWhenOpen={this.renderBadge()}
         id={id}
         label={<FormattedMessage id="ui-licenses.section.organizations" />}
-        onToggle={onToggle}
-        open={open}
       >
         <Layout className="padding-bottom-gutter">
           {this.renderOrganizations()}

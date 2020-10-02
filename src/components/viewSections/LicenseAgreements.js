@@ -37,8 +37,6 @@ export default class LicenseAgreements extends React.Component {
         }).isRequired,
       })).isRequired,
     }).isRequired,
-    onToggle: PropTypes.func,
-    open: PropTypes.bool,
   };
 
   state = {
@@ -111,7 +109,7 @@ export default class LicenseAgreements extends React.Component {
   }
 
   render() {
-    const { id, onToggle, open } = this.props;
+    const { id } = this.props;
 
     return (
       <IfInterface name="erm">
@@ -120,8 +118,6 @@ export default class LicenseAgreements extends React.Component {
           displayWhenOpen={this.renderBadge()}
           id={id}
           label={<FormattedMessage id="ui-licenses.section.licenseAgreements" />}
-          onToggle={onToggle}
-          open={open}
         >
           <Layout className="padding-bottom-gutter">
             { this.state.groupedLinkedAgreements.length ? this.renderLinkedAgreements() : <FormattedMessage id="ui-licenses.emptyAccordion.linkedAgreements" /> }
