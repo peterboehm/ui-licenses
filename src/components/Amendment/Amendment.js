@@ -65,12 +65,10 @@ export default class Amendment extends React.Component {
   }
 
   getInitialAccordionsState = () => {
-    const { data, data: { amendment = {} } } = this.props;
-
     return {
-      amendmentCoreDocs: !isEmpty(amendment.docs),
-      amendmentSupplementaryDocs: !isEmpty(amendment.supplementaryDocs),
-      amendmentTerms: !isEmpty(data.terms),
+      amendmentCoreDocs: false,
+      amendmentSupplementaryDocs: false,
+      amendmentTerms: false,
     };
   }
 

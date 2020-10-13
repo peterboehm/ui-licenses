@@ -141,17 +141,15 @@ class License extends React.Component {
   }
 
   getInitialAccordionsState = () => {
-    const { data, data: { license = {} } } = this.props;
-
     return {
-      licenseInternalContacts: !isEmpty(license.contacts),
-      licenseOrganizations: !isEmpty(license.orgs),
-      licenseCoreDocs: !isEmpty(license.docs),
-      licenseAmendments: !isEmpty(license.amendments),
-      licenseTerms: !isEmpty(data.terms),
-      licenseSupplement: !isEmpty(license.supplementaryDocs),
-      licenseAgreements: !isEmpty(license.linkedAgreements),
-      licenseNotes: true,
+      licenseInternalContacts: false,
+      licenseOrganizations: false,
+      licenseCoreDocs: false,
+      licenseAmendments: false,
+      licenseTerms: false,
+      licenseSupplement: false,
+      licenseAgreements: false,
+      licenseNotes: false,
     };
   }
 
