@@ -79,7 +79,7 @@
     "supplementaryDocs.remove": "Rimuovi documento supplementare",
     "delete": "Elimina",
     "edit": "Modifica",
-    "section.supplementaryDocuments": "Supplementary documents",
+    "section.supplementaryDocuments": "Documentazione supplementare",
     "terms.count": "{count, number} saved {count, plural, one {term} other {terms}}",
     "terms.callout.delete.error": "There was an error deleting term {name}: {error}",
     "terms.callout.delete.success": "<strong>Term deleted:</strong> {name}",
@@ -142,7 +142,7 @@
     "duplicateLicenseModal.licenseDateInfo": "License date information",
     "duplicateLicenseModal.licenseInfo": "License information",
     "duplicateLicenseModal.organizations": "Organizations",
-    "duplicateLicenseModal.supplementaryDocs": "Supplementary documents",
+    "duplicateLicenseModal.supplementaryDocs": "Documentazione supplementare",
     "duplicateLicenseModal.terms": "Termini",
     "alternativeNames": "Alternative names"
 }
