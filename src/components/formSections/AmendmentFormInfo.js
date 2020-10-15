@@ -17,8 +17,8 @@ import { parseDateOnlyString } from '../utils';
 class AmendmentFormInfo extends React.Component {
   static propTypes = {
     data: PropTypes.shape({
-      statusValues: PropTypes.array,
-      typeValues: PropTypes.array,
+      statusValues: PropTypes.arrayOf(PropTypes.object),
+      typeValues: PropTypes.arrayOf(PropTypes.object),
     }),
     mutators: PropTypes.object,
     values: PropTypes.object

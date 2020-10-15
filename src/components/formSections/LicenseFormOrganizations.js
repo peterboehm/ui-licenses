@@ -17,7 +17,7 @@ class LicenseFormOrganizations extends React.Component {
     onToggle: PropTypes.func,
     open: PropTypes.bool,
     data: PropTypes.shape({
-      orgRoleValues: PropTypes.array,
+      orgRoleValues: PropTypes.arrayOf(PropTypes.object),
     }),
   };
 

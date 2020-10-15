@@ -20,8 +20,8 @@ import { parseDateOnlyString } from '../utils';
 export default class LicenseFormInfo extends React.Component {
   static propTypes = {
     data: PropTypes.shape({
-      statusValues: PropTypes.array,
-      typeValues: PropTypes.array,
+      statusValues: PropTypes.arrayOf(PropTypes.object),
+      typeValues: PropTypes.arrayOf(PropTypes.object),
     }),
     id: PropTypes.string,
     mutators: PropTypes.object,

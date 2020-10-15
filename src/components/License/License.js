@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { isEmpty } from 'lodash';
 import { FormattedMessage } from 'react-intl';
 import { NotesSmartAccordion } from '@folio/stripes/smart-components';
 
@@ -38,8 +37,8 @@ class License extends React.Component {
   static propTypes = {
     data: PropTypes.shape({
       license: PropTypes.object,
-      terms: PropTypes.array,
-      users: PropTypes.array,
+      terms: PropTypes.arrayOf(PropTypes.object),
+      users: PropTypes.arrayOf(PropTypes.object),
     }),
     handlers: PropTypes.shape({
       onClone: PropTypes.func.isRequired,

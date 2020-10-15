@@ -16,7 +16,7 @@ import { LicenseEndDate } from '@folio/stripes-erm-components';
 export default class LicenseAmendments extends React.Component {
   static propTypes = {
     license: PropTypes.shape({
-      amendments: PropTypes.array,
+      amendments: PropTypes.arrayOf(PropTypes.object),
     }),
     handlers: PropTypes.shape({
       onAmendmentClick: PropTypes.func,
