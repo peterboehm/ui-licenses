@@ -1,8 +1,12 @@
 # Change history for ui-licenses
 
-##  5.0.0 IN PROGRESS
+##  5.0.0 2020-10-15
 * Added ability to set and view notes on organizations. ERM-967
+* Retrieve upto 100 results from users endpoint. ERM-980
 * Upgrade to Stripes 5.0
+* Separate organization and role filter. ERM-1043
+* Added ability to search agreement by its description. ERM-1044
+* Remove unused redux dependencies.
 * Refactor `bigtest/mirage` with `miragejs`.
 
 ## 4.0.1 2020-07-06
