@@ -1,5 +1,8 @@
 # Change history for ui-licenses
 
+## 5.1.0 In Progress
+* Added optionalOkapiInterfaces to package.json. ERM-940
+
 ##  5.0.0 2020-10-15
 * Added ability to set and view notes on organizations. ERM-967
 * Retrieve upto 100 results from users endpoint. ERM-980

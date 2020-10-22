@@ -1,6 +1,6 @@
 {
   "name": "@folio/licenses",
-  "version": "5.0.0",
+  "version": "5.1.0",
   "description": "ERM License functionality for Stripes",
   "main": "src/index.js",
   "repository": "",
@@ -85,8 +85,11 @@
     "home": "/licenses",
     "queryResource": "query",
     "okapiInterfaces": {
-      "licenses": "1.0 2.0 3.0",
-      "organizations-storage.interfaces": "2.0",
+      "licenses": "1.0 2.0 3.0"
+    },
+    "optionalOkapiInterfaces": {
+      "order-lines": "1.0",
+      "organizations-storage.interfaces": "1.0 2.0",
       "users": "13.0 14.0 15.0"
     },
     "stripesDeps": [
