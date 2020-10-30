@@ -1,5 +1,5 @@
 {
-    "settings.general": "General",
+    "settings.general": "一般",
     "meta.title": "ライセンス",
     "prop.status": "ステータス",
     "createLicense": "新しいライセンス",
@@ -44,7 +44,7 @@
     "placeholder.documentCategory": "カテゴリーを入力してください",
     "supplementaryDocs.add": "補足ドキュメントを追加",
     "supplementaryDocs.none": "補足文書は追加されていません",
-    "loading": "Loading...",
+    "loading": "読み込み中...",
     "searchInputLabel": "ライセンスを検索",
     "closeEditLicense": "Close edit license pane",
     "create": "作成",
