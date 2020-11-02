@@ -12,7 +12,6 @@ import {
   TextArea,
   TextField,
 } from '@folio/stripes/components';
-import { parseDateOnlyString } from '../utils';
 
 class AmendmentFormInfo extends React.Component {
   static propTypes = {
@@ -84,7 +83,7 @@ class AmendmentFormInfo extends React.Component {
               label={<FormattedMessage id="ui-licenses.prop.startDate" />}
               name="startDate" // Lets us pass an empty string instead of `undefined`
               parse={v => v}
-              parser={parseDateOnlyString}
+              timeZone="UTC"
             />
           </Col>
           <Col md={5} xs={10}>
@@ -96,7 +95,7 @@ class AmendmentFormInfo extends React.Component {
               label={<FormattedMessage id="ui-licenses.prop.endDate" />}
               name="endDate"
               parse={v => v} // Lets us pass an empty string instead of `undefined`
-              parser={parseDateOnlyString}
+              timeZone="UTC"
               validate={this.validateEndDate}
             />
           </Col>
