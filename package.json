@@ -161,7 +161,8 @@
         "visible": true,
         "subPermissions": [
           "settings.licenses.enabled",
-          "licenses.custprops.manage"
+          "licenses.custprops.manage",
+          "licenses.refdata.view"
         ]
       }
     ],
