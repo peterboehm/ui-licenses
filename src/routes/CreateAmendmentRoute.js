@@ -9,6 +9,8 @@ import { CalloutContext, stripesConnect } from '@folio/stripes/core';
 import withFileHandlers from './components/withFileHandlers';
 import Form from '../components/AmendmentForm';
 
+const RECORDS_PER_REQUEST = 100;
+
 class CreateAmendmentRoute extends React.Component {
   static manifest = Object.freeze({
     license: {
@@ -19,6 +21,8 @@ class CreateAmendmentRoute extends React.Component {
     documentCategories: {
       type: 'okapi',
       path: 'licenses/refdata/DocumentAttachment/atType',
+      limitParam: 'perPage',
+      perRequest: RECORDS_PER_REQUEST,
       shouldRefresh: () => false,
     },
     statusValues: {

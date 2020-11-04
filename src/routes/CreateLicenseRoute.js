@@ -10,6 +10,8 @@ import withFileHandlers from './components/withFileHandlers';
 import View from '../components/LicenseForm';
 import NoPermissions from '../components/NoPermissions';
 
+const RECORDS_PER_REQUEST = 100;
+
 class CreateLicenseRoute extends React.Component {
   static manifest = Object.freeze({
     licenses: {
@@ -31,6 +33,8 @@ class CreateLicenseRoute extends React.Component {
     typeValues: {
       type: 'okapi',
       path: 'licenses/refdata/License/type',
+      limitParam: 'perPage',
+      perRequest: RECORDS_PER_REQUEST,
       shouldRefresh: () => false,
     },
     orgRoleValues: {
@@ -41,11 +45,15 @@ class CreateLicenseRoute extends React.Component {
     documentCategories: {
       type: 'okapi',
       path: 'licenses/refdata/DocumentAttachment/atType',
+      limitParam: 'perPage',
+      perRequest: RECORDS_PER_REQUEST,
       shouldRefresh: () => false,
     },
     contactRoleValues: {
       type: 'okapi',
       path: 'licenses/refdata/InternalContact/role',
+      limitParam: 'perPage',
+      perRequest: RECORDS_PER_REQUEST,
       shouldRefresh: () => false,
     },
   });
