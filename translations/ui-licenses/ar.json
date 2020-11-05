@@ -20,7 +20,7 @@
     "section.organizations": "المؤسسات",
     "section.terms": "الشروط",
     "prop.openEnded": "مفتوح انتهى",
-    "warn.clearEndDate": "سيتم مسح هذه القائمة عند الحفظ بسبب تحديد \"مفتوح انتهى\"",
+    "warn.clearEndDate": "سيتم مسح تاريخ الانتهاء بسبب تحديد \"مفتوح انتهى\"",
     "prop.termValue": "القيمة",
     "terms.add": "إضافة مصطلح",
     "errors.multipleLicensors": "يُسمح بمرخص واحد فقط لكل رخصة.",
