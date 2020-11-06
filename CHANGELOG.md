@@ -3,6 +3,11 @@
 ## 5.1.0 In Progress
 * Added optionalOkapiInterfaces to package.json. ERM-940
 
+## 5.0.1 2020-11-05
+* Fixes bug where incorrect Dates are saved when tenant timezone is ahead of UTC. ERM-1202
+* Fixes bug where a user with manage license terms permission should be able to edit the license terms. ERM-1196
+* Bumped the limit to fetch 100 results for user definable pick lists. ERM-1193
+
 ##  5.0.0 2020-10-15
 * Added ability to set and view notes on organizations. ERM-967
 * Retrieve upto 100 results from users endpoint. ERM-980
