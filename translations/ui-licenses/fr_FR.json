@@ -130,7 +130,7 @@
     "permission.licenses.edit": "Licences: modifier les licences",
     "permission.licenses.delete": "Licences: supprimer les licences",
     "permission.picklists.manage": "Settings (Licenses): Manage pick lists and values",
-    "permission.terms.manage": "Settings (Licenses): Manage license terms",
+    "permission.terms.manage": "Paramètres (licences): gérer les termes de licence",
     "licenses.duplicate": "Dupliquer",
     "duplicateLicenseModal.cloneEndpointError": "Unable to duplicate the license. The clone endpoint could not be accessed.",
     "duplicateLicenseModal.coreDocs": "Documents de base",
