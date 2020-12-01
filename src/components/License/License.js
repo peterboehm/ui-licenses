@@ -17,7 +17,7 @@ import {
   PaneMenu,
   Row,
 } from '@folio/stripes/components';
-import { AppIcon, IfPermission, TitleManager } from '@folio/stripes/core';
+import { AppIcon, IfPermission, TitleManager, withStripes } from '@folio/stripes/core';
 import SafeHTMLMessage from '@folio/react-intl-safe-html';
 import DuplicateLicenseModal from '../DuplicateLicenseModal';
 
@@ -51,7 +51,9 @@ class License extends React.Component {
     urls: PropTypes.shape({
       edit: PropTypes.func,
     }).isRequired,
-    stripes: PropTypes.object,
+    stripes: PropTypes.shape({
+      hasPerm: PropTypes.func
+    }),
   };
 
   state = {
@@ -91,52 +93,56 @@ class License extends React.Component {
   }
 
   getActionMenu = ({ onToggle }) => {
-    const { urls } = this.props;
-
+    const { stripes, urls } = this.props;
     if (!urls.edit) return null;
+    const buttons = [];
 
-    return (
-      <>
-        <IfPermission perm="ui-licenses.licenses.edit">
-          <Button
-            buttonStyle="dropdownItem"
-            id="clickable-dropdown-edit-license"
-            to={urls.edit()}
-          >
-            <Icon icon="edit">
-              <FormattedMessage id="ui-licenses.edit" />
-            </Icon>
-          </Button>
-          <Button
-            buttonStyle="dropdownItem"
-            id="clickable-dropdown-duplicate-license"
-            onClick={() => {
-              this.openDuplicateLicenseModal();
-              onToggle();
-            }}
-          >
-            <Icon icon="duplicate">
-              <FormattedMessage id="ui-licenses.licenses.duplicate" />
-            </Icon>
-          </Button>
-        </IfPermission>
-        <IfPermission perm="ui-licenses.licenses.delete">
-          <Button
-            buttonStyle="dropdownItem"
-            id="clickable-dropdown-delete-licenses"
-            onClick={() => {
-              this.openDeleteConfirmationModal();
-              onToggle();
-            }}
-          >
-            <Icon icon="trash">
-              <FormattedMessage id="ui-licenses.delete" />
-            </Icon>
-          </Button>
-        </IfPermission>
+    if (stripes.hasPerm('ui-licenses.licenses.edit')) {
+      buttons.push(
+        <Button
+          buttonStyle="dropdownItem"
+          id="clickable-dropdown-edit-license"
+          to={urls.edit()}
+        >
+          <Icon icon="edit">
+            <FormattedMessage id="ui-licenses.edit" />
+          </Icon>
+        </Button>
+      );
+      buttons.push(
+        <Button
+          buttonStyle="dropdownItem"
+          id="clickable-dropdown-duplicate-license"
+          onClick={() => {
+            this.openDuplicateLicenseModal();
+            onToggle();
+          }}
+        >
+          <Icon icon="duplicate">
+            <FormattedMessage id="ui-licenses.licenses.duplicate" />
+          </Icon>
+        </Button>
+      );
+    }
 
-      </>
-    );
+    if (stripes.hasPerm('ui-licenses.licenses.delete')) {
+      buttons.push(
+        <Button
+          buttonStyle="dropdownItem"
+          id="clickable-dropdown-delete-licenses"
+          onClick={() => {
+            this.openDeleteConfirmationModal();
+            onToggle();
+          }}
+        >
+          <Icon icon="trash">
+            <FormattedMessage id="ui-licenses.delete" />
+          </Icon>
+        </Button>
+      );
+    }
+
+    return buttons.length ? buttons : null;
   }
 
   getInitialAccordionsState = () => {
@@ -269,4 +275,4 @@ class License extends React.Component {
   }
 }
 
-export default License;
+export default withStripes(License);
