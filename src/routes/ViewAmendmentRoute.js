@@ -7,9 +7,12 @@ import { FormattedMessage } from 'react-intl';
 import SafeHTMLMessage from '@folio/react-intl-safe-html';
 import { CalloutContext, stripesConnect } from '@folio/stripes/core';
 import { ConfirmationModal } from '@folio/stripes/components';
+import DuplicateAmendmentModal from '../components/DuplicateAmendmentModal';
 
 import withFileHandlers from './components/withFileHandlers';
 import View from '../components/Amendment';
+
+import { errorTypes } from '../constants';
 
 class ViewAmendmentsRoute extends React.Component {
   static manifest = Object.freeze({
@@ -59,8 +62,11 @@ class ViewAmendmentsRoute extends React.Component {
 
   static contextType = CalloutContext;
 
-  state = { showConfirmDelete: false };
+  state = { showConfirmDelete: false, showDuplicate: false };
 
+  // We now have /licenses/amendments/{amendmentId} available as an endpoint,
+  // meaning we could theoretically switch the amendment views over to that in future
+  // and avoid parsing the license amendments for it.
   getAmendment = () => {
     const { match, resources } = this.props;
     const amendments = get(resources, 'license.records[0].amendments', []);
@@ -94,9 +100,46 @@ class ViewAmendmentsRoute extends React.Component {
       });
   }
 
+  handleClone = (cloneableProperties) => {
+    const { history, match, stripes: { okapi } } = this.props;
+
+    return fetch(`${okapi.url}/licenses/amendments/${match.params.amendmentId}/clone`, {
+      method: 'POST',
+      headers: {
+        'X-Okapi-Tenant': okapi.tenant,
+        'X-Okapi-Token': okapi.token,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(cloneableProperties),
+    }).then(response => {
+      if (response.ok) {
+        return response.text(); // Parse it as text
+      } else {
+        throw new Error(errorTypes.JSON_ERROR);
+      }
+    }).then(text => {
+      const data = JSON.parse(text); // Try to parse it as json
+      if (data.id) {
+        return Promise.resolve(history.push(`${this.urls.editAmendment(data.id)}`)); // Location search is already a part of urls.editAmendment
+      } else {
+        throw new Error(errorTypes.INVALID_JSON_ERROR); // when the json response body doesn't contain an id
+      }
+    }).catch(error => {
+      throw error;
+    });
+  }
+
   showDeleteConfirmationModal = () => this.setState({ showConfirmDelete: true });
 
   hideDeleteConfirmationModal = () => this.setState({ showConfirmDelete: false });
+
+  showDuplicateModal = () => {
+    this.setState({ showDuplicate: true });
+  }
+
+  closeDuplicateModal = () => {
+    this.setState({ showDuplicate: false });
+  }
 
   fetchIsPending = () => {
     return Object.values(this.props.resources)
@@ -105,7 +148,7 @@ class ViewAmendmentsRoute extends React.Component {
   }
 
   urls = {
-    editAmendment: this.props.stripes.hasPerm('ui-licenses.licenses.edit') && (() => `/licenses/${this.props.match.params.id}/amendments/${this.props.match.params.amendmentId}/edit${this.props.location.search}`),
+    editAmendment: this.props.stripes.hasPerm('ui-licenses.licenses.edit') && (amendmentId => `/licenses/${this.props.match.params.id}/amendments/${amendmentId}/edit${this.props.location.search}`),
   }
 
   render() {
@@ -124,10 +167,17 @@ class ViewAmendmentsRoute extends React.Component {
             ...handlers,
             onClose: this.handleClose,
             onDelete: this.props.stripes.hasPerm('ui-licenses.licenses.edit') && this.handleDelete && this.showDeleteConfirmationModal,
+            onClone: this.props.stripes.hasPerm('ui-licenses.licenses.edit') && this.handleClone && this.showDuplicateModal
           }}
           isLoading={get(resources, 'license.isPending')}
           urls={this.urls}
         />
+        { this.state.showDuplicate &&
+          <DuplicateAmendmentModal
+            onClone={this.handleClone}
+            onClose={this.closeDuplicateModal}
+          />
+        }
         {this.state.showConfirmDelete && (
           <ConfirmationModal
             buttonStyle="danger"

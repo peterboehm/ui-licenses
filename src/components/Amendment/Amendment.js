@@ -41,6 +41,7 @@ export default class Amendment extends React.Component {
     handlers: PropTypes.shape({
       onClose: PropTypes.func.isRequired,
       onDelete: PropTypes.func,
+      onClone: PropTypes.func,
     }),
     isLoading: PropTypes.bool,
     urls: PropTypes.shape({
@@ -72,22 +73,35 @@ export default class Amendment extends React.Component {
   }
 
   renderActionMenu = ({ onToggle }) => {
-    const { handlers, urls } = this.props;
+    const { data: { amendment: { id: amendmentId } }, handlers, urls } = this.props;
 
     if (!urls.editAmendment && !handlers.onDelete) return null;
 
     return (
       <>
         {urls.editAmendment &&
-          <Button
-            buttonStyle="dropdownItem"
-            id="clickable-dropdown-edit-amendment"
-            to={urls.editAmendment()}
-          >
-            <Icon icon="edit">
-              <FormattedMessage id="ui-licenses.edit" />
-            </Icon>
-          </Button>
+          <>
+            <Button
+              buttonStyle="dropdownItem"
+              id="clickable-dropdown-edit-amendment"
+              to={urls.editAmendment(amendmentId)}
+            >
+              <Icon icon="edit">
+                <FormattedMessage id="ui-licenses.edit" />
+              </Icon>
+            </Button>
+            <Button
+              buttonStyle="dropdownItem"
+              id="clickable-dropdown-duplicate-amendment"
+              onClick={() => {
+                handlers.onClone();
+              }}
+            >
+              <Icon icon="duplicate">
+                <FormattedMessage id="ui-licenses.licenses.duplicate" />
+              </Icon>
+            </Button>
+          </>
         }
         {handlers.onDelete &&
           <Button
@@ -107,25 +121,28 @@ export default class Amendment extends React.Component {
     );
   }
 
-  renderEditAmendmentPaneMenu = () => (
-    <IfPermission perm="ui-licenses.licenses.edit">
-      <PaneMenu>
-        <FormattedMessage id="ui-licenses.amendments.create">
-          {ariaLabel => (
-            <Button
-              aria-label={ariaLabel}
-              buttonStyle="primary"
-              id="clickable-edit-amendment"
-              marginBottom0
-              to={this.props.urls.editAmendment()}
-            >
-              <FormattedMessage id="stripes-components.button.edit" />
-            </Button>
-          )}
-        </FormattedMessage>
-      </PaneMenu>
-    </IfPermission>
-  )
+  renderEditAmendmentPaneMenu = () => {
+    const { data: { amendment: { id: amendmentId } } } = this.props;
+    return (
+      <IfPermission perm="ui-licenses.licenses.edit">
+        <PaneMenu>
+          <FormattedMessage id="ui-licenses.amendments.create">
+            {ariaLabel => (
+              <Button
+                aria-label={ariaLabel}
+                buttonStyle="primary"
+                id="clickable-edit-amendment"
+                marginBottom0
+                to={this.props.urls.editAmendment(amendmentId)}
+              >
+                <FormattedMessage id="stripes-components.button.edit" />
+              </Button>
+            )}
+          </FormattedMessage>
+        </PaneMenu>
+      </IfPermission>
+    );
+  }
 
   render() {
     const {

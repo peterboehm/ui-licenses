@@ -67,6 +67,17 @@
   "duplicateLicenseModal.supplementaryDocs": "Supplementary documents",
   "duplicateLicenseModal.terms": "Terms",
 
+  "duplicateAmendmentModal.cloneEndpointError": "Unable to duplicate the amendment. The clone endpoint could not be accessed.",
+  "duplicateAmendmentModal.coreDocs": "Core documents",
+  "duplicateAmendmentModal.duplicateAmendment": "Duplicate amendment",
+  "duplicateAmendmentModal.duplicateMessage": "Please select which sections of the amendment to duplicate",
+  "duplicateAmendmentModal.duplicateModalError": "Error: the amendment was not duplicated",
+  "duplicateAmendmentModal.invalidResponseError": "Unable to duplicate the amendment. The response received from the server was invalid.",
+  "duplicateAmendmentModal.amendmentDateInfo": "Amendment date information",
+  "duplicateAmendmentModal.amendmentInfo": "Amendment information",
+  "duplicateAmendmentModal.supplementaryDocs": "Supplementary documents",
+  "duplicateAmendmentModal.terms": "Terms",
+
   "emptyAccordion.internalContacts": "No internal contacts for this license",
   "emptyAccordion.organizations": "No organizations for this license",
   "emptyAccordion.coreDocuments": "No core documents for this {type}",
