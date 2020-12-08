@@ -15,7 +15,7 @@ import {
   Row,
 } from '@folio/stripes/components';
 
-import { IfPermission, TitleManager } from '@folio/stripes/core';
+import { AppIcon, IfPermission, TitleManager } from '@folio/stripes/core';
 
 import {
   AmendmentInfo,
@@ -163,13 +163,14 @@ export default class Amendment extends React.Component {
     return (
       <Pane
         actionMenu={this.renderActionMenu}
+        appIcon={<AppIcon app="licenses" iconKey="amendment" />}
         lastMenu={this.renderEditAmendmentPaneMenu()}
-        paneTitle={amendment.name}
+        paneTitle={<FormattedMessage id="ui-licenses.amendments.view.paneTitle" values={{ name: amendment.name }} />}
         {...paneProps}
       >
         <TitleManager record={amendment.name}>
-          <AmendmentLicense {...this.getSectionProps()} />
           <AmendmentInfo {...this.getSectionProps()} />
+          <AmendmentLicense {...this.getSectionProps()} />
           <AccordionStatus>
             <Row end="xs">
               <Col xs>

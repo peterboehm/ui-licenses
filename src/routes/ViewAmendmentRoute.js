@@ -149,6 +149,7 @@ class ViewAmendmentsRoute extends React.Component {
 
   urls = {
     editAmendment: this.props.stripes.hasPerm('ui-licenses.licenses.edit') && (amendmentId => `/licenses/${this.props.match.params.id}/amendments/${amendmentId}/edit${this.props.location.search}`),
+    licenseView: id => `/licenses/${id}`
   }
 
   render() {

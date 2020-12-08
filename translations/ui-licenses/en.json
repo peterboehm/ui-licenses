@@ -44,6 +44,11 @@
   "amendments.delete.confirmLabel": "Delete",
   "amendments.delete.confirmHeading": "Delete amendment",
   "amendments.delete.confirmMessage": "Amendment <strong>{name}</strong> will be <strong>deleted</strong>.",
+  "amendments.view.paneTitle": "Amendment: {name}",
+  "amendments.view.status": "Amendment status",
+  "amendments.view.startDate": "Amendment start date",
+  "amendments.view.endDate": "Amendment end date",
+  "amendments.view.license.licensor": "Licensor",
 
   "coreDocs.add": "Add core document",
   "coreDocs.none": "No core documents have been added.",
@@ -140,6 +145,7 @@
   "prop.startDate": "Start date",
   "prop.status": "Status",
   "prop.type": "Type",
+  "prop.licensor.notSet": "Not set",
 
   "placeholder.documentCategory": "Enter a category",
   "placeholder.licenseName": "Enter the license name",

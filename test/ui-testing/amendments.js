@@ -232,7 +232,7 @@ module.exports.test = (uiTestCtx) => {
                 return `${parts[0]}/${parts[1]}/${parts[2]}`;
               };
 
-              const licenseName = document.querySelector('[data-test-license-card-name]').textContent;
+              const licenseName = document.querySelector('[data-test-amendment-license-parent-license]').textContent;
               if (licenseName !== _licenseName) throw Error(`Expected license name to be ${licenseName} and found ${_licenseName}`);
 
               const amendmentName = document.querySelector('[data-test-amendment-name]').textContent;

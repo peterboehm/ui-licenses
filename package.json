@@ -176,6 +176,11 @@
         "name": "inactiveLicense",
         "alt": " ",
         "title": "Inactive license"
+      },
+      {
+        "name": "amendment",
+        "alt": " ",
+        "title": "Amendment"
       }
     ]
   }

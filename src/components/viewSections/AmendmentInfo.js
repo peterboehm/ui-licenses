@@ -31,39 +31,35 @@ export default class AmendmentInfo extends React.Component {
     const { amendment } = this.props;
     return (
       <div id="amendment-info">
-        <Headline
-          faded
-          margin="none"
-          size="large"
-        >
-          <FormattedMessage id="ui-licenses.amendments.amendmentInfo" />
-        </Headline>
         <Row>
           <Col xs={12}>
-            <KeyValue label={<FormattedMessage id="ui-licenses.prop.name" />}>
-              <div data-test-amendment-name>
-                {amendment.name || amendment.id}
-              </div>
-            </KeyValue>
+            <div data-test-amendment-name>
+              <Headline
+                size="xx-large"
+                tag="h2"
+              >
+                {amendment.name}
+              </Headline>
+            </div>
           </Col>
         </Row>
         <Row>
           <Col md={3} xs={6}>
-            <KeyValue label={<FormattedMessage id="ui-licenses.prop.status" />}>
+            <KeyValue label={<FormattedMessage id="ui-licenses.amendments.view.status" />}>
               <div data-test-amendment-status>
                 {amendment?.status?.label ?? <NoValue />}
               </div>
             </KeyValue>
           </Col>
           <Col md={3} xs={6}>
-            <KeyValue label={<FormattedMessage id="ui-licenses.prop.startDate" />}>
+            <KeyValue label={<FormattedMessage id="ui-licenses.amendments.view.startDate" />}>
               <div data-test-amendment-start-date>
                 {amendment.startDate ? <FormattedUTCDate value={amendment.startDate} /> : <NoValue />}
               </div>
             </KeyValue>
           </Col>
           <Col md={3} xs={6}>
-            <KeyValue label={<FormattedMessage id="ui-licenses.prop.endDate" />}>
+            <KeyValue label={<FormattedMessage id="ui-licenses.amendments.view.endDate" />}>
               <div data-test-amendment-end-date>
                 <LicenseEndDate license={amendment} />
               </div>
