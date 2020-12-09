@@ -38,7 +38,8 @@ export default class AmendmentLicense extends React.Component {
           <Col xs={12}>
             <KeyValue label={
               <Headline
-                size="medium"
+                margin="none"
+                size="large"
                 tag="h3"
               >
                 <FormattedMessage id="ui-licenses.prop.parentLicense" />
@@ -79,15 +80,6 @@ export default class AmendmentLicense extends React.Component {
             <KeyValue label={<FormattedMessage id="ui-licenses.amendments.view.license.licensor" />}>
               <div data-test-amendment-license-licensor-name>
                 {this.renderLicensor()}
-              </div>
-            </KeyValue>
-          </Col>
-        </Row>
-        <Row>
-          <Col xs={12}>
-            <KeyValue label={<FormattedMessage id="ui-licenses.prop.description" />}>
-              <div data-test-amendment-license-description>
-                {license.description || <NoValue />}
               </div>
             </KeyValue>
           </Col>
