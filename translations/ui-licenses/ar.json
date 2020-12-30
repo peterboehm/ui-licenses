@@ -144,5 +144,21 @@
     "duplicateLicenseModal.organizations": "المؤسسات",
     "duplicateLicenseModal.supplementaryDocs": "وثائق تكميلية",
     "duplicateLicenseModal.terms": "مصطلحات",
-    "alternativeNames": "أسماء بديلة"
+    "alternativeNames": "أسماء بديلة",
+    "duplicateAmendmentModal.cloneEndpointError": "تعذر نسخ التعديل. تعذر الوصول إلى نقطة نهاية النسخة.",
+    "duplicateAmendmentModal.coreDocs": "الوثائق الأساسية",
+    "duplicateAmendmentModal.duplicateAmendment": "نسخ التعديل",
+    "duplicateAmendmentModal.duplicateMessage": "يرجى تحديد الأقسام المرجو نسخها من التعديل",
+    "duplicateAmendmentModal.duplicateModalError": "خطأ: لم يتم نسخ التعديل",
+    "duplicateAmendmentModal.invalidResponseError": "تعذر نسخ التعديل. الاستجابة الواردة من الخادم غير صالحة.",
+    "duplicateAmendmentModal.amendmentDateInfo": "معلومات تاريخ التعديل",
+    "duplicateAmendmentModal.amendmentInfo": "معلومات التعديل",
+    "duplicateAmendmentModal.supplementaryDocs": "وثائق تكميلية",
+    "duplicateAmendmentModal.terms": "مصطلحات",
+    "amendments.view.paneTitle": "التعديل: {name}",
+    "amendments.view.status": "حالة التعديل",
+    "amendments.view.startDate": "تاريخ بدء التعديل",
+    "amendments.view.endDate": "تاريخ انتهاء التعديل",
+    "amendments.view.license.licensor": "المرخص",
+    "prop.licensor.notSet": "لم يتم تعيينه"
 }

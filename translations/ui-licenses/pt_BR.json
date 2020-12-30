@@ -144,5 +144,21 @@
     "duplicateLicenseModal.organizations": "Organizações",
     "duplicateLicenseModal.supplementaryDocs": "Documentos suplementares",
     "duplicateLicenseModal.terms": "Termos",
-    "alternativeNames": "Nomes alternativos"
+    "alternativeNames": "Nomes alternativos",
+    "duplicateAmendmentModal.cloneEndpointError": "Não é possível duplicar a alteração. O endpoint do clone não pôde ser acessado.",
+    "duplicateAmendmentModal.coreDocs": "Documentos principais",
+    "duplicateAmendmentModal.duplicateAmendment": "Duplicar alteração",
+    "duplicateAmendmentModal.duplicateMessage": "Por favor selecione quais as seções da alteração a duplicar",
+    "duplicateAmendmentModal.duplicateModalError": "Erro: a alteração não foi duplicada",
+    "duplicateAmendmentModal.invalidResponseError": "Impossível duplicar a alteração. A resposta recebida do servidor é inválida.",
+    "duplicateAmendmentModal.amendmentDateInfo": "Informações sobre data de alteração",
+    "duplicateAmendmentModal.amendmentInfo": "Informação da emenda",
+    "duplicateAmendmentModal.supplementaryDocs": "Documentos suplementares",
+    "duplicateAmendmentModal.terms": "Termos",
+    "amendments.view.paneTitle": "Alteração: {nome}",
+    "amendments.view.status": "Status de alteração",
+    "amendments.view.startDate": "Data de início da alteração",
+    "amendments.view.endDate": "Data final da alteração",
+    "amendments.view.license.licensor": "Licenciante",
+    "prop.licensor.notSet": "Não configurado"
 }
