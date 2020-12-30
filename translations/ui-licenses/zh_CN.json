@@ -144,5 +144,21 @@
     "duplicateLicenseModal.organizations": "组织",
     "duplicateLicenseModal.supplementaryDocs": "补充文档",
     "duplicateLicenseModal.terms": "条款",
-    "alternativeNames": "交替名称"
+    "alternativeNames": "交替名称",
+    "duplicateAmendmentModal.cloneEndpointError": "无法复制修改。无法访问克隆端点。",
+    "duplicateAmendmentModal.coreDocs": "核心文档",
+    "duplicateAmendmentModal.duplicateAmendment": "复制修改",
+    "duplicateAmendmentModal.duplicateMessage": "请选择要修改的部分以复制",
+    "duplicateAmendmentModal.duplicateModalError": "错误：修改未复制",
+    "duplicateAmendmentModal.invalidResponseError": "无法复制修改。从服务器收到的响应无效。",
+    "duplicateAmendmentModal.amendmentDateInfo": "修改日期信息",
+    "duplicateAmendmentModal.amendmentInfo": "修改信息",
+    "duplicateAmendmentModal.supplementaryDocs": "补充文档",
+    "duplicateAmendmentModal.terms": "条款",
+    "amendments.view.paneTitle": "修改： {name}",
+    "amendments.view.status": "修改状态",
+    "amendments.view.startDate": "修改开始日期",
+    "amendments.view.endDate": "修改结束日期",
+    "amendments.view.license.licensor": "许可方",
+    "prop.licensor.notSet": "未设置"
 }
