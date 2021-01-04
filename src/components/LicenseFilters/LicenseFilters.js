@@ -4,7 +4,7 @@ import { FormattedMessage } from 'react-intl';
 
 import { Accordion, AccordionSet, FilterAccordionHeader, Selection } from '@folio/stripes/components';
 import { CheckboxFilter, MultiSelectionFilter } from '@folio/stripes/smart-components';
-import { CustomPropertyFilters, OrganizationSelection } from '@folio/stripes-erm-components';
+import { CustomPropertyFilters, DateFilter, OrganizationSelection } from '@folio/stripes-erm-components';
 
 const FILTERS = [
   'status',
@@ -162,6 +162,22 @@ export default class LicenseFilters extends React.Component {
     );
   }
 
+  renderStartDateFilter = () => {
+    return <DateFilter
+      activeFilters={this.props.activeFilters}
+      filterHandlers={this.props.filterHandlers}
+      name="startDate"
+    />;
+  }
+
+  renderEndDateFilter = () => {
+    return <DateFilter
+      activeFilters={this.props.activeFilters}
+      filterHandlers={this.props.filterHandlers}
+      name="endDate"
+    />;
+  }
+
   renderCustomPropertyFilters = () => {
     return <CustomPropertyFilters
       activeFilters={this.props.activeFilters}
@@ -179,6 +195,8 @@ export default class LicenseFilters extends React.Component {
         {this.renderOrganizationFilter()}
         {this.renderOrganizationRoleFilter()}
         {this.renderTagsFilter()}
+        {this.renderStartDateFilter()}
+        {this.renderEndDateFilter()}
         {this.renderCustomPropertyFilters()}
       </AccordionSet>
     );
