@@ -1,8 +1,8 @@
 # Change history for ui-licenses
 
-## 5.1.0 In Progress
+## 6.0.0 In Progress
 * Added optionalOkapiInterfaces to package.json. ERM-940
-
+* Upgrade to Stripes 6.0
 ## 5.0.1 2020-11-05
 * Fixes bug where incorrect Dates are saved when tenant timezone is ahead of UTC. ERM-1202
 * Fixes bug where a user with manage license terms permission should be able to edit the license terms. ERM-1196
