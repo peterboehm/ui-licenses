@@ -83,7 +83,7 @@
     "terms.count": "{count, number} saved {count, plural, one {term} other {terms}}",
     "terms.callout.delete.error": "There was an error deleting term {name}: {error}",
     "terms.callout.delete.success": "<strong>Term deleted:</strong> {name}",
-    "terms.callout.delete.termInUse": "Term <strong>{name}</strong> was not deleted because it is in use on one or more licenses.",
+    "terms.callout.delete.termInUse": "<strong>Error:</strong> Term <strong>{name}</strong> was not deleted because it is in use on one or more licenses or amendments.",
     "terms.callout.save.error": "There was an error saving term {name}: {error}",
     "terms.callout.save.success": "<strong>Term saved:</strong> {name}",
     "create.callout": "<strong>License created:</strong> {name}",

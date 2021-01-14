@@ -59,7 +59,7 @@ class TermsConfigForm extends React.Component {
           .json()
           .then(error => {
             const pattern = new RegExp(
-              'violates foreign key constraint.*is still referenced from table',
+              'ConstraintViolationException',
               's'
             );
             if (pattern.test(error.message)) {
